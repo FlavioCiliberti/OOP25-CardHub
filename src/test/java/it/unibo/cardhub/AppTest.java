@@ -1,18 +1,16 @@
 package it.unibo.cardhub;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 import org.junit.jupiter.api.Test;
-
-import it.unibo.cardhub.App;
 
 /**
  * Application test.
  */
 class AppTest {
 
+    /**
+     * Checks that the test framework works correctly.
+     */
     @Test void testApp() {
-        
+
     }
 }
