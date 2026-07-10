@@ -13,6 +13,13 @@ public interface Card {
     String getId();
 
     /**
+     * Returns the name of the card.
+     * 
+     * @return name of the card
+     */
+    String getName();
+
+    /**
      * A getter for the card's description.
      * 
      * @return the cards's description
