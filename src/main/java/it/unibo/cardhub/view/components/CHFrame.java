@@ -14,14 +14,15 @@ public class CHFrame extends JFrame {
         container.setLayout(layout);
 
         JPanel screen1 = new JPanel();
-        screen1.setBackground(Color.green);
+        // screen1.setBackground(Color.green);
+        screen1.setBackground(new Color(CHColor.TERTIARY.getCode()));
         JPanel screen2 = new CHPanel();
 
         container.add(screen1, "1");
         container.add(screen2, "2");
 
         this.add(container);
-        layout.show(container, "2");
+        layout.show(container, "1");
 
         this.setSize(new Dimension(640, 400));
         this.setVisible(true);
