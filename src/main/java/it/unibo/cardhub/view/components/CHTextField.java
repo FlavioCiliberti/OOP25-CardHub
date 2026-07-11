@@ -14,8 +14,12 @@ public class CHTextField extends JTextField{
     private void customize(){
         this.setBackground(new Color(CHColor.SECONDARY.getCode()));
         this.setForeground(new Color(CHColor.TERTIARY.getCode()));
-        this.setPreferredSize(new Dimension(100, 20));
-        this.setBorder(BorderFactory.createLineBorder(new Color(CHColor.TERTIARY.getCode())));
         this.setCaretColor(new Color(CHColor.TERTIARY.getCode()));
+        this.setPreferredSize(new Dimension(100, 26));
+        this.setBorder(BorderFactory.createLineBorder(new Color(CHColor.TERTIARY.getCode())));
+            this.setBorder(BorderFactory.createCompoundBorder(
+            this.getBorder(),
+            BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
     }
 }
