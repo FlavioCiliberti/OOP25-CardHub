@@ -5,6 +5,6 @@ import javax.swing.JPanel;
 
 class CHPanel extends JPanel{
     CHPanel(){
-        this.setBackground(Color.BLACK);
+        this.setBackground(new Color(CHColor.SECONDARY.getCode()));
     }
 }

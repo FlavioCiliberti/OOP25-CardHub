@@ -1,6 +1,8 @@
 package it.unibo.cardhub.view.components;
 
 import java.awt.*;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -14,15 +16,16 @@ public class CHFrame extends JFrame {
         container.setLayout(layout);
 
         JPanel screen1 = new JPanel();
-        // screen1.setBackground(Color.green);
+        screen1.setBackground(Color.green);
         screen1.setBackground(new Color(CHColor.TERTIARY.getCode()));
         JPanel screen2 = new CHPanel();
+        screen2.add(new CHButton("pulsante"));
 
         container.add(screen1, "1");
         container.add(screen2, "2");
 
         this.add(container);
-        layout.show(container, "1");
+        layout.show(container, "2");
 
         this.setSize(new Dimension(640, 400));
         this.setVisible(true);
