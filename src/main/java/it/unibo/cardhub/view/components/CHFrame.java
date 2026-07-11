@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import it.unibo.cardhub.view.home.HomeViewImpl;
+
 public class CHFrame extends JFrame {
     public CHFrame(){
         this.setTitle("Card Hub App");
@@ -19,8 +21,7 @@ public class CHFrame extends JFrame {
         JPanel screen1 = new JPanel();
         screen1.setBackground(Color.green);
         screen1.setBackground(new Color(CHColor.TERTIARY.getCode()));
-        JPanel screen2 = new CHPanel();
-        screen2.add(new CHTextField());
+        JPanel screen2 = new HomeViewImpl();
 
         container.add(screen1, "1");
         container.add(screen2, "2");

@@ -17,7 +17,7 @@ public class CHTextField extends JTextField{
         this.setCaretColor(new Color(CHColor.TERTIARY.getCode()));
         this.setPreferredSize(new Dimension(100, 26));
         this.setBorder(BorderFactory.createLineBorder(new Color(CHColor.TERTIARY.getCode())));
-            this.setBorder(BorderFactory.createCompoundBorder(
+        this.setBorder(BorderFactory.createCompoundBorder(
             this.getBorder(),
             BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
