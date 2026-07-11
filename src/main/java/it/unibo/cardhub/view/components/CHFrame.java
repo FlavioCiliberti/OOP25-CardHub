@@ -20,7 +20,7 @@ public class CHFrame extends JFrame {
         screen1.setBackground(Color.green);
         screen1.setBackground(new Color(CHColor.TERTIARY.getCode()));
         JPanel screen2 = new CHPanel();
-        screen2.add(new CHTextArea());
+        screen2.add(new CHLabel("ciao"));
 
         container.add(screen1, "1");
         container.add(screen2, "2");
