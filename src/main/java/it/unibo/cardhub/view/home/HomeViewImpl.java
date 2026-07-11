@@ -55,7 +55,24 @@ public class HomeViewImpl extends ScreenView {
     private void manageCentralPanel(){
         central.setLayout(new GridLayout(1, 2));
 
+        JPanel menu = createMenu();
+        JPanel heroWrapper = createHeroWrapper();
+
+        central.add(menu);
+        central.add(heroWrapper);
+    }
+
+    private void manageSouthPanel(){
+        south.add(exitBtn);
+        south.setBorder(BorderFactory.createCompoundBorder(
+            this.getBorder(),
+            BorderFactory.createEmptyBorder(10, 10, 10, 10)
+        ));
+    }
+
+    private JPanel createMenu(){
         JPanel menu = new CHPanel();
+
         menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
         menu.setBorder(BorderFactory.createCompoundBorder(
             this.getBorder(),
@@ -74,21 +91,17 @@ public class HomeViewImpl extends ScreenView {
             }
         }
 
+        return menu;
+    }
+
+    private JPanel createHeroWrapper(){
         JPanel heroWrapper = new CHPanel();
+
         heroWrapper.setPreferredSize(new Dimension(200,200));
         JLabel hero = new JLabel();
         hero.setIcon(new ImageIcon(getClass().getResource("/it/unibo/cardhub/view/home_hero.jpg")));
         heroWrapper.add(hero);
 
-        central.add(menu);
-        central.add(heroWrapper);
-    }
-
-    private void manageSouthPanel(){
-        south.add(exitBtn);
-        south.setBorder(BorderFactory.createCompoundBorder(
-            this.getBorder(),
-            BorderFactory.createEmptyBorder(10, 10, 10, 10)
-        ));
+        return heroWrapper;
     }
 }
