@@ -7,6 +7,10 @@ import javax.swing.JButton;
 public class CHButton extends JButton{
     public CHButton(String text){
         super(text);
+        customize();
+    }
+
+    private void customize(){
         this.setBackground(new Color(CHColor.PRIMARY.getCode()));
         this.setForeground(new Color(CHColor.SECONDARY.getCode()));
         this.setFocusable(false);
