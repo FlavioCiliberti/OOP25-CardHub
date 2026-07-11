@@ -17,18 +17,38 @@ public class HomeViewImpl extends ScreenView {
     final private JPanel central;
     final private JPanel south;
 
-    final JButton newMatchBtn;
-    final JButton loadMatchBtn;
-    final JButton manageDecksBtn;
-    final JButton exitBtn;
+    final private JButton newMatchBtn;
+    final private JButton loadMatchBtn;
+    final private JButton manageDecksBtn;
+    final private JButton exitBtn;
 
     public HomeViewImpl(){
         north = new CHPanel();
+        central = new CHPanel();
+        south = new CHPanel();
+
+        exitBtn = new CHButton("Exit to desktop");
+        newMatchBtn = new CHButton("New Match");
+        loadMatchBtn = new CHButton("Load Match");
+        manageDecksBtn = new CHButton("Manage Decks");
+
+        manageNorthPanel();
+        manageCentralPanel();
+        manageSouthPanel();
+
+        this.setLayout(new BorderLayout());
+        this.add(north, BorderLayout.NORTH);
+        this.add(central, BorderLayout.CENTER);
+        this.add(south, BorderLayout.SOUTH);
+    }
+
+    private void manageNorthPanel(){
         JLabel title = new CHTitle("CardHub");
         north.add(title);
         title.setHorizontalAlignment(JLabel.CENTER);
-
-        this.central = new CHPanel();
+    }
+    
+    private void manageCentralPanel(){
         central.setLayout(new BorderLayout());
         JPanel cLeft = new CHPanel();
         cLeft.setLayout(new BoxLayout(cLeft, BoxLayout.Y_AXIS));
@@ -37,14 +57,9 @@ public class HomeViewImpl extends ScreenView {
             this.getBorder(),
             BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
-        newMatchBtn = new CHButton("New Match");
-        loadMatchBtn = new CHButton("Load Match");
-        manageDecksBtn = new CHButton("Manage Decks");
         cLeft.add(newMatchBtn);
         cLeft.add(loadMatchBtn);
         cLeft.add(manageDecksBtn);
-
-        
 
         JPanel cRight = new CHPanel();
         cRight.setBackground(Color.green);
@@ -52,23 +67,13 @@ public class HomeViewImpl extends ScreenView {
 
         central.add(cLeft, BorderLayout.WEST);
         central.add(cRight, BorderLayout.EAST);
+    }
 
-
-        south = new CHPanel();
-        exitBtn = new CHButton("Exit to desktop");
+    private void manageSouthPanel(){
         south.add(exitBtn);
         south.setBorder(BorderFactory.createCompoundBorder(
             this.getBorder(),
             BorderFactory.createEmptyBorder(10, 10, 10, 10)
         ));
-
-        this.setLayout(new BorderLayout());
-        this.add(north, BorderLayout.NORTH);
-        this.add(central, BorderLayout.CENTER);
-        this.add(south, BorderLayout.SOUTH);
-
-
     }
-
-
 }
