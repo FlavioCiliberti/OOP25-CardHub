@@ -4,12 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import it.unibo.cardhub.view.components.*;
@@ -51,15 +53,14 @@ public class HomeViewImpl extends ScreenView {
     }
     
     private void manageCentralPanel(){
-        central.setLayout(new BorderLayout());
+        central.setLayout(new GridLayout(1, 2));
+
         JPanel menu = new CHPanel();
         menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
-        menu.setBorder(BorderFactory.createLineBorder(new Color(CHColor.TERTIARY.getCode())));
         menu.setBorder(BorderFactory.createCompoundBorder(
             this.getBorder(),
             BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
-
         menu.add(Box.createVerticalGlue());
         menu.add(newMatchBtn);
         menu.add(Box.createVerticalStrut(16));
@@ -67,21 +68,20 @@ public class HomeViewImpl extends ScreenView {
         menu.add(Box.createVerticalStrut(16));
         menu.add(manageDecksBtn);
         menu.add(Box.createVerticalGlue());
-
         for (Component c : menu.getComponents()) {
             if (c instanceof JButton button) {
                 button.setAlignmentX(Component.CENTER_ALIGNMENT);
             }
         }
 
-        menu.setBackground(Color.yellow);
+        JPanel heroWrapper = new CHPanel();
+        heroWrapper.setPreferredSize(new Dimension(200,200));
+        JLabel hero = new JLabel();
+        hero.setIcon(new ImageIcon(getClass().getResource("/it/unibo/cardhub/view/home_hero.jpg")));
+        heroWrapper.add(hero);
 
-        JPanel cRight = new CHPanel();
-        cRight.setBackground(Color.green);
-        cRight.setPreferredSize(new Dimension(200,200));
-
-        central.add(menu, BorderLayout.WEST);
-        central.add(cRight, BorderLayout.EAST);
+        central.add(menu);
+        central.add(heroWrapper);
     }
 
     private void manageSouthPanel(){
