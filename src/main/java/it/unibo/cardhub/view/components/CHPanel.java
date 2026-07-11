@@ -4,7 +4,7 @@ import java.awt.Color;
 import javax.swing.JPanel;
 
 class CHPanel extends JPanel{
-    CHPanel(){
+    public CHPanel(){
         this.setBackground(new Color(CHColor.SECONDARY.getCode()));
     }
 }

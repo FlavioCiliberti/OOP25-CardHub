@@ -5,6 +5,7 @@ import java.awt.*;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 public class CHFrame extends JFrame {
     public CHFrame(){
@@ -19,7 +20,7 @@ public class CHFrame extends JFrame {
         screen1.setBackground(Color.green);
         screen1.setBackground(new Color(CHColor.TERTIARY.getCode()));
         JPanel screen2 = new CHPanel();
-        screen2.add(new CHButton("pulsante"));
+        screen2.add(new JTextArea());
 
         container.add(screen1, "1");
         container.add(screen2, "2");
