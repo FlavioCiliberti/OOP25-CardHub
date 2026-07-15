@@ -10,6 +10,11 @@ public class CHLabel extends JLabel {
         customize();
     }
 
+    public CHLabel(Color color, int horizontalAlignment){
+        this.setForeground(color);
+        this.setHorizontalAlignment(horizontalAlignment);
+    }
+
     private void customize(){
         this.setForeground(new Color(CHColor.TERTIARY.getCode()));
     }
