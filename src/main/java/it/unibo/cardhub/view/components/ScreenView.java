@@ -12,7 +12,6 @@ import javax.swing.JPanel;
  * configuration for application screens.
  * </p>
  */
-@SuppressWarnings("PMD.ConstructorCallsOverridableMethod") //not overriden in app
 public class ScreenView extends JPanel {
     private static final long serialVersionUID = 1L;
 
@@ -31,6 +30,6 @@ public class ScreenView extends JPanel {
      * </p>
      */
     private void customize() {
-        this.setBackground(new Color(CHColor.SECONDARY.getCode()));
+        super.setBackground(new Color(CHColor.SECONDARY.getCode()));
     }
 }
