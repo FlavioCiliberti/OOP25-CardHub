@@ -5,26 +5,28 @@ import javax.swing.JPanel;
 
 /**
  * Custom panel component used throughout the application.
+ * 
  * <p>
  * This class extends {@link JPanel} and applies the default application
  * styling to panels.
  * </p>
  */
-public class CHPanel extends JPanel{
+public class CHPanel extends JPanel {
     /**
      * Creates a new custom panel with the default configuration.
      */
-    public CHPanel(){
+    public CHPanel() {
         customize();
     }
 
     /**
      * Applies the default customization to this panel.
+     * 
      * <p>
      * Sets the background color according to the application color palette.
      * </p>
      */
-    private void customize(){
+    private void customize() {
         this.setBackground(new Color(CHColor.SECONDARY.getCode()));
     }
 }

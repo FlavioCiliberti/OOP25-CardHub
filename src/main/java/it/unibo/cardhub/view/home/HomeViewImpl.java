@@ -7,25 +7,37 @@ import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import it.unibo.cardhub.view.components.CHButton;
+import it.unibo.cardhub.view.components.CHPanel;
+import it.unibo.cardhub.view.components.CHTitle;
+import it.unibo.cardhub.view.components.ScreenView;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-import it.unibo.cardhub.view.components.*;
-
 public class HomeViewImpl extends ScreenView {
-    final private JPanel north;
-    final private JPanel central;
-    final private JPanel south;
+    private static final int PADDING = 10;
 
-    final private JButton newMatchBtn;
-    final private JButton loadMatchBtn;
-    final private JButton manageDecksBtn;
-    final private JButton exitBtn;
+    private static final int COLS = 2;
+    private static final int ROWS = 1;
+    private static final int HERO_WRAPPER_WIDTH = 200;
+    private static final int HERO_WRAPPER_HEIGHT = 200;
+    private static final int STRUT_HEIGHT = 16;
 
-    public HomeViewImpl(){
+    private final JPanel north;
+    private final JPanel central;
+    private final JPanel south;
+
+    private final JButton newMatchBtn;
+    private final JButton loadMatchBtn;
+    private final JButton manageDecksBtn;
+    private final JButton exitBtn;
+
+    public HomeViewImpl() {
         north = new CHPanel();
         central = new CHPanel();
         south = new CHPanel();
@@ -34,6 +46,8 @@ public class HomeViewImpl extends ScreenView {
         newMatchBtn = new CHButton("New Match");
         loadMatchBtn = new CHButton("Load Match");
         manageDecksBtn = new CHButton("Manage Decks");
+
+        setUpListeners();
 
         manageNorthPanel();
         manageCentralPanel();
@@ -45,46 +59,46 @@ public class HomeViewImpl extends ScreenView {
         this.add(south, BorderLayout.SOUTH);
     }
 
-    private void manageNorthPanel(){
-        JLabel title = new CHTitle("CardHub");
+    private void manageNorthPanel() {
+        final JLabel title = new CHTitle("CardHub");
         north.add(title);
         title.setHorizontalAlignment(JLabel.CENTER);
     }
-    
-    private void manageCentralPanel(){
-        central.setLayout(new GridLayout(1, 2));
 
-        JPanel menu = createMenu();
-        JPanel heroWrapper = createHeroWrapper();
+    private void manageCentralPanel() {
+        central.setLayout(new GridLayout(ROWS, COLS));
+
+        final JPanel menu = createMenu();
+        final JPanel heroWrapper = createHeroWrapper();
 
         central.add(menu);
         central.add(heroWrapper);
     }
 
-    private void manageSouthPanel(){
+    private void manageSouthPanel() {
         south.add(exitBtn);
         south.setBorder(BorderFactory.createCompoundBorder(
             this.getBorder(),
-            BorderFactory.createEmptyBorder(10, 10, 10, 10)
+            BorderFactory.createEmptyBorder(PADDING, PADDING, PADDING, PADDING)
         ));
     }
 
-    private JPanel createMenu(){
-        JPanel menu = new CHPanel();
+    private JPanel createMenu() {
+        final JPanel menu = new CHPanel();
 
         menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
         menu.setBorder(BorderFactory.createCompoundBorder(
             this.getBorder(),
-            BorderFactory.createEmptyBorder(5, 10, 5, 10)
+            BorderFactory.createEmptyBorder(PADDING, PADDING, PADDING, PADDING)
         ));
         menu.add(Box.createVerticalGlue());
         menu.add(newMatchBtn);
-        menu.add(Box.createVerticalStrut(16));
+        menu.add(Box.createVerticalStrut(STRUT_HEIGHT));
         menu.add(loadMatchBtn);
-        menu.add(Box.createVerticalStrut(16));
+        menu.add(Box.createVerticalStrut(STRUT_HEIGHT));
         menu.add(manageDecksBtn);
         menu.add(Box.createVerticalGlue());
-        for (Component c : menu.getComponents()) {
+        for (final Component c : menu.getComponents()) {
             if (c instanceof JButton button) {
                 button.setAlignmentX(Component.CENTER_ALIGNMENT);
             }
@@ -93,14 +107,37 @@ public class HomeViewImpl extends ScreenView {
         return menu;
     }
 
-    private JPanel createHeroWrapper(){
-        JPanel heroWrapper = new CHPanel();
+    private JPanel createHeroWrapper() {
+        final JPanel heroWrapper = new CHPanel();
 
-        heroWrapper.setPreferredSize(new Dimension(200,200));
-        JLabel hero = new JLabel();
+        heroWrapper.setPreferredSize(new Dimension(HERO_WRAPPER_WIDTH, HERO_WRAPPER_HEIGHT));
+        final JLabel hero = new JLabel();
         hero.setIcon(new ImageIcon(getClass().getResource("/it/unibo/cardhub/view/home_hero.jpg")));
         heroWrapper.add(hero);
 
         return heroWrapper;
+    }
+
+    private void setUpListeners() {
+        newMatchBtn.addActionListener(e -> goToNewMatch());
+        loadMatchBtn.addActionListener(e -> goToLoadMatch());
+        manageDecksBtn.addActionListener(e -> goToManageDecks());
+        exitBtn.addActionListener(e -> exit());
+    }
+
+    public void goToNewMatch() {
+        return;
+    }
+
+    public void goToLoadMatch() {
+        return;
+    }
+
+    public void goToManageDecks() {
+        return;
+    }
+
+    public void exit() {
+        return;
     }
 }

@@ -2,15 +2,16 @@ package it.unibo.cardhub.view.components;
 
 import java.awt.*;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 import it.unibo.cardhub.view.home.HomeViewImpl;
 
 public class CHFrame extends JFrame {
-    public CHFrame(){
+    /**
+     * 
+     */
+    public CHFrame() {
         this.setTitle("Card Hub App");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

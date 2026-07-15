@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 
 /**
  * Custom label component used throughout the application.
+ *
  * <p>
  * This class extends {@link JLabel} and provides predefined constructors
  * with default styling or custom color and alignment configuration.
@@ -17,7 +18,7 @@ public class CHLabel extends JLabel {
      *
      * @param text the text displayed by the label
      */
-    public CHLabel(String text){
+    public CHLabel(final String text) {
         super(text);
         customize();
     }
@@ -27,22 +28,23 @@ public class CHLabel extends JLabel {
      *
      * @param color the foreground color of the label
      * @param horizontalAlignment the horizontal alignment constant defined in
-     * {@link JLabel} (e.g. {@link JLabel#LEFT},
-     * {@link JLabel#CENTER}, {@link JLabel#RIGHT})
+     *     ({@link JLabel} (e.g. {@link JLabel#LEFT},
+     *     {@link JLabel#CENTER}, {@link JLabel#RIGHT})
      */
-    public CHLabel(Color color, int horizontalAlignment){
+    public CHLabel(final Color color, final int horizontalAlignment) {
         this.setForeground(color);
         this.setHorizontalAlignment(horizontalAlignment);
     }
 
     /**
      * Applies the default customization to this label.
+     *
      * <p>
      * Sets the foreground color to the tertiary application color defined by
      * {@link CHColor#TERTIARY}.
      * </p>
      */
-    private void customize(){
+    private void customize() {
         this.setForeground(new Color(CHColor.TERTIARY.getCode()));
     }
 }
