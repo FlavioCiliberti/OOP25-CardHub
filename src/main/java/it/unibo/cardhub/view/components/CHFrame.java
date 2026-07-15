@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 
 // import it.unibo.cardhub.view.home.HomeViewImpl;
 
-//IMPORTANT; SERVES FOR UI TESTING PURPUSES ONLY FOR NOW
+//IMPORTANT; SERVES FOR UI TESTING PURPUSES ONLY (FOR NOW)
 /**
  * Custom Frame component used as the the application GUI.
  */
