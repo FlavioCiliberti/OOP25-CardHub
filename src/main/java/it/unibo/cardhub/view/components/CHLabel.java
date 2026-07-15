@@ -12,7 +12,9 @@ import javax.swing.JLabel;
  * with default styling or custom color and alignment configuration.
  * </p>
  */
-public class CHLabel extends JLabel {
+public final class CHLabel extends JLabel {
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new custom label with the specified text.
      *

@@ -7,22 +7,25 @@ import javax.swing.JPanel;
 
 import it.unibo.cardhub.view.home.HomeViewImpl;
 
-public class CHFrame extends JFrame {
+//IMPORTANT; SERVES FOR UI TESTING PURPUSES ONLY FOR NOW
+public final class CHFrame extends JFrame {
+    private static final long serialVersionUID = 1L;
+
     /**
      * 
      */
     public CHFrame() {
         this.setTitle("Card Hub App");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        JPanel container = new JPanel();
-        CardLayout layout = new CardLayout();
+        final JPanel container = new JPanel();
+        final CardLayout layout = new CardLayout();
         container.setLayout(layout);
 
-        JPanel screen1 = new JPanel();
+        final JPanel screen1 = new JPanel();
         screen1.setBackground(Color.green);
         screen1.setBackground(new Color(CHColor.TERTIARY.getCode()));
-        JPanel screen2 = new HomeViewImpl();
+        final JPanel screen2 = new HomeViewImpl();
 
         container.add(screen1, "1");
         container.add(screen2, "2");

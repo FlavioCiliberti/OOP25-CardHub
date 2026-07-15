@@ -14,7 +14,9 @@ import javax.swing.JTextField;
  * styling, including colors, preferred size, border, and internal padding.
  * </p>
  */
-public class CHTextField extends JTextField {
+public final class CHTextField extends JTextField {
+    private static final long serialVersionUID = 1L;
+
     private static final int PADDING_LEFT = 10;
     private static final int PADDING_RIGHT = 10;
     private static final int PADDING_TOP = 5;
@@ -43,9 +45,8 @@ public class CHTextField extends JTextField {
         this.setForeground(new Color(CHColor.TERTIARY.getCode()));
         this.setCaretColor(new Color(CHColor.TERTIARY.getCode()));
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        this.setBorder(BorderFactory.createLineBorder(new Color(CHColor.TERTIARY.getCode())));
         this.setBorder(BorderFactory.createCompoundBorder(
-            this.getBorder(),
+            BorderFactory.createLineBorder(new Color(CHColor.TERTIARY.getCode())),
             BorderFactory.createEmptyBorder(PADDING_TOP, PADDING_LEFT, PADDING_BOTTOM, PADDING_RIGHT)
         ));
     }

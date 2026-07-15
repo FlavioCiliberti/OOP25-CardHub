@@ -19,7 +19,12 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-public class HomeViewImpl extends ScreenView {
+/**
+ * Home screen view, showing the CardHub title, the main menu and a hero image.
+ */
+public final class HomeViewImpl extends ScreenView {
+    private static final long serialVersionUID = 1L;
+
     private static final int PADDING = 10;
 
     private static final int COLS = 2;
@@ -37,6 +42,9 @@ public class HomeViewImpl extends ScreenView {
     private final JButton manageDecksBtn;
     private final JButton exitBtn;
 
+    /**
+     * Builds the home view, laying out the title, the menu, the hero image and the exit button.
+     */
     public HomeViewImpl() {
         north = new CHPanel();
         central = new CHPanel();
@@ -100,7 +108,7 @@ public class HomeViewImpl extends ScreenView {
         menu.add(Box.createVerticalGlue());
         for (final Component c : menu.getComponents()) {
             if (c instanceof JButton button) {
-                button.setAlignmentX(Component.CENTER_ALIGNMENT);
+                button.setAlignmentX(CENTER_ALIGNMENT);
             }
         }
 
@@ -125,19 +133,27 @@ public class HomeViewImpl extends ScreenView {
         exitBtn.addActionListener(e -> exit());
     }
 
+    /**
+     * Navigates to the new match screen.
+     */
     public void goToNewMatch() {
-        return;
     }
 
+    /**
+     * Navigates to the load match screen.
+     */
     public void goToLoadMatch() {
-        return;
     }
 
+    /**
+     * Navigates to the manage decks screen.
+     */
     public void goToManageDecks() {
-        return;
     }
 
+    /**
+     * Exits the application.
+     */
     public void exit() {
-        return;
     }
 }

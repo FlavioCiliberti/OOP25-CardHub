@@ -13,7 +13,8 @@ import javax.swing.JButton;
  * and focus behavior.
  * </p>
  */
-public class CHButton extends JButton {
+public final class CHButton extends JButton {
+    private static final long serialVersionUID = 1L;
 
     /**
      * Creates a new custom button with the specified text.

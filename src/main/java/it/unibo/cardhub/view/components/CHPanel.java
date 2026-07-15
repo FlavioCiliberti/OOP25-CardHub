@@ -11,7 +11,9 @@ import javax.swing.JPanel;
  * styling to panels.
  * </p>
  */
-public class CHPanel extends JPanel {
+public final class CHPanel extends JPanel {
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates a new custom panel with the default configuration.
      */

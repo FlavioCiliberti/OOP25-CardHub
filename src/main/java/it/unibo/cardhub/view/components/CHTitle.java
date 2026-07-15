@@ -13,7 +13,9 @@ import javax.swing.JLabel;
  * displaying titles, including custom font and color settings.
  * </p>
  */
-public class CHTitle extends JLabel {
+public final class CHTitle extends JLabel {
+    private static final long serialVersionUID = 1L;
+
     private static final int FONT_SIZE = 24;
 
     /**
