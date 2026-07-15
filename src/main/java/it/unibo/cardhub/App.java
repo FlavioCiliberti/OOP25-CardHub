@@ -17,7 +17,7 @@ public final class App {
      * @param args command line arguments
      */
     public static void main(final String[] args) {
-        var ui = new CHFrame();
+        final var ui = new CHFrame();
         ui.setVisible(true);
     }
 }
