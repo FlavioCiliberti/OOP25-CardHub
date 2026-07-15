@@ -43,6 +43,7 @@ public class CreateMatchImpl extends ScreenView{
     private final JButton play;
 
     //playersPanel items
+    //IMPORTANT: JComboBox wants a type, remember to add <Deck> in the final implementation
     private final JLabel playersLabel;
     private final JLabel firstPlayerLabel;
     private final JLabel firstPlayerNameLabel;
@@ -122,7 +123,8 @@ public class CreateMatchImpl extends ScreenView{
         fieldSizeModel = new SpinnerNumberModel(3, MIN_FIELD_SIZE, MAX_FIELD_SIZE, 1);
         fieldSizeSpinner = new JSpinner(fieldSizeModel);
         startingHandLabel = new CHLabel("Starting Hand Size");
-        startingHandModel = new SpinnerNumberModel(4, MIN_HAND_SIZE, MAX_HAND_SIZE, 1);
+        //Starting hand size needs to always be lower or equal to max hand size
+        startingHandModel = new SpinnerNumberModel(4, MIN_HAND_SIZE, ((Integer) handSizeSpinner.getValue()).intValue(), 1);
         startingHandSpinner = new JSpinner(startingHandModel);
         autoDrawCheckBox = new JCheckBox("Auto Draw on Turn Start");
         winnerActionLabel = new CHLabel("Winner Card Action");
@@ -286,10 +288,9 @@ public class CreateMatchImpl extends ScreenView{
         settingsPanel.add(startingHandLabel);
 
         startingHandSpinner.setBounds(115, 44, 30, 20);
-        startingHandModel.setMaximum((Integer) handSizeSpinner.getValue());
         settingsPanel.add(startingHandSpinner);
         handSizeSpinner.addChangeListener(e -> {
-            //Forces starting hand size to be lower than max hand size
+            //Forces starting hand size to be lower or equal to max hand size
             int maxHandSize = (Integer) handSizeSpinner.getValue();
 
             startingHandModel.setMaximum(maxHandSize);
@@ -299,7 +300,7 @@ public class CreateMatchImpl extends ScreenView{
         });
 
         autoDrawCheckBox.setBackground(new Color(CHColor.PRIMARY.getCode()));
-        autoDrawCheckBox.setBounds(158, 41, 161, 23);
+        autoDrawCheckBox.setBounds(158, 43, 161, 23);
         settingsPanel.add(autoDrawCheckBox);
 
         winnerActionLabel.setHorizontalAlignment(SwingConstants.CENTER);
