@@ -1,7 +1,6 @@
 package it.unibo.cardhub.view.components;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.BorderFactory;
@@ -15,7 +14,7 @@ public final class CHEntryPanel extends CHPanel {
     private final CHLabel title;
     private final CHLabel subtitle;
     private final CHPanel buttonPanel;
-
+//Color
     /**
      * Creates a new entry panel.
      * 
@@ -28,7 +27,7 @@ public final class CHEntryPanel extends CHPanel {
 
         this.setLayout(new BorderLayout(8, 8));
         this.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(CHColor.PRIMARY.getCode())), 
+            BorderFactory.createLineBorder(CHStyles.primaryColor()),
             BorderFactory.createEmptyBorder(10, 10, 10, 10)));
 
         title = new CHLabel(titleText);
