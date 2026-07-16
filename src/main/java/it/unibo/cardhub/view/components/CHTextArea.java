@@ -1,7 +1,5 @@
 package it.unibo.cardhub.view.components;
 
-import java.awt.Color;
-
 import javax.swing.BorderFactory;
 import javax.swing.JTextArea;
 
@@ -38,11 +36,11 @@ public class CHTextArea extends JTextArea {
      * </p>
      */
     private void customize() {
-        super.setBackground(new Color(CHColor.SECONDARY.getCode()));
-        super.setForeground(new Color(CHColor.TERTIARY.getCode()));
-        super.setCaretColor(new Color(CHColor.TERTIARY.getCode()));
+        super.setBackground(CHStyles.secondaryColor());
+        super.setForeground(CHStyles.tertiaryColor());
+        super.setCaretColor(CHStyles.tertiaryColor());
         super.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(CHColor.TERTIARY.getCode())),
+            BorderFactory.createLineBorder(CHStyles.tertiaryColor()),
             BorderFactory.createEmptyBorder(PADDING_TOP, PADDING_LEFT, PADDING_BOTTOM, PADDING_RIGHT)
         ));
     }

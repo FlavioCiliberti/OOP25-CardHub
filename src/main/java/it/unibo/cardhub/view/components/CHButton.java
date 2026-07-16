@@ -1,7 +1,5 @@
 package it.unibo.cardhub.view.components;
 
-import java.awt.Color;
-
 import javax.swing.JButton;
 
 /**
@@ -36,8 +34,8 @@ public class CHButton extends JButton {
      * </p>
      */
     private void customize() {
-        super.setBackground(new Color(CHColor.PRIMARY.getCode()));
-        super.setForeground(new Color(CHColor.SECONDARY.getCode()));
+        super.setBackground(CHStyles.primaryColor());
+        super.setForeground(CHStyles.secondaryColor());
         super.setFocusable(false);
     }
 }

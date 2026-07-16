@@ -1,6 +1,5 @@
 package it.unibo.cardhub.view.components;
 
-import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JLabel;
@@ -37,7 +36,7 @@ public class CHTitle extends JLabel {
      * </p>
      */
     private void customize() {
-        super.setForeground(new Color(CHColor.PRIMARY.getCode()));
+        super.setForeground(CHStyles.primaryColor());
         super.setFont(new Font("SansSerif", Font.BOLD, FONT_SIZE));
     }
 }

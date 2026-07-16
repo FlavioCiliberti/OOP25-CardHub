@@ -47,6 +47,6 @@ public class CHLabel extends JLabel {
      * </p>
      */
     private void customize() {
-        super.setForeground(new Color(CHColor.TERTIARY.getCode()));
+        super.setForeground(CHStyles.tertiaryColor());
     }
 }

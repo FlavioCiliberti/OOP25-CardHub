@@ -13,6 +13,7 @@ import it.unibo.cardhub.view.components.CHButton;
 import it.unibo.cardhub.view.components.CHPanel;
 import it.unibo.cardhub.view.components.CHTitle;
 import it.unibo.cardhub.view.components.ScreenView;
+import it.unibo.cardhub.view.components.CHStyles;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -25,8 +26,6 @@ import javax.swing.JButton;
  */
 public final class HomeViewImpl extends ScreenView implements HomeView {
     private static final long serialVersionUID = 1L;
-
-    private static final int PADDING = 10;
 
     private static final int COLS = 2;
     private static final int ROWS = 1;
@@ -88,7 +87,7 @@ public final class HomeViewImpl extends ScreenView implements HomeView {
         south.add(exitBtn);
         south.setBorder(BorderFactory.createCompoundBorder(
             this.getBorder(),
-            BorderFactory.createEmptyBorder(PADDING, PADDING, PADDING, PADDING)
+            BorderFactory.createEmptyBorder(CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING)
         ));
     }
 
@@ -98,7 +97,7 @@ public final class HomeViewImpl extends ScreenView implements HomeView {
         menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
         menu.setBorder(BorderFactory.createCompoundBorder(
             this.getBorder(),
-            BorderFactory.createEmptyBorder(PADDING, PADDING, PADDING, PADDING)
+            BorderFactory.createEmptyBorder(CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING)
         ));
         menu.add(Box.createVerticalGlue());
         menu.add(newMatchBtn);

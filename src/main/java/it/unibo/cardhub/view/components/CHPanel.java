@@ -1,6 +1,5 @@
 package it.unibo.cardhub.view.components;
 
-import java.awt.Color;
 import javax.swing.JPanel;
 
 /**
@@ -29,6 +28,6 @@ public class CHPanel extends JPanel {
      * </p>
      */
     private void customize() {
-        super.setBackground(new Color(CHColor.SECONDARY.getCode()));
+        super.setBackground(CHStyles.secondaryColor());
     }
 }
