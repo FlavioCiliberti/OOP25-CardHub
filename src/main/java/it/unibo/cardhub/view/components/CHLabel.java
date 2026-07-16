@@ -12,7 +12,7 @@ import javax.swing.JLabel;
  * with default styling or custom color and alignment configuration.
  * </p>
  */
-public final class CHLabel extends JLabel {
+public class CHLabel extends JLabel {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -34,8 +34,8 @@ public final class CHLabel extends JLabel {
      *     {@link JLabel#CENTER}, {@link JLabel#RIGHT})
      */
     public CHLabel(final Color color, final int horizontalAlignment) {
-        this.setForeground(color);
-        this.setHorizontalAlignment(horizontalAlignment);
+        super.setForeground(color);
+        super.setHorizontalAlignment(horizontalAlignment);
     }
 
     /**
@@ -47,6 +47,6 @@ public final class CHLabel extends JLabel {
      * </p>
      */
     private void customize() {
-        this.setForeground(new Color(CHColor.TERTIARY.getCode()));
+        super.setForeground(new Color(CHColor.TERTIARY.getCode()));
     }
 }

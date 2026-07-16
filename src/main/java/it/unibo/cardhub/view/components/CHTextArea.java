@@ -13,7 +13,7 @@ import javax.swing.JTextArea;
  * styling, including background color, text color, caret color, and padding.
  * </p>
  */
-public final class CHTextArea extends JTextArea {
+public class CHTextArea extends JTextArea {
     private static final long serialVersionUID = 1L;
 
     private static final int PADDING_LEFT = 10;
@@ -38,10 +38,10 @@ public final class CHTextArea extends JTextArea {
      * </p>
      */
     private void customize() {
-        this.setBackground(new Color(CHColor.SECONDARY.getCode()));
-        this.setForeground(new Color(CHColor.TERTIARY.getCode()));
-        this.setCaretColor(new Color(CHColor.TERTIARY.getCode()));
-        this.setBorder(BorderFactory.createCompoundBorder(
+        super.setBackground(new Color(CHColor.SECONDARY.getCode()));
+        super.setForeground(new Color(CHColor.TERTIARY.getCode()));
+        super.setCaretColor(new Color(CHColor.TERTIARY.getCode()));
+        super.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(new Color(CHColor.TERTIARY.getCode())),
             BorderFactory.createEmptyBorder(PADDING_TOP, PADDING_LEFT, PADDING_BOTTOM, PADDING_RIGHT)
         ));

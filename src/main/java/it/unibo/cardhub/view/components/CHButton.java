@@ -13,7 +13,7 @@ import javax.swing.JButton;
  * and focus behavior.
  * </p>
  */
-public final class CHButton extends JButton {
+public class CHButton extends JButton {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -36,8 +36,8 @@ public final class CHButton extends JButton {
      * </p>
      */
     private void customize() {
-        this.setBackground(new Color(CHColor.PRIMARY.getCode()));
-        this.setForeground(new Color(CHColor.SECONDARY.getCode()));
-        this.setFocusable(false);
+        super.setBackground(new Color(CHColor.PRIMARY.getCode()));
+        super.setForeground(new Color(CHColor.SECONDARY.getCode()));
+        super.setFocusable(false);
     }
 }

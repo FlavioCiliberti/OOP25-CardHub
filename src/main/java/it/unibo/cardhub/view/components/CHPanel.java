@@ -11,7 +11,7 @@ import javax.swing.JPanel;
  * styling to panels.
  * </p>
  */
-public final class CHPanel extends JPanel {
+public class CHPanel extends JPanel {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -29,6 +29,6 @@ public final class CHPanel extends JPanel {
      * </p>
      */
     private void customize() {
-        this.setBackground(new Color(CHColor.SECONDARY.getCode()));
+        super.setBackground(new Color(CHColor.SECONDARY.getCode()));
     }
 }
