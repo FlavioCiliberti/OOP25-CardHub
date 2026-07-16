@@ -1,4 +1,4 @@
-package it.unibo.cardhub.view.home;
+package it.unibo.cardhub.view.impl;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import it.unibo.cardhub.view.api.HomeView;
 import it.unibo.cardhub.view.components.CHButton;
 import it.unibo.cardhub.view.components.CHPanel;
 import it.unibo.cardhub.view.components.CHTitle;
@@ -22,7 +23,7 @@ import javax.swing.JButton;
 /**
  * Home screen view, showing the CardHub title, the main menu and a hero image.
  */
-public final class HomeViewImpl extends ScreenView {
+public final class HomeViewImpl extends ScreenView implements HomeView {
     private static final long serialVersionUID = 1L;
 
     private static final int PADDING = 10;
@@ -134,26 +135,30 @@ public final class HomeViewImpl extends ScreenView {
     }
 
     /**
-     * Navigates to the new match screen.
+     * {@inheritDoc}
      */
+    @Override
     public void goToNewMatch() {
     }
 
     /**
-     * Navigates to the load match screen.
+     * {@inheritDoc}
      */
+    @Override
     public void goToLoadMatch() {
     }
 
     /**
-     * Navigates to the manage decks screen.
+     * {@inheritDoc}
      */
+    @Override
     public void goToManageDecks() {
     }
 
     /**
-     * Exits the application.
+     * {@inheritDoc}
      */
+    @Override
     public void exit() {
     }
 }

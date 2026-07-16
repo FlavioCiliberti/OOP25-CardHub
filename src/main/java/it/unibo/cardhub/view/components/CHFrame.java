@@ -7,7 +7,7 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 // import javax.swing.JPanel;
 
-// import it.unibo.cardhub.view.home.HomeViewImpl;
+// import it.unibo.cardhub.view.impl.HomeViewImpl;
 
 //IMPORTANT; SERVES FOR UI TESTING PURPUSES ONLY (FOR NOW)
 /**
