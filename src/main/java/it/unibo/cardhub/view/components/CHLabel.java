@@ -16,37 +16,36 @@ public class CHLabel extends JLabel {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Creates a new custom label with the specified text.
-     *
+     * Creates a new custom label with the specified text and the default color.
+     * Sets the foreground color to the tertiary application color defined by
+     * {@link CHColor#TERTIARY}.
+     * 
      * @param text the text displayed by the label
      */
     public CHLabel(final String text) {
-        super(text);
-        customize();
+        this(text, CHStyles.tertiaryColor());
     }
 
     /**
-     * Creates a new custom label with the specified color and horizontal alignment.
+     * Creates a new custom label with the specified text and color.
+     *
+     * @param text the text displayed by the label
+     */
+    public CHLabel(final String text, final Color color) {
+        super(text);
+        super.setForeground(color);
+    }
+
+    /**
+     * Creates a new custom label with the specified text, color and horizontal alignment.
      *
      * @param color the foreground color of the label
      * @param horizontalAlignment the horizontal alignment constant defined in
      *     ({@link JLabel} (e.g. {@link JLabel#LEFT},
      *     {@link JLabel#CENTER}, {@link JLabel#RIGHT})
      */
-    public CHLabel(final Color color, final int horizontalAlignment) {
-        super.setForeground(color);
+    public CHLabel(final String text, final Color color, final int horizontalAlignment) {
+        this(text, color);
         super.setHorizontalAlignment(horizontalAlignment);
-    }
-
-    /**
-     * Applies the default customization to this label.
-     *
-     * <p>
-     * Sets the foreground color to the tertiary application color defined by
-     * {@link CHColor#TERTIARY}.
-     * </p>
-     */
-    private void customize() {
-        super.setForeground(CHStyles.tertiaryColor());
     }
 }
