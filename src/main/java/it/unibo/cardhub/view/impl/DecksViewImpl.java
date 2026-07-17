@@ -1,7 +1,7 @@
 package it.unibo.cardhub.view.impl;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionListener;
+import java.awt.Component;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -16,9 +16,9 @@ import it.unibo.cardhub.view.components.CHTitle;
 import it.unibo.cardhub.view.components.ScreenView;
 
 /**
- * Implementation of DeckView.
+ * Swing implementation of the decks view.
  */
-public class DecksViewImpl extends ScreenView implements DecksView {
+public final class DecksViewImpl extends ScreenView implements DecksView {
     
     private final CHPanel deckListPanel;
     private final CHPanel titlePanel;
@@ -35,7 +35,7 @@ public class DecksViewImpl extends ScreenView implements DecksView {
         titlePanel = new CHPanel();
         createPanel = new CHPanel();
 
-        createNewButton = new CHButton("Create new");
+        createNewButton = new CHButton("Create new deck");
         backButton = new CHButton("<");
 
         scrollPane = new JScrollPane(deckListPanel);
@@ -44,6 +44,8 @@ public class DecksViewImpl extends ScreenView implements DecksView {
         manageDeckListPanel();
         manageCreatePanel();
         loadDummyDecks();
+
+        setUpListeners();
 
         this.setLayout(new BorderLayout());
         this.add(titlePanel, BorderLayout.NORTH);
@@ -73,11 +75,12 @@ public class DecksViewImpl extends ScreenView implements DecksView {
         ));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addDeck(final String deckName, final int numberOfCards) {
-        CHEntryPanel entry = new CHEntryPanel(deckName, String.valueOf(numberOfCards));
-        entry.addButton(new CHButton("Edit"));
-        entry.addButton(new CHButton("Delete"));
+        CHEntryPanel entry = new CHEntryPanel(deckName, String.valueOf(numberOfCards), "Edit", "Delete");
 
         deckListPanel.add(entry);
 
@@ -86,25 +89,17 @@ public class DecksViewImpl extends ScreenView implements DecksView {
     }
 
     private void loadDummyDecks() {
-        CHEntryPanel deck1 = new CHEntryPanel("Standard Deck", "32 cards");
-        deck1.addButton(new CHButton("Edit"));
-        deck1.addButton(new CHButton("Delete"));
-        deckListPanel.add(deck1);
-
-        CHEntryPanel deck2 = new CHEntryPanel("Pokemon", "60 cards");
-        deck2.addButton(new CHButton("Edit"));
-        deck2.addButton(new CHButton("Delete"));
-        deckListPanel.add(deck2);
-
-        CHEntryPanel deck3 = new CHEntryPanel("Yu-Gi-Oh!", "40 cards");
-        deck3.addButton(new CHButton("Edit"));
-        deck3.addButton(new CHButton("Delete"));
-        deckListPanel.add(deck3);
+        addDeck("Standard deck", 32);
+        addDeck("Pokemon", 60);
+        addDeck("Yu-Gi-Oh!", 40);
 
         deckListPanel.revalidate();
         deckListPanel.repaint();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void clearDecks() {
         deckListPanel.removeAll();
@@ -112,15 +107,46 @@ public class DecksViewImpl extends ScreenView implements DecksView {
         deckListPanel.repaint();
     }
 
-    @Override
-    public void addCreateListener(ActionListener listener) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addCreateListener'");
+    private void setUpListeners() {
+        createNewButton.addActionListener(e -> goToDeckManager());
+        backButton.addActionListener(e -> goToHome());
+
+        // Question: should I also iterate though single entries to find their two buttons or does it iterate through each entry components recursively?
+        boolean first = true;
+        for (final Component c : deckListPanel.getComponents()) {
+            if (c instanceof CHButton && first) {
+                CHButton button = (CHButton) c;
+                button.addActionListener(e -> goToDeckManager());
+                first = false;
+            }
+            if (c instanceof CHButton && !first) {
+                CHButton button = (CHButton) c;
+                button.addActionListener(e -> {
+                    for (final Component d : deckListPanel.getComponents()) {
+                        if (d instanceof CHEntryPanel) {
+                            CHEntryPanel entry = (CHEntryPanel) d;
+                            if (entry.getSecondButton().equals(button)) {
+                                deckListPanel.remove(entry);
+                            }
+                        }
+                    }
+                });
+                first = true;
+            }
+        }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void addBackListener(ActionListener listener) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'addBackListener'");
+    public void goToDeckManager() {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void goToHome() {
     }
 }

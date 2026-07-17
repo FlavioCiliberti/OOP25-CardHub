@@ -14,14 +14,16 @@ public final class CHEntryPanel extends CHPanel {
     private final CHLabel title;
     private final CHLabel subtitle;
     private final CHPanel buttonPanel;
-//Color
+    private final CHButton firstButton;
+    private final CHButton secondButton;
+
     /**
      * Creates a new entry panel.
      * 
      * @param titleText title
      * @param subtitleText subtitle
      */
-    public CHEntryPanel(final String titleText, final String subtitleText) {
+    public CHEntryPanel(final String titleText, final String subtitleText, final String firstButtonText, final String secondButtonText) {
 
         super();
 
@@ -32,8 +34,12 @@ public final class CHEntryPanel extends CHPanel {
 
         title = new CHLabel(titleText);
         subtitle = new CHLabel(subtitleText);
+        firstButton = new CHButton(firstButtonText);
+        secondButton = new CHButton(secondButtonText);
         buttonPanel = new CHPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.add(firstButton);
+        buttonPanel.add(secondButton);
         buttonPanel.setOpaque(false);
 
         this.add(title, BorderLayout.NORTH);
@@ -42,12 +48,21 @@ public final class CHEntryPanel extends CHPanel {
     }
 
     /**
-     * Adds a button to the panel.
+     * Returns the first button.
      * 
-     * @param button button to add
+     * @return the first button
      */
-    public void addButton(final CHButton button) {
-        buttonPanel.add(button);
+    public CHButton getFirstButton() {
+        return this.firstButton;
+    }
+
+    /**
+     * Returns the second button.
+     * 
+     * @return the second button
+     */
+    public CHButton getSecondButton() {
+        return this.secondButton;
     }
 
     /**
