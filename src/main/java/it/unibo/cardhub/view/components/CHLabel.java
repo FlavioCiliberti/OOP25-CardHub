@@ -38,6 +38,21 @@ public class CHLabel extends JLabel {
     }
 
     /**
+     * Creates a new custom label with the specified text and horizontal alignment.
+     * Sets the foreground color to the tertiary application color defined by
+     * {@link CHColor#TERTIARY}.
+     *
+     * @param text the text displayed by the label
+     * @param horizontalAlignment the horizontal alignment constant defined in
+     *     ({@link JLabel} (e.g. {@link JLabel#LEFT},
+     *     {@link JLabel#CENTER}, {@link JLabel#RIGHT})
+     */
+    public CHLabel(final String text, final int horizontalAlignment) {
+        this(text);
+        super.setHorizontalAlignment(horizontalAlignment);
+    }
+
+    /**
      * Creates a new custom label with the specified text, color and horizontal alignment.
      *
      * @param text the text displayed by the label
