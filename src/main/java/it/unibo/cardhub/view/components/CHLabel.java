@@ -30,6 +30,7 @@ public class CHLabel extends JLabel {
      * Creates a new custom label with the specified text and color.
      *
      * @param text the text displayed by the label
+     * @param color the foreground color of the label
      */
     public CHLabel(final String text, final Color color) {
         super(text);
@@ -39,6 +40,7 @@ public class CHLabel extends JLabel {
     /**
      * Creates a new custom label with the specified text, color and horizontal alignment.
      *
+     * @param text the text displayed by the label
      * @param color the foreground color of the label
      * @param horizontalAlignment the horizontal alignment constant defined in
      *     ({@link JLabel} (e.g. {@link JLabel#LEFT},
