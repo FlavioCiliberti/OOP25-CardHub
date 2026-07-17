@@ -9,9 +9,9 @@ public enum GameMode {
     private final String displayName;
 
     /**
-     * Creates a game mode
+     * Creates a game mode.
      * 
-     * @param value the mode
+     * @param displayName the mode
      */
     GameMode(final String displayName) {
         this.displayName = displayName;

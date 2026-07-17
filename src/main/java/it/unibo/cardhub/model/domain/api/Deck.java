@@ -6,6 +6,13 @@ package it.unibo.cardhub.model.domain.api;
 public interface Deck extends CardCollection {
 
     /**
+     * Returns the deck's ID.
+     * 
+     * @return the deck's ID
+     */
+    String getId();
+
+    /**
      * Draws a card from the deck.
      * 
      * @return the drawn card

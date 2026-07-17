@@ -22,12 +22,15 @@ public final class CHEntryPanel extends CHPanel {
      * 
      * @param titleText title
      * @param subtitleText subtitle
+     * @param firstButtonText first button
+     * @param secondButtonText second button
      */
-    public CHEntryPanel(final String titleText, final String subtitleText, final String firstButtonText, final String secondButtonText) {
-
+    public CHEntryPanel(final String titleText, final String subtitleText, 
+        final String firstButtonText, final String secondButtonText) {
         super();
 
         this.setLayout(new BorderLayout(8, 8));
+
         this.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(CHStyles.primaryColor()),
             BorderFactory.createEmptyBorder(10, 10, 10, 10)));
@@ -42,9 +45,9 @@ public final class CHEntryPanel extends CHPanel {
         buttonPanel.add(secondButton);
         buttonPanel.setOpaque(false);
 
-        this.add(title, BorderLayout.NORTH);
+        this.add(title, BorderLayout.EAST);
         this.add(subtitle, BorderLayout.CENTER);
-        this.add(buttonPanel, BorderLayout.SOUTH);
+        this.add(buttonPanel, BorderLayout.WEST);
     }
 
     /**

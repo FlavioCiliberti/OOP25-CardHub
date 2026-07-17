@@ -1,5 +1,7 @@
 package it.unibo.cardhub.view.api;
 
+import java.awt.event.ActionListener;
+
 /**
  * Represents the view of the decks section.
  */
@@ -19,12 +21,30 @@ public interface DecksView {
     void clearDecks();
 
     /**
-     * Tells the navigator to redirect to the deck manager screen.
+     * Handles events for the create deck button.
+     * 
+     * @param listener action listener
      */
-    void goToDeckManager();
+    void addCreateDeckListener(ActionListener listener);
 
     /**
-     * Tells the navigator to redirect to the home screen.
+     * Handles events for the back button.
+     * 
+     * @param listener action listener
      */
-    void goToHome();
+    void addBackListener(ActionListener listener);
+
+    /**
+     * Adds a listener to edit buttons.
+     * 
+     * @param listener action listener
+     */
+    void addEditListener(ActionListener listener);
+
+    /**
+     * Adds a listener to delete buttons.
+     * 
+     * @param listener action listener
+     */
+    void addDeleteListener(ActionListener listener);
 }

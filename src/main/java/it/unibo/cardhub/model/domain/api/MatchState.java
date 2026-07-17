@@ -8,6 +8,13 @@ import java.util.Optional;
 public interface MatchState {
 
     /**
+     * Returns the match's ID.
+     * 
+     * @return the card's ID
+     */
+    String getId();
+
+    /**
      * Starts a match.
      */
     void start();

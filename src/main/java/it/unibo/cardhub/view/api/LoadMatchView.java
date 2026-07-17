@@ -1,5 +1,7 @@
 package it.unibo.cardhub.view.api;
 
+import java.awt.event.ActionListener;
+
 import it.unibo.cardhub.model.logic.GameMode;
 
 /**
@@ -21,13 +23,24 @@ public interface LoadMatchView {
     void clearMatches();
 
     /**
-     * Tells the navigator to redirect to the home screen.
+     * Handles events for the back button.
+     * 
+     * @param listener action listener
      */
-    void goToHome();
+    void addBackListener(ActionListener listener);
 
     /**
-     * Tells the navigator to redirect to the match screen.
+     * Adds a listener to load buttons.
+     * 
+     * @param listener action listener
      */
-    void goToMatch();
+    void addLoadListener(ActionListener listener);
+
+    /**
+     * Adds a listener to delete buttons.
+     * 
+     * @param listener action listener
+     */
+    void addDeleteListener(ActionListener listener);
 }
 
