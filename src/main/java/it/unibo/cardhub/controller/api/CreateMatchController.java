@@ -9,6 +9,11 @@ import java.util.Map;
 public interface CreateMatchController {
 
     /**
+     * Navigates back to the previous view.
+     */
+    void goBack();
+
+    /**
      * Retrieves the available decks indexed by their identifier.
      *
      * @return an unmodifiable map associating each deck id with its name
