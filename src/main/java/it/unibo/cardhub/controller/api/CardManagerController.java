@@ -24,8 +24,10 @@ public interface CardManagerController extends BackNavigableScreen {
      * @param imgPath the path to the card's image resource; must not be {@code null} or blank
      * @param description an optional textual description of the card
      * @param deckIds the identifiers of the decks the card belongs to; must not be {@code null}
+     * 
+     * @return {@code true is saved successfully}
      */
-    void saveCard(String name, int value, String imgPath, Optional<String> description, Set<Integer> deckIds);
+    boolean saveCard(String name, int value, String imgPath, Optional<String> description, Set<Integer> deckIds);
 
     /**
      * Clears the currently displayed card data in the view and initializes a new,
