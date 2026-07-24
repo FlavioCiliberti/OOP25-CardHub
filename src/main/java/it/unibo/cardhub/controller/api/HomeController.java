@@ -4,7 +4,7 @@ package it.unibo.cardhub.controller.api;
  * Controller responsible for handling the main actions available
  * from the home screen of the application.
  */
-public interface HomeController {
+public interface HomeController extends ScreenController {
 
     /**
      * Creates the instances necessary for the CreateMatch screen.

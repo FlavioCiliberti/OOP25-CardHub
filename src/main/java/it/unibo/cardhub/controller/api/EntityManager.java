@@ -10,11 +10,6 @@ package it.unibo.cardhub.controller.api;
 public interface EntityManager<T> extends ItemPageNavigator {
 
     /**
-     * Navigates back to the previous view.
-     */
-    void goBack();
-
-    /**
      * Creates the instances necessary for the item-editing screen
      * to create a new item.
      * Then navigates to it.

@@ -9,5 +9,5 @@ package it.unibo.cardhub.controller.api;
  * editing, and deleting decks.
  * </p>
  */
-public interface ManageDecksController extends EntityManager<Integer> {
+public interface ManageDecksController extends EntityManager<Integer>, BackNavigableScreen {
 }

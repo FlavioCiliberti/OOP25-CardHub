@@ -9,7 +9,7 @@ package it.unibo.cardhub.controller.api;
  * editing, and deleting cards.
  * </p>
  */
-public interface DeckManagerController extends EntityManager<Integer> {
+public interface DeckManagerController extends EntityManager<Integer>, BackNavigableScreen {
 
     /**
      * Changes the deck's name to the given name.

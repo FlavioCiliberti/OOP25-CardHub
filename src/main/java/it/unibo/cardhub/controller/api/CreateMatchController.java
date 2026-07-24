@@ -6,12 +6,7 @@ import java.util.Map;
  * Provides operations to create a match between two players,
  * either with default rules, full rule sets, or custom configurable rules.
  */
-public interface CreateMatchController {
-
-    /**
-     * Navigates back to the previous view.
-     */
-    void goBack();
+public interface CreateMatchController extends BackNavigableScreen {
 
     /**
      * Retrieves the available decks indexed by their identifier.
