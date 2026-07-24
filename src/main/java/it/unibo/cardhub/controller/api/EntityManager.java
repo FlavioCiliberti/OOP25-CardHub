@@ -7,7 +7,7 @@ package it.unibo.cardhub.controller.api;
  * @param <T> the type of the identifier used to reference an item
  */
 
-public interface EntityManager<T> {
+public interface EntityManager<T> extends ItemPageNavigator {
 
     /**
      * Navigates back to the previous view.
@@ -37,22 +37,4 @@ public interface EntityManager<T> {
      * @throws IllegalArgumentException if no item with the given identifier exists
      */
     void delete(T id);
-
-    /**
-     * Changes the current page of the item list to the given page number.
-     *
-     * @param page the target page number
-     * @throws IllegalArgumentException if {@code page} is not a valid page number
-     */
-    void changePage(int page);
-
-    /**
-     * Changes the current page of the item list to the previous one.
-     */
-    void previousPage();
-
-    /**
-     * Changes the current page of the item list to the next one.
-     */
-    void nextPage();
 }
