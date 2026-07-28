@@ -16,8 +16,9 @@ public interface Player {
      * Puts a card onto the table from the player's hand.
      * 
      * @param card to be played
+     * @return the card
      */
-    void playCard(Card card);
+    Card playCard(Card card);
 
     /**
      * A getter for the player's name.
@@ -32,11 +33,4 @@ public interface Player {
      * @return the player's hand
      */
     Hand getHand();
-
-    /**
-     * A getter for the player's deck.
-     * 
-     * @return the player's deck
-     */
-    Deck getDeck();
 }
