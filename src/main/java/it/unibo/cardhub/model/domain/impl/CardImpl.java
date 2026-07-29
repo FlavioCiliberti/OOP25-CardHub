@@ -9,7 +9,8 @@ import it.unibo.cardhub.model.domain.api.Card;
  * @param name card name
  * @param value card value
  * @param desc card description
+ * @param imagePath card image path
  */
-public record CardImpl(String id, String name, int value, String desc) implements Card {
+public record CardImpl(String id, String name, int value, String desc, String imagePath) implements Card {
 
 }

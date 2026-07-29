@@ -32,4 +32,11 @@ public interface Card {
      * @return the cards's description
      */
     String desc();
+
+    /**
+     * Returns image path.
+     * 
+     * @return image path
+     */
+    String imagePath();
 }
