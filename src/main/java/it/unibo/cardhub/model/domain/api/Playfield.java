@@ -34,8 +34,9 @@ public interface Playfield {
      * Removes a card from the table.
      * 
      * @param card to be removed
+     * @return the card
      */
-    void removeCard(Card card);
+    Card removeCard(Card card);
 
     /**
      * A getter for the player's cards.
