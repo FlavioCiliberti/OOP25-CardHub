@@ -1,10 +1,11 @@
 package it.unibo.cardhub.view.creatematch;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -20,7 +21,9 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
+import it.unibo.cardhub.controller.api.CreateMatchController;
 import it.unibo.cardhub.view.components.CHButton;
 import it.unibo.cardhub.view.components.CHColor;
 import it.unibo.cardhub.view.components.CHLabel;
@@ -35,9 +38,18 @@ public class CreateMatchImpl extends ScreenView{
     private final static int MIN_FIELD_SIZE = 1;
     private final static int MAX_HAND_SIZE = 7;
     private final static int MAX_FIELD_SIZE = 6;
+    private final static int TOP_PANEL_BORDER = 7;
+    private final static int CENTER_PANEL_Y_BORDER = 15;
+    private final static int CENTER_PANEL_X_BORDER = 65;
+    private final static int CENTER_PANEL_BETWEEN_BORDER = 25;
+    private final static double PLAYERS_PANEL_WEIGHT = 45.0;
+    private final static double GAME_MODES_PANEL_WEIGHT = 27.5;
+    private final static double SETTINGS_PANEL_WEIGHT = 27.5;
 
     //Panels
     private final JPanel topPanel;
+    private final JPanel centerPanel;
+    private final JPanel bottomPanel;
     private final JPanel playersPanel;
     private final JPanel firstPlayerPanel;
     private final JPanel secondPlayerPanel;
@@ -50,7 +62,7 @@ public class CreateMatchImpl extends ScreenView{
     private final JButton play;
 
     //playersPanel items
-    //IMPORTANT: JComboBox wants a type, remember to add <Deck> in the final implementation
+    //TODO JComboBox wants a type, remember to add <Deck> in the final implementation
     private final JLabel playersLabel;
     private final JLabel firstPlayerLabel;
     private final JLabel firstPlayerNameLabel;
@@ -93,8 +105,10 @@ public class CreateMatchImpl extends ScreenView{
     private final JRadioButton loseNoneRadioButton;
     private final ButtonGroup loserActionGroup;
 
-    public CreateMatchImpl() {
+    public CreateMatchImpl(CreateMatchController controller) {
         topPanel = new CHPanel();
+        centerPanel = new CHPanel();
+        bottomPanel = new CHPanel();
         playersPanel = new CHPanel();
         firstPlayerPanel = new CHPanel();
         secondPlayerPanel = new CHPanel();
@@ -117,7 +131,7 @@ public class CreateMatchImpl extends ScreenView{
         secondPlayerNameField = new CHTextField();
         secondPlayerDeckBox = new JComboBox<>();
 
-        gameModeLabel = new CHLabel("Game Mode");
+        gameModeLabel = new CHLabel("Game Mode", CHStyles.secondaryColor(), SwingConstants.CENTER);
         freePlayRadioButton = new JRadioButton("Free Play");
         customRulesRadioButton = new JRadioButton("Custom Rules");
         fullGameRadioButton = new JRadioButton("Full Game");
@@ -157,34 +171,19 @@ public class CreateMatchImpl extends ScreenView{
         topPanel.setLayout(new BorderLayout());
         this.manageTopPanel();
 
-        JPanel bottomPanel = new CHPanel();
         bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         bottomPanel.add(play);
         this.add(bottomPanel, BorderLayout.SOUTH);
 
-        playersPanel.setBounds(69, 53, 319, 232);
-        playersPanel.setBackground(new Color(CHColor.PRIMARY.getCode()));
-        this.add(playersPanel);
-        playersPanel.setLayout(null);
-        this.managePlayersPanel();
-
-        gameModesPanel.setBounds(69, 314, 319, 113);
-        gameModesPanel.setBackground(new Color(CHColor.PRIMARY.getCode()));
-        this.add(gameModesPanel);
-        gameModesPanel.setLayout(null);
-        this.manageGameModesPanel();
-
-        settingsPanel.setBounds(69, 457, 319, 162);
-        settingsPanel.setBackground(new Color(CHColor.PRIMARY.getCode()));
-        settingsPanel.setVisible(false); 
-        this.add(settingsPanel);
-        settingsPanel.setLayout(null);
-        this.manageSettingsPanel();
+        centerPanel.setLayout(new GridBagLayout());
+        this.add(centerPanel, BorderLayout.CENTER);
+        this.manageCenterPanel();
     }
 
     //sets up topPanel
     private void manageTopPanel() {
-        topPanel.setBorder(BorderFactory.createEmptyBorder(7, 7, 7, 7));
+        topPanel.setBorder(BorderFactory.createEmptyBorder(TOP_PANEL_BORDER, TOP_PANEL_BORDER, TOP_PANEL_BORDER, TOP_PANEL_BORDER));
+
         topPanel.add(back, BorderLayout.WEST);
 
         title.setHorizontalAlignment(SwingConstants.CENTER);
@@ -195,6 +194,46 @@ public class CreateMatchImpl extends ScreenView{
         dummy.setPreferredSize(back.getPreferredSize());
         dummy.setMaximumSize(back.getPreferredSize());
         topPanel.add(dummy, BorderLayout.EAST);
+    }
+
+    //sets up centerPanel
+    private void manageCenterPanel() {
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(CENTER_PANEL_Y_BORDER, CENTER_PANEL_X_BORDER, CENTER_PANEL_Y_BORDER, CENTER_PANEL_X_BORDER));
+
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.fill = GridBagConstraints.BOTH;
+        constraints.weightx = 1.0;
+
+        constraints.gridy = 0;
+        constraints.weighty = PLAYERS_PANEL_WEIGHT;
+        playersPanel.setBackground(CHStyles.primaryColor());
+        playersPanel.setBorder(BorderFactory.createMatteBorder(0, 0, CENTER_PANEL_BETWEEN_BORDER, 0, CHStyles.secondaryColor()));
+        centerPanel.add(playersPanel, constraints);
+        playersPanel.setLayout(null);
+        this.managePlayersPanel();
+
+        constraints.gridy = 1;
+        constraints.weighty = GAME_MODES_PANEL_WEIGHT;
+        gameModesPanel.setBackground(new Color(CHColor.PRIMARY.getCode()));
+        gameModesPanel.setBorder(BorderFactory.createMatteBorder(0, 0, CENTER_PANEL_BETWEEN_BORDER, 0, CHStyles.secondaryColor()));
+        centerPanel.add(gameModesPanel, constraints);
+        gameModesPanel.setLayout(null);
+        this.manageGameModesPanel();
+
+        constraints.gridy = 2;
+        constraints.weighty = SETTINGS_PANEL_WEIGHT;
+        
+        //encapsulates settingsPanel so that when it's not visible the other panels don't get resized
+        JPanel settingsPanelContainer = new CHPanel();
+        settingsPanelContainer.setLayout(new BorderLayout());
+        centerPanel.add(settingsPanelContainer, constraints);
+
+        settingsPanel.setBackground(new Color(CHColor.PRIMARY.getCode()));
+        settingsPanel.setVisible(false); 
+        settingsPanelContainer.add(settingsPanel, BorderLayout.CENTER);
+        settingsPanel.setLayout(null);
+        this.manageSettingsPanel();
     }
 
     //sets up playersPanel
@@ -244,12 +283,10 @@ public class CreateMatchImpl extends ScreenView{
 
     //Sets up gameModesPanel
     private void manageGameModesPanel() {
-        gameModeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        gameModeLabel.setForeground(new Color(CHColor.SECONDARY.getCode()));
         gameModeLabel.setBounds(0, 3, 319, 14);
         gameModesPanel.add(gameModeLabel);
 
-        freePlayRadioButton.setBackground(new Color(CHColor.PRIMARY.getCode()));
+        freePlayRadioButton.setBackground(CHStyles.primaryColor());
         freePlayRadioButton.setBounds(118, 21, 107, 23);
         freePlayRadioButton.addActionListener(e -> {
             //Makes the settings panel invisible
@@ -258,7 +295,7 @@ public class CreateMatchImpl extends ScreenView{
         gameModesGroup.add(freePlayRadioButton);
         gameModesPanel.add(freePlayRadioButton);
 
-        customRulesRadioButton.setBackground(new Color(CHColor.PRIMARY.getCode()));
+        customRulesRadioButton.setBackground(CHStyles.primaryColor());
         customRulesRadioButton.setBounds(118, 50, 107, 23);
         customRulesRadioButton.addActionListener(e -> {
             //Makes the settings panel visible
@@ -267,7 +304,7 @@ public class CreateMatchImpl extends ScreenView{
         gameModesGroup.add(customRulesRadioButton);
         gameModesPanel.add(customRulesRadioButton);
 
-        fullGameRadioButton.setBackground(new Color(CHColor.PRIMARY.getCode()));
+        fullGameRadioButton.setBackground(CHStyles.primaryColor());
         fullGameRadioButton.setBounds(118, 78, 107, 23);
         fullGameRadioButton.addActionListener(e -> {
             //Makes the settings panel invisible
