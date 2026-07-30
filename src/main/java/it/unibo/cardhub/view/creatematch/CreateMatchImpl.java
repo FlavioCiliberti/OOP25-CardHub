@@ -1,9 +1,14 @@
 package it.unibo.cardhub.view.creatematch;
 
+import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -20,6 +25,7 @@ import it.unibo.cardhub.view.components.CHButton;
 import it.unibo.cardhub.view.components.CHColor;
 import it.unibo.cardhub.view.components.CHLabel;
 import it.unibo.cardhub.view.components.CHPanel;
+import it.unibo.cardhub.view.components.CHStyles;
 import it.unibo.cardhub.view.components.CHTextField;
 import it.unibo.cardhub.view.components.CHTitle;
 import it.unibo.cardhub.view.components.ScreenView;
@@ -31,6 +37,7 @@ public class CreateMatchImpl extends ScreenView{
     private final static int MAX_FIELD_SIZE = 6;
 
     //Panels
+    private final JPanel topPanel;
     private final JPanel playersPanel;
     private final JPanel firstPlayerPanel;
     private final JPanel secondPlayerPanel;
@@ -87,6 +94,7 @@ public class CreateMatchImpl extends ScreenView{
     private final ButtonGroup loserActionGroup;
 
     public CreateMatchImpl() {
+        topPanel = new CHPanel();
         playersPanel = new CHPanel();
         firstPlayerPanel = new CHPanel();
         secondPlayerPanel = new CHPanel();
@@ -138,21 +146,21 @@ public class CreateMatchImpl extends ScreenView{
         loseNoneRadioButton = new JRadioButton("None");
         loserActionGroup = new ButtonGroup();
 
-        this.setLayout(null);
+        this.setLayout(new BorderLayout());
         this.manageContentPane();
     }
 
     //sets up the content pane
     private void manageContentPane() {
-        back.setBounds(5, 5, 41, 23);
-        this.add(back);
+        topPanel.setPreferredSize(new Dimension(470,40));
+        this.add(topPanel, BorderLayout.NORTH);
+        topPanel.setLayout(new BorderLayout());
+        this.manageTopPanel();
 
-        title.setHorizontalAlignment(SwingConstants.CENTER);
-        title.setBounds(0, 6, 454, 18);
-        this.add(title);
-
-        play.setBounds(181, 634, 89, 23);
-        this.add(play);
+        JPanel bottomPanel = new CHPanel();
+        bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        bottomPanel.add(play);
+        this.add(bottomPanel, BorderLayout.SOUTH);
 
         playersPanel.setBounds(69, 53, 319, 232);
         playersPanel.setBackground(new Color(CHColor.PRIMARY.getCode()));
@@ -172,6 +180,21 @@ public class CreateMatchImpl extends ScreenView{
         this.add(settingsPanel);
         settingsPanel.setLayout(null);
         this.manageSettingsPanel();
+    }
+
+    //sets up topPanel
+    private void manageTopPanel() {
+        topPanel.setBorder(BorderFactory.createEmptyBorder(7, 7, 7, 7));
+        topPanel.add(back, BorderLayout.WEST);
+
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        topPanel.add(title, BorderLayout.CENTER);
+
+        //to center title
+        JPanel dummy = new CHPanel();
+        dummy.setPreferredSize(back.getPreferredSize());
+        dummy.setMaximumSize(back.getPreferredSize());
+        topPanel.add(dummy, BorderLayout.EAST);
     }
 
     //sets up playersPanel
