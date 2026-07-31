@@ -8,7 +8,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -21,7 +20,6 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 
 import it.unibo.cardhub.controller.api.CreateMatchController;
 import it.unibo.cardhub.view.components.CHButton;
@@ -37,7 +35,7 @@ public class CreateMatchImpl extends ScreenView{
     public final int WIDTH = 470;
     public final int HEIGHT = 710;
 
-    //logic related
+    //logic constraints
     private final static int MIN_HAND_SIZE = 1;
     private final static int MIN_FIELD_SIZE = 1;
     private final static int MAX_HAND_SIZE = 7;
@@ -231,6 +229,7 @@ public class CreateMatchImpl extends ScreenView{
         centerPanel.add(settingsPanelContainer);
         centerPanel.setPreferredSize(new Dimension(WIDTH, (int)(HEIGHT * 0.27)));
         centerPanel.setMaximumSize(new Dimension(WIDTH, (int)(HEIGHT * 0.27)));
+
         settingsPanel.setBackground(new Color(CHColor.PRIMARY.getCode()));
         settingsPanel.setVisible(false); 
         settingsPanelContainer.add(settingsPanel, BorderLayout.CENTER);
