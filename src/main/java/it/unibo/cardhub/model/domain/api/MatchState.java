@@ -1,5 +1,6 @@
 package it.unibo.cardhub.model.domain.api;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -32,6 +33,13 @@ public interface MatchState {
     Player getCurrentPlayer();
 
     /**
+     * Returns all the players of the match.
+     * 
+     * @return all the players
+     */
+    List<Player> getPlayers();
+
+    /**
      * A getter for the match's winner.
      * 
      * @return the winner, if present
@@ -39,11 +47,11 @@ public interface MatchState {
     Optional<Player> getWinner();
 
     /**
-     * A setter for the match's winner.
+     * Ends a match and sets the winner.
      * 
-     * @param player who is the winner
+     * @param player the winner
      */
-    void setWinner(Player player);
+    void endMatch(Player player);
 
     /**
      * Informs about the match's state.

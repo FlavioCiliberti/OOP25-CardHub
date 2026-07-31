@@ -10,26 +10,33 @@ public interface Card {
      * 
      * @return the card's ID
      */
-    String getId();
+    String id();
 
     /**
-     * A getter for the card's description.
+     * Returns the name of the card.
      * 
-     * @return the cards's description
+     * @return name of the card
      */
-    String getDescription();
-
-    /**
-     * A getter for the card's image path.
-     * 
-     * @return the card's image path
-     */
-    String getImagePath();
+    String name();
 
     /**
      * A getter for the card's value.
      * 
      * @return the cards value
      */
-    int getValue();
+    int value();
+
+    /**
+     * A getter for the card's description.
+     * 
+     * @return the cards's description
+     */
+    String desc();
+
+    /**
+     * Returns image path.
+     * 
+     * @return image path
+     */
+    String imagePath();
 }
