@@ -54,9 +54,6 @@ public class CreateMatchImpl extends ScreenView{
     private final static double SETTINGS_PANEL_WEIGHT = 27.5;
 
     //Panels
-    private final JPanel topPanel;
-    private final JPanel centerPanel;
-    private final JPanel bottomPanel;
     private final JPanel playersPanel;
     private final JPanel firstPlayerPanel;
     private final JPanel secondPlayerPanel;
@@ -113,9 +110,6 @@ public class CreateMatchImpl extends ScreenView{
     private final ButtonGroup loserActionGroup;
 
     public CreateMatchImpl(CreateMatchController controller) {
-        topPanel = new CHPanel();
-        centerPanel = new CHPanel();
-        bottomPanel = new CHPanel();
         playersPanel = new CHPanel();
         firstPlayerPanel = new CHPanel();
         secondPlayerPanel = new CHPanel();
@@ -173,22 +167,25 @@ public class CreateMatchImpl extends ScreenView{
 
     //sets up the content pane
     private void manageContentPane() {
+        JPanel topPanel = new CHPanel();
         topPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * TOP_PANEL_RATIO)));
         this.add(topPanel, BorderLayout.NORTH);
         topPanel.setLayout(new BorderLayout());
-        this.manageTopPanel();
+        this.manageTopPanel(topPanel);
 
+        JPanel bottomPanel = new CHPanel();
         bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         bottomPanel.add(play);
         this.add(bottomPanel, BorderLayout.SOUTH);
 
+        JPanel centerPanel = new CHPanel();
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         this.add(centerPanel, BorderLayout.CENTER);
-        this.manageCenterPanel();
+        this.manageCenterPanel(centerPanel);
     }
 
     //sets up topPanel
-    private void manageTopPanel() {
+    private void manageTopPanel(JPanel topPanel) {
         topPanel.setBorder(BorderFactory.createEmptyBorder(TOP_PANEL_PADDING, TOP_PANEL_PADDING, TOP_PANEL_PADDING, TOP_PANEL_PADDING));
 
         topPanel.add(back, BorderLayout.WEST);
@@ -204,7 +201,7 @@ public class CreateMatchImpl extends ScreenView{
     }
 
     //sets up centerPanel
-    private void manageCenterPanel() {
+    private void manageCenterPanel(JPanel centerPanel) {
         centerPanel.setBorder(BorderFactory.createEmptyBorder(CENTER_PANEL_Y_PADDING, CENTER_PANEL_X_PADDING, CENTER_PANEL_Y_PADDING, CENTER_PANEL_X_PADDING));
 
         playersPanel.setBackground(CHStyles.primaryColor());
