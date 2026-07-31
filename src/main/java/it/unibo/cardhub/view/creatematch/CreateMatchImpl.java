@@ -168,9 +168,7 @@ public class CreateMatchImpl extends ScreenView{
     //sets up the content pane
     private void manageContentPane() {
         JPanel topPanel = new CHPanel();
-        topPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * TOP_PANEL_RATIO)));
         this.add(topPanel, BorderLayout.NORTH);
-        topPanel.setLayout(new BorderLayout());
         this.manageTopPanel(topPanel);
 
         JPanel bottomPanel = new CHPanel();
@@ -179,13 +177,16 @@ public class CreateMatchImpl extends ScreenView{
         this.add(bottomPanel, BorderLayout.SOUTH);
 
         JPanel centerPanel = new CHPanel();
-        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         this.add(centerPanel, BorderLayout.CENTER);
         this.manageCenterPanel(centerPanel);
     }
 
     //sets up topPanel
     private void manageTopPanel(JPanel topPanel) {
+        topPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * TOP_PANEL_RATIO)));
+
+        topPanel.setLayout(new BorderLayout());
+
         topPanel.setBorder(BorderFactory.createEmptyBorder(TOP_PANEL_PADDING, TOP_PANEL_PADDING, TOP_PANEL_PADDING, TOP_PANEL_PADDING));
 
         topPanel.add(back, BorderLayout.WEST);
@@ -202,40 +203,33 @@ public class CreateMatchImpl extends ScreenView{
 
     //sets up centerPanel
     private void manageCenterPanel(JPanel centerPanel) {
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
         centerPanel.setBorder(BorderFactory.createEmptyBorder(CENTER_PANEL_Y_PADDING, CENTER_PANEL_X_PADDING, CENTER_PANEL_Y_PADDING, CENTER_PANEL_X_PADDING));
 
-        playersPanel.setBackground(CHStyles.primaryColor());
-        playersPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * PLAYERS_PANEL_RATIO)));
-        playersPanel.setMaximumSize(new Dimension(WIDTH, (int) (HEIGHT * PLAYERS_PANEL_RATIO)));
-        playersPanel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, CENTER_PANEL_BETWEEN_PADDING, PADDING_NONE, CHStyles.secondaryColor()));
         centerPanel.add(playersPanel);
-        playersPanel.setLayout(new BorderLayout());
         this.managePlayersPanel();
 
-        gameModesPanel.setBackground(new Color(CHColor.PRIMARY.getCode()));
-        gameModesPanel.setPreferredSize(new Dimension(WIDTH, (int)(HEIGHT * 0.18)));
-        gameModesPanel.setMaximumSize(new Dimension(WIDTH, (int)(HEIGHT * 0.18)));
-        gameModesPanel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, CENTER_PANEL_BETWEEN_PADDING, PADDING_NONE, CHStyles.secondaryColor()));
         centerPanel.add(gameModesPanel);
-        gameModesPanel.setLayout(null);
         this.manageGameModesPanel();
         
         //encapsulates settingsPanel so that when it's not visible the other panels don't get resized
         JPanel settingsPanelContainer = new CHPanel();
         settingsPanelContainer.setLayout(new BorderLayout());
+        settingsPanelContainer.setPreferredSize(new Dimension(WIDTH, (int)(HEIGHT * 0.25)));
+        settingsPanelContainer.setMaximumSize(new Dimension(WIDTH, (int)(HEIGHT * 0.25)));
         centerPanel.add(settingsPanelContainer);
-        centerPanel.setPreferredSize(new Dimension(WIDTH, (int)(HEIGHT * 0.27)));
-        centerPanel.setMaximumSize(new Dimension(WIDTH, (int)(HEIGHT * 0.27)));
-
-        settingsPanel.setBackground(new Color(CHColor.PRIMARY.getCode()));
-        settingsPanel.setVisible(false); 
         settingsPanelContainer.add(settingsPanel, BorderLayout.CENTER);
-        settingsPanel.setLayout(null);
         this.manageSettingsPanel();
     }
 
     //sets up playersPanel
     private void managePlayersPanel() {
+        playersPanel.setBackground(CHStyles.primaryColor());
+        playersPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * PLAYERS_PANEL_RATIO)));
+        playersPanel.setMaximumSize(new Dimension(WIDTH, (int) (HEIGHT * PLAYERS_PANEL_RATIO)));
+        playersPanel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, CENTER_PANEL_BETWEEN_PADDING, PADDING_NONE, CHStyles.secondaryColor()));
+        playersPanel.setLayout(new BorderLayout());
+
         playersPanel.add(playersLabel, BorderLayout.NORTH);
 
         //contains both players' panels
@@ -246,20 +240,20 @@ public class CreateMatchImpl extends ScreenView{
         playersPanel.add(playersContainer, BorderLayout.CENTER);
 
         //Player 1 Panel
-        playersContainer.add(firstPlayerPanel);
-        firstPlayerPanel.setLayout(new GridBagLayout());
-        managePlayerPanel(firstPlayerPanel, firstPlayerLabel, firstPlayerNameLabel, firstPlayerDeckLabel, firstPlayerNameField, firstPlayerDeckBox);
         firstPlayerPanel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, PADDING, PADDING_NONE, CHStyles.primaryColor()));
+        managePlayerPanel(firstPlayerPanel, firstPlayerLabel, firstPlayerNameLabel, firstPlayerDeckLabel, firstPlayerNameField, firstPlayerDeckBox);
+        playersContainer.add(firstPlayerPanel);
 
         //Player 2 Panel
-        playersContainer.add(secondPlayerPanel);
-        secondPlayerPanel.setLayout(new GridBagLayout());
         managePlayerPanel(secondPlayerPanel, secondPlayerLabel, secondPlayerNameLabel, secondPlayerDeckLabel, secondPlayerNameField, secondPlayerDeckBox);
+        playersContainer.add(secondPlayerPanel);
 
     }
 
     //sets up firstPlayerPanel and secondPlayerPanel
     private void managePlayerPanel(JPanel panel, JLabel title, JLabel nameLabel, JLabel deckLabel, JTextField nameTextField, JComboBox deckBox) {
+        panel.setLayout(new GridBagLayout());
+
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 0;
         constraints.fill = GridBagConstraints.BOTH;
@@ -293,6 +287,12 @@ public class CreateMatchImpl extends ScreenView{
 
     //Sets up gameModesPanel
     private void manageGameModesPanel() {
+        gameModesPanel.setBackground(new Color(CHColor.PRIMARY.getCode()));
+        gameModesPanel.setPreferredSize(new Dimension(WIDTH, (int)(HEIGHT * 0.2)));
+        gameModesPanel.setMaximumSize(new Dimension(WIDTH, (int)(HEIGHT * 0.2)));
+        gameModesPanel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, CENTER_PANEL_BETWEEN_PADDING, PADDING_NONE, CHStyles.secondaryColor()));
+        gameModesPanel.setLayout(null);
+        
         gameModeLabel.setBounds(0, 3, 319, 14);
         gameModesPanel.add(gameModeLabel);
 
@@ -331,6 +331,10 @@ public class CreateMatchImpl extends ScreenView{
 
     //Sets up settingsPanel
     private void manageSettingsPanel() {
+        settingsPanel.setBackground(new Color(CHColor.PRIMARY.getCode()));
+        settingsPanel.setVisible(false);
+        settingsPanel.setLayout(null);
+        
         settingsLabel.setHorizontalAlignment(SwingConstants.CENTER);
         settingsLabel.setForeground(new Color(CHColor.SECONDARY.getCode()));
         settingsLabel.setBounds(0, 2, 319, 14);
