@@ -38,10 +38,14 @@ public class CreateMatchImpl extends ScreenView{
     private final static int MIN_FIELD_SIZE = 1;
     private final static int MAX_HAND_SIZE = 7;
     private final static int MAX_FIELD_SIZE = 6;
-    private final static int TOP_PANEL_BORDER = 7;
-    private final static int CENTER_PANEL_Y_BORDER = 15;
-    private final static int CENTER_PANEL_X_BORDER = 65;
-    private final static int CENTER_PANEL_BETWEEN_BORDER = 25;
+
+    //GUI padding and weights
+    private final static int PADDING = 10;
+    private final static int PADDING_NONE = 0;
+    private final static int TOP_PANEL_PADDING = 7;
+    private final static int CENTER_PANEL_Y_PADDING = 15;
+    private final static int CENTER_PANEL_X_PADDING = 65;
+    private final static int CENTER_PANEL_BETWEEN_PADDING = 25;
     private final static double PLAYERS_PANEL_WEIGHT = 45.0;
     private final static double GAME_MODES_PANEL_WEIGHT = 27.5;
     private final static double SETTINGS_PANEL_WEIGHT = 27.5;
@@ -120,12 +124,12 @@ public class CreateMatchImpl extends ScreenView{
         play = new CHButton("Play");
 
         playersLabel = new CHLabel("Players");
-        firstPlayerLabel = new CHLabel("Player 1");
+        firstPlayerLabel = new CHLabel("Player 1", SwingConstants.CENTER);
         firstPlayerNameLabel = new CHLabel("Name");
         firstPlayerDeckLabel = new CHLabel("Deck");
         firstPlayerNameField = new CHTextField();
         firstPlayerDeckBox = new JComboBox<>();
-        secondPlayerLabel = new CHLabel("Player 2");
+        secondPlayerLabel = new CHLabel("Player 2", SwingConstants.CENTER);
         secondPlayerNameLabel = new CHLabel("Name");
         secondPlayerDeckLabel = new CHLabel("Deck");
         secondPlayerNameField = new CHTextField();
@@ -182,7 +186,7 @@ public class CreateMatchImpl extends ScreenView{
 
     //sets up topPanel
     private void manageTopPanel() {
-        topPanel.setBorder(BorderFactory.createEmptyBorder(TOP_PANEL_BORDER, TOP_PANEL_BORDER, TOP_PANEL_BORDER, TOP_PANEL_BORDER));
+        topPanel.setBorder(BorderFactory.createEmptyBorder(TOP_PANEL_PADDING, TOP_PANEL_PADDING, TOP_PANEL_PADDING, TOP_PANEL_PADDING));
 
         topPanel.add(back, BorderLayout.WEST);
 
@@ -198,7 +202,7 @@ public class CreateMatchImpl extends ScreenView{
 
     //sets up centerPanel
     private void manageCenterPanel() {
-        centerPanel.setBorder(BorderFactory.createEmptyBorder(CENTER_PANEL_Y_BORDER, CENTER_PANEL_X_BORDER, CENTER_PANEL_Y_BORDER, CENTER_PANEL_X_BORDER));
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(CENTER_PANEL_Y_PADDING, CENTER_PANEL_X_PADDING, CENTER_PANEL_Y_PADDING, CENTER_PANEL_X_PADDING));
 
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 0;
@@ -208,20 +212,20 @@ public class CreateMatchImpl extends ScreenView{
         constraints.gridy = 0;
         constraints.weighty = PLAYERS_PANEL_WEIGHT;
         playersPanel.setBackground(CHStyles.primaryColor());
-        playersPanel.setBorder(BorderFactory.createMatteBorder(0, 0, CENTER_PANEL_BETWEEN_BORDER, 0, CHStyles.secondaryColor()));
+        playersPanel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, CENTER_PANEL_BETWEEN_PADDING, PADDING_NONE, CHStyles.secondaryColor()));
         centerPanel.add(playersPanel, constraints);
         playersPanel.setLayout(null);
         this.managePlayersPanel();
 
-        constraints.gridy = 1;
+        constraints.gridy++;
         constraints.weighty = GAME_MODES_PANEL_WEIGHT;
         gameModesPanel.setBackground(new Color(CHColor.PRIMARY.getCode()));
-        gameModesPanel.setBorder(BorderFactory.createMatteBorder(0, 0, CENTER_PANEL_BETWEEN_BORDER, 0, CHStyles.secondaryColor()));
+        gameModesPanel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, CENTER_PANEL_BETWEEN_PADDING, PADDING_NONE, CHStyles.secondaryColor()));
         centerPanel.add(gameModesPanel, constraints);
         gameModesPanel.setLayout(null);
         this.manageGameModesPanel();
 
-        constraints.gridy = 2;
+        constraints.gridy++;
         constraints.weighty = SETTINGS_PANEL_WEIGHT;
         
         //encapsulates settingsPanel so that when it's not visible the other panels don't get resized
@@ -246,39 +250,48 @@ public class CreateMatchImpl extends ScreenView{
         //Player 1 Panel
         firstPlayerPanel.setBounds(31, 21, 258, 90);
         playersPanel.add(firstPlayerPanel);
-        firstPlayerPanel.setLayout(null);
+        firstPlayerPanel.setLayout(new GridBagLayout());
         managePlayerPanel(firstPlayerPanel, firstPlayerLabel, firstPlayerNameLabel, firstPlayerDeckLabel, firstPlayerNameField, firstPlayerDeckBox);
 
         //Player 2 Panel
         secondPlayerPanel.setBounds(31, 122, 258, 90);
         playersPanel.add(secondPlayerPanel);
-        secondPlayerPanel.setLayout(null);
+        secondPlayerPanel.setLayout(new GridBagLayout());
         managePlayerPanel(secondPlayerPanel, secondPlayerLabel, secondPlayerNameLabel, secondPlayerDeckLabel, secondPlayerNameField, secondPlayerDeckBox);
 
     }
 
     //sets up firstPlayerPanel and secondPlayerPanel
     private void managePlayerPanel(JPanel panel, JLabel title, JLabel nameLabel, JLabel deckLabel, JTextField nameTextField, JComboBox deckBox) {
-        title.setHorizontalAlignment(SwingConstants.CENTER);
-        title.setBounds(0, 1, 258, 14);
-        panel.add(title);
+        GridBagConstraints constraints = new GridBagConstraints();
+        constraints.gridx = 0;
+        constraints.fill = GridBagConstraints.BOTH;
+        constraints.weightx = 1.0;
 
-        nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        nameLabel.setBounds(10, 15, 70, 28);
-        panel.add(nameLabel);
+        constraints.gridy = 0;
+        constraints.weighty = 1.0;
+        panel.add(title, constraints);
 
-        deckLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        deckLabel.setBounds(20, 55, 46, 14);
-        panel.add(deckLabel);
+        constraints.gridy++;
+        JPanel namePanel = new CHPanel();
+        namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.X_AXIS));
+        namePanel.setBorder(BorderFactory.createEmptyBorder(PADDING_NONE, PADDING, PADDING_NONE, 20));
+        nameLabel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, PADDING_NONE, PADDING, CHStyles.secondaryColor()));
+        namePanel.add(nameLabel);
+        namePanel.add(nameTextField);
+        panel.add(namePanel, constraints);
 
-        nameTextField.setBounds(90, 19, 148, 22);
-        panel.add(nameTextField);
-        nameTextField.setColumns(10);
-
-        deckBox.setBounds(90, 52, 148, 20);
+        constraints.gridy++;
+        JPanel deckPanel = new CHPanel();
+        deckPanel.setLayout(new BoxLayout(deckPanel, BoxLayout.X_AXIS));
+        deckLabel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, PADDING_NONE, 4, CHStyles.secondaryColor()));
+        deckPanel.add(deckLabel);
         deckBox.addItem("test 1");
         deckBox.addItem("test 2");
-        panel.add(deckBox);
+        deckBox.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING, PADDING_NONE, PADDING, CHStyles.secondaryColor()));
+        deckPanel.add(deckBox);
+        deckPanel.setBorder(BorderFactory.createMatteBorder(PADDING, PADDING, PADDING, PADDING, CHStyles.secondaryColor()));
+        panel.add(deckPanel, constraints);
     }
 
     //Sets up gameModesPanel
