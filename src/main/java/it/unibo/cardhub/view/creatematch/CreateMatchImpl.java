@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Component;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -13,6 +14,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -42,15 +44,16 @@ public class CreateMatchImpl extends ScreenView{
     private final static int MAX_FIELD_SIZE = 6;
 
     //GUI padding and panel size
-    private final static int PADDING = 10;
+    private final static int PADDING_STANDARD = 10;
     private final static int PADDING_NONE = 0;
     private final static int TOP_PANEL_PADDING = 7;
     private final static int CENTER_PANEL_Y_PADDING = 15;
     private final static int CENTER_PANEL_X_PADDING = 65;
-    private final static int CENTER_PANEL_BETWEEN_PADDING = 25;
+    private final static int CENTER_PANEL_PADDING_BETWEEN = 25;
+    private final static int PADDING_SMALL = 4;
     private final static double TOP_PANEL_RATIO = 0.06;
     private final static double PLAYERS_PANEL_RATIO = 0.4;
-    private final static double GAME_MODES_PANEL_WEIGHT = 27.5;
+    private final static double GAME_MODES_PANEL_RATIO = 0.16;
     private final static double SETTINGS_PANEL_WEIGHT = 27.5;
 
     //Panels
@@ -227,7 +230,7 @@ public class CreateMatchImpl extends ScreenView{
         playersPanel.setBackground(CHStyles.primaryColor());
         playersPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * PLAYERS_PANEL_RATIO)));
         playersPanel.setMaximumSize(new Dimension(WIDTH, (int) (HEIGHT * PLAYERS_PANEL_RATIO)));
-        playersPanel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, CENTER_PANEL_BETWEEN_PADDING, PADDING_NONE, CHStyles.secondaryColor()));
+        playersPanel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, CENTER_PANEL_PADDING_BETWEEN, PADDING_NONE, CHStyles.secondaryColor()));
         playersPanel.setLayout(new BorderLayout());
 
         playersPanel.add(playersLabel, BorderLayout.NORTH);
@@ -235,12 +238,12 @@ public class CreateMatchImpl extends ScreenView{
         //contains both players' panels
         JPanel playersContainer = new CHPanel();
         playersContainer.setLayout(new BoxLayout(playersContainer, BoxLayout.Y_AXIS));
-        playersContainer.setBorder(BorderFactory.createEmptyBorder(PADDING_NONE, PADDING, PADDING, PADDING));
+        playersContainer.setBorder(BorderFactory.createEmptyBorder(PADDING_NONE, PADDING_STANDARD, PADDING_STANDARD, PADDING_STANDARD));
         playersContainer.setBackground(CHStyles.primaryColor());
         playersPanel.add(playersContainer, BorderLayout.CENTER);
 
         //Player 1 Panel
-        firstPlayerPanel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, PADDING, PADDING_NONE, CHStyles.primaryColor()));
+        firstPlayerPanel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, PADDING_STANDARD, PADDING_NONE, CHStyles.primaryColor()));
         managePlayerPanel(firstPlayerPanel, firstPlayerLabel, firstPlayerNameLabel, firstPlayerDeckLabel, firstPlayerNameField, firstPlayerDeckBox);
         playersContainer.add(firstPlayerPanel);
 
@@ -266,8 +269,8 @@ public class CreateMatchImpl extends ScreenView{
         constraints.gridy++;
         JPanel namePanel = new CHPanel();
         namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.X_AXIS));
-        namePanel.setBorder(BorderFactory.createEmptyBorder(PADDING_NONE, PADDING, PADDING_NONE, 20));
-        nameLabel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, PADDING_NONE, PADDING, CHStyles.secondaryColor()));
+        namePanel.setBorder(BorderFactory.createEmptyBorder(PADDING_NONE, PADDING_STANDARD, PADDING_NONE, 20));
+        nameLabel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, PADDING_NONE, PADDING_STANDARD, CHStyles.secondaryColor()));
         namePanel.add(nameLabel);
         namePanel.add(nameTextField);
         panel.add(namePanel, constraints);
@@ -275,47 +278,47 @@ public class CreateMatchImpl extends ScreenView{
         constraints.gridy++;
         JPanel deckPanel = new CHPanel();
         deckPanel.setLayout(new BoxLayout(deckPanel, BoxLayout.X_AXIS));
-        deckLabel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, PADDING_NONE, 4, CHStyles.secondaryColor()));
+        deckLabel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, PADDING_NONE, PADDING_SMALL, CHStyles.secondaryColor()));
         deckPanel.add(deckLabel);
         deckBox.addItem("test 1");
         deckBox.addItem("test 2");
-        deckBox.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING, PADDING_NONE, PADDING, CHStyles.secondaryColor()));
+        deckBox.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_STANDARD, PADDING_NONE, PADDING_STANDARD, CHStyles.secondaryColor()));
         deckPanel.add(deckBox);
-        deckPanel.setBorder(BorderFactory.createMatteBorder(PADDING, PADDING, PADDING, PADDING, CHStyles.secondaryColor()));
+        deckPanel.setBorder(BorderFactory.createMatteBorder(PADDING_STANDARD, PADDING_STANDARD, PADDING_STANDARD, PADDING_STANDARD, CHStyles.secondaryColor()));
         panel.add(deckPanel, constraints);
     }
 
     //Sets up gameModesPanel
     private void manageGameModesPanel() {
         gameModesPanel.setBackground(new Color(CHColor.PRIMARY.getCode()));
-        gameModesPanel.setPreferredSize(new Dimension(WIDTH, (int)(HEIGHT * 0.2)));
-        gameModesPanel.setMaximumSize(new Dimension(WIDTH, (int)(HEIGHT * 0.2)));
-        gameModesPanel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, CENTER_PANEL_BETWEEN_PADDING, PADDING_NONE, CHStyles.secondaryColor()));
-        gameModesPanel.setLayout(null);
+        gameModesPanel.setPreferredSize(new Dimension(WIDTH, (int)(HEIGHT * GAME_MODES_PANEL_RATIO)));
+        gameModesPanel.setMaximumSize(new Dimension(WIDTH, (int)(HEIGHT * GAME_MODES_PANEL_RATIO)));
+        gameModesPanel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, CENTER_PANEL_PADDING_BETWEEN, PADDING_NONE, CHStyles.secondaryColor()));
+        gameModesPanel.setLayout(new BoxLayout(gameModesPanel, BoxLayout.Y_AXIS));
         
-        gameModeLabel.setBounds(0, 3, 319, 14);
         gameModesPanel.add(gameModeLabel);
+        gameModeLabel.setAlignmentX(CENTER_ALIGNMENT);
 
         freePlayRadioButton.setBackground(CHStyles.primaryColor());
-        freePlayRadioButton.setBounds(118, 21, 107, 23);
         freePlayRadioButton.addActionListener(e -> {
             //Makes the settings panel invisible
             settingsPanel.setVisible(false);
         });
         gameModesGroup.add(freePlayRadioButton);
         gameModesPanel.add(freePlayRadioButton);
+        freePlayRadioButton.setAlignmentX(CENTER_ALIGNMENT);
 
         customRulesRadioButton.setBackground(CHStyles.primaryColor());
-        customRulesRadioButton.setBounds(118, 50, 107, 23);
         customRulesRadioButton.addActionListener(e -> {
             //Makes the settings panel visible
             settingsPanel.setVisible(true);
         });
         gameModesGroup.add(customRulesRadioButton);
         gameModesPanel.add(customRulesRadioButton);
+        customRulesRadioButton.setAlignmentX(CENTER_ALIGNMENT);
+        customRulesRadioButton.setBorder(BorderFactory.createEmptyBorder(PADDING_NONE, 27, PADDING_SMALL, PADDING_NONE));
 
         fullGameRadioButton.setBackground(CHStyles.primaryColor());
-        fullGameRadioButton.setBounds(118, 78, 107, 23);
         fullGameRadioButton.addActionListener(e -> {
             //Makes the settings panel invisible
             settingsPanel.setVisible(false);
@@ -327,6 +330,8 @@ public class CreateMatchImpl extends ScreenView{
         });
         gameModesGroup.add(fullGameRadioButton);
         gameModesPanel.add(fullGameRadioButton);
+        fullGameRadioButton.setAlignmentX(CENTER_ALIGNMENT);
+        fullGameRadioButton.setBorder(BorderFactory.createEmptyBorder(PADDING_NONE, PADDING_SMALL, PADDING_NONE, PADDING_NONE));
     }
 
     //Sets up settingsPanel
