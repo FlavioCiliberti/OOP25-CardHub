@@ -141,24 +141,24 @@ public class CreateMatchImpl extends ScreenView{
         fullGameRadioButton = new JRadioButton("Full Game");
         gameModesGroup = new ButtonGroup();
 
-        settingsLabel = new CHLabel("Custom Settings");
-        handSizeLabel = new CHLabel("Max Hand Size");
+        settingsLabel = new CHLabel("Custom Settings", CHStyles.secondaryColor(), SwingConstants.CENTER);
+        handSizeLabel = new CHLabel("Max Hand Size", CHStyles.secondaryColor(), SwingConstants.CENTER);
         handSizeModel = new SpinnerNumberModel(4, MIN_HAND_SIZE, MAX_HAND_SIZE, 1);
         handSizeSpinner = new JSpinner(handSizeModel);
-        fieldSizeLabel = new CHLabel("Field Size per Player");
+        fieldSizeLabel = new CHLabel("Field Size per Player", CHStyles.secondaryColor(), SwingConstants.CENTER);
         fieldSizeModel = new SpinnerNumberModel(3, MIN_FIELD_SIZE, MAX_FIELD_SIZE, 1);
         fieldSizeSpinner = new JSpinner(fieldSizeModel);
-        startingHandLabel = new CHLabel("Starting Hand Size");
+        startingHandLabel = new CHLabel("Starting Hand Size", CHStyles.secondaryColor(), SwingConstants.LEFT);
         //Starting hand size needs to always be lower or equal to max hand size
         startingHandModel = new SpinnerNumberModel(4, MIN_HAND_SIZE, ((Integer) handSizeSpinner.getValue()).intValue(), 1);
         startingHandSpinner = new JSpinner(startingHandModel);
         autoDrawCheckBox = new JCheckBox("Auto Draw on Turn Start");
-        winnerActionLabel = new CHLabel("Winner Card Action");
+        winnerActionLabel = new CHLabel("Winner Card Action", CHStyles.secondaryColor(), SwingConstants.CENTER);
         winPileRadioButton = new JRadioButton("To Pile");
         winLoserPileRadioButton = new JRadioButton("To Loser's Pile");
         winNoneRadioButton = new JRadioButton("None");
         winnerActionGroup = new ButtonGroup();
-        loserActionLabel = new CHLabel("Loser Card Action");
+        loserActionLabel = new CHLabel("Loser Card Action", CHStyles.secondaryColor(), SwingConstants.CENTER);
         losePileRadioButton = new JRadioButton("To Pile");
         loseWinnerPileRadioButton = new JRadioButton("To Winner's Pile");
         loseNoneRadioButton = new JRadioButton("None");
@@ -338,36 +338,13 @@ public class CreateMatchImpl extends ScreenView{
     private void manageSettingsPanel() {
         settingsPanel.setBackground(new Color(CHColor.PRIMARY.getCode()));
         settingsPanel.setVisible(false);
-        settingsPanel.setLayout(null);
-        
-        settingsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        settingsLabel.setForeground(new Color(CHColor.SECONDARY.getCode()));
-        settingsLabel.setBounds(0, 2, 319, 14);
+        settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.Y_AXIS));
+    
+        settingsLabel.setAlignmentX(CENTER_ALIGNMENT);
         settingsPanel.add(settingsLabel);
 
-        handSizeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        handSizeLabel.setForeground(new Color(CHColor.SECONDARY.getCode()));
-        handSizeLabel.setBounds(10, 20, 85, 14);
-        settingsPanel.add(handSizeLabel);
+        this.createRow(handSizeLabel, handSizeSpinner, fieldSizeLabel, fieldSizeSpinner);
 
-        handSizeSpinner.setBounds(95, 17, 30, 20);
-        settingsPanel.add(handSizeSpinner);
-
-        fieldSizeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        fieldSizeLabel.setForeground(new Color(CHColor.SECONDARY.getCode()));
-        fieldSizeLabel.setBounds(155, 20, 119, 14);
-        settingsPanel.add(fieldSizeLabel);
-
-        fieldSizeSpinner.setBounds(275, 17, 30, 20);
-        settingsPanel.add(fieldSizeSpinner);
-
-        startingHandLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        startingHandLabel.setForeground(new Color(CHColor.SECONDARY.getCode()));
-        startingHandLabel.setBounds(10, 47, 105, 14);
-        settingsPanel.add(startingHandLabel);
-
-        startingHandSpinner.setBounds(115, 44, 30, 20);
-        settingsPanel.add(startingHandSpinner);
         handSizeSpinner.addChangeListener(e -> {
             //Forces starting hand size to be lower or equal to max hand size
             int maxHandSize = (Integer) handSizeSpinner.getValue();
@@ -379,47 +356,44 @@ public class CreateMatchImpl extends ScreenView{
         });
 
         autoDrawCheckBox.setBackground(new Color(CHColor.PRIMARY.getCode()));
-        autoDrawCheckBox.setBounds(158, 43, 161, 23);
-        settingsPanel.add(autoDrawCheckBox);
 
-        winnerActionLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        winnerActionLabel.setForeground(new Color(CHColor.SECONDARY.getCode()));
-        winnerActionLabel.setBounds(0, 70, 319, 14);
+        this.createRow(startingHandLabel, startingHandSpinner, autoDrawCheckBox);
+
+        winnerActionLabel.setAlignmentX(CENTER_ALIGNMENT);
         settingsPanel.add(winnerActionLabel);
 
         winPileRadioButton.setBackground(new Color(CHColor.PRIMARY.getCode()));
-        winPileRadioButton.setBounds(34, 88, 66, 23);
         winnerActionGroup.add(winPileRadioButton);
-        settingsPanel.add(winPileRadioButton);
 
         winLoserPileRadioButton.setBackground(new Color(CHColor.PRIMARY.getCode()));
-        winLoserPileRadioButton.setBounds(114, 88, 109, 23);
         winnerActionGroup.add(winLoserPileRadioButton);
-        settingsPanel.add(winLoserPileRadioButton);
 
         winNoneRadioButton.setBackground(new Color(CHColor.PRIMARY.getCode()));
-        winNoneRadioButton.setBounds(225, 88, 58, 23);
         winnerActionGroup.add(winNoneRadioButton);
-        settingsPanel.add(winNoneRadioButton);
 
-        loserActionLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        loserActionLabel.setForeground(new Color(CHColor.SECONDARY.getCode()));
-        loserActionLabel.setBounds(0, 114, 319, 14);
+        this.createRow(winPileRadioButton, winLoserPileRadioButton, winNoneRadioButton);
+
+        loserActionLabel.setAlignmentX(CENTER_ALIGNMENT);
         settingsPanel.add(loserActionLabel);
 
         losePileRadioButton.setBackground(new Color(CHColor.PRIMARY.getCode()));
-        losePileRadioButton.setBounds(24, 130, 66, 23);
         loserActionGroup.add(losePileRadioButton);
-        settingsPanel.add(losePileRadioButton);
 
         loseWinnerPileRadioButton.setBackground(new Color(CHColor.PRIMARY.getCode()));
-        loseWinnerPileRadioButton.setBounds(104, 130, 120, 23);
         loserActionGroup.add(loseWinnerPileRadioButton);
-        settingsPanel.add(loseWinnerPileRadioButton);
 
         loseNoneRadioButton.setBackground(new Color(CHColor.PRIMARY.getCode()));
-        loseNoneRadioButton.setBounds(235, 130, 58, 23);
         loserActionGroup.add(loseNoneRadioButton);
-        settingsPanel.add(loseNoneRadioButton);
+
+        this.createRow(losePileRadioButton, loseWinnerPileRadioButton, loseNoneRadioButton);
+    }
+
+    private void createRow(JComponent... components) {
+        JPanel row = new CHPanel();
+        row.setBackground(CHStyles.primaryColor());
+        for (JComponent component : components) {
+            row.add(component);
+        }
+        settingsPanel.add(row);
     }
 }
