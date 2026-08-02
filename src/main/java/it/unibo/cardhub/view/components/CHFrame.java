@@ -28,8 +28,7 @@ public class CHFrame extends JFrame {
 
             @Override
             public void goBack() {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'goBack'");
+
             }
 
             @Override
@@ -46,21 +45,18 @@ public class CHFrame extends JFrame {
 
             @Override
             public void createFreeGame(String player1Name, int player1DeckId, String player2Name, int player2DeckId) {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'createFreeGame'");
+
             }
 
             @Override
-            public void createFullGame(String player1Name, int player1DeckId, String player2Name, int player2DeckId) {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'createFullGame'");
+            public void createFullGame(String player1Name, String player2Name) {
+
             }
 
             @Override
             public void createCustomGame(String player1Name, int player1DeckId, String player2Name, int player2DeckId,
-                    int maxHandSize, int playerFieldSize, boolean autoDraw) {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'createCustomGame'");
+                    int maxHandSize, int StartingHandSize, int playerFieldSize, boolean autoDraw) {
+
             }
             
         });

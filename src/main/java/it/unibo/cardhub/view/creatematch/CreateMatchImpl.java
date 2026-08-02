@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Component;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -24,6 +23,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 
 import it.unibo.cardhub.controller.api.CreateMatchController;
+import it.unibo.cardhub.model.domain.exceptions.EmptyFieldException;
 import it.unibo.cardhub.view.components.CHButton;
 import it.unibo.cardhub.view.components.CHColor;
 import it.unibo.cardhub.view.components.CHLabel;
@@ -112,6 +112,9 @@ public class CreateMatchImpl extends ScreenView{
     private final JRadioButton loseNoneRadioButton;
     private final ButtonGroup loserActionGroup;
 
+    //controller
+    CreateMatchController controller;
+
     public CreateMatchImpl(CreateMatchController controller) {
         playersPanel = new CHPanel();
         firstPlayerPanel = new CHPanel();
@@ -164,12 +167,15 @@ public class CreateMatchImpl extends ScreenView{
         loseNoneRadioButton = new JRadioButton("None");
         loserActionGroup = new ButtonGroup();
 
-        this.setLayout(new BorderLayout());
+        this.controller = controller;
+
         this.manageContentPane();
     }
 
     //sets up the content pane
     private void manageContentPane() {
+        this.setLayout(new BorderLayout());
+
         JPanel topPanel = new CHPanel();
         this.add(topPanel, BorderLayout.NORTH);
         this.manageTopPanel(topPanel);
@@ -177,6 +183,9 @@ public class CreateMatchImpl extends ScreenView{
         JPanel bottomPanel = new CHPanel();
         bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         bottomPanel.add(play);
+        play.addActionListener(e -> {
+            this.startGame(controller);
+        });
         this.add(bottomPanel, BorderLayout.SOUTH);
 
         JPanel centerPanel = new CHPanel();
@@ -192,6 +201,9 @@ public class CreateMatchImpl extends ScreenView{
 
         topPanel.setBorder(BorderFactory.createEmptyBorder(TOP_PANEL_PADDING, TOP_PANEL_PADDING, TOP_PANEL_PADDING, TOP_PANEL_PADDING));
 
+        back.addActionListener(e -> {
+            controller.goBack();
+        });
         topPanel.add(back, BorderLayout.WEST);
 
         title.setHorizontalAlignment(SwingConstants.CENTER);
@@ -397,5 +409,33 @@ public class CreateMatchImpl extends ScreenView{
             row.add(component);
         }
         panel.add(row);
+    }
+
+    private int getDeck(JComboBox deckBox) {
+        throw new EmptyFieldException();
+    }
+
+    private void startGame(CreateMatchController controller) {
+        String firstPlayerName = firstPlayerNameField.getText();
+        String secondPlayerName = secondPlayerNameField.getText();
+
+        if (!firstPlayerName.isEmpty() && !secondPlayerName.isEmpty()) {
+            if (freePlayRadioButton.isSelected()) {
+                controller.createFreeGame(firstPlayerName, this.getDeck(firstPlayerDeckBox), secondPlayerName, this.getDeck(secondPlayerDeckBox));
+                return;
+            } else if (fullGameRadioButton.isSelected()) {
+                controller.createFullGame(firstPlayerName, secondPlayerName);
+                return;
+            } else if (customRulesRadioButton.isSelected()) {
+                if (winnerActionGroup.getSelection() != null && loserActionGroup.getSelection() != null) {
+                    controller.createCustomGame(firstPlayerName, this.getDeck(firstPlayerDeckBox), 
+                                                secondPlayerName, this.getDeck(secondPlayerDeckBox), 
+                                                (Integer) handSizeSpinner.getValue(), (Integer) startingHandSpinner.getValue(), 
+                                                (Integer) fieldSizeSpinner.getValue(), autoDrawCheckBox.isSelected());
+                    return;
+                }
+            }
+        }
+        throw new EmptyFieldException();
     }
 }
