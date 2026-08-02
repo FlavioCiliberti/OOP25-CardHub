@@ -1,4 +1,4 @@
-package it.unibo.cardhub.model.domain;
+package it.unibo.cardhub.controller;
 
 /**
  * Identifiers for the screens (views) of the application.

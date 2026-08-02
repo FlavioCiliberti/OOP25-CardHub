@@ -2,7 +2,7 @@ package it.unibo.cardhub.controller.api;
 
 import javax.swing.JComponent;
 
-import it.unibo.cardhub.model.domain.ScreenId;
+import it.unibo.cardhub.controller.ScreenId;
 
 /**
  * Interface for the application's navigator, responsible

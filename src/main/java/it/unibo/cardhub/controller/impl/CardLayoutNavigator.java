@@ -6,8 +6,8 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.cardhub.controller.ScreenId;
 import it.unibo.cardhub.controller.api.Navigator;
-import it.unibo.cardhub.model.domain.ScreenId;
 
 /**
  * {@link Navigator} implementation that uses Swing {@link CardLayout}.
