@@ -1,6 +1,7 @@
 package it.unibo.cardhub.view.components;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -39,8 +40,16 @@ public class CHFrame extends JFrame {
 
             @Override
             public Map<Integer, String> getDecks() {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'getDecks'");
+                int first = 1;
+                int second = 2;
+                String test1 = "test 1";
+                String test2 = "test 2";
+
+                Map<Integer, String> map = new HashMap<>();
+                map.put(1, test1);
+                map.put(2, test2);
+                
+                return map;
             }
 
             @Override
