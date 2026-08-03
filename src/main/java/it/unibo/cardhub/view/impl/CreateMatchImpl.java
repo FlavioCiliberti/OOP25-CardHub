@@ -32,11 +32,14 @@ import it.unibo.cardhub.view.components.CHTextField;
 import it.unibo.cardhub.view.components.CHTitle;
 import it.unibo.cardhub.view.components.ScreenView;
 
-public class CreateMatchImpl extends ScreenView {
-    private static final long serialVersionUID = 42L;
-
+/**
+ * Create Match View, showing the setting needed to create the match.
+ */
+public final class CreateMatchImpl extends ScreenView {
     public static final int WIDTH = 470;
     public static final int HEIGHT = 710;
+
+    private static final long serialVersionUID = 42L;
 
     //logic constraints
     private static final int MIN_HAND_SIZE = 1;
@@ -105,8 +108,14 @@ public class CreateMatchImpl extends ScreenView {
     private final ButtonGroup loserActionGroup;
 
     //controller
-    CreateMatchController controller;
+    private final Map<Integer, String> decks;
 
+    /**
+     * Builds the create match view,
+     * calling ManageContentPane to start laying the components.
+     * 
+     * @param controller the controller for the current screen
+     */
     public CreateMatchImpl(final CreateMatchController controller) {
         playersPanel = new CHPanel(CHStyles.primaryColor(), new BorderLayout());
         firstPlayerPanel = new CHPanel(new GridBagLayout());
@@ -132,7 +141,8 @@ public class CreateMatchImpl extends ScreenView {
         fieldSizeModel = new SpinnerNumberModel(FIELD_DEFAULT_VALUE, MIN_FIELD_SIZE, MAX_FIELD_SIZE, SPINNER_STEP_SIZE);
         fieldSizeSpinner = new JSpinner(fieldSizeModel);
         //Starting hand size needs to always be lower or equal to max hand size
-        startingHandModel = new SpinnerNumberModel(HAND_DEFAULT_VALUE, MIN_HAND_SIZE, ((Integer) handSizeSpinner.getValue()).intValue(), SPINNER_STEP_SIZE);
+        startingHandModel = new SpinnerNumberModel(HAND_DEFAULT_VALUE, MIN_HAND_SIZE,
+                                                    ((Integer) handSizeSpinner.getValue()).intValue(), SPINNER_STEP_SIZE);
         startingHandSpinner = new JSpinner(startingHandModel);
         autoDrawCheckBox = new JCheckBox("Auto Draw on Turn Start");
         winPileRadioButton = new JRadioButton("To Pile");
@@ -144,18 +154,18 @@ public class CreateMatchImpl extends ScreenView {
         loseNoneRadioButton = new JRadioButton("None");
         loserActionGroup = new ButtonGroup();
 
-        this.controller = controller;
+        this.decks = controller.getDecks();
 
-        this.setLayout(new BorderLayout());
-        this.manageContentPane();
+        this.manageContentPane(controller);
     }
 
     //sets up the content pane
-    private void manageContentPane() {
+    private void manageContentPane(final CreateMatchController controller) {
+        this.setLayout(new BorderLayout());
 
         final JPanel topPanel = new CHPanel(new BorderLayout());
         this.add(topPanel, BorderLayout.NORTH);
-        this.manageTopPanel(topPanel);
+        this.manageTopPanel(topPanel, controller);
 
         final JPanel bottomPanel = new CHPanel();
         bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -171,9 +181,10 @@ public class CreateMatchImpl extends ScreenView {
     }
 
     //sets up topPanel
-    private void manageTopPanel(final JPanel topPanel) {
+    private void manageTopPanel(final JPanel topPanel, final CreateMatchController controller) {
         topPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * TOP_PANEL_RATIO)));
-        topPanel.setBorder(BorderFactory.createEmptyBorder(TOP_PANEL_PADDING, TOP_PANEL_PADDING, TOP_PANEL_PADDING, TOP_PANEL_PADDING));
+        topPanel.setBorder(BorderFactory.createEmptyBorder(TOP_PANEL_PADDING, TOP_PANEL_PADDING,
+                                                            TOP_PANEL_PADDING, TOP_PANEL_PADDING));
 
         backButton.addActionListener(e -> {
             controller.goBack();
@@ -194,7 +205,8 @@ public class CreateMatchImpl extends ScreenView {
     //sets up centerPanel
     private void manageCenterPanel(final JPanel centerPanel) {
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
-        centerPanel.setBorder(BorderFactory.createEmptyBorder(CENTER_PANEL_Y_PADDING, CENTER_PANEL_X_PADDING, CENTER_PANEL_Y_PADDING, CENTER_PANEL_X_PADDING));
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(CENTER_PANEL_Y_PADDING, CENTER_PANEL_X_PADDING,
+                                                                CENTER_PANEL_Y_PADDING, CENTER_PANEL_X_PADDING));
 
         centerPanel.add(playersPanel);
         this.managePlayersPanel();
@@ -205,7 +217,7 @@ public class CreateMatchImpl extends ScreenView {
         centerPanel.add(gameModesPanelContainer);
         gameModesPanelContainer.add(gameModesPanel, BorderLayout.CENTER);
         this.manageGameModesPanel();
-        
+
         //encapsulates settingsPanel so that when it's not visible the other panels don't get resized
         final JPanel settingsPanelContainer = new CHPanel(new BorderLayout());
         settingsPanelContainer.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * SETTINGS_PANEL_RATIO)));
@@ -217,7 +229,9 @@ public class CreateMatchImpl extends ScreenView {
     //sets up playersPanel
     private void managePlayersPanel() {
         playersPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * PLAYERS_PANEL_RATIO)));
-        playersPanel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, CENTER_PANEL_PADDING_BETWEEN, PADDING_NONE, CHStyles.secondaryColor()));
+        playersPanel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE,
+                                                                CENTER_PANEL_PADDING_BETWEEN, PADDING_NONE,
+                                                                CHStyles.secondaryColor()));
 
         final JLabel playersLabel = new CHLabel("Players", CHStyles.secondaryColor(), SwingConstants.CENTER);
         playersPanel.add(playersLabel, BorderLayout.NORTH);
@@ -225,11 +239,14 @@ public class CreateMatchImpl extends ScreenView {
         //contains both players' panels
         final JPanel playersContainer = new CHPanel(CHStyles.primaryColor());
         playersContainer.setLayout(new BoxLayout(playersContainer, BoxLayout.Y_AXIS));
-        playersContainer.setBorder(BorderFactory.createEmptyBorder(PADDING_NONE, PADDING_STANDARD, PADDING_STANDARD, PADDING_STANDARD));
+        playersContainer.setBorder(BorderFactory.createEmptyBorder(PADDING_NONE, PADDING_STANDARD,
+                                                                    PADDING_STANDARD, PADDING_STANDARD));
         playersPanel.add(playersContainer, BorderLayout.CENTER);
 
         //Player 1 Panel
-        firstPlayerPanel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, PADDING_STANDARD, PADDING_NONE, CHStyles.primaryColor()));
+        firstPlayerPanel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE,
+                                                                    PADDING_STANDARD, PADDING_NONE,
+                                                                    CHStyles.primaryColor()));
         managePlayerPanel(firstPlayerPanel, playersContainer, new CHLabel("Player 1", SwingConstants.CENTER), 
                             new CHLabel("Name"), new CHLabel("Deck"), firstPlayerNameField, firstPlayerDeckBox);
 
@@ -240,7 +257,9 @@ public class CreateMatchImpl extends ScreenView {
     }
 
     //sets up firstPlayerPanel and secondPlayerPanel
-    private void managePlayerPanel(final JPanel panel, final JPanel container, final JLabel title, final JLabel nameLabel, final JLabel deckLabel, final JTextField nameTextField, final JComboBox<DeckBoxItem<Integer, String>> deckBox) {
+    private void managePlayerPanel(final JPanel panel, final JPanel container, final JLabel title, final JLabel nameLabel,
+                                    final JLabel deckLabel, final JTextField nameTextField,
+                                    final JComboBox<DeckBoxItem<Integer, String>> deckBox) {
         final GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = GRID_WEIGHT_DEFAULT;
@@ -253,7 +272,9 @@ public class CreateMatchImpl extends ScreenView {
         final JPanel namePanel = new CHPanel();
         namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.X_AXIS));
         namePanel.setBorder(BorderFactory.createEmptyBorder(PADDING_NONE, PADDING_STANDARD, PADDING_NONE, PADDING_LARGE));
-        nameLabel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, PADDING_NONE, PADDING_STANDARD, CHStyles.secondaryColor()));
+        nameLabel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE,
+                                                            PADDING_NONE, PADDING_STANDARD,
+                                                            CHStyles.secondaryColor()));
         namePanel.add(nameLabel);
         namePanel.add(nameTextField);
         panel.add(namePanel, constraints);
@@ -261,14 +282,20 @@ public class CreateMatchImpl extends ScreenView {
         constraints.gridy++;
         final JPanel deckPanel = new CHPanel();
         deckPanel.setLayout(new BoxLayout(deckPanel, BoxLayout.X_AXIS));
-        deckLabel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE, PADDING_NONE, PADDING_SMALL, CHStyles.secondaryColor()));
+        deckLabel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE,
+                                                            PADDING_NONE, PADDING_SMALL,
+                                                            CHStyles.secondaryColor()));
         deckPanel.add(deckLabel);
-        deckBox.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_STANDARD, PADDING_NONE, PADDING_STANDARD, CHStyles.secondaryColor()));
-        for (final Map.Entry<Integer, String> entry : controller.getDecks().entrySet()) {
+        deckBox.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_STANDARD,
+                                                            PADDING_NONE, PADDING_STANDARD,
+                                                            CHStyles.secondaryColor()));
+        for (final Map.Entry<Integer, String> entry : decks.entrySet()) {
             deckBox.addItem(new DeckBoxItem<>(entry.getKey(), entry.getValue()));
         }
         deckPanel.add(deckBox);
-        deckPanel.setBorder(BorderFactory.createMatteBorder(PADDING_STANDARD, PADDING_STANDARD, PADDING_STANDARD, PADDING_STANDARD, CHStyles.secondaryColor()));
+        deckPanel.setBorder(BorderFactory.createMatteBorder(PADDING_STANDARD, PADDING_STANDARD,
+                                                            PADDING_STANDARD, PADDING_STANDARD,
+                                                            CHStyles.secondaryColor()));
         panel.add(deckPanel, constraints);
 
         container.add(panel);
@@ -278,7 +305,7 @@ public class CreateMatchImpl extends ScreenView {
     private void manageGameModesPanel() {
         gameModesPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * GAME_MODES_PANEL_RATIO)));
         gameModesPanel.setLayout(new BoxLayout(gameModesPanel, BoxLayout.Y_AXIS));
-        
+
         final JLabel gameModeLabel = new CHLabel("Game Mode", CHStyles.secondaryColor(), SwingConstants.CENTER);
         gameModesPanel.add(gameModeLabel);
         gameModeLabel.setAlignmentX(CENTER_ALIGNMENT);
@@ -298,7 +325,8 @@ public class CreateMatchImpl extends ScreenView {
         });
         this.createRow(gameModesPanel, customRulesRadioButton);
         customRulesRadioButton.setAlignmentX(CENTER_ALIGNMENT);
-        customRulesRadioButton.setBorder(BorderFactory.createEmptyBorder(PADDING_NONE, RADIO_BUTTON_PADDING, PADDING_SMALL, PADDING_NONE));
+        customRulesRadioButton.setBorder(BorderFactory.createEmptyBorder(PADDING_NONE, RADIO_BUTTON_PADDING,
+                                                                            PADDING_SMALL, PADDING_NONE));
 
         fullGameRadioButton.addActionListener(e -> {
             //Makes the settings panel invisible
@@ -318,8 +346,10 @@ public class CreateMatchImpl extends ScreenView {
     private void manageSettingsPanel() {
         settingsPanel.setVisible(false);
         settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.Y_AXIS));
-        settingsPanel.setBorder(BorderFactory.createMatteBorder(CENTER_PANEL_PADDING_BETWEEN, PADDING_NONE, PADDING_NONE, PADDING_NONE, CHStyles.secondaryColor()));
-    
+        settingsPanel.setBorder(BorderFactory.createMatteBorder(CENTER_PANEL_PADDING_BETWEEN, PADDING_NONE,
+                                                                PADDING_NONE, PADDING_NONE,
+                                                                CHStyles.secondaryColor()));
+
         final JLabel settingsLabel = new CHLabel("Custom Settings", CHStyles.secondaryColor(), SwingConstants.CENTER);
         settingsLabel.setAlignmentX(CENTER_ALIGNMENT);
         settingsPanel.add(settingsLabel);
@@ -366,7 +396,7 @@ public class CreateMatchImpl extends ScreenView {
         panel.add(row);
     }
 
-    private void manageRadioButton (final ButtonGroup group, final JRadioButton... buttons) {
+    private void manageRadioButton(final ButtonGroup group, final JRadioButton... buttons) {
         for (final JRadioButton button : buttons) {
             button.setBackground(CHStyles.primaryColor());
             group.add(button);
@@ -382,13 +412,17 @@ public class CreateMatchImpl extends ScreenView {
                 controller.createFullGame(firstPlayerName, secondPlayerName);
                 return;
             } else {
-                final DeckBoxItem<Integer, String> player1Deck = (DeckBoxItem<Integer, String>) firstPlayerDeckBox.getSelectedItem();
-                final DeckBoxItem<Integer, String> player2Deck = (DeckBoxItem<Integer, String>) secondPlayerDeckBox.getSelectedItem();
+                final DeckBoxItem<Integer, String> player1Deck =
+                        (DeckBoxItem<Integer, String>) firstPlayerDeckBox.getSelectedItem();
+                final DeckBoxItem<Integer, String> player2Deck =
+                        (DeckBoxItem<Integer, String>) secondPlayerDeckBox.getSelectedItem();
 
                 if (freePlayRadioButton.isSelected()) {
                     controller.createFreeGame(firstPlayerName, player1Deck.getKey(), secondPlayerName, player2Deck.getKey());
                     return;
-                } else if (customRulesRadioButton.isSelected() && winnerActionGroup.getSelection() != null && loserActionGroup.getSelection() != null) {
+                } else if (customRulesRadioButton.isSelected()
+                            && winnerActionGroup.getSelection() != null
+                            && loserActionGroup.getSelection() != null) {
                     controller.createCustomGame(firstPlayerName, player1Deck.getKey(),
                                                 secondPlayerName, player2Deck.getKey(),
                                                 (Integer) handSizeSpinner.getValue(), (Integer) startingHandSpinner.getValue(),
@@ -400,7 +434,7 @@ public class CreateMatchImpl extends ScreenView {
         throw new EmptyFieldException();
     }
 
-    private class DeckBoxItem<K, V> {
+    private static final class DeckBoxItem<K, V> {
         private final K key;
         private final V value;
 

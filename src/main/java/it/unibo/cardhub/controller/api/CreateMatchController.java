@@ -52,6 +52,6 @@ public interface CreateMatchController extends BackNavigableScreen {
     void createCustomGame(String player1Name, int player1DeckId, 
                         String player2Name, int player2DeckId,
                         int maxHandSize, int startingHandSize,
-                        int playerFieldSize, boolean autoDraw); //IMPORTANT: winner and looser card actions parameters must be added
+                        int playerFieldSize, boolean autoDraw); //IMPORTANT:winner and loser card actions parameters must be added
 
 }

@@ -1,8 +1,8 @@
 package it.unibo.cardhub.model.logic;
 
-/*
-* An enumeration of game modes.
-*/
+/**
+ * An enumeration for game modes.
+ */
 public enum GameMode {
     FREE_PLAY("Free Play"), CUSTOM("Custom"), FULL_GAME("Full Game");
 
@@ -16,7 +16,7 @@ public enum GameMode {
     GameMode(final String displayName) {
         this.displayName = displayName;
     }
-        
+
     /**
      * Returns a game mode.
      * 
