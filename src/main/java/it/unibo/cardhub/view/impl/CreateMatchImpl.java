@@ -278,26 +278,23 @@ public class CreateMatchImpl extends ScreenView{
         gameModesPanel.add(gameModeLabel);
         gameModeLabel.setAlignmentX(CENTER_ALIGNMENT);
 
-        freePlayRadioButton.setBackground(CHStyles.primaryColor());
+        this.manageRadioButton(gameModesGroup, freePlayRadioButton, customRulesRadioButton, fullGameRadioButton);
+
         freePlayRadioButton.addActionListener(e -> {
             //Makes the settings panel invisible
             settingsPanel.setVisible(false);
         });
-        gameModesGroup.add(freePlayRadioButton);
         this.createRow(gameModesPanel, freePlayRadioButton);
         freePlayRadioButton.setAlignmentX(CENTER_ALIGNMENT);
 
-        customRulesRadioButton.setBackground(CHStyles.primaryColor());
         customRulesRadioButton.addActionListener(e -> {
             //Makes the settings panel visible
             settingsPanel.setVisible(true);
-        });
-        gameModesGroup.add(customRulesRadioButton);
+        });;
         this.createRow(gameModesPanel, customRulesRadioButton);
         customRulesRadioButton.setAlignmentX(CENTER_ALIGNMENT);
         customRulesRadioButton.setBorder(BorderFactory.createEmptyBorder(PADDING_NONE, RADIO_BUTTON_PADDING, PADDING_SMALL, PADDING_NONE));
 
-        fullGameRadioButton.setBackground(CHStyles.primaryColor());
         fullGameRadioButton.addActionListener(e -> {
             //Makes the settings panel invisible
             settingsPanel.setVisible(false);
@@ -307,7 +304,6 @@ public class CreateMatchImpl extends ScreenView{
             firstPlayerDeckBox.setEnabled(!fullGameRadioButton.isSelected());
             secondPlayerDeckBox.setEnabled(!fullGameRadioButton.isSelected());
         });
-        gameModesGroup.add(fullGameRadioButton);
         this.createRow(gameModesPanel, fullGameRadioButton);
         fullGameRadioButton.setAlignmentX(CENTER_ALIGNMENT);
         fullGameRadioButton.setBorder(BorderFactory.createEmptyBorder(PADDING_NONE, PADDING_SMALL, PADDING_NONE, PADDING_NONE));
@@ -346,30 +342,14 @@ public class CreateMatchImpl extends ScreenView{
         winnerActionLabel.setAlignmentX(CENTER_ALIGNMENT);
         settingsPanel.add(winnerActionLabel);
 
-        winPileRadioButton.setBackground(CHStyles.primaryColor());
-        winnerActionGroup.add(winPileRadioButton);
-
-        winLoserPileRadioButton.setBackground(CHStyles.primaryColor());
-        winnerActionGroup.add(winLoserPileRadioButton);
-
-        winNoneRadioButton.setBackground(CHStyles.primaryColor());
-        winnerActionGroup.add(winNoneRadioButton);
-
+        this.manageRadioButton(winnerActionGroup, winPileRadioButton, winLoserPileRadioButton, winNoneRadioButton);
         this.createRow(settingsPanel, winPileRadioButton, winLoserPileRadioButton, winNoneRadioButton);
 
         JLabel loserActionLabel = new CHLabel("Loser Card Action", CHStyles.secondaryColor(), SwingConstants.CENTER);
         loserActionLabel.setAlignmentX(CENTER_ALIGNMENT);
         settingsPanel.add(loserActionLabel);
 
-        losePileRadioButton.setBackground(CHStyles.primaryColor());
-        loserActionGroup.add(losePileRadioButton);
-
-        loseWinnerPileRadioButton.setBackground(CHStyles.primaryColor());
-        loserActionGroup.add(loseWinnerPileRadioButton);
-
-        loseNoneRadioButton.setBackground(CHStyles.primaryColor());
-        loserActionGroup.add(loseNoneRadioButton);
-
+        this.manageRadioButton(loserActionGroup, losePileRadioButton, loseWinnerPileRadioButton, loseNoneRadioButton);
         this.createRow(settingsPanel, losePileRadioButton, loseWinnerPileRadioButton, loseNoneRadioButton);
     }
 
@@ -379,6 +359,13 @@ public class CreateMatchImpl extends ScreenView{
             row.add(component);
         }
         panel.add(row);
+    }
+
+    private void manageRadioButton (ButtonGroup group, JRadioButton... buttons) {
+        for (JRadioButton button : buttons) {
+            button.setBackground(CHStyles.primaryColor());
+            group.add(button);
+        }
     }
 
     private void startGame(CreateMatchController controller) {
