@@ -4,10 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.Objects;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import it.unibo.cardhub.controller.api.HomeController;
 import it.unibo.cardhub.view.api.HomeView;
 import it.unibo.cardhub.view.components.CHButton;
 import it.unibo.cardhub.view.components.CHPanel;
@@ -33,6 +35,8 @@ public final class HomeViewImpl extends ScreenView implements HomeView {
     private static final int HERO_WRAPPER_HEIGHT = 200;
     private static final int STRUT_HEIGHT = 16;
 
+    private final transient HomeController controller;
+
     private final JPanel north;
     private final JPanel central;
     private final JPanel south;
@@ -44,8 +48,12 @@ public final class HomeViewImpl extends ScreenView implements HomeView {
 
     /**
      * Builds the home view, laying out the title, the menu, the hero image and the exit button.
+     * 
+     * @param controller the controller for the current screen
      */
-    public HomeViewImpl() {
+    public HomeViewImpl(final HomeController controller) {
+        this.controller = Objects.requireNonNull(controller);
+
         north = new CHPanel();
         central = new CHPanel();
         south = new CHPanel();
@@ -127,37 +135,41 @@ public final class HomeViewImpl extends ScreenView implements HomeView {
     }
 
     private void setUpListeners() {
-        newMatchBtn.addActionListener(e -> goToNewMatch());
-        loadMatchBtn.addActionListener(e -> goToLoadMatch());
-        manageDecksBtn.addActionListener(e -> goToManageDecks());
-        exitBtn.addActionListener(e -> exit());
+        newMatchBtn.addActionListener(e -> onNewMatch());
+        loadMatchBtn.addActionListener(e -> onLoadMatch());
+        manageDecksBtn.addActionListener(e -> onManageDecks());
+        exitBtn.addActionListener(e -> onExit());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void goToNewMatch() {
+    public void onNewMatch() {
+        controller.newMatch();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void goToLoadMatch() {
+    public void onLoadMatch() {
+        controller.loadMatch();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void goToManageDecks() {
+    public void onManageDecks() {
+        controller.manageDecks();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void exit() {
+    public void onExit() {
+        controller.exit();
     }
 }
