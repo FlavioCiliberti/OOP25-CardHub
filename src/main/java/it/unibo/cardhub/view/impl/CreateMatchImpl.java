@@ -374,8 +374,7 @@ public class CreateMatchImpl extends ScreenView{
     }
 
     private void createRow(JPanel panel, JComponent... components) {
-        JPanel row = new CHPanel();
-        row.setBackground(CHStyles.primaryColor());
+        JPanel row = new CHPanel(CHStyles.primaryColor());
         for (JComponent component : components) {
             row.add(component);
         }
