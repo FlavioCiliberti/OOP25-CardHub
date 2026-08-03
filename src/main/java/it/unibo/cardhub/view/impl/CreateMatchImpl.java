@@ -32,35 +32,37 @@ import it.unibo.cardhub.view.components.CHTextField;
 import it.unibo.cardhub.view.components.CHTitle;
 import it.unibo.cardhub.view.components.ScreenView;
 
-public class CreateMatchImpl extends ScreenView{
-    public final int WIDTH = 470;
-    public final int HEIGHT = 710;
+public class CreateMatchImpl extends ScreenView {
+    private static final long serialVersionUID = 42L;
+
+    public static final int WIDTH = 470;
+    public static final int HEIGHT = 710;
 
     //logic constraints
-    private final static int MIN_HAND_SIZE = 1;
-    private final static int MIN_FIELD_SIZE = 1;
-    private final static int MAX_HAND_SIZE = 7;
-    private final static int MAX_FIELD_SIZE = 6;
-    private final static int SPINNER_STEP_SIZE = 1;
-    private final static int HAND_DEFAULT_VALUE = 4;
-    private final static int FIELD_DEFAULT_VALUE = 3;
+    private static final int MIN_HAND_SIZE = 1;
+    private static final int MIN_FIELD_SIZE = 1;
+    private static final int MAX_HAND_SIZE = 7;
+    private static final int MAX_FIELD_SIZE = 6;
+    private static final int SPINNER_STEP_SIZE = 1;
+    private static final int HAND_DEFAULT_VALUE = 4;
+    private static final int FIELD_DEFAULT_VALUE = 3;
 
     //GUI padding and panel size
-    private final static int PADDING_LARGE = 20;
-    private final static int PADDING_STANDARD = 10;
-    private final static int PADDING_SMALL = 4;
-    private final static int PADDING_NONE = 0;
-    private final static int TOP_PANEL_PADDING = 7;
-    private final static int RADIO_BUTTON_PADDING = 27;
-    private final static int CENTER_PANEL_Y_PADDING = 15;
-    private final static int CENTER_PANEL_X_PADDING = 65;
-    private final static int CENTER_PANEL_PADDING_BETWEEN = 25;
-    private final static int GRID_DEFAULT = 0;
-    private final static double GRID_WEIGHT_DEFAULT = 1.0;
-    private final static double TOP_PANEL_RATIO = 0.06;
-    private final static double PLAYERS_PANEL_RATIO = 0.35;
-    private final static double GAME_MODES_PANEL_RATIO = 0.15;
-    private final static double SETTINGS_PANEL_RATIO = 0.29;
+    private static final int PADDING_LARGE = 20;
+    private static final int PADDING_STANDARD = 10;
+    private static final int PADDING_SMALL = 4;
+    private static final int PADDING_NONE = 0;
+    private static final int TOP_PANEL_PADDING = 7;
+    private static final int RADIO_BUTTON_PADDING = 27;
+    private static final int CENTER_PANEL_Y_PADDING = 15;
+    private static final int CENTER_PANEL_X_PADDING = 65;
+    private static final int CENTER_PANEL_PADDING_BETWEEN = 25;
+    private static final int GRID_DEFAULT = 0;
+    private static final double GRID_WEIGHT_DEFAULT = 1.0;
+    private static final double TOP_PANEL_RATIO = 0.06;
+    private static final double PLAYERS_PANEL_RATIO = 0.35;
+    private static final double GAME_MODES_PANEL_RATIO = 0.15;
+    private static final double SETTINGS_PANEL_RATIO = 0.29;
 
     //Panels
     private final JPanel playersPanel;

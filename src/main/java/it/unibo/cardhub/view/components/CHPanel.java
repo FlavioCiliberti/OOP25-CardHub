@@ -28,7 +28,7 @@ public class CHPanel extends JPanel {
      * 
      * @param layout the layout to be used
      */
-    public CHPanel(LayoutManager layout) {
+    public CHPanel(final LayoutManager layout) {
         this(CHStyles.secondaryColor(), layout);
     }
 
@@ -37,7 +37,7 @@ public class CHPanel extends JPanel {
      * 
      * @param color the color to be used as background color
      */
-    public CHPanel(Color color) {
+    public CHPanel(final Color color) {
         super.setBackground(color);
     }
 
@@ -47,7 +47,7 @@ public class CHPanel extends JPanel {
      * @param color the color to be used as background color
      * @param layout the layout to be used
      */
-    public CHPanel(Color color, LayoutManager layout) {
+    public CHPanel(final Color color, final LayoutManager layout) {
         super.setLayout(layout);
         super.setBackground(color);
     }
