@@ -1,12 +1,10 @@
-package it.unibo.cardhub.view.creatematch;
+package it.unibo.cardhub.view.impl;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.security.KeyStore.Entry;
 import java.util.Map;
 
 import javax.swing.BorderFactory;

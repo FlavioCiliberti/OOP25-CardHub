@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import it.unibo.cardhub.controller.api.CreateMatchController;
-import it.unibo.cardhub.view.creatematch.CreateMatchImpl;
+import it.unibo.cardhub.view.impl.CreateMatchImpl;
 
 public class CHFrame extends JFrame {
     public CHFrame(){
@@ -48,7 +48,7 @@ public class CHFrame extends JFrame {
                 Map<Integer, String> map = new HashMap<>();
                 map.put(1, test1);
                 map.put(2, test2);
-                
+
                 return map;
             }
 
