@@ -74,7 +74,6 @@ public class CreateMatchImpl extends ScreenView{
     private final JButton play;
 
     //playersPanel items
-    //TODO JComboBox wants a type, remember to add <Deck> in the final implementation
     private final JLabel playersLabel;
     private final JLabel firstPlayerLabel;
     private final JLabel firstPlayerNameLabel;
