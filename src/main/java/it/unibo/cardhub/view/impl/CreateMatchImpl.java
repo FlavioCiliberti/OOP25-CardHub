@@ -41,6 +41,9 @@ public class CreateMatchImpl extends ScreenView{
     private final static int MIN_FIELD_SIZE = 1;
     private final static int MAX_HAND_SIZE = 7;
     private final static int MAX_FIELD_SIZE = 6;
+    private final static int SPINNER_STEP_SIZE = 1;
+    private final static int HAND_DEFAULT_VALUE = 4;
+    private final static int FIELD_DEFAULT_VALUE = 3;
 
     //GUI padding and panel size
     private final static int PADDING_LARGE = 20;
@@ -122,12 +125,12 @@ public class CreateMatchImpl extends ScreenView{
         fullGameRadioButton = new JRadioButton("Full Game");
         gameModesGroup = new ButtonGroup();
 
-        handSizeModel = new SpinnerNumberModel(4, MIN_HAND_SIZE, MAX_HAND_SIZE, 1);
+        handSizeModel = new SpinnerNumberModel(HAND_DEFAULT_VALUE, MIN_HAND_SIZE, MAX_HAND_SIZE, SPINNER_STEP_SIZE);
         handSizeSpinner = new JSpinner(handSizeModel);
-        fieldSizeModel = new SpinnerNumberModel(3, MIN_FIELD_SIZE, MAX_FIELD_SIZE, 1);
+        fieldSizeModel = new SpinnerNumberModel(FIELD_DEFAULT_VALUE, MIN_FIELD_SIZE, MAX_FIELD_SIZE, SPINNER_STEP_SIZE);
         fieldSizeSpinner = new JSpinner(fieldSizeModel);
         //Starting hand size needs to always be lower or equal to max hand size
-        startingHandModel = new SpinnerNumberModel(4, MIN_HAND_SIZE, ((Integer) handSizeSpinner.getValue()).intValue(), 1);
+        startingHandModel = new SpinnerNumberModel(HAND_DEFAULT_VALUE, MIN_HAND_SIZE, ((Integer) handSizeSpinner.getValue()).intValue(), SPINNER_STEP_SIZE);
         startingHandSpinner = new JSpinner(startingHandModel);
         autoDrawCheckBox = new JCheckBox("Auto Draw on Turn Start");
         winPileRadioButton = new JRadioButton("To Pile");
