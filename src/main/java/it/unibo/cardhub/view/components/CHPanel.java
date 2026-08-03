@@ -1,5 +1,8 @@
 package it.unibo.cardhub.view.components;
 
+import java.awt.Color;
+import java.awt.LayoutManager;
+
 import javax.swing.JPanel;
 
 /**
@@ -17,17 +20,35 @@ public class CHPanel extends JPanel {
      * Creates a new custom panel with the default configuration.
      */
     public CHPanel() {
-        customize();
+        this(CHStyles.secondaryColor());
     }
 
     /**
-     * Applies the default customization to this panel.
+     * Creates a new custom panel with the default background color and the chosen layouot.
      * 
-     * <p>
-     * Sets the background color according to the application color palette.
-     * </p>
+     * @param layout the layout to be used
      */
-    private void customize() {
-        super.setBackground(CHStyles.secondaryColor());
+    public CHPanel(LayoutManager layout) {
+        this(CHStyles.secondaryColor(), layout);
+    }
+
+    /**
+     * Creates a new custom panel with the chosen background color.
+     * 
+     * @param color the color to be used as background color
+     */
+    public CHPanel(Color color) {
+        super.setBackground(color);
+    }
+
+    /**
+     * Creates a new custom panel with the chosen color and layout.
+     * 
+     * @param color the color to be used as background color
+     * @param layout the layout to be used
+     */
+    public CHPanel(Color color, LayoutManager layout) {
+        super.setLayout(layout);
+        super.setBackground(color);
     }
 }
