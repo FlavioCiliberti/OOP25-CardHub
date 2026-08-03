@@ -29,11 +29,9 @@ public interface CreateMatchController extends BackNavigableScreen {
      * Creates a new game using the full official rule set.
      *
      * @param player1Name the name of the first player
-     * @param player1DeckId the deck id chosen by the first player
      * @param player2Name the name of the second player
-     * @param player2DeckId the deck id chosen by the second player
      */
-    void createFullGame(String player1Name, int player1DeckId, String player2Name, int player2DeckId);
+    void createFullGame(String player1Name, String player2Name);
 
     /**
      * Creates a new game using a custom, user-configurable rule set.
@@ -47,12 +45,13 @@ public interface CreateMatchController extends BackNavigableScreen {
      * @param player2Name the name of the second player
      * @param player2DeckId the deck id chosen by the second player
      * @param maxHandSize the maximum amount of cards a player can have in their hand
+     * @param startingHandSize the amount of cards a player has in their hand on game start
      * @param playerFieldSize the maximum amount of cards a player can put in their playfield
      * @param autoDraw set to {@code true} if a draw must be done automatically at the beggining of the turn
      */
     void createCustomGame(String player1Name, int player1DeckId, 
                         String player2Name, int player2DeckId,
-                        int maxHandSize, int playerFieldSize,
-                        boolean autoDraw); //IMPORTANT: winner and looser card actions parameters must be added
+                        int maxHandSize, int startingHandSize,
+                        int playerFieldSize, boolean autoDraw); //IMPORTANT:winner and loser card actions parameters must be added
 
 }
