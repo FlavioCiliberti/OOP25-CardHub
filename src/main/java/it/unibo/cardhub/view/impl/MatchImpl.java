@@ -44,7 +44,7 @@ public final class MatchImpl extends ScreenView {
         this.setLayout(new BorderLayout());
 
         JPanel topPanel = new CHPanel(new FlowLayout(FlowLayout.RIGHT));
-        topPanel.setBorder(BorderFactory.createEmptyBorder(PADDING_SMALL, PADDING_NONE, PADDING_NONE, PADDING_STANDARD));
+        topPanel.setBorder(BorderFactory.createEmptyBorder(PADDING_SMALL, PADDING_NONE, PADDING_NONE, PADDING_SMALL));
         topPanel.add(exitButton);
         this.add(topPanel, BorderLayout.NORTH);
 
