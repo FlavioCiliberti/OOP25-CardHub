@@ -15,6 +15,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
@@ -24,6 +25,9 @@ import javax.swing.SwingConstants;
 
 import it.unibo.cardhub.controller.api.CreateMatchController;
 import it.unibo.cardhub.model.domain.exceptions.EmptyFieldException;
+import it.unibo.cardhub.model.logic.GameMode;
+import it.unibo.cardhub.model.logic.LoserCardAction;
+import it.unibo.cardhub.model.logic.WinnerCardAction;
 import it.unibo.cardhub.view.components.CHButton;
 import it.unibo.cardhub.view.components.CHLabel;
 import it.unibo.cardhub.view.components.CHPanel;
@@ -108,7 +112,11 @@ public final class CreateMatchImpl extends ScreenView {
     private final ButtonGroup loserActionGroup;
 
     //controller
+    private final transient CreateMatchController controller;
     private final Map<Integer, String> decks;
+    private GameMode selectedGameMode;
+    private WinnerCardAction selectedWinnerCardAction;
+    private LoserCardAction selectedLoserCardAction;
 
     /**
      * Builds the create match view,
@@ -154,24 +162,35 @@ public final class CreateMatchImpl extends ScreenView {
         loseNoneRadioButton = new JRadioButton("None");
         loserActionGroup = new ButtonGroup();
 
-        this.decks = controller.getDecks();
+        this.controller = controller;
+        decks = controller.getDecks();
 
-        this.manageContentPane(controller);
+        //default values
+        freePlayRadioButton.setSelected(true);
+        selectedGameMode = GameMode.FREE_PLAY;
+
+        winPileRadioButton.setSelected(true);
+        selectedWinnerCardAction = WinnerCardAction.TO_PILE;
+
+        losePileRadioButton.setSelected(true);
+        selectedLoserCardAction = LoserCardAction.TO_PILE;
+
+        this.manageContentPane();
     }
 
     //sets up the content pane
-    private void manageContentPane(final CreateMatchController controller) {
+    private void manageContentPane() {
         this.setLayout(new BorderLayout());
 
         final JPanel topPanel = new CHPanel(new BorderLayout());
         this.add(topPanel, BorderLayout.NORTH);
-        this.manageTopPanel(topPanel, controller);
+        this.manageTopPanel(topPanel);
 
         final JPanel bottomPanel = new CHPanel();
         bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         bottomPanel.add(playButton);
         playButton.addActionListener(e -> {
-            this.startGame(controller);
+            this.startGame();
         });
         this.add(bottomPanel, BorderLayout.SOUTH);
 
@@ -181,7 +200,7 @@ public final class CreateMatchImpl extends ScreenView {
     }
 
     //sets up topPanel
-    private void manageTopPanel(final JPanel topPanel, final CreateMatchController controller) {
+    private void manageTopPanel(final JPanel topPanel) {
         topPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * TOP_PANEL_RATIO)));
         topPanel.setBorder(BorderFactory.createEmptyBorder(TOP_PANEL_PADDING, TOP_PANEL_PADDING,
                                                             TOP_PANEL_PADDING, TOP_PANEL_PADDING));
@@ -313,6 +332,8 @@ public final class CreateMatchImpl extends ScreenView {
         this.manageRadioButton(gameModesGroup, freePlayRadioButton, customRulesRadioButton, fullGameRadioButton);
 
         freePlayRadioButton.addActionListener(e -> {
+            selectedGameMode = GameMode.FREE_PLAY;
+
             //Makes the settings panel invisible
             settingsPanel.setVisible(false);
         });
@@ -320,6 +341,8 @@ public final class CreateMatchImpl extends ScreenView {
         freePlayRadioButton.setAlignmentX(CENTER_ALIGNMENT);
 
         customRulesRadioButton.addActionListener(e -> {
+            selectedGameMode = GameMode.CUSTOM;
+
             //Makes the settings panel visible
             settingsPanel.setVisible(true);
         });
@@ -329,6 +352,8 @@ public final class CreateMatchImpl extends ScreenView {
                                                                             PADDING_SMALL, PADDING_NONE));
 
         fullGameRadioButton.addActionListener(e -> {
+            selectedGameMode = GameMode.FULL_GAME;
+
             //Makes the settings panel invisible
             settingsPanel.setVisible(false);
         });
@@ -377,6 +402,15 @@ public final class CreateMatchImpl extends ScreenView {
         winnerActionLabel.setAlignmentX(CENTER_ALIGNMENT);
         settingsPanel.add(winnerActionLabel);
 
+        winPileRadioButton.addItemListener(e -> {
+            selectedWinnerCardAction = WinnerCardAction.TO_PILE;
+        });
+        winLoserPileRadioButton.addItemListener(e -> {
+            selectedWinnerCardAction = WinnerCardAction.TO_LOSER_PILE;
+        });
+        winNoneRadioButton.addItemListener(e -> {
+            selectedWinnerCardAction = WinnerCardAction.NONE;
+        });
         this.manageRadioButton(winnerActionGroup, winPileRadioButton, winLoserPileRadioButton, winNoneRadioButton);
         this.createRow(settingsPanel, winPileRadioButton, winLoserPileRadioButton, winNoneRadioButton);
 
@@ -384,10 +418,20 @@ public final class CreateMatchImpl extends ScreenView {
         loserActionLabel.setAlignmentX(CENTER_ALIGNMENT);
         settingsPanel.add(loserActionLabel);
 
+        losePileRadioButton.addItemListener(e -> {
+            selectedLoserCardAction = LoserCardAction.TO_PILE;
+        });
+        loseWinnerPileRadioButton.addItemListener(e -> {
+            selectedLoserCardAction = LoserCardAction.TO_WINNER_PILE;
+        });
+        loseNoneRadioButton.addItemListener(e -> {
+            selectedLoserCardAction = LoserCardAction.NONE;
+        });
         this.manageRadioButton(loserActionGroup, losePileRadioButton, loseWinnerPileRadioButton, loseNoneRadioButton);
         this.createRow(settingsPanel, losePileRadioButton, loseWinnerPileRadioButton, loseNoneRadioButton);
     }
 
+    //creates a horizontal jPanel with the given components
     private void createRow(final JPanel panel, final JComponent... components) {
         final JPanel row = new CHPanel(CHStyles.primaryColor());
         for (final JComponent component : components) {
@@ -396,6 +440,7 @@ public final class CreateMatchImpl extends ScreenView {
         panel.add(row);
     }
 
+    //adds all the radioButtons to the same group, and changes their background color
     private void manageRadioButton(final ButtonGroup group, final JRadioButton... buttons) {
         for (final JRadioButton button : buttons) {
             button.setBackground(CHStyles.primaryColor());
@@ -403,50 +448,28 @@ public final class CreateMatchImpl extends ScreenView {
         }
     }
 
-    private void startGame(final CreateMatchController controller) {
+    //tries to pass all the parameters to the controller
+    private void startGame() {
         final String firstPlayerName = firstPlayerNameField.getText();
         final String secondPlayerName = secondPlayerNameField.getText();
+        final DeckBoxItem<Integer, String> player1Deck =
+                (DeckBoxItem<Integer, String>) firstPlayerDeckBox.getSelectedItem();
+        final DeckBoxItem<Integer, String> player2Deck =
+                (DeckBoxItem<Integer, String>) secondPlayerDeckBox.getSelectedItem();
 
-        if (!firstPlayerName.isEmpty() && !secondPlayerName.isEmpty()) {
-            if (fullGameRadioButton.isSelected()) {
-                controller.createFullGame(firstPlayerName, secondPlayerName);
-                return;
-            } else {
-                final DeckBoxItem<Integer, String> player1Deck =
-                        (DeckBoxItem<Integer, String>) firstPlayerDeckBox.getSelectedItem();
-                final DeckBoxItem<Integer, String> player2Deck =
-                        (DeckBoxItem<Integer, String>) secondPlayerDeckBox.getSelectedItem();
-
-                if (freePlayRadioButton.isSelected()) {
-                    controller.createFreeGame(firstPlayerName, player1Deck.getKey(), secondPlayerName, player2Deck.getKey());
-                    return;
-                } else if (customRulesRadioButton.isSelected()
-                            && winnerActionGroup.getSelection() != null
-                            && loserActionGroup.getSelection() != null) {
-                    controller.createCustomGame(firstPlayerName, player1Deck.getKey(),
-                                                secondPlayerName, player2Deck.getKey(),
-                                                (Integer) handSizeSpinner.getValue(), (Integer) startingHandSpinner.getValue(),
-                                                (Integer) fieldSizeSpinner.getValue(), autoDrawCheckBox.isSelected());
-                    return;
-                }
-            }
+        try {
+            controller.tryCreatingMatch(firstPlayerName, player1Deck.key(),
+                                            secondPlayerName, player2Deck.key(),
+                                            (Integer) handSizeSpinner.getValue(), (Integer) startingHandSpinner.getValue(),
+                                            (Integer) fieldSizeSpinner.getValue(), autoDrawCheckBox.isSelected(),
+                                            selectedWinnerCardAction, selectedLoserCardAction, selectedGameMode);
+        } catch (final EmptyFieldException e) {
+            JOptionPane.showMessageDialog(null, "Must fill all fields!", "error", JOptionPane.ERROR_MESSAGE);
         }
-        throw new EmptyFieldException();
     }
 
-    private static final class DeckBoxItem<K, V> {
-        private final K key;
-        private final V value;
-
-        private DeckBoxItem(final K key, final V value) {
-            this.key = key;
-            this.value = value;
-        }
-
-        private K getKey() {
-            return key;
-        }
-
+    //a record for the items to populate deckBox
+    private record DeckBoxItem<K, V>(K key, V value) {
         @Override
         public String toString() {
             return value.toString();

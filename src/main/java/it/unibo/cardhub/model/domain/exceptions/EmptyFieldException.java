@@ -3,7 +3,7 @@ package it.unibo.cardhub.model.domain.exceptions;
 /**
  * An exception for empty GUI fields.
  */
-public class EmptyFieldException extends RuntimeException {
+public class EmptyFieldException extends Exception {
 
     private static final long serialVersionUID = 42L;
 
