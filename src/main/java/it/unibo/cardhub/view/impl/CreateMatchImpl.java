@@ -452,8 +452,10 @@ public final class CreateMatchImpl extends ScreenView {
     private void startGame() {
         final String firstPlayerName = firstPlayerNameField.getText();
         final String secondPlayerName = secondPlayerNameField.getText();
+        @SuppressWarnings("unchecked")
         final DeckBoxItem<Integer, String> player1Deck =
                 (DeckBoxItem<Integer, String>) firstPlayerDeckBox.getSelectedItem();
+        @SuppressWarnings("unchecked")
         final DeckBoxItem<Integer, String> player2Deck =
                 (DeckBoxItem<Integer, String>) secondPlayerDeckBox.getSelectedItem();
 
