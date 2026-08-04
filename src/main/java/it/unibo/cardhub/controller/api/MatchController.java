@@ -64,6 +64,22 @@ public interface MatchController extends ScreenController {
     void reshuffleIntoDeck(Player owner);
 
     /**
+     * Checks if the player's deck is empty.
+     * 
+     * @param owner the player who owns the deck
+     * @return {@code true} if the deck is empty
+     */
+    boolean isEmptyDeck(Player owner);
+
+    /**
+     * Checks if the player's discard pile is empty.
+     * 
+     * @param owner
+     * @return {@code true} if the discard pile is empty
+     */
+    boolean isEmptyDiscardPile(Player owner);
+
+    /**
      * Ends the current player's turn and moves on to the next one.
      */
     void endTurn();
