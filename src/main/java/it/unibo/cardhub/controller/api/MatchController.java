@@ -74,7 +74,7 @@ public interface MatchController extends ScreenController {
     /**
      * Checks if the player's discard pile is empty.
      * 
-     * @param owner
+     * @param owner the player who owns the discard pile
      * @return {@code true} if the discard pile is empty
      */
     boolean isEmptyDiscardPile(Player owner);
