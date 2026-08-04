@@ -20,6 +20,7 @@ import it.unibo.cardhub.view.components.ScreenView;
 public final class MatchImpl extends ScreenView {
     private static final int PADDING_LARGE = 20;
     private static final int PADDING_STANDARD = 10;
+    private static final int PADDING_SMALL = 4;
     private static final int PADDING_NONE = 0;
 
     private final JButton exitButton;
@@ -43,6 +44,7 @@ public final class MatchImpl extends ScreenView {
         this.setLayout(new BorderLayout());
 
         JPanel topPanel = new CHPanel(new FlowLayout(FlowLayout.RIGHT));
+        topPanel.setBorder(BorderFactory.createEmptyBorder(PADDING_SMALL, PADDING_NONE, PADDING_NONE, PADDING_STANDARD));
         topPanel.add(exitButton);
         this.add(topPanel, BorderLayout.NORTH);
 
@@ -69,7 +71,7 @@ public final class MatchImpl extends ScreenView {
     //sets up the center panel
     private void manageCenterPanel(JPanel centerPanel) {
         this.add(centerPanel, BorderLayout.CENTER);
-        centerPanel.setBorder(BorderFactory.createMatteBorder(PADDING_STANDARD, PADDING_LARGE,
+        centerPanel.setBorder(BorderFactory.createMatteBorder(PADDING_SMALL, PADDING_LARGE,
                                                                 PADDING_NONE, PADDING_LARGE,
                                                                 CHStyles.secondaryColor()));
 
