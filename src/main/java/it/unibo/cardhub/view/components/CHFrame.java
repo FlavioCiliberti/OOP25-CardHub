@@ -2,6 +2,10 @@ package it.unibo.cardhub.view.components;
 
 import java.awt.Dimension;
 
+// import java.awt.*;
+// import javax.swing.JPanel;
+// import it.unibo.cardhub.view.impl.HomeViewImpl;
+
 import javax.swing.JFrame;
 
 //IMPORTANT; SERVES FOR UI TESTING PURPUSES ONLY (FOR NOW)
@@ -26,16 +30,17 @@ public final class CHFrame extends JFrame {
 
         // final JPanel screen1 = new JPanel();
         // screen1.setBackground(Color.green);
-        // screen1.setBackground(new Color(CHColor.TERTIARY.getCode()));
+        // screen1.setBackground(new Color(CHColor.PRIMARY.getCode()));
         // final JPanel screen2 = new HomeViewImpl();
 
         // container.add(screen1, "1");
         // container.add(screen2, "2");
 
         // this.add(container);
-        // layout.show(container, "2");
+        // layout.show(container, "1");
 
         this.setSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+        this.setMinimumSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setVisible(true);
     }
 

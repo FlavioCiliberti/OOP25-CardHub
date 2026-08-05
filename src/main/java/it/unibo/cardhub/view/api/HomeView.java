@@ -1,27 +1,27 @@
 package it.unibo.cardhub.view.api;
 
 /**
- * View for the home screen.
+ * Represents th view for the home screen.
  */
 public interface HomeView {
 
     /**
      * Navigates to the new match screen.
      */
-    void goToNewMatch();
+    void onNewMatch();
 
     /**
      * Navigates to the load match screen.
      */
-    void goToLoadMatch();
+    void onLoadMatch();
 
     /**
      * Navigates to the manage decks screen.
      */
-    void goToManageDecks();
+    void onManageDecks();
 
     /**
      * Exits the application.
      */
-    void exit();
+    void onExit();
 }
