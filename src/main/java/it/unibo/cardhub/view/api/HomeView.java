@@ -1,7 +1,7 @@
 package it.unibo.cardhub.view.api;
 
 /**
- * View for the home screen.
+ * Represents th view for the home screen.
  */
 public interface HomeView {
 
