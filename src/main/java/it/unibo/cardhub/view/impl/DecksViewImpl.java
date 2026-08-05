@@ -8,6 +8,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
+import it.unibo.cardhub.controller.api.ManageDecksController;
 import it.unibo.cardhub.view.api.DecksView;
 import it.unibo.cardhub.view.components.CHButton;
 import it.unibo.cardhub.view.components.CHEntryPanel;
@@ -22,68 +23,59 @@ import it.unibo.cardhub.view.components.ScreenView;
 public final class DecksViewImpl extends ScreenView implements DecksView {
 
     private static final long serialVersionUID = 1L;
-    private final CHPanel deckListPanel;
-    private final CHPanel titlePanel;
-    private final CHPanel createPanel;
+    private final CHPanel listPanel;
+    private final CHPanel headerPanel;
     private final CHPanel listContainer;
-    private final CHButton createNewButton;
     private final CHButton backButton;
     private final JScrollPane scrollPane;
     private final CHListHeader listHeader;
-    private ActionListener editListener;
-    private ActionListener deleteListener;
+    private ActionListener selectListener;
+    private ActionListener viewListener;
+    private final ManageDecksController controller;
     private int index;
 
     /**
      * Creates a new screen for visualization of decks.
      */
-    public DecksViewImpl() {
-        deckListPanel = new CHPanel();
-        titlePanel = new CHPanel();
-        createPanel = new CHPanel();
+    public DecksViewImpl(final ManageDecksController controller) {
+        super();
+        this.controller = controller;
+        listPanel = new CHPanel();
+        headerPanel = new CHPanel();
         listContainer = new CHPanel();
 
-        createNewButton = new CHButton("Create new deck");
         backButton = new CHButton("<");
 
         listHeader = new CHListHeader("Deck name", "Number of cards");
 
-        scrollPane = new JScrollPane(deckListPanel);
+        scrollPane = new JScrollPane(listPanel);
 
         manageTitlePanel();
         manageDeckListPanel();
-        manageCreatePanel();
+
+        setUpListeners();
 
         listContainer.setLayout(new BorderLayout());
         listContainer.add(listHeader, BorderLayout.NORTH);
         listContainer.add(scrollPane, BorderLayout.CENTER);
 
         this.setLayout(new BorderLayout());
-        this.add(titlePanel, BorderLayout.NORTH);
+        this.add(headerPanel, BorderLayout.NORTH);
         this.add(listContainer, BorderLayout.CENTER);
-        this.add(createPanel, BorderLayout.SOUTH);
     }
 
     private void manageTitlePanel() {
         final JLabel title = new CHTitle("Decks");
-        titlePanel.setLayout(new BorderLayout());
-        titlePanel.add(title, BorderLayout.CENTER);
-        titlePanel.add(backButton, BorderLayout.WEST);
+        headerPanel.setLayout(new BorderLayout());
+        headerPanel.add(title, BorderLayout.CENTER);
+        headerPanel.add(backButton, BorderLayout.WEST);
         title.setHorizontalAlignment(CHTitle.CENTER);
-        titlePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     }
 
     private void manageDeckListPanel() {
-        deckListPanel.setLayout(new BoxLayout(deckListPanel, BoxLayout.Y_AXIS));
-        deckListPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-    }
-
-    private void manageCreatePanel() {
-        createPanel.add(createNewButton);
-        createPanel.setBorder(BorderFactory.createCompoundBorder(
-            this.getBorder(),
-            BorderFactory.createEmptyBorder(10, 10, 10, 10)
-        ));
+        listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
+        listPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
     }
 
     /**
@@ -91,18 +83,18 @@ public final class DecksViewImpl extends ScreenView implements DecksView {
      */
     @Override
     public void addDeck(final String deckName, final int numberOfCards) {
-        final CHEntryPanel entry = new CHEntryPanel(deckName, String.valueOf(numberOfCards), "Edit", "Delete");
+        final CHEntryPanel entry = new CHEntryPanel(deckName, String.valueOf(numberOfCards), "Select", "View");
         index++;
 
         entry.getFirstButton().setActionCommand(String.valueOf(index));
         entry.getSecondButton().setActionCommand(String.valueOf(index));
-        entry.getFirstButton().addActionListener(editListener);
-        entry.getSecondButton().addActionListener(deleteListener);
+        entry.getFirstButton().addActionListener(selectListener);
+        entry.getSecondButton().addActionListener(viewListener);
 
-        deckListPanel.add(entry);
+        listPanel.add(entry);
 
-        deckListPanel.revalidate();
-        deckListPanel.repaint();
+        listPanel.revalidate();
+        listPanel.repaint();
     }
 
     /**
@@ -110,18 +102,14 @@ public final class DecksViewImpl extends ScreenView implements DecksView {
      */
     @Override
     public void clearDecks() {
-        deckListPanel.removeAll();
-        deckListPanel.revalidate();
-        deckListPanel.repaint();
+        listPanel.removeAll();
+        listPanel.revalidate();
+        listPanel.repaint();
         index = 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addCreateDeckListener(final ActionListener listener) {
-        createNewButton.addActionListener(listener);
+    private void setUpListeners() {
+        backButton.addActionListener(e -> controller.);
     }
 
     /**
@@ -129,22 +117,22 @@ public final class DecksViewImpl extends ScreenView implements DecksView {
      */
     @Override
     public void addBackListener(final ActionListener listener) {
-        backButton.addActionListener(listener);
+        backButton.addActionListener(e -> controller.goBack());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addEditListener(final ActionListener listener) {
-        this.editListener = listener;
+    public void addSelectListener(final ActionListener listener) {
+        this.selectListener = listener;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addDeleteListener(final ActionListener listener) {
-        this.deleteListener = listener;
+    public void addViewListener(final ActionListener listener) {
+        this.viewListener = listener;
     }
 }
