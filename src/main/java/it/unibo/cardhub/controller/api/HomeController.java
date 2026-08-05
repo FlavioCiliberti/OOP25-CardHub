@@ -1,0 +1,32 @@
+package it.unibo.cardhub.controller.api;
+
+/**
+ * Controller responsible for handling the main actions available
+ * from the home screen of the application.
+ */
+public interface HomeController extends ScreenController {
+
+    /**
+     * Creates the instances necessary for the CreateMatch screen.
+     * Then navigates to it.
+     */
+    void newMatch();
+
+    /**
+     * Creates the instances necessary for the LoadMatch screen.
+     * Then navigates to it.
+     */
+
+    void loadMatch();
+
+    /**
+     * Creates the instances necessary for the ManageDecks screen.
+     * Then navigates to it.
+     */
+    void manageDecks();
+
+    /**
+     * Terminates the application.
+     */
+    void exit();
+}
