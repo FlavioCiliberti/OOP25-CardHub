@@ -30,7 +30,7 @@ public class CHButton extends JButton {
      *
      * @param icon the icon displayed on the button
      */
-    public CHButton(ImageIcon icon) {
+    public CHButton(final ImageIcon icon) {
         super(icon);
         customize();
     }

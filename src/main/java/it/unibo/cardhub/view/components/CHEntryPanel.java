@@ -51,24 +51,6 @@ public final class CHEntryPanel extends CHPanel {
     }
 
     /**
-     * Returns the first button.
-     * 
-     * @return the first button
-     */
-    public CHButton getFirstButton() {
-        return this.firstButton;
-    }
-
-    /**
-     * Returns the second button.
-     * 
-     * @return the second button
-     */
-    public CHButton getSecondButton() {
-        return this.secondButton;
-    }
-
-    /**
      * Changes the title.
      * 
      * @param text new title

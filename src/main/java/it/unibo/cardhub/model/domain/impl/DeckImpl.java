@@ -14,11 +14,24 @@ import it.unibo.cardhub.model.domain.exceptions.EmptyCardCollectionException;
  */
 public class DeckImpl extends AbstractCardCollection implements Deck {
 
+    private final String id;
+
     /**
      * Deck constructor.
+     * 
+     * @param id the deck id
      */
-    public DeckImpl() {
+    public DeckImpl(final String id) {
         super();
+        this.id = id;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getId() {
+        return this.id;
     }
 
     /**

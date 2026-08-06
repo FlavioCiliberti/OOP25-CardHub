@@ -65,4 +65,13 @@ public class CHLabel extends JLabel {
         this(text, color);
         super.setHorizontalAlignment(horizontalAlignment);
     }
+
+    /**
+     * Creates a new custom label with no text and the default color.
+     * Sets the foreground color to the tertiary application color defined by
+     * {@link CHColor#TERTIARY}.
+     */
+    public CHLabel() {
+        this("");
+    }
 }
