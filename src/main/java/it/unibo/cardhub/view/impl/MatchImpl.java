@@ -39,9 +39,13 @@ public final class MatchImpl extends ScreenView {
 
     private final JPanel firstPlayerPanel;
     private final JPanel firstPlayerHandPanel;
+    private final JPanel secondPlayerPanel;
+    private final JPanel secondPlayerHandPanel;
 
     private final JLabel firstPlayerDeckLabel;
+    private final JLabel secondPlayerDeckLabel;
     private final JButton firstPlayerShuffleDeckButton;
+    private final JButton secondPlayerShuffleDeckButton;
     private final JButton exitButton;
     private final JButton endTurnButton;
     private final JButton concedeButton;
@@ -49,11 +53,15 @@ public final class MatchImpl extends ScreenView {
     private int timeRemaining;
     
     public MatchImpl() {
-        firstPlayerPanel = new CHPanel(CHStyles.primaryColor());
+        firstPlayerPanel = new CHPanel();
         firstPlayerHandPanel = new CHPanel(new FlowLayout(FlowLayout.LEFT, PADDING_STANDARD, PADDING_NONE));
+        secondPlayerPanel = new CHPanel();
+        secondPlayerHandPanel = new CHPanel(new FlowLayout(FlowLayout.RIGHT, PADDING_STANDARD, PADDING_NONE));
 
         firstPlayerDeckLabel = new CHLabel("Deck");
+        secondPlayerDeckLabel = new CHLabel("Deck");
         firstPlayerShuffleDeckButton = new CHButton("Shuffle");
+        secondPlayerShuffleDeckButton = new CHButton("Shuffle");
         exitButton = new CHButton("Exit");
         endTurnButton = new CHButton("End Turn");
         concedeButton = new CHButton("Concede");
@@ -94,25 +102,35 @@ public final class MatchImpl extends ScreenView {
 
     //sets up the center panel
     private void manageCenterPanel(JPanel centerPanel) {
+        JLabel firstPlayerLabel = new CHLabel("Giocatore 1", SwingConstants.CENTER);
+        JLabel secondPlayerLabel = new CHLabel("Giocatore 2", SwingConstants.CENTER);
+
         this.add(centerPanel, BorderLayout.CENTER);
         centerPanel.setBorder(BorderFactory.createMatteBorder(PADDING_SMALL, PADDING_LARGE,
                                                                 PADDING_NONE, PADDING_LARGE,
                                                                 CHStyles.secondaryColor()));
-        this.managePlayerPanel(firstPlayerPanel, firstPlayerHandPanel, firstPlayerShuffleDeckButton, new CHLabel("Giocatore 1", SwingConstants.CENTER), firstPlayerDeckLabel);
+        this.managePlayerPanel(firstPlayerPanel, firstPlayerHandPanel, firstPlayerShuffleDeckButton, firstPlayerLabel, firstPlayerDeckLabel, true);
         centerPanel.add(firstPlayerPanel, BorderLayout.SOUTH);
+        this.managePlayerPanel(secondPlayerPanel, secondPlayerHandPanel, secondPlayerShuffleDeckButton, secondPlayerLabel, secondPlayerDeckLabel, false);
+        centerPanel.add(secondPlayerPanel, BorderLayout.NORTH);
     }
 
-    private void managePlayerPanel(JPanel playerPanel, JPanel handPanel, JButton shuffleButton, JLabel nameLabel, JLabel deckLabel) {
+    private void managePlayerPanel(JPanel playerPanel, JPanel handPanel, JButton shuffleButton, JLabel nameLabel, JLabel deckLabel, boolean mirrored) {
         final int maxHandSize = 5;
         final int cardValue = 10;
         final String cardName = "Exodia il Proibito";
 
+        JPanel firstRow = new CHPanel(new BorderLayout());
+        JPanel secondRow = new CHPanel(new BorderLayout());
+        JPanel handPanelWrapper = new CHPanel(new GridBagLayout());
+
+        JLabel cardInfoLabel = new CHLabel("", SwingConstants.CENTER);
+        ImageIcon deckIcon = new ImageIcon(getClass().getResource("/it/unibo/cardhub/view/Back.png"));
+
         playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
         playerPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED, CHStyles.secondaryColor(), CHStyles.primaryColor()));
 
-        JPanel firstRow = new CHPanel(new BorderLayout());
-        firstRow.setBorder(BorderFactory.createEmptyBorder(PADDING_STANDARD, PADDING_NONE, PADDING_NONE, 13));
-        JLabel cardInfoLabel = new CHLabel("", SwingConstants.CENTER);
+        firstRow.setBorder(BorderFactory.createEmptyBorder(PADDING_STANDARD, PADDING_STANDARD, PADDING_NONE, 13));
         firstRow.add(cardInfoLabel, BorderLayout.CENTER);
 
         for (int i = 0; i < maxHandSize; i++) {
@@ -132,25 +150,18 @@ public final class MatchImpl extends ScreenView {
                 }
             });
             handPanel.add(card);
-            System.out.println(image.getIconWidth());
-            System.out.println(image.getIconHeight());
-            System.out.println(getClass().getResource("/it/unibo/cardhub/io/Exodia.png"));
         }
 
-        JPanel handPanelWrapper = new CHPanel(new GridBagLayout());
         handPanelWrapper.add(handPanel);
-        firstRow.add(handPanelWrapper, BorderLayout.WEST);
+        firstRow.add(handPanelWrapper, mirrored ? BorderLayout.WEST : BorderLayout.EAST);
 
-        ImageIcon deckIcon = new ImageIcon(getClass().getResource("/it/unibo/cardhub/view/Back.png"));
-        JLabel deck = new JLabel(new ImageIcon(deckIcon.getImage().getScaledInstance(66, 100, Image.SCALE_SMOOTH)));
-        deck.setPreferredSize(new Dimension(66, 100));
+        deckLabel.setIcon(new ImageIcon(deckIcon.getImage().getScaledInstance(66, 96, Image.SCALE_SMOOTH)));
+        deckLabel.setPreferredSize(new Dimension(66, 100));
+        firstRow.add(deckLabel, mirrored ? BorderLayout.EAST : BorderLayout.WEST);
 
-        firstRow.add(deck, BorderLayout.EAST);
-
-        JPanel secondRow = new CHPanel(new BorderLayout());
-        secondRow.setBorder(BorderFactory.createEmptyBorder(PADDING_STANDARD, PADDING_NONE, PADDING_NONE, PADDING_STANDARD));
+        secondRow.setBorder(BorderFactory.createEmptyBorder(PADDING_STANDARD, PADDING_NONE, PADDING_STANDARD, PADDING_STANDARD));
         secondRow.add(nameLabel, BorderLayout.CENTER);
-        secondRow.add(shuffleButton, BorderLayout.EAST);
+        secondRow.add(shuffleButton, mirrored ? BorderLayout.EAST : BorderLayout.WEST);
 
         playerPanel.add(firstRow);
         playerPanel.add(secondRow);
