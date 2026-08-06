@@ -1,5 +1,6 @@
 package it.unibo.cardhub.view.components;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 /**
@@ -21,6 +22,24 @@ public class CHButton extends JButton {
      */
     public CHButton(final String text) {
         super(text);
+        customize();
+    }
+
+    /**
+     * Creates a new custom button with the specified icon.
+     *
+     * @param icon the icon displayed on the button
+     */
+    public CHButton(ImageIcon icon) {
+        super(icon);
+        customize();
+    }
+
+    /**
+     * Creates a new custom button with no text or icon.
+     */
+    public CHButton() {
+        super();
         customize();
     }
 
