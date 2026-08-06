@@ -40,6 +40,7 @@ public final class MatchImpl extends ScreenView {
 
     private final JPanel firstPlayerPanel;
     private final JPanel firstPlayerHandPanel;
+    private final JPanel playField;
     private final JPanel secondPlayerPanel;
     private final JPanel secondPlayerHandPanel;
 
@@ -59,6 +60,7 @@ public final class MatchImpl extends ScreenView {
         firstPlayerHandPanel = new CHPanel(new FlowLayout(FlowLayout.LEFT, PADDING_STANDARD, PADDING_NONE));
         secondPlayerPanel = new CHPanel();
         secondPlayerHandPanel = new CHPanel(new FlowLayout(FlowLayout.RIGHT, PADDING_STANDARD, PADDING_NONE));
+        playField = new CHPanel(CHStyles.tertiaryColor(), new BorderLayout());
 
         firstPlayerDeckLabel = new CHLabel(String.valueOf(40), CHStyles.primaryColor());
         secondPlayerDeckLabel = new CHLabel(String.valueOf(40), CHStyles.primaryColor());
@@ -83,7 +85,7 @@ public final class MatchImpl extends ScreenView {
         topPanel.add(exitButton);
         this.add(topPanel, BorderLayout.NORTH);
 
-        this.manageCenterPanel(new CHPanel(CHStyles.tertiaryColor(), new BorderLayout()));
+        this.managePlayField();
 
         this.manageBottomPanel();
     }
@@ -103,19 +105,19 @@ public final class MatchImpl extends ScreenView {
         this.add(bottomPanel, BorderLayout.SOUTH);
     }
 
-    //sets up the center panel
-    private void manageCenterPanel(JPanel centerPanel) {
+    //sets up playField
+    private void managePlayField() {
         JLabel firstPlayerLabel = new CHLabel("Giocatore 1", SwingConstants.CENTER);
         JLabel secondPlayerLabel = new CHLabel("Giocatore 2", SwingConstants.CENTER);
 
-        this.add(centerPanel, BorderLayout.CENTER);
-        centerPanel.setBorder(BorderFactory.createMatteBorder(PADDING_SMALL, PADDING_LARGE,
+        this.add(playField, BorderLayout.CENTER);
+        playField.setBorder(BorderFactory.createMatteBorder(PADDING_SMALL, PADDING_LARGE,
                                                                 PADDING_NONE, PADDING_LARGE,
                                                                 CHStyles.secondaryColor()));
         this.managePlayerPanel(firstPlayerPanel, firstPlayerHandPanel, firstPlayerShuffleDeckButton, firstPlayerLabel, firstPlayerDeckLabel, true);
-        centerPanel.add(firstPlayerPanel, BorderLayout.SOUTH);
+        playField.add(firstPlayerPanel, BorderLayout.SOUTH);
         this.managePlayerPanel(secondPlayerPanel, secondPlayerHandPanel, secondPlayerShuffleDeckButton, secondPlayerLabel, secondPlayerDeckLabel, false);
-        centerPanel.add(secondPlayerPanel, BorderLayout.NORTH);
+        playField.add(secondPlayerPanel, BorderLayout.NORTH);
     }
 
     private void managePlayerPanel(JPanel playerPanel, JPanel handPanel, JButton shuffleButton, JLabel nameLabel, JLabel deckLabel, boolean mirrored) {
