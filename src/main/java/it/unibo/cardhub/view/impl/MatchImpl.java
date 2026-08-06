@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -50,6 +51,7 @@ public final class MatchImpl extends ScreenView {
     private final JButton endTurnButton;
     private final JButton concedeButton;
     private final int turnMaxTimer;
+    private Optional<JLabel> selectedCard;
     private int timeRemaining;
     
     public MatchImpl() {
@@ -58,8 +60,8 @@ public final class MatchImpl extends ScreenView {
         secondPlayerPanel = new CHPanel();
         secondPlayerHandPanel = new CHPanel(new FlowLayout(FlowLayout.RIGHT, PADDING_STANDARD, PADDING_NONE));
 
-        firstPlayerDeckLabel = new CHLabel("Deck");
-        secondPlayerDeckLabel = new CHLabel("Deck");
+        firstPlayerDeckLabel = new CHLabel(String.valueOf(40), CHStyles.primaryColor());
+        secondPlayerDeckLabel = new CHLabel(String.valueOf(40), CHStyles.primaryColor());
         firstPlayerShuffleDeckButton = new CHButton("Shuffle");
         secondPlayerShuffleDeckButton = new CHButton("Shuffle");
         exitButton = new CHButton("Exit");
@@ -67,6 +69,7 @@ public final class MatchImpl extends ScreenView {
         concedeButton = new CHButton("Concede");
         turnMaxTimer = 10; //temporary for testing purposes
         timeRemaining = turnMaxTimer;
+        this.selectedCard = Optional.empty();
 
         this.manageContentPane();
     }
@@ -80,7 +83,7 @@ public final class MatchImpl extends ScreenView {
         topPanel.add(exitButton);
         this.add(topPanel, BorderLayout.NORTH);
 
-        this.manageCenterPanel(new CHPanel(new BorderLayout()));
+        this.manageCenterPanel(new CHPanel(CHStyles.tertiaryColor(), new BorderLayout()));
 
         this.manageBottomPanel();
     }
@@ -120,7 +123,7 @@ public final class MatchImpl extends ScreenView {
         final int cardValue = 10;
         final String cardName = "Exodia il Proibito";
 
-        JPanel firstRow = new CHPanel(new BorderLayout());
+        JPanel firstRow = new CHPanel(new BorderLayout(PADDING_STANDARD, 0));
         JPanel secondRow = new CHPanel(new BorderLayout());
         JPanel handPanelWrapper = new CHPanel(new GridBagLayout());
 
@@ -130,7 +133,7 @@ public final class MatchImpl extends ScreenView {
         playerPanel.setLayout(new BoxLayout(playerPanel, BoxLayout.Y_AXIS));
         playerPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED, CHStyles.secondaryColor(), CHStyles.primaryColor()));
 
-        firstRow.setBorder(BorderFactory.createEmptyBorder(PADDING_STANDARD, PADDING_STANDARD, PADDING_NONE, 13));
+        firstRow.setBorder(BorderFactory.createEmptyBorder(PADDING_STANDARD, 13, PADDING_STANDARD, 13));
         firstRow.add(cardInfoLabel, BorderLayout.CENTER);
 
         for (int i = 0; i < maxHandSize; i++) {
@@ -148,6 +151,20 @@ public final class MatchImpl extends ScreenView {
                 public void mouseExited(MouseEvent e) {
                     cardInfoLabel.setText("");
                 }
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    //removes highlight from the last selected card
+                    selectedCard.ifPresent(previous ->
+                        previous.setBorder(BorderFactory.createEmptyBorder())
+                    );
+
+                    //stores selected card
+                    card.setBorder(BorderFactory.createLineBorder(CHStyles.tertiaryColor(), 2));
+
+                    //highlights clicked card
+                    selectedCard = Optional.of(card);
+                }
             });
             handPanel.add(card);
         }
@@ -157,14 +174,16 @@ public final class MatchImpl extends ScreenView {
 
         deckLabel.setIcon(new ImageIcon(deckIcon.getImage().getScaledInstance(66, 96, Image.SCALE_SMOOTH)));
         deckLabel.setPreferredSize(new Dimension(66, 100));
+        deckLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+        deckLabel.setVerticalTextPosition(SwingConstants.CENTER);
         firstRow.add(deckLabel, mirrored ? BorderLayout.EAST : BorderLayout.WEST);
 
-        secondRow.setBorder(BorderFactory.createEmptyBorder(PADDING_STANDARD, PADDING_NONE, PADDING_STANDARD, PADDING_STANDARD));
+        secondRow.setBorder(BorderFactory.createEmptyBorder(PADDING_STANDARD, PADDING_STANDARD, PADDING_STANDARD, PADDING_STANDARD));
         secondRow.add(nameLabel, BorderLayout.CENTER);
         secondRow.add(shuffleButton, mirrored ? BorderLayout.EAST : BorderLayout.WEST);
 
-        playerPanel.add(firstRow);
-        playerPanel.add(secondRow);
+        playerPanel.add(mirrored ? firstRow : secondRow);
+        playerPanel.add(mirrored ? secondRow : firstRow);
     }
 
     private void startTimer(JLabel timerLabel) {

@@ -33,7 +33,7 @@ public class CHFrame extends JFrame {
 
         this.add(container);
         layout.show(container, "2");
-        this.setSize(new Dimension(960, 960));
+        this.setSize(new Dimension(1200, 1000));
 
         this.setVisible(true);
     }
