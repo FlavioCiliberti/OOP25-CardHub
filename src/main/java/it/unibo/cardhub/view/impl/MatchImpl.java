@@ -118,6 +118,7 @@ public final class MatchImpl extends ScreenView {
         playField.add(firstPlayerPanel, BorderLayout.SOUTH);
         this.managePlayerPanel(secondPlayerPanel, secondPlayerHandPanel, secondPlayerShuffleDeckButton, secondPlayerLabel, secondPlayerDeckLabel, false);
         playField.add(secondPlayerPanel, BorderLayout.NORTH);
+        playField.add(new PlayfieldPanel(), BorderLayout.CENTER);
     }
 
     private void managePlayerPanel(JPanel playerPanel, JPanel handPanel, JButton shuffleButton, JLabel nameLabel, JLabel deckLabel, boolean mirrored) {
