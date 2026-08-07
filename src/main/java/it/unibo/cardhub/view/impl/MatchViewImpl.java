@@ -32,7 +32,7 @@ import it.unibo.cardhub.view.components.CHPanel;
 import it.unibo.cardhub.view.components.CHStyles;
 import it.unibo.cardhub.view.components.ScreenView;
 
-public final class MatchImpl extends ScreenView {
+public final class MatchViewImpl extends ScreenView {
     private static final int PADDING_LARGE = 20;
     private static final int PADDING_STANDARD = 10;
     private static final int PADDING_SMALL = 4;
@@ -55,7 +55,7 @@ public final class MatchImpl extends ScreenView {
     private Optional<JLabel> selectedCard;
     private int timeRemaining;
     
-    public MatchImpl() {
+    public MatchViewImpl() {
         firstPlayerPanel = new CHPanel();
         firstPlayerHandPanel = new CHPanel(new FlowLayout(FlowLayout.LEFT, PADDING_STANDARD, PADDING_NONE));
         secondPlayerPanel = new CHPanel();
