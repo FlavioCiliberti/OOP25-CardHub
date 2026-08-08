@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.util.Objects;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import it.unibo.cardhub.controller.api.HomeController;
@@ -170,6 +171,13 @@ public final class HomeViewImpl extends ScreenView implements HomeView {
      */
     @Override
     public void onExit() {
-        controller.exit();
+        if (confirmDialog("Are you sure you want to exit?", "Exit")) {
+            controller.exit();
+        }
     }
+
+    private boolean confirmDialog(final String question, final String name) {
+        return JOptionPane.showConfirmDialog(this, question, name, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+    }
+
 }

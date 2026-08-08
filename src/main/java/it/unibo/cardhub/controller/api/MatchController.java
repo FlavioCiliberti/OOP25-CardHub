@@ -55,6 +55,15 @@ public interface MatchController extends ScreenController {
     void drawFromDeck(Player owner);
 
     /**
+     * Shuffles a player's deck.
+     *
+     * @param owner the player who owns the deck
+     * @throws IllegalStateException if {@code owner} is not the current
+     *         player
+     */
+    void shuffleDeck(Player owner);
+
+    /**
      * Reshuffles a player's discard pile back into their deck.
      *
      * @param owner the player who owns the discard pile and deck
