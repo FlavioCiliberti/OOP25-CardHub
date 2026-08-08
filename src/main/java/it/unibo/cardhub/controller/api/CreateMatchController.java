@@ -14,6 +14,36 @@ import it.unibo.cardhub.model.logic.WinnerCardAction;
 public interface CreateMatchController extends BackNavigableScreen {
 
     /**
+     * @return the minimum allowed hand size
+     */
+    int getMinHandSize();
+
+    /**
+     * @return the maximum allowed hand size
+     */
+    int getMaxHandSize();
+
+    /**
+     * @return the minimum allowed field size
+     */
+    int getMinFieldSize();
+
+    /**
+     * @return the maximum allowed field size
+     */
+    int getMaxFieldSize();
+
+    /**
+     * @return the default hand size proposed to the user
+     */
+    int getDefaultHandSize();
+
+    /**
+     * @return the default field size proposed to the user
+     */
+    int getDefaultFieldSize();
+
+    /**
      * Retrieves the available decks indexed by their identifier.
      *
      * @return an unmodifiable map associating each deck id with its name
