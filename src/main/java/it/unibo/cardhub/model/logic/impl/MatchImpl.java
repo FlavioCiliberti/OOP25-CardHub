@@ -17,8 +17,6 @@ class MatchImpl implements Match{
     private final MatchState matchState;
     private final MatchLogic matchLogic;
 
-    private final int maxHandSize;
-    private final int startingHandSize;
     private final int playerFieldSize;
     private final boolean autoDraw;
     private final WinnerCardAction winnerCardAction;
@@ -32,8 +30,6 @@ class MatchImpl implements Match{
         matchState = new MatchStateImpl(new ArrayList<>(Arrays.asList(player1, player2)));
 
         this.matchLogic = matchLogic;
-        this.maxHandSize = maxHandSize;
-        this.startingHandSize = startingHandSize;
         this.playerFieldSize = playerFieldSize;
         this.autoDraw = autoDraw;
         this.winnerCardAction = winnerAction;
