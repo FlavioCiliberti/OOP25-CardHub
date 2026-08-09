@@ -5,6 +5,7 @@ import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.Deck;
 import it.unibo.cardhub.model.domain.api.Hand;
 import it.unibo.cardhub.model.domain.api.Player;
+import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 
 /**
  * Player implementation.
@@ -33,9 +34,9 @@ public class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
-    public Card drawCard() {
+    public Card drawCard() throws CardCollectionFullException{
         if (this.hand.isFull()) {
-            throw new IllegalStateException("The hand exceeded the max amount of cards.");
+            throw new CardCollectionFullException("The hand exceeded the max amount of cards.");
         }
 
         final Card card = this.deck.drawCard();

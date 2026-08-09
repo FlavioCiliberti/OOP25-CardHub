@@ -3,7 +3,6 @@ package it.unibo.cardhub.model.logic.api;
 import java.util.List;
 
 import it.unibo.cardhub.model.domain.api.Card;
-import it.unibo.cardhub.model.domain.api.Player;
 
 /**
  * handles the match logic.
@@ -23,7 +22,7 @@ public interface MatchLogic {
      * 
      * @return the turn player.
      */
-    public Player getCurrentPlayer();
+    public PlayerEnum getCurrentPlayer();
 
     /**
      * changes the turn player.

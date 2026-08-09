@@ -1,4 +1,4 @@
-package it.unibo.cardhub.model.domain.impl;
+package it.unibo.cardhub.model.logic.impl;
 
 import it.unibo.cardhub.model.domain.api.Deck;
 import it.unibo.cardhub.model.logic.api.Match;
