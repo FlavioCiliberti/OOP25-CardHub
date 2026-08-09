@@ -13,18 +13,11 @@ public interface Card {
     String id();
 
     /**
-     * A getter for the card's description.
+     * Returns the name of the card.
      * 
-     * @return the cards's description
+     * @return name of the card
      */
-    String desc();
-
-    /**
-     * A getter for the card's image path.
-     * 
-     * @return the card's image path
-     */
-    String imagePath();
+    String name();
 
     /**
      * A getter for the card's value.
@@ -32,4 +25,18 @@ public interface Card {
      * @return the cards value
      */
     int value();
+
+    /**
+     * A getter for the card's description.
+     * 
+     * @return the cards's description
+     */
+    String desc();
+
+    /**
+     * Returns image path.
+     * 
+     * @return image path
+     */
+    String imagePath();
 }

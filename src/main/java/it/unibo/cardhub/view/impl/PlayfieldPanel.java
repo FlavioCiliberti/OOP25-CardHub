@@ -8,7 +8,7 @@ import it.unibo.cardhub.view.components.CHPanel;
 import it.unibo.cardhub.view.components.CHStyles;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -34,7 +34,7 @@ public final class PlayfieldPanel extends CHPanel {
 
         this.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(CHStyles.primaryColor()),
-            BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+            BorderFactory.createEmptyBorder(CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING)));
 
         this.playfieldArea = new PlayfieldAreaPanel();
         this.playerDiscardPileArea = new DiscardPileAreaPanel(BorderLayout.SOUTH);
@@ -67,9 +67,11 @@ public final class PlayfieldPanel extends CHPanel {
      * Updates the playfield with the specified list of cards.
      *
      * @param cards the list of cards to display on the playfield
+     * @param rows the number of rows in the playfield
+     * @param columns the number of columns in the playfield
      */
-    public void updatePlayfield(final List<Card> cards) {
-        this.playfieldArea.update(Objects.requireNonNull(cards, "Cards list cannot be null"));
+    public void updatePlayfield(final List<Card> cards, final int rows, final int columns) {
+        this.playfieldArea.update(Objects.requireNonNull(cards, "Cards list cannot be null"), rows, columns);
     }
 
     private static final class PlayfieldAreaPanel extends CHPanel {
@@ -77,17 +79,22 @@ public final class PlayfieldPanel extends CHPanel {
         private static final long serialVersionUID = 1L;
 
         PlayfieldAreaPanel() {
-            super(new FlowLayout());
+            super();
 
             this.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(CHStyles.primaryColor()),
-                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+                BorderFactory.createEmptyBorder(CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING)));
         }
 
-        void update(final List<Card> cards) {
+        void update(final List<Card> cards, final int rows, final int columns) {
+            if (rows <= 0 || columns <= 0) {
+                throw new IllegalArgumentException("Rows and columns must be positive integers");
+            }
+
+            this.setLayout(new GridLayout(rows, columns, CHStyles.PADDING, CHStyles.PADDING));
             this.removeAll();
 
-            cards.forEach(c -> this.add(new CHButton(new ImageIcon(c.imagePath()))));
+            cards.forEach(c -> this.add(new CHLabel(new ImageIcon(c.imagePath()))));
 
             this.revalidate();
             this.repaint();
@@ -109,7 +116,7 @@ public final class PlayfieldPanel extends CHPanel {
 
             this.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(CHStyles.primaryColor()),
-                BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+                BorderFactory.createEmptyBorder(CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING)));
 
             this.pile = new CHLabel();
             this.reshuffle = new CHButton("Reshuffle into deck");

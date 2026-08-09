@@ -2,6 +2,7 @@ package it.unibo.cardhub.view.components;
 
 import java.awt.Color;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
@@ -73,5 +74,14 @@ public class CHLabel extends JLabel {
      */
     public CHLabel() {
         this("");
+    }
+
+    /**
+     * Creates a new custom label with the specified image icon.
+     *
+     * @param imageIcon the image icon displayed by the label
+     */
+    public CHLabel(final ImageIcon imageIcon) {
+        super(imageIcon);
     }
 }
