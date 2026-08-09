@@ -24,10 +24,19 @@ public class PlayerImpl implements Player {
      * @param deck player deck
      */
     @SuppressFBWarnings(value = "EI2", justification = "The player's deck is intentionally shared with the match lifecycle.")
-    public PlayerImpl(final String name, final Hand hand, final Deck deck) {
+    public PlayerImpl(final String name, final int maxHandSize, final int startingHandSize, final Deck deck) {
         this.name = name;
-        this.hand = hand;
+        this.hand = new HandImpl(maxHandSize);
         this.deck = deck;
+
+        //draw initial cards
+        for (int i = 0; i <= startingHandSize; i++) {
+            try {
+                this.drawCard();
+            } catch (CardCollectionFullException e) {
+                //startingHandSize <= maxHandSize so the exception is not gonna get thrown
+            }
+        }
     }
 
     /**
