@@ -20,7 +20,8 @@ public class PlayerImpl implements Player {
      * Player constructor.
      * 
      * @param name player name
-     * @param hand player hand
+     * @param maxHandSize the maximum hand size
+     * @param startingHandSize the amount of card in hand at match start
      * @param deck player deck
      */
     @SuppressFBWarnings(value = "EI2", justification = "The player's deck is intentionally shared with the match lifecycle.")
