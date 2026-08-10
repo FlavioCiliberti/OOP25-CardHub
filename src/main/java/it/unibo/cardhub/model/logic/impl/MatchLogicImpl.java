@@ -1,0 +1,66 @@
+package it.unibo.cardhub.model.logic.impl;
+
+import it.unibo.cardhub.model.domain.api.Card;
+import it.unibo.cardhub.model.domain.api.MatchState;
+import it.unibo.cardhub.model.logic.api.CardAction;
+import it.unibo.cardhub.model.logic.api.MatchLogic;
+import it.unibo.cardhub.model.logic.api.PlayerEnum;
+import it.unibo.cardhub.model.logic.api.ComparisonWinner;
+
+class MatchLogicImpl implements MatchLogic {
+    private PlayerEnum currentPlayer;
+    private final CardAction winnerCardAction;
+    private final CardAction loserCardAction;
+
+    MatchLogicImpl(final CardAction winnerCardAction, final CardAction loserCardAction) {
+        this.winnerCardAction = winnerCardAction;
+        this.loserCardAction = loserCardAction;
+
+        currentPlayer = PlayerEnum.PLAYER_ONE;
+    }
+
+    @Override
+    public ComparisonWinner compareCard(final Card firstPlayerCard, final Card secondPlayerCard, final MatchState matchState) {
+        if (firstPlayerCard.value() > secondPlayerCard.value()) {
+            //player1 winner action
+            this.executeCardAction(firstPlayerCard, PlayerEnum.PLAYER_ONE, winnerCardAction, matchState);
+            //player2 loser action
+            this.executeCardAction(secondPlayerCard, PlayerEnum.PLAYER_TWO, loserCardAction, matchState);
+            return ComparisonWinner.PLAYER_1;
+        } else if (firstPlayerCard.value() < secondPlayerCard.value()) {
+            //player2 winner action
+            this.executeCardAction(firstPlayerCard, PlayerEnum.PLAYER_TWO, winnerCardAction, matchState);
+            //player1 loser action
+            this.executeCardAction(secondPlayerCard, PlayerEnum.PLAYER_ONE, loserCardAction, matchState);
+            return ComparisonWinner.PLAYER_2;
+        }
+        return ComparisonWinner.TIE;
+    }
+
+    @Override
+    public PlayerEnum getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    @Override
+    public void changeTurn() {
+        if (currentPlayer == PlayerEnum.PLAYER_ONE) {
+            currentPlayer = PlayerEnum.PLAYER_TWO;
+        } else {
+            currentPlayer = PlayerEnum.PLAYER_ONE;
+        }
+    }
+
+    private void executeCardAction(final Card card, final PlayerEnum player,
+                                    final CardAction action, final MatchState matchState) {
+
+        if (action == CardAction.TO_PILE) {
+            matchState.getPlayfield().removeCard(card);
+            matchState.getPlayer(player).putInPile(card);
+        } else if (action == CardAction.TO_HAND) {
+            matchState.getPlayfield().removeCard(card);
+            matchState.getPlayer(player).getHand().addCard(card);
+        }
+    }
+
+}

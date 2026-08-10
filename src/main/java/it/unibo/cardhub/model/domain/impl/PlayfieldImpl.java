@@ -17,18 +17,18 @@ import it.unibo.cardhub.model.domain.exceptions.NoSuchCardsException;
 public class PlayfieldImpl implements Playfield {
 
     private final Map<Player, List<Card>> playerCards;
-    private final int maxHandSize;
+    private final int maxFieldSize;
 
     /**
      * Playfield constructor.
      * 
      * @param players of the playfield
-     * @param maxHandSize of the game
+     * @param maxFieldSize of the game
      */
-    public PlayfieldImpl(final List<Player> players, final int maxHandSize) {
+    public PlayfieldImpl(final List<Player> players, final int maxFieldSize) {
         this.playerCards = new LinkedHashMap<>();
         players.forEach(p -> this.playerCards.put(Objects.requireNonNull(p), new ArrayList<>()));
-        this.maxHandSize = maxHandSize;
+        this.maxFieldSize = maxFieldSize;
     }
 
     /**
@@ -36,7 +36,7 @@ public class PlayfieldImpl implements Playfield {
      */
     @Override
     public int getMaxCardsPerPlayer() {
-        return this.maxHandSize;
+        return this.maxFieldSize;
     }
 
     /**
@@ -45,7 +45,7 @@ public class PlayfieldImpl implements Playfield {
     @Override
     public boolean canAddCard(final Player player) {
         final List<Card> cards = Objects.requireNonNull(this.playerCards.get(player), "No such player.");
-        return cards.size() < this.maxHandSize;
+        return cards.size() < this.maxFieldSize;
     }
 
     /**
