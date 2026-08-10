@@ -60,6 +60,10 @@ public class PlayerImpl implements Player {
             throw new CardCollectionFullException("The hand exceeded the max amount of cards.");
         }
 
+        if (this.deck.isEmpty()) {
+            throw new IllegalStateException("Tried to draw with an empty deck");
+        }
+
         final Card card = this.deck.drawCard();
         this.hand.addCard(card);
         return card;

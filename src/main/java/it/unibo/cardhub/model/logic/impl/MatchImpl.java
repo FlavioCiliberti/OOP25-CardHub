@@ -4,14 +4,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 
+import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.Player;
+import it.unibo.cardhub.model.domain.api.Playfield;
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 import it.unibo.cardhub.model.domain.impl.MatchStateImpl;
 import it.unibo.cardhub.model.logic.api.Match;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
 import it.unibo.cardhub.model.logic.api.PlayerEnum;
+import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 
+/**
+ * an implementation of Match.
+ */
 class MatchImpl implements Match{
     private final MatchState matchState;
     private final MatchLogic matchLogic;
@@ -21,8 +27,16 @@ class MatchImpl implements Match{
     private MatchStatus status;
     private Optional<Player> winner;
 
+    /**
+     * Match constructor.
+     * 
+     * @param player1 the first player
+     * @param player2 the second player
+     * @param playerFieldSize maximum number of cards on the field per player
+     * @param autoDraw should the turn player draw a card on turn start
+     * @param matchLogic the match logic
+     */
     public MatchImpl(Player player1, Player player2,
-                        int maxHandSize, int startingHandSize,
                         int playerFieldSize, boolean autoDraw,
                         MatchLogic matchLogic) {
         matchState = new MatchStateImpl(new ArrayList<>(Arrays.asList(player1, player2)), playerFieldSize);
@@ -32,20 +46,61 @@ class MatchImpl implements Match{
         this.winner = Optional.empty();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void drawCard(PlayerEnum player) throws CardCollectionFullException {
         try {
-            matchState.getPlayers().get(player.getIndex()).drawCard();
+            this.getPlayer(player).drawCard();
         } catch (CardCollectionFullException e) {
             throw new CardCollectionFullException("Hand is full!");
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void playCard(Card card, PlayerEnum playerEnum) throws CardCollectionFullException{
+        Player player = matchState.getPlayer(playerEnum);
+
+        if (matchState.getPlayfield().canAddCard(player)) {
+            player.playCard(card);
+            matchState.getPlayfield().addCard(player, card);
+        } else {
+            throw new CardCollectionFullException("Player's field is full!");
+        }
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ComparisonWinner compareCard(Card firstPlayerCard, Card secondPlayerCard) {
+        return matchLogic.compareCard(firstPlayerCard, secondPlayerCard, matchState);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Player getPlayer(PlayerEnum player) {
+        return matchState.getPlayer(player);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PlayerEnum getTurnPlayer() {
         return matchLogic.getCurrentPlayer();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void changeTurn() {
         this.matchLogic.changeTurn();
@@ -57,6 +112,9 @@ class MatchImpl implements Match{
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void start() {
         if (this.status != MatchStatus.CREATED) {
@@ -66,11 +124,17 @@ class MatchImpl implements Match{
         this.status = MatchStatus.RUNNING;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Optional<Player> getWinner() {
         return this.winner;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void endMatch(Player player) {
         if (this.status != MatchStatus.RUNNING) {
@@ -85,9 +149,20 @@ class MatchImpl implements Match{
         this.status = MatchStatus.FINISHED;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isFinished() {
         return this.status == MatchStatus.FINISHED;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Playfield getPlayfield() {
+        return matchState.getPlayfield();
     }
 
     /**

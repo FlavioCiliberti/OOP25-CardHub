@@ -6,6 +6,7 @@ import java.util.Objects;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.model.domain.api.Playfield;
+import it.unibo.cardhub.model.logic.api.PlayerEnum;
 
 /**
  * Match state implementation.
@@ -38,5 +39,21 @@ public class MatchStateImpl implements MatchState {
     @Override
     public List<Player> getPlayers() {
         return List.copyOf(this.players);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Player getPlayer(PlayerEnum player) {
+        return this.getPlayers().get(player.getIndex());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Playfield getPlayfield() {
+        return field;
     }
 }

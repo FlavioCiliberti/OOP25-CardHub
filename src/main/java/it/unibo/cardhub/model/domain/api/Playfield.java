@@ -15,7 +15,7 @@ public interface Playfield {
     int getMaxCardsPerPlayer();
 
     /**
-     * Informs whether a player can add another card to his hand.
+     * Informs whether a player can add another card to the field.
      * 
      * @param player that wants to add a card
      * @return true if he can, false otherwise
