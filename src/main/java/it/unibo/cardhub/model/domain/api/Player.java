@@ -24,6 +24,13 @@ public interface Player {
     Card playCard(Card card);
 
     /**
+     * Puts a card in the player's discard pile.
+     * 
+     * @param card the card to be put in the discard pile
+     */
+    public void putInPile(Card card);
+
+    /**
      * A getter for the player's name.
      * 
      * @return the player's name

@@ -3,6 +3,7 @@ package it.unibo.cardhub.model.domain.impl;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.Deck;
+import it.unibo.cardhub.model.domain.api.DiscardPile;
 import it.unibo.cardhub.model.domain.api.Hand;
 import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
@@ -15,6 +16,7 @@ public class PlayerImpl implements Player {
     private final String name;
     private final Hand hand;
     private final Deck deck;
+    private final DiscardPile discardPile;
 
     /**
      * Player constructor.
@@ -29,6 +31,7 @@ public class PlayerImpl implements Player {
         this.name = name;
         this.hand = new HandImpl(maxHandSize);
         this.deck = deck;
+        this.discardPile = new DiscardPileImpl();
 
         //draw initial cards
         for (int i = 0; i <= startingHandSize; i++) {
@@ -38,6 +41,14 @@ public class PlayerImpl implements Player {
                 //startingHandSize <= maxHandSize so the exception is not gonna get thrown
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void putInPile(Card card) {
+        this.discardPile.addCard(card);
     }
 
     /**
