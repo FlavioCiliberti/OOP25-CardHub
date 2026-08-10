@@ -18,24 +18,24 @@ public interface Match {
      * @param player the player to draw the card
      * @throws CardCollectionFullException if the player's hand is full
      */
-    void drawCard(PlayerEnum player) throws CardCollectionFullException;
+    void drawCard(Player player) throws CardCollectionFullException;
 
     /**
      * Makes the player play a card.
      * 
      * @param card the card to be played
-     * @param playerEnum the player playing the card
+     * @param player the player playing the card
      * @throws CardCollectionFullException if the player's side of the field is full
      */
-    void playCard(Card card, PlayerEnum playerEnum) throws CardCollectionFullException;
+    void playCard(Card card, Player player) throws CardCollectionFullException;
 
     /**
      * Moves a card from the field to the discard pile.
      * 
      * @param card the card to move
-     * @param playerEnum the player the card belongs to
+     * @param player the player the card belongs to
      */
-    void moveCardFromFieldToPile(Card card, PlayerEnum playerEnum);
+    void moveCardFromFieldToPile(Card card, Player player);
 
     /**
      * compares two Cards and proceeds with the corresponding actions.
@@ -45,14 +45,6 @@ public interface Match {
      * @return the result of the comparison
      */
     ComparisonWinner compareCard(Card firstPlayerCard, Card secondPlayerCard);
-
-    /**
-     * returns the specified player.
-     * 
-     * @param player the requested player
-     * @return the player
-     */
-    Player getPlayer(PlayerEnum player);
 
     /**
      * Returns the state of the playfield.
@@ -66,7 +58,7 @@ public interface Match {
      * 
      * @return the turn player.
      */
-    PlayerEnum getTurnPlayer();
+    Player getTurnPlayer();
 
     /**
      * changes the turn player.

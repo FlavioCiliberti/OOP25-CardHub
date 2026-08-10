@@ -2,64 +2,76 @@ package it.unibo.cardhub.model.logic.impl;
 
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
+import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
-import it.unibo.cardhub.model.logic.api.PlayerEnum;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 
 class MatchLogicImpl implements MatchLogic {
-    private PlayerEnum currentPlayer;
+    private final Player player1;
+    private final Player player2;
+    private Player currentPlayer;
     private final CardAction winnerCardAction;
     private final CardAction loserCardAction;
 
-    MatchLogicImpl(final CardAction winnerCardAction, final CardAction loserCardAction) {
+    MatchLogicImpl(final Player player1, final Player player2,
+                    final CardAction winnerCardAction, final CardAction loserCardAction) {
+
+        this.player1 = player1;
+        this.player2 = player2;
         this.winnerCardAction = winnerCardAction;
         this.loserCardAction = loserCardAction;
 
-        currentPlayer = PlayerEnum.PLAYER_ONE;
+        currentPlayer = player1;
     }
 
     @Override
     public ComparisonWinner compareCard(final Card firstPlayerCard, final Card secondPlayerCard, final MatchState matchState) {
         if (firstPlayerCard.value() > secondPlayerCard.value()) {
             //player1 winner action
-            this.executeCardAction(firstPlayerCard, PlayerEnum.PLAYER_ONE, winnerCardAction, matchState);
+            this.executeCardAction(firstPlayerCard, player1, winnerCardAction, matchState);
             //player2 loser action
-            this.executeCardAction(secondPlayerCard, PlayerEnum.PLAYER_TWO, loserCardAction, matchState);
+            this.executeCardAction(secondPlayerCard, player2, loserCardAction, matchState);
             return ComparisonWinner.PLAYER_1;
         } else if (firstPlayerCard.value() < secondPlayerCard.value()) {
             //player2 winner action
-            this.executeCardAction(firstPlayerCard, PlayerEnum.PLAYER_TWO, winnerCardAction, matchState);
+            this.executeCardAction(firstPlayerCard, player2, winnerCardAction, matchState);
             //player1 loser action
-            this.executeCardAction(secondPlayerCard, PlayerEnum.PLAYER_ONE, loserCardAction, matchState);
+            this.executeCardAction(secondPlayerCard, player1, loserCardAction, matchState);
             return ComparisonWinner.PLAYER_2;
         }
         return ComparisonWinner.TIE;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public PlayerEnum getCurrentPlayer() {
+    public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void changeTurn() {
-        if (currentPlayer == PlayerEnum.PLAYER_ONE) {
-            currentPlayer = PlayerEnum.PLAYER_TWO;
+        if (currentPlayer.equals(player1)) {
+            currentPlayer = player2;
         } else {
-            currentPlayer = PlayerEnum.PLAYER_ONE;
+            currentPlayer = player1;
         }
     }
 
-    private void executeCardAction(final Card card, final PlayerEnum player,
+    private void executeCardAction(final Card card, final Player player,
                                     final CardAction action, final MatchState matchState) {
 
         if (action == CardAction.TO_PILE) {
             matchState.getPlayfield().removeCard(card);
-            matchState.getPlayer(player).putInPile(card);
+            player.putInPile(card);
         } else if (action == CardAction.TO_HAND) {
             matchState.getPlayfield().removeCard(card);
-            matchState.getPlayer(player).getHand().addCard(card);
+            player.getHand().addCard(card);
         }
     }
 

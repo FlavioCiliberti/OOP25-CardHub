@@ -12,7 +12,6 @@ import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 import it.unibo.cardhub.model.domain.impl.MatchStateImpl;
 import it.unibo.cardhub.model.logic.api.Match;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
-import it.unibo.cardhub.model.logic.api.PlayerEnum;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 
 /**
@@ -52,17 +51,15 @@ class MatchImpl implements Match {
      * {@inheritDoc}
      */
     @Override
-    public void drawCard(final PlayerEnum player) throws CardCollectionFullException {
-        this.getPlayer(player).drawCard();
+    public void drawCard(final Player player) throws CardCollectionFullException {
+        player.drawCard();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void playCard(final Card card, final PlayerEnum playerEnum) throws CardCollectionFullException {
-        final Player player = matchState.getPlayer(playerEnum);
-
+    public void playCard(final Card card, final Player player) throws CardCollectionFullException {
         if (matchState.getPlayfield().canAddCard(player)) {
             player.playCard(card);
             matchState.getPlayfield().addCard(player, card);
@@ -76,8 +73,9 @@ class MatchImpl implements Match {
      * {@inheritDoc}
      */
     @Override
-    public void moveCardFromFieldToPile(final Card card, final PlayerEnum playerEnum) {
-        matchState.getPlayer(playerEnum).putInPile(card);
+    public void moveCardFromFieldToPile(final Card card, final Player player) {
+        matchState.getPlayfield().removeCard(card);
+        player.putInPile(card);
     }
 
     /**
@@ -92,15 +90,7 @@ class MatchImpl implements Match {
      * {@inheritDoc}
      */
     @Override
-    public Player getPlayer(final PlayerEnum player) {
-        return matchState.getPlayer(player);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public PlayerEnum getTurnPlayer() {
+    public Player getTurnPlayer() {
         return matchLogic.getCurrentPlayer();
     }
 
