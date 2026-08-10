@@ -41,7 +41,7 @@ public interface Match {
      * @return the result of the comparison
      */
     ComparisonWinner compareCard(Card firstPlayerCard, Card secondPlayerCard);
-    
+
     /**
      * returns the specified player.
      * 

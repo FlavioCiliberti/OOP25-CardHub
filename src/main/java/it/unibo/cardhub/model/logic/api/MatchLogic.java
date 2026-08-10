@@ -15,17 +15,17 @@ public interface MatchLogic {
      * @param matchState the matchState to be updated with the actions
      * @return the result of the comparison
      */
-    public ComparisonWinner compareCard(Card firstPlayerCard, Card secondPlayerCard, MatchState matchState);
+    ComparisonWinner compareCard(Card firstPlayerCard, Card secondPlayerCard, MatchState matchState);
 
     /**
      * getter for the turn player.
      * 
      * @return the turn player.
      */
-    public PlayerEnum getCurrentPlayer();
+    PlayerEnum getCurrentPlayer();
 
     /**
      * changes the turn player.
      */
-    public void changeTurn();
+    void changeTurn();
 }

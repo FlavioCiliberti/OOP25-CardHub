@@ -7,12 +7,12 @@ import it.unibo.cardhub.model.logic.api.MatchLogic;
 import it.unibo.cardhub.model.logic.api.PlayerEnum;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 
-class MatchLogicImpl implements MatchLogic{
+class MatchLogicImpl implements MatchLogic {
     private PlayerEnum currentPlayer;
     private final CardAction winnerCardAction;
     private final CardAction loserCardAction;
 
-    public MatchLogicImpl(CardAction winnerCardAction, CardAction loserCardAction) {
+    MatchLogicImpl(final CardAction winnerCardAction, final CardAction loserCardAction) {
         this.winnerCardAction = winnerCardAction;
         this.loserCardAction = loserCardAction;
 
@@ -20,7 +20,7 @@ class MatchLogicImpl implements MatchLogic{
     }
 
     @Override
-    public ComparisonWinner compareCard(Card firstPlayerCard, Card secondPlayerCard, MatchState matchState) {
+    public ComparisonWinner compareCard(final Card firstPlayerCard, final Card secondPlayerCard, final MatchState matchState) {
         if (firstPlayerCard.value() > secondPlayerCard.value()) {
             //player1 winner action
             this.executeCardAction(firstPlayerCard, PlayerEnum.PLAYER_ONE, winnerCardAction, matchState);
@@ -51,14 +51,16 @@ class MatchLogicImpl implements MatchLogic{
         }
     }
 
-    private void executeCardAction(Card Card, PlayerEnum player, CardAction action, MatchState matchState) {
+    private void executeCardAction(final Card card, final PlayerEnum player,
+                                    final CardAction action, final MatchState matchState) {
+
         if (action == CardAction.TO_PILE) {
-            matchState.getPlayfield().removeCard(Card);
-            matchState.getPlayer(player).putInPile(Card);
+            matchState.getPlayfield().removeCard(card);
+            matchState.getPlayer(player).putInPile(card);
         } else if (action == CardAction.TO_HAND) {
-            matchState.getPlayfield().removeCard(Card);
-            matchState.getPlayer(player).getHand().addCard(Card);
+            matchState.getPlayfield().removeCard(card);
+            matchState.getPlayer(player).getHand().addCard(card);
         }
     }
-    
+
 }

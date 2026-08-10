@@ -9,7 +9,7 @@ import it.unibo.cardhub.model.logic.api.Match;
 /**
  * a factory for Match.
  */
-public class MatchFactory {
+public final class MatchFactory {
     private static final int DEFAULT_MAX_HAND_SIZE = 5;
     private static final int DEFAULT_STARTING_HAND_SIZE = 5;
     private static final int DEFAULT_PLAYFIELD_SIZE = 3;
@@ -27,11 +27,13 @@ public class MatchFactory {
      * @param secondPlayerDeck player2 deck
      * @return a MatchImpl for Free Match
      */
-    public static Match createFreeMatch(String firstPlayerName, String secondPlayerName,
-                                        Deck firstPlayerDeck, Deck secondPlayerDeck) {
+    public static Match createFreeMatch(final String firstPlayerName, final String secondPlayerName,
+                                        final Deck firstPlayerDeck, final Deck secondPlayerDeck) {
 
-        Player player1 = new PlayerImpl(firstPlayerName, DEFAULT_MAX_HAND_SIZE, DEFAULT_STARTING_HAND_SIZE, firstPlayerDeck);
-        Player player2 = new PlayerImpl(secondPlayerName, DEFAULT_MAX_HAND_SIZE, DEFAULT_STARTING_HAND_SIZE, secondPlayerDeck);
+        final Player player1 = new PlayerImpl(firstPlayerName, DEFAULT_MAX_HAND_SIZE,
+                                                DEFAULT_STARTING_HAND_SIZE, firstPlayerDeck);
+        final Player player2 = new PlayerImpl(secondPlayerName, DEFAULT_MAX_HAND_SIZE,
+                                                DEFAULT_STARTING_HAND_SIZE, secondPlayerDeck);
 
         return new MatchImpl(player1, player2, 
                                 DEFAULT_PLAYFIELD_SIZE, true, 
@@ -53,14 +55,16 @@ public class MatchFactory {
      * @param loserAction the action done to the loser card
      * @return a MatchImpl for Custom Match
      */
-    public static Match createCustomMatch(String firstPlayerName, String secondPlayerName,
-                                            Deck firstPlayerDeck, Deck secondPlayerDeck,
-                                            int maxHandSize, int startingHandSize,
-                                            int playerFieldSize, boolean autoDraw,
-                                            CardAction winnerAction, CardAction loserAction) {
+    public static Match createCustomMatch(final String firstPlayerName, final String secondPlayerName,
+                                            final Deck firstPlayerDeck, final Deck secondPlayerDeck,
+                                            final int maxHandSize, final int startingHandSize,
+                                            final int playerFieldSize, final boolean autoDraw,
+                                            final CardAction winnerAction, final CardAction loserAction) {
 
-        Player player1 = new PlayerImpl(firstPlayerName, maxHandSize, startingHandSize, firstPlayerDeck);
-        Player player2 = new PlayerImpl(secondPlayerName, maxHandSize, startingHandSize, secondPlayerDeck);
+        final Player player1 = new PlayerImpl(firstPlayerName, maxHandSize,
+                                                startingHandSize, firstPlayerDeck);
+        final Player player2 = new PlayerImpl(secondPlayerName, maxHandSize,
+                                                startingHandSize, secondPlayerDeck);
 
         return new MatchImpl(player1, player2,
                                 playerFieldSize, autoDraw,

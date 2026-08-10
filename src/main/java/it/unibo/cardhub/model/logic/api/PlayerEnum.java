@@ -1,7 +1,7 @@
 package it.unibo.cardhub.model.logic.api;
 
 /**
- * An enumeration for player1 and player2
+ * An enumeration for player1 and player2.
  */
 public enum PlayerEnum {
     PLAYER_ONE(0),
@@ -14,7 +14,7 @@ public enum PlayerEnum {
      * 
      * @param index the index of the player
      */
-    PlayerEnum(int index) {
+    PlayerEnum(final int index) {
         this.index = index;
     }
 

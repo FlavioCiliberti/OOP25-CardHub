@@ -11,7 +11,7 @@ import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 /**
  * Player implementation.
  */
-public class PlayerImpl implements Player {
+public final class PlayerImpl implements Player {
 
     private final String name;
     private final Hand hand;
@@ -37,8 +37,9 @@ public class PlayerImpl implements Player {
         for (int i = 0; i <= startingHandSize; i++) {
             try {
                 this.drawCard();
-            } catch (CardCollectionFullException e) {
-                //startingHandSize <= maxHandSize so the exception is not gonna get thrown
+            } catch (final CardCollectionFullException e) {
+                //startingHandSize <= maxHandSize so the exception should never trigger
+                throw new IllegalStateException("Hand already had cards in it on instantiation", e);
             }
         }
     }
@@ -47,7 +48,7 @@ public class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
-    public void putInPile(Card card) {
+    public void putInPile(final Card card) {
         this.discardPile.addCard(card);
     }
 
@@ -55,7 +56,7 @@ public class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
-    public Card drawCard() throws CardCollectionFullException{
+    public Card drawCard() throws CardCollectionFullException {
         if (this.hand.isFull()) {
             throw new CardCollectionFullException("The hand exceeded the max amount of cards.");
         }
@@ -89,6 +90,9 @@ public class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+                        justification = "Hand is intentionally exposed to let callers mutate its state"
+    )
     public Hand getHand() {
         return this.hand;
     }

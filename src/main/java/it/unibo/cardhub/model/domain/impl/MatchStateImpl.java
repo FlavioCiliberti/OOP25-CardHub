@@ -3,6 +3,7 @@ package it.unibo.cardhub.model.domain.impl;
 import java.util.List;
 import java.util.Objects;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.model.domain.api.Playfield;
@@ -20,9 +21,10 @@ public class MatchStateImpl implements MatchState {
      * Match state constructor.
      * 
      * @param players of the match
+     * @param maxFieldSize maximum number of cards on the field per player
      * @throws IllegalArgumentException if the match has no players
      */
-    public MatchStateImpl(final List<Player> players, int maxFieldSize) {
+    public MatchStateImpl(final List<Player> players, final int maxFieldSize) {
         Objects.requireNonNull(players);
 
         if (players.isEmpty()) {
@@ -45,7 +47,7 @@ public class MatchStateImpl implements MatchState {
      * {@inheritDoc}
      */
     @Override
-    public Player getPlayer(PlayerEnum player) {
+    public Player getPlayer(final PlayerEnum player) {
         return this.getPlayers().get(player.getIndex());
     }
 
@@ -53,7 +55,10 @@ public class MatchStateImpl implements MatchState {
      * {@inheritDoc}
      */
     @Override
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+                        justification = "Playfield is intentionally exposed to let callers mutate its state"
+    )
     public Playfield getPlayfield() {
-        return field;
+        return this.field;
     }
 }

@@ -18,7 +18,7 @@ import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 /**
  * an implementation of Match.
  */
-class MatchImpl implements Match{
+class MatchImpl implements Match {
     private final MatchState matchState;
     private final MatchLogic matchLogic;
 
@@ -36,9 +36,9 @@ class MatchImpl implements Match{
      * @param autoDraw should the turn player draw a card on turn start
      * @param matchLogic the match logic
      */
-    public MatchImpl(Player player1, Player player2,
-                        int playerFieldSize, boolean autoDraw,
-                        MatchLogic matchLogic) {
+    MatchImpl(final Player player1, final Player player2,
+                        final int playerFieldSize, final boolean autoDraw,
+                        final MatchLogic matchLogic) {
         matchState = new MatchStateImpl(new ArrayList<>(Arrays.asList(player1, player2)), playerFieldSize);
 
         this.matchLogic = matchLogic;
@@ -50,20 +50,16 @@ class MatchImpl implements Match{
      * {@inheritDoc}
      */
     @Override
-    public void drawCard(PlayerEnum player) throws CardCollectionFullException {
-        try {
-            this.getPlayer(player).drawCard();
-        } catch (CardCollectionFullException e) {
-            throw new CardCollectionFullException("Hand is full!");
-        }
+    public void drawCard(final PlayerEnum player) throws CardCollectionFullException {
+        this.getPlayer(player).drawCard();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void playCard(Card card, PlayerEnum playerEnum) throws CardCollectionFullException{
-        Player player = matchState.getPlayer(playerEnum);
+    public void playCard(final Card card, final PlayerEnum playerEnum) throws CardCollectionFullException {
+        final Player player = matchState.getPlayer(playerEnum);
 
         if (matchState.getPlayfield().canAddCard(player)) {
             player.playCard(card);
@@ -78,7 +74,7 @@ class MatchImpl implements Match{
      * {@inheritDoc}
      */
     @Override
-    public ComparisonWinner compareCard(Card firstPlayerCard, Card secondPlayerCard) {
+    public ComparisonWinner compareCard(final Card firstPlayerCard, final Card secondPlayerCard) {
         return matchLogic.compareCard(firstPlayerCard, secondPlayerCard, matchState);
     }
 
@@ -86,7 +82,7 @@ class MatchImpl implements Match{
      * {@inheritDoc}
      */
     @Override
-    public Player getPlayer(PlayerEnum player) {
+    public Player getPlayer(final PlayerEnum player) {
         return matchState.getPlayer(player);
     }
 
@@ -102,12 +98,14 @@ class MatchImpl implements Match{
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("PMD.EmptyCatchBlock")
     public void changeTurn() {
         this.matchLogic.changeTurn();
         if (autoDraw) {
             try {
                 this.drawCard(this.getTurnPlayer());
-            } catch (CardCollectionFullException e) {
+            } catch (final CardCollectionFullException e) {
+                // Expected: the player doesn't draw if their hand is already full
             }
         }
     }
@@ -136,7 +134,7 @@ class MatchImpl implements Match{
      * {@inheritDoc}
      */
     @Override
-    public void endMatch(Player player) {
+    public void endMatch(final Player player) {
         if (this.status != MatchStatus.RUNNING) {
             throw new IllegalStateException("A winner can only be set while the match is running.");
         }
@@ -168,7 +166,7 @@ class MatchImpl implements Match{
     /**
      * Represents the status of the match.
      */
-    public enum MatchStatus {
+    enum MatchStatus {
         CREATED, RUNNING, FINISHED
     }
 }
