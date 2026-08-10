@@ -3,7 +3,7 @@ package it.unibo.cardhub.view.components;
 import java.awt.Color;
 
 /**
- * GUI styles shared throught the application. 
+ * GUI styles shared throughout the application. 
  */
 public final class CHStyles {
     public static final int PADDING = 10;
