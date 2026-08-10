@@ -2,6 +2,7 @@ package it.unibo.cardhub.view.components;
 
 import java.awt.Color;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 /**
@@ -73,5 +74,17 @@ public class CHLabel extends JLabel {
      */
     public CHLabel() {
         this("");
+    }
+
+    /**
+     * Creates a new custom label with the specified image icon.
+     * Sets the foreground color to the tertiary application color defined by
+     * {@link CHColor#TERTIARY}.
+     *
+     * @param imageIcon the image icon displayed by the label
+     */
+    public CHLabel(ImageIcon imageIcon) {
+        super(imageIcon);
+        super.setForeground(CHStyles.tertiaryColor());
     }
 }
