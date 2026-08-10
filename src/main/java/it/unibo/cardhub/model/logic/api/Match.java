@@ -11,10 +11,6 @@ import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
  * Handles the match in its entirety.
  */
 public interface Match {
-    /**
-     * Starts a match.
-     */
-    void start();
 
     /**
      * Makes the player draw a card.
@@ -32,6 +28,14 @@ public interface Match {
      * @throws CardCollectionFullException if the player's side of the field is full
      */
     void playCard(Card card, PlayerEnum playerEnum) throws CardCollectionFullException;
+
+    /**
+     * Moves a card from the field to the discard pile.
+     * 
+     * @param card the card to move
+     * @param playerEnum the player the card belongs to
+     */
+    void moveCardFromFieldToPile(Card card, PlayerEnum playerEnum);
 
     /**
      * compares two Cards and proceeds with the corresponding actions.

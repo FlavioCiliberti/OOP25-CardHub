@@ -44,6 +44,8 @@ class MatchImpl implements Match {
         this.matchLogic = matchLogic;
         this.autoDraw = autoDraw;
         this.winner = Optional.empty();
+
+        this.start();
     }
 
     /**
@@ -68,6 +70,14 @@ class MatchImpl implements Match {
             throw new CardCollectionFullException("Player's field is full!");
         }
 
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void moveCardFromFieldToPile(final Card card, final PlayerEnum playerEnum) {
+        matchState.getPlayer(playerEnum).putInPile(card);
     }
 
     /**
@@ -110,11 +120,7 @@ class MatchImpl implements Match {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void start() {
+    private void start() {
         if (this.status != MatchStatus.CREATED) {
             throw new IllegalStateException("The match has already started.");
         }
