@@ -1,9 +1,11 @@
 package it.unibo.cardhub.model.domain.api;
 
+import java.util.Optional;
+
 /**
  * Represents a card.
  */
-public interface Card {
+public interface Card<T> {
 
     /**
      * A getter for the card's ID.
@@ -13,16 +15,16 @@ public interface Card {
     String id();
 
     /**
-     * Returns the name of the card.
+     * Returns the card's attribute.
      * 
-     * @return name of the card
+     * @return the card's attribute
      */
-    String name();
+    T attributes();
 
     /**
-     * A getter for the card's value.
+     * Returns the card's value.
      * 
-     * @return the cards value
+     * @return the card's value
      */
     int value();
 
@@ -31,12 +33,5 @@ public interface Card {
      * 
      * @return the cards's description
      */
-    String desc();
-
-    /**
-     * Returns image path.
-     * 
-     * @return image path
-     */
-    String imagePath();
+    Optional<String> desc();
 }
