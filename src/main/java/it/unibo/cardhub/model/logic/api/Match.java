@@ -38,6 +38,13 @@ public interface Match {
     void moveCardFromFieldToPile(Card card, Player player);
 
     /**
+     * Shuffles the player's discard pile into the deck.
+     * 
+     * @param player the player the action is going to be performed on
+     */
+    void shufflePileIntoDeck(Player player);
+
+    /**
      * compares two Cards and proceeds with the corresponding actions.
      * 
      * @param firstPlayerCard the card of player1 to be compared

@@ -31,6 +31,11 @@ public interface Player {
     void putInPile(Card card);
 
     /**
+     * Shuffles the player's discard pile into the deck.
+     */
+    void shufflePileIntoDeck();
+
+    /**
      * A getter for the player's name.
      * 
      * @return the player's name
