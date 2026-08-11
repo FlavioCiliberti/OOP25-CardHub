@@ -46,7 +46,7 @@ public class HandImpl extends AbstractCardCollection implements Hand {
      * {@inheritDoc}
      */
     @Override
-    public Card playCard(final Card card) {
+    public Card<?> playCard(final Card<?> card) {
         if (!this.getMutableCards().remove(card)) {
             throw new NoSuchCardsException();
         }

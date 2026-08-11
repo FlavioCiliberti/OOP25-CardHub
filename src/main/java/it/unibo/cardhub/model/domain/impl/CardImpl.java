@@ -14,4 +14,7 @@ import it.unibo.cardhub.model.domain.api.Card;
  */
 public record CardImpl<T>(String id, T attributes, int value, Optional<String> desc) implements Card<T> {
 
+    public static <T> Card<T> of(final String id, final T attributes, final int value) {
+        return new CardImpl<>(id, attributes, value, Optional.empty());
+    }
 }

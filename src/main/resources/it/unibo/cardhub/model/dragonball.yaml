@@ -1,0 +1,120 @@
+cards:
+  - id: goku_base
+    name: Goku
+    attribute: saiyan
+    value: 100
+    description: Saiyan warrior
+
+  - id: goku_super_saiyan
+    name: Super Saiyan Goku
+    attribute: super_saiyan
+    value: 150
+    description: Super Saiyan transformation
+
+  - id: goku_super_saiyan_2
+    name: Super Saiyan 2 Goku
+    attribute: super_saiyan_2
+    value: 180
+    description: Advanced Super Saiyan transformation
+
+  - id: goku_super_saiyan_3
+    name: Super Saiyan 3 Goku
+    attribute: super_saiyan_3
+    value: 220
+    description: Powerful Super Saiyan transformation
+
+  - id: vegeta_base
+    name: Vegeta
+    attribute: saiyan
+    value: 100
+    description: Saiyan prince
+
+  - id: vegeta_super_saiyan
+    name: Super Saiyan Vegeta
+    attribute: super_saiyan
+    value: 145
+    description: Super Saiyan transformation
+
+  - id: gohan
+    name: Gohan
+    attribute: saiyan_hybrid
+    value: 110
+    description: Saiyan-human hybrid
+
+  - id: gohan_ultimate
+    name: Ultimate Gohan
+    attribute: ultimate
+    value: 200
+    description: Unlocked potential
+
+  - id: piccolo
+    name: Piccolo
+    attribute: namekian
+    value: 95
+    description: Namekian warrior
+
+  - id: piccolo_fused
+    name: Fused Piccolo
+    attribute: namekian
+    value: 140
+    description: Enhanced Namekian warrior
+
+  - id: trunks
+    name: Trunks
+    attribute: saiyan_hybrid
+    value: 105
+    description: Saiyan-human hybrid
+
+  - id: trunks_super_saiyan
+    name: Super Saiyan Trunks
+    attribute: super_saiyan
+    value: 150
+    description: Super Saiyan transformation
+
+  - id: frieza
+    name: Frieza
+    attribute: alien
+    value: 130
+    description: Galactic emperor
+
+  - id: frieza_final
+    name: Final Form Frieza
+    attribute: final_form
+    value: 190
+    description: Frieza final form
+
+  - id: cell
+    name: Cell
+    attribute: bio_android
+    value: 160
+    description: Bio-engineered warrior
+
+  - id: cell_perfect
+    name: Perfect Cell
+    attribute: perfect_form
+    value: 210
+    description: Perfect Cell form
+
+  - id: majin_buu
+    name: Majin Buu
+    attribute: majin
+    value: 170
+    description: Majin creature
+
+  - id: kid_buu
+    name: Kid Buu
+    attribute: pure_majin
+    value: 190
+    description: Pure Majin form
+
+  - id: broly
+    name: Broly
+    attribute: legendary_saiyan
+    value: 220
+    description: Legendary Super Saiyan
+
+  - id: beerus
+    name: Beerus
+    attribute: god
+    value: 300
+    description: God of Destruction

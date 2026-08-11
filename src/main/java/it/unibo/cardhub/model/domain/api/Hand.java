@@ -25,5 +25,5 @@ public interface Hand extends CardCollection {
      * @param card to be played
      * @return the card
      */
-    Card playCard(Card card);
+    Card<?> playCard(Card<?> card);
 }

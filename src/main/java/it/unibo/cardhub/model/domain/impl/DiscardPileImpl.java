@@ -23,7 +23,7 @@ public class DiscardPileImpl extends AbstractCardCollection implements DiscardPi
      * {@inheritDoc}
      */
     @Override
-    public Card takeCard(final Card card) {
+    public Card<?> takeCard(final Card<?> card) {
         if (!this.getMutableCards().remove(card)) {
             throw new NoSuchCardsException();
         }
@@ -35,7 +35,7 @@ public class DiscardPileImpl extends AbstractCardCollection implements DiscardPi
      * {@inheritDoc}
      */
     @Override
-    public Optional<Card> peekCard() {
+    public Optional<Card<?>> peekCard() {
         if (getMutableCards().isEmpty()) {
             return Optional.empty();
         }

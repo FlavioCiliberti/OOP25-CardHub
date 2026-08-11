@@ -31,7 +31,7 @@ public interface MatchController extends ScreenController {
      * @throws IllegalStateException if {@code owner} is not the current
      *         player, or {@code card} is not in their hand
      */
-    void playCard(Player owner, Card card);
+    void playCard(Player owner, Card<?> card);
 
     /**
      * Moves a card from a player's section of the playfield to that
@@ -43,7 +43,7 @@ public interface MatchController extends ScreenController {
      *         player, or {@code card} is not on their section of the
      *         playfield
      */
-    void discardCard(Player owner, Card card);
+    void discardCard(Player owner, Card<?> card);
 
     /**
      * Draws the top card of a player's deck into that player's hand.

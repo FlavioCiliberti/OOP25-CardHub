@@ -28,7 +28,7 @@ public interface Playfield {
      * @param player that plays the card
      * @param card to be put on the table
      */
-    void addCard(Player player, Card card);
+    void addCard(Player player, Card<?> card);
 
     /**
      * Removes a card from the table.
@@ -36,7 +36,7 @@ public interface Playfield {
      * @param card to be removed
      * @return the card
      */
-    Card removeCard(Card card);
+    Card<?> removeCard(Card<?> card);
 
     /**
      * A getter for the player's cards.
@@ -44,7 +44,7 @@ public interface Playfield {
      * @param player having cards of interest
      * @return a list of cards
      */
-    List<Card> getCards(Player player);
+    List<Card<?>> getCards(Player player);
 
     /**
      * Removes all cards from the table.
@@ -56,5 +56,5 @@ public interface Playfield {
      * 
      * @return a list of all the cards
      */
-    List<Card> getAllCards();
+    List<Card<?>> getAllCards();
 }

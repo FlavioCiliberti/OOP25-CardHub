@@ -1,0 +1,120 @@
+cards:
+  - id: dark_magician
+    name: Dark Magician
+    attribute: dark
+    value: 2500
+    description: Spellcaster monster
+
+  - id: dark_magician_girl
+    name: Dark Magician Girl
+    attribute: dark
+    value: 2000
+    description: Spellcaster monster
+
+  - id: blue_eyes_white_dragon
+    name: Blue-Eyes White Dragon
+    attribute: light
+    value: 3000
+    description: Dragon monster
+
+  - id: red_eyes_black_dragon
+    name: Red-Eyes Black Dragon
+    attribute: dark
+    value: 2400
+    description: Dragon monster
+
+  - id: summoned_skull
+    name: Summoned Skull
+    attribute: dark
+    value: 2500
+    description: Fiend monster
+
+  - id: kuriboh
+    name: Kuriboh
+    attribute: dark
+    value: 300
+    description: Fiend monster
+
+  - id: jinzo
+    name: Jinzo
+    attribute: dark
+    value: 2400
+    description: Machine monster
+
+  - id: gaia_the_fierce_knight
+    name: Gaia the Fierce Knight
+    attribute: earth
+    value: 2300
+    description: Warrior monster
+
+  - id: celtic_guardian
+    name: Celtic Guardian
+    attribute: earth
+    value: 1400
+    description: Warrior monster
+
+  - id: buster_blader
+    name: Buster Blader
+    attribute: earth
+    value: 2600
+    description: Warrior monster
+
+  - id: elemental_hero_neos
+    name: Elemental HERO Neos
+    attribute: light
+    value: 2500
+    description: Warrior monster
+
+  - id: exodia_head
+    name: Exodia the Forbidden One
+    attribute: dark
+    value: 1000
+    description: Effect monster
+
+  - id: obelisk
+    name: Obelisk the Tormentor
+    attribute: divine
+    value: 4000
+    description: Divine-Beast monster
+
+  - id: slifer
+    name: Slifer the Sky Dragon
+    attribute: divine
+    value: 3000
+    description: Divine-Beast monster
+
+  - id: ra
+    name: The Winged Dragon of Ra
+    attribute: divine
+    value: 4000
+    description: Divine-Beast monster
+
+  - id: kuribabylon
+    name: Kuribabylon
+    attribute: dark
+    value: 1500
+    description: Fiend monster
+
+  - id: marshmallon
+    name: Marshmallon
+    attribute: light
+    value: 300
+    description: Fairy monster
+
+  - id: cyber_dragon
+    name: Cyber Dragon
+    attribute: light
+    value: 2100
+    description: Machine monster
+
+  - id: stardust_dragon
+    name: Stardust Dragon
+    attribute: wind
+    value: 2500
+    description: Dragon Synchro monster
+
+  - id: black_luster_soldier
+    name: Black Luster Soldier
+    attribute: earth
+    value: 3000
+    description: Warrior monster

@@ -1,0 +1,120 @@
+cards:
+  - id: pikachu
+    name: Pikachu
+    attribute: electric
+    value: 60
+    description: Electric-type Pokémon
+
+  - id: charizard
+    name: Charizard
+    attribute: fire
+    value: 120
+    description: Fire-type Pokémon
+
+  - id: blastoise
+    name: Blastoise
+    attribute: water
+    value: 110
+    description: Water-type Pokémon
+
+  - id: venusaur
+    name: Venusaur
+    attribute: grass
+    value: 110
+    description: Grass-type Pokémon
+
+  - id: raichu
+    name: Raichu
+    attribute: electric
+    value: 90
+    description: Electric-type Pokémon
+
+  - id: charmeleon
+    name: Charmeleon
+    attribute: fire
+    value: 80
+    description: Fire-type Pokémon
+
+  - id: squirtle
+    name: Squirtle
+    attribute: water
+    value: 40
+    description: Water-type Pokémon
+
+  - id: ivysaur
+    name: Ivysaur
+    attribute: grass
+    value: 70
+    description: Grass-type Pokémon
+
+  - id: mewtwo
+    name: Mewtwo
+    attribute: psychic
+    value: 130
+    description: Psychic-type Pokémon
+
+  - id: mew
+    name: Mew
+    attribute: psychic
+    value: 100
+    description: Psychic-type Pokémon
+
+  - id: gengar
+    name: Gengar
+    attribute: ghost
+    value: 100
+    description: Ghost-type Pokémon
+
+  - id: alakazam
+    name: Alakazam
+    attribute: psychic
+    value: 95
+    description: Psychic-type Pokémon
+
+  - id: gyarados
+    name: Gyarados
+    attribute: water
+    value: 100
+    description: Water-type Pokémon
+
+  - id: dragonite
+    name: Dragonite
+    attribute: dragon
+    value: 125
+    description: Dragon-type Pokémon
+
+  - id: lapras
+    name: Lapras
+    attribute: water
+    value: 85
+    description: Water-type Pokémon
+
+  - id: arcanine
+    name: Arcanine
+    attribute: fire
+    value: 95
+    description: Fire-type Pokémon
+
+  - id: snorlax
+    name: Snorlax
+    attribute: normal
+    value: 100
+    description: Normal-type Pokémon
+
+  - id: eevee
+    name: Eevee
+    attribute: normal
+    value: 50
+    description: Normal-type Pokémon
+
+  - id: lucario
+    name: Lucario
+    attribute: fighting
+    value: 95
+    description: Fighting-type Pokémon
+
+  - id: greninja
+    name: Greninja
+    attribute: water
+    value: 100
+    description: Water-type Pokémon
