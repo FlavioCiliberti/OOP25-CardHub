@@ -73,6 +73,14 @@ class MatchImpl implements Match {
      * {@inheritDoc}
      */
     @Override
+    public void shufflePileIntoDeck(final Player player) {
+        player.shufflePileIntoDeck();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void moveCardFromFieldToPile(final Card card, final Player player) {
         matchState.getPlayfield().removeCard(card);
         player.putInPile(card);
