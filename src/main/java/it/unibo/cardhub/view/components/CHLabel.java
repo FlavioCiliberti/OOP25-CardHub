@@ -83,7 +83,7 @@ public class CHLabel extends JLabel {
      *
      * @param imageIcon the image icon displayed by the label
      */
-    public CHLabel(ImageIcon imageIcon) {
+    public CHLabel(final ImageIcon imageIcon) {
         super(imageIcon);
         super.setForeground(CHStyles.tertiaryColor());
     }
