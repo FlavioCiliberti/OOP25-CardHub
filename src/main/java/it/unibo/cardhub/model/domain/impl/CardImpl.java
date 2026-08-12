@@ -14,6 +14,14 @@ import it.unibo.cardhub.model.domain.api.Card;
  */
 public record CardImpl<T>(String id, T attributes, int value, Optional<String> desc) implements Card<T> {
 
+    /**
+     * Creates a new card without a description.
+     * 
+     * @param id         the card's ID
+     * @param attributes the card's attribute
+     * @param value      the card's value
+     * @return a new card with the given ID, attribute and value, and without a description
+     */
     public static <T> Card<T> of(final String id, final T attributes, final int value) {
         return new CardImpl<>(id, attributes, value, Optional.empty());
     }

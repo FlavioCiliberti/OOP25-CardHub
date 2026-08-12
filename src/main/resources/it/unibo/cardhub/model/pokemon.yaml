@@ -1,120 +1,70 @@
 cards:
   - id: pikachu
-    name: Pikachu
-    attribute: electric
+    attribute:
+      type: Electric
+      rarity: Common
     value: 60
-    description: Electric-type Pokémon
+    description: "An Electric-type Pokémon."
 
-  - id: charizard
-    name: Charizard
-    attribute: fire
-    value: 120
-    description: Fire-type Pokémon
-
-  - id: blastoise
-    name: Blastoise
-    attribute: water
-    value: 110
-    description: Water-type Pokémon
-
-  - id: venusaur
-    name: Venusaur
-    attribute: grass
-    value: 110
-    description: Grass-type Pokémon
-
-  - id: raichu
-    name: Raichu
-    attribute: electric
-    value: 90
-    description: Electric-type Pokémon
+  - id: charmander
+    attribute:
+      type: Fire
+      rarity: Common
+    value: 50
+    description: "A small Fire-type Pokémon."
 
   - id: charmeleon
-    name: Charmeleon
-    attribute: fire
+    attribute:
+      type: Fire
+      rarity: Uncommon
     value: 80
-    description: Fire-type Pokémon
+    description: "The evolved form of Charmander."
+
+  - id: charizard
+    attribute:
+      type: Fire
+      rarity: Rare
+    value: 120
+    description: "A powerful Fire-type Pokémon."
 
   - id: squirtle
-    name: Squirtle
-    attribute: water
-    value: 40
-    description: Water-type Pokémon
+    attribute:
+      type: Water
+      rarity: Common
+    value: 50
+    description: "A small Water-type Pokémon."
+
+  - id: wartortle
+    attribute:
+      type: Water
+      rarity: Uncommon
+    value: 75
+    description: "The evolved form of Squirtle."
+
+  - id: blastoise
+    attribute:
+      type: Water
+      rarity: Rare
+    value: 110
+    description: "A powerful Water-type Pokémon."
+
+  - id: bulbasaur
+    attribute:
+      type: Grass
+      rarity: Common
+    value: 45
+    description: "A Grass-type Pokémon."
 
   - id: ivysaur
-    name: Ivysaur
-    attribute: grass
+    attribute:
+      type: Grass
+      rarity: Uncommon
     value: 70
-    description: Grass-type Pokémon
+    description: "The evolved form of Bulbasaur."
 
-  - id: mewtwo
-    name: Mewtwo
-    attribute: psychic
-    value: 130
-    description: Psychic-type Pokémon
-
-  - id: mew
-    name: Mew
-    attribute: psychic
-    value: 100
-    description: Psychic-type Pokémon
-
-  - id: gengar
-    name: Gengar
-    attribute: ghost
-    value: 100
-    description: Ghost-type Pokémon
-
-  - id: alakazam
-    name: Alakazam
-    attribute: psychic
-    value: 95
-    description: Psychic-type Pokémon
-
-  - id: gyarados
-    name: Gyarados
-    attribute: water
-    value: 100
-    description: Water-type Pokémon
-
-  - id: dragonite
-    name: Dragonite
-    attribute: dragon
-    value: 125
-    description: Dragon-type Pokémon
-
-  - id: lapras
-    name: Lapras
-    attribute: water
-    value: 85
-    description: Water-type Pokémon
-
-  - id: arcanine
-    name: Arcanine
-    attribute: fire
-    value: 95
-    description: Fire-type Pokémon
-
-  - id: snorlax
-    name: Snorlax
-    attribute: normal
-    value: 100
-    description: Normal-type Pokémon
-
-  - id: eevee
-    name: Eevee
-    attribute: normal
-    value: 50
-    description: Normal-type Pokémon
-
-  - id: lucario
-    name: Lucario
-    attribute: fighting
-    value: 95
-    description: Fighting-type Pokémon
-
-  - id: greninja
-    name: Greninja
-    attribute: water
-    value: 100
-    description: Water-type Pokémon
+  - id: venusaur
+    attribute:
+      type: Grass
+      rarity: Rare
+    value: 105
+    description: "A powerful Grass-type Pokémon."

@@ -1,120 +1,70 @@
 cards:
-  - id: dark_magician
-    name: Dark Magician
-    attribute: dark
+  - id: dark-magician
+    attribute:
+      type: Spellcaster
+      race: Dark
     value: 2500
-    description: Spellcaster monster
+    description: "A powerful spellcaster."
 
-  - id: dark_magician_girl
-    name: Dark Magician Girl
-    attribute: dark
+  - id: dark-magician-girl
+    attribute:
+      type: Spellcaster
+      race: Dark
     value: 2000
-    description: Spellcaster monster
+    description: "A skilled spellcaster."
 
-  - id: blue_eyes_white_dragon
-    name: Blue-Eyes White Dragon
-    attribute: light
+  - id: blue-eyes-white-dragon
+    attribute:
+      type: Dragon
+      race: Light
     value: 3000
-    description: Dragon monster
+    description: "A legendary dragon."
 
-  - id: red_eyes_black_dragon
-    name: Red-Eyes Black Dragon
-    attribute: dark
+  - id: red-eyes-black-dragon
+    attribute:
+      type: Dragon
+      race: Dark
     value: 2400
-    description: Dragon monster
+    description: "A fierce black dragon."
 
-  - id: summoned_skull
-    name: Summoned Skull
-    attribute: dark
+  - id: summoned-skull
+    attribute:
+      type: Fiend
+      race: Dark
     value: 2500
-    description: Fiend monster
+    description: "A powerful fiend."
 
   - id: kuriboh
-    name: Kuriboh
-    attribute: dark
+    attribute:
+      type: Fiend
+      race: Dark
     value: 300
-    description: Fiend monster
+    description: "A small but useful monster."
 
   - id: jinzo
-    name: Jinzo
-    attribute: dark
+    attribute:
+      type: Machine
+      race: Dark
     value: 2400
-    description: Machine monster
+    description: "A machine that controls traps."
 
-  - id: gaia_the_fierce_knight
-    name: Gaia the Fierce Knight
-    attribute: earth
-    value: 2300
-    description: Warrior monster
-
-  - id: celtic_guardian
-    name: Celtic Guardian
-    attribute: earth
+  - id: celtic-guardian
+    attribute:
+      type: Warrior
+      race: Earth
     value: 1400
-    description: Warrior monster
+    description: "A skilled warrior."
 
-  - id: buster_blader
-    name: Buster Blader
-    attribute: earth
-    value: 2600
-    description: Warrior monster
+  - id: gaia-the-fierce-knight
+    attribute:
+      type: Warrior
+      race: Earth
+    value: 2300
+    description: "A powerful knight."
 
-  - id: elemental_hero_neos
-    name: Elemental HERO Neos
-    attribute: light
-    value: 2500
-    description: Warrior monster
-
-  - id: exodia_head
-    name: Exodia the Forbidden One
-    attribute: dark
-    value: 1000
-    description: Effect monster
-
-  - id: obelisk
-    name: Obelisk the Tormentor
-    attribute: divine
-    value: 4000
-    description: Divine-Beast monster
-
-  - id: slifer
-    name: Slifer the Sky Dragon
-    attribute: divine
-    value: 3000
-    description: Divine-Beast monster
-
-  - id: ra
-    name: The Winged Dragon of Ra
-    attribute: divine
-    value: 4000
-    description: Divine-Beast monster
-
-  - id: kuribabylon
-    name: Kuribabylon
-    attribute: dark
-    value: 1500
-    description: Fiend monster
-
-  - id: marshmallon
-    name: Marshmallon
-    attribute: light
-    value: 300
-    description: Fairy monster
-
-  - id: cyber_dragon
-    name: Cyber Dragon
-    attribute: light
-    value: 2100
-    description: Machine monster
-
-  - id: stardust_dragon
-    name: Stardust Dragon
-    attribute: wind
-    value: 2500
-    description: Dragon Synchro monster
-
-  - id: black_luster_soldier
-    name: Black Luster Soldier
-    attribute: earth
-    value: 3000
-    description: Warrior monster
+  - id: summoned-sorcerer
+    attribute:
+      type: Spellcaster
+      race: Dark
+    value: 1800
+    description: "A mysterious sorcerer."
