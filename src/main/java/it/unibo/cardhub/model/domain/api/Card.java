@@ -4,6 +4,8 @@ import java.util.Optional;
 
 /**
  * Represents a card.
+ * 
+ * @param <T> the type of the card's attribute
  */
 public interface Card<T> {
 

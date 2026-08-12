@@ -10,7 +10,7 @@ import it.unibo.cardhub.model.domain.api.Card;
  * A utility class for resolving images associated with cards.
  */
 public final class ImageResolver {
-    
+
     private ImageResolver() {
         // Private constructor to prevent instantiation
     }

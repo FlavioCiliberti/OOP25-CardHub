@@ -48,7 +48,7 @@ public class DiscardPileImpl extends AbstractCardCollection implements DiscardPi
      */
     @Override
     public void reshuffleIntoDeck(final Deck deck) {
-        deck.addCards(this.getMutableCards());
+        this.getMutableCards().forEach(deck::addCard);
         this.getMutableCards().clear();
         deck.shuffle();
     }

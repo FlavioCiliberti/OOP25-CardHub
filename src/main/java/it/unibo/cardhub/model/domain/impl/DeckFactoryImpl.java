@@ -6,7 +6,7 @@ import it.unibo.cardhub.model.domain.api.DeckFactory;
 /**
  * Factory for creating Italian decks.
  */
-public class ItalianDeckFactory implements DeckFactory {
+public class DeckFactoryImpl implements DeckFactory {
 
     private static final int MAX = 10;
 
@@ -14,7 +14,7 @@ public class ItalianDeckFactory implements DeckFactory {
      * {@inheritDoc}
      */
     @Override
-    public Deck create() {
+    public Deck createItalianDeck() {
         final Deck deck = new DeckImpl();
         for (final Suit suit : Suit.values()) {
             for (int value = 1; value <= MAX; value++) {
@@ -22,12 +22,5 @@ public class ItalianDeckFactory implements DeckFactory {
             }
         }
         return deck;
-    }
-
-    /**
-     * Represents the suits of an Italian deck.
-     */
-    public enum Suit {
-        HEARTS, DIAMONDS, CLUBS, SPADES
     }
 }

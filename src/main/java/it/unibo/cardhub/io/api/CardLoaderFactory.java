@@ -32,7 +32,7 @@ public interface CardLoaderFactory {
      * @param type the type of the Yu-Gi-Oh card
      * @param race the race of the Yu-Gi-Oh card
      */
-    public record YuGiOh(String type, String race) { }
+    record YuGiOh(String type, String race) { }
 
     /**
      * Record representing a Pokemon card with its type and rarity.
@@ -40,7 +40,7 @@ public interface CardLoaderFactory {
      * @param type the type of the Pokemon card
      * @param rarity the rarity of the Pokemon card
      */
-    public record Pokemon(String type, String rarity) { }
+    record Pokemon(String type, String rarity) { }
 
     /**
      * Record representing a Dragon Ball card with its type and rarity.
@@ -48,5 +48,5 @@ public interface CardLoaderFactory {
      * @param type the type of the Dragon Ball card
      * @param rarity the rarity of the Dragon Ball card
      */
-    public record DragonBall(String type, String rarity) { }
+    record DragonBall(String type, String rarity) { }
 }
