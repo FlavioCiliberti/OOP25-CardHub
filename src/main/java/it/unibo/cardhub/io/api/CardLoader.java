@@ -12,5 +12,10 @@ import it.unibo.cardhub.model.domain.api.Card;
 @FunctionalInterface
 public interface CardLoader<T> {
 
+    /**
+     * Loads a list of cards from the data source.
+     *
+     * @return a list of cards
+     */
     List<Card<T>> load();
 }

@@ -11,6 +11,7 @@ import it.unibo.cardhub.model.domain.api.Card;
  * @param attributes card attribute
  * @param value card value
  * @param desc card description
+ * @param <T> card attribute type
  */
 public record CardImpl<T>(String id, T attributes, int value, Optional<String> desc) implements Card<T> {
 
