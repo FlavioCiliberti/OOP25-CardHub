@@ -1,5 +1,6 @@
 package it.unibo.cardhub.model.logic.impl;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.Player;
@@ -47,6 +48,9 @@ class MatchLogicImpl implements MatchLogic {
      * {@inheritDoc}
      */
     @Override
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+                        justification = "temporary for development purposes"
+    )
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
@@ -55,6 +59,9 @@ class MatchLogicImpl implements MatchLogic {
      * {@inheritDoc}
      */
     @Override
+    @SuppressFBWarnings(value = "EI_EXPOSE_REP",
+                        justification = "temporary for development purposes"
+    )
     public void changeTurn() {
         if (currentPlayer.equals(player1)) {
             currentPlayer = player2;

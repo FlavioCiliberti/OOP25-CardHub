@@ -56,7 +56,19 @@ public final class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
+<<<<<<< HEAD
     public Card<?> drawCard() throws CardCollectionFullException {
+=======
+    public void shufflePileIntoDeck() {
+        this.discardPile.reshuffleIntoDeck(deck);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Card drawCard() throws CardCollectionFullException {
+>>>>>>> a4131f36f42de8fcca455eb898c528a25e03569b
         if (this.hand.isFull()) {
             throw new CardCollectionFullException("The hand exceeded the max amount of cards.");
         }
