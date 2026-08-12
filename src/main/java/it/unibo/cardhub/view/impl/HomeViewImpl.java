@@ -27,6 +27,9 @@ import javax.swing.JButton;
  * Home screen view, showing the CardHub title, the main menu and a hero image.
  */
 public final class HomeViewImpl extends ScreenView implements HomeView {
+    public static final int WIDTH = 1200;
+    public static final int HEIGHT = 1000;
+
     private static final long serialVersionUID = 1L;
 
     private static final String TITLE = "CardHub"; 
