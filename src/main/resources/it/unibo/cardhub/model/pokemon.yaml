@@ -1,70 +1,80 @@
 cards:
-  - id: pikachu
-    attribute:
-      type: Electric
-      rarity: Common
-    value: 60
-    description: "An Electric-type Pokémon."
+  - id: pokemon-001
+    attributes:
+      type: electric
+      rarity: common
+    value: 10
+    description: "A Pokémon with electric powers."
+    image: pikachu.png
 
-  - id: charmander
-    attribute:
-      type: Fire
-      rarity: Common
-    value: 50
-    description: "A small Fire-type Pokémon."
+  - id: pokemon-002
+    attributes:
+      type: fire
+      rarity: common
+    value: 10
+    description: "A Pokémon with fire powers."
+    image: charmander.png
 
-  - id: charmeleon
-    attribute:
-      type: Fire
-      rarity: Uncommon
-    value: 80
-    description: "The evolved form of Charmander."
+  - id: pokemon-003
+    attributes:
+      type: water
+      rarity: common
+    value: 10
+    description: "A Pokémon with water powers."
+    image: squirtle.png
 
-  - id: charizard
-    attribute:
-      type: Fire
-      rarity: Rare
-    value: 120
-    description: "A powerful Fire-type Pokémon."
+  - id: pokemon-004
+    attributes:
+      type: grass
+      rarity: uncommon
+    value: 20
+    description: "A Pokémon with grass powers."
+    image: bulbasaur.png
 
-  - id: squirtle
-    attribute:
-      type: Water
-      rarity: Common
-    value: 50
-    description: "A small Water-type Pokémon."
+  - id: pokemon-005
+    attributes:
+      type: psychic
+      rarity: rare
+    value: 30
+    description: "A Pokémon with psychic abilities."
+    image: abra.png
 
-  - id: wartortle
-    attribute:
-      type: Water
-      rarity: Uncommon
-    value: 75
-    description: "The evolved form of Squirtle."
+  - id: pokemon-006
+    attributes:
+      type: electric
+      rarity: rare
+    value: 30
+    description: "A powerful electric Pokémon."
+    image: pikachu.png
 
-  - id: blastoise
-    attribute:
-      type: Water
-      rarity: Rare
-    value: 110
-    description: "A powerful Water-type Pokémon."
+  - id: pokemon-007
+    attributes:
+      type: fire
+      rarity: uncommon
+    value: 20
+    description: "A Pokémon with strong fire attacks."
+    image: charmeleon.png
 
-  - id: bulbasaur
-    attribute:
-      type: Grass
-      rarity: Common
-    value: 45
-    description: "A Grass-type Pokémon."
+  - id: pokemon-008
+    attributes:
+      type: water
+      rarity: uncommon
+    value: 20
+    description: "A Pokémon with strong water attacks."
+    image: wartortle.png
 
-  - id: ivysaur
-    attribute:
-      type: Grass
-      rarity: Uncommon
-    value: 70
-    description: "The evolved form of Bulbasaur."
+  - id: pokemon-009
+    attributes:
+      type: grass
+      rarity: rare
+    value: 30
+    description: "A powerful grass Pokémon."
+    image: bulbasaur.png
 
-  - id: venusaur
-    attribute:
-      type: Grass
-      rarity: Rare
-    value: 105
-    description: "A powerful Grass-type Pokémon."
+  - id: pokemon-010
+    attributes:
+      type: normal
+      rarity: rare
+    value: 30
+    description: "A versatile Pokémon."
+    image: eevee.png

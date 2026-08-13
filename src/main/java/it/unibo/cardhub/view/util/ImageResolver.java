@@ -23,7 +23,7 @@ public final class ImageResolver {
      * @throws NullPointerException if the image resource is not found
      */
     public static ImageIcon resolve(final Card<?> card) {
-        final String path = "it/unibo/cardhub/view/images/resources/" + card.id() + ".png";
+        final String path = "it/unibo/cardhub/view/images/resources/" + card.image();
         return new ImageIcon(Objects.requireNonNull(ImageResolver.class.getResource(path), "Image not found: " + path));
     }
 }

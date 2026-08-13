@@ -38,6 +38,13 @@ public interface Card<T> {
     Optional<String> desc();
 
     /**
+     * Returns the image file name.
+     * 
+     * @return image file name
+     */
+    String image();
+
+    /**
      * Record representing a Yu-Gi-Oh card with its type and race.
      * 
      * @param type the type of the Yu-Gi-Oh card
