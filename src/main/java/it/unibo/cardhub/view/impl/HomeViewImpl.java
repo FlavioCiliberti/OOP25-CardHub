@@ -140,7 +140,7 @@ public final class HomeViewImpl extends ScreenView implements HomeView {
         SouthPanel(final JButton exitBtn) {
             super.add(exitBtn);
             super.setBorder(BorderFactory.createEmptyBorder(
-                CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING
+                CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD
             ));
         }
     }
@@ -151,7 +151,7 @@ public final class HomeViewImpl extends ScreenView implements HomeView {
         MenuPanel(final JButton newMatchBtn, final JButton loadMatchBtn, final JButton manageDecksBtn) {
             super.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             super.setBorder(BorderFactory.createEmptyBorder(
-                CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING
+                CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD
             ));
             super.add(Box.createVerticalGlue());
             super.add(newMatchBtn);

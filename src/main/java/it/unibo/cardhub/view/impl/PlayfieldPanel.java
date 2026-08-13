@@ -34,7 +34,7 @@ public final class PlayfieldPanel extends CHPanel {
 
         this.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(CHStyles.primaryColor()),
-            BorderFactory.createEmptyBorder(CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING)));
+            BorderFactory.createEmptyBorder(CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD)));
 
         this.playfieldArea = new PlayfieldAreaPanel();
         this.playerDiscardPileArea = new DiscardPileAreaPanel(BorderLayout.SOUTH);
@@ -83,7 +83,7 @@ public final class PlayfieldPanel extends CHPanel {
 
             this.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(CHStyles.primaryColor()),
-                BorderFactory.createEmptyBorder(CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING)));
+                BorderFactory.createEmptyBorder(CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD)));
         }
 
         void update(final List<Card> cards, final int rows, final int columns) {
@@ -91,7 +91,7 @@ public final class PlayfieldPanel extends CHPanel {
                 throw new IllegalArgumentException("Rows and columns must be positive integers");
             }
 
-            this.setLayout(new GridLayout(rows, columns, CHStyles.PADDING, CHStyles.PADDING));
+            this.setLayout(new GridLayout(rows, columns, CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD));
             this.removeAll();
 
             cards.forEach(c -> this.add(new CHLabel(new ImageIcon(c.imagePath()))));
@@ -116,7 +116,7 @@ public final class PlayfieldPanel extends CHPanel {
 
             this.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(CHStyles.primaryColor()),
-                BorderFactory.createEmptyBorder(CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING)));
+                BorderFactory.createEmptyBorder(CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD)));
 
             this.pile = new CHLabel();
             this.reshuffle = new CHButton("Reshuffle into deck");

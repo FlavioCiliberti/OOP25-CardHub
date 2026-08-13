@@ -29,10 +29,9 @@ import it.unibo.cardhub.view.components.ScreenView;
  * Builds the match view.
  */
 public final class MatchViewImpl extends ScreenView {
-    private static final int PADDING_LARGE = 20;
-    private static final int PADDING_STANDARD = 10;
-    private static final int PADDING_SMALL = 4;
-    private static final int PADDING_NONE = 0;
+    public static final int WIDTH = 1200;
+    public static final int HEIGHT = 960;
+
     private static final int PADDING_ROW = 13;
     private static final int CARD_WIDTH = 66;
     private static final int CARD_HEIGHT = 96;
@@ -64,9 +63,9 @@ public final class MatchViewImpl extends ScreenView {
      */
     public MatchViewImpl() {
         firstPlayerPanel = new CHPanel();
-        firstPlayerHandPanel = new CHPanel(new FlowLayout(FlowLayout.LEFT, PADDING_STANDARD, PADDING_NONE));
+        firstPlayerHandPanel = new CHPanel(new FlowLayout(FlowLayout.LEFT, CHStyles.PADDING_STANDARD, CHStyles.PADDING_NONE));
         secondPlayerPanel = new CHPanel();
-        secondPlayerHandPanel = new CHPanel(new FlowLayout(FlowLayout.RIGHT, PADDING_STANDARD, PADDING_NONE));
+        secondPlayerHandPanel = new CHPanel(new FlowLayout(FlowLayout.RIGHT, CHStyles.PADDING_STANDARD, CHStyles.PADDING_NONE));
         playField = new CHPanel(CHStyles.tertiaryColor(), new BorderLayout());
 
         firstPlayerDeckLabel = new CHLabel(String.valueOf(DECK_SIZE), CHStyles.primaryColor());
@@ -88,7 +87,8 @@ public final class MatchViewImpl extends ScreenView {
         this.setLayout(new BorderLayout());
 
         final JPanel topPanel = new CHPanel(new FlowLayout(FlowLayout.RIGHT));
-        topPanel.setBorder(BorderFactory.createEmptyBorder(PADDING_SMALL, PADDING_NONE, PADDING_NONE, PADDING_SMALL));
+        topPanel.setBorder(BorderFactory.createEmptyBorder(CHStyles.PADDING_SMALL, CHStyles.PADDING_NONE,
+                                                            CHStyles.PADDING_NONE, CHStyles.PADDING_SMALL));
         topPanel.add(exitButton);
         this.add(topPanel, BorderLayout.NORTH);
 
@@ -99,7 +99,7 @@ public final class MatchViewImpl extends ScreenView {
 
     //sets up the bottomPanel and adds it to the content pane
     private void manageBottomPanel() {
-        final JPanel bottomPanel = new CHPanel(new FlowLayout(FlowLayout.CENTER, PADDING_LARGE, PADDING_STANDARD));
+        final JPanel bottomPanel = new CHPanel(new FlowLayout(FlowLayout.CENTER, CHStyles.PADDING_LARGE, CHStyles.PADDING_STANDARD));
 
         final JLabel timerLabel = new CHLabel("Time Remaining: " + timeRemaining, SwingConstants.CENTER);
         this.startTimer(timerLabel);
@@ -118,8 +118,8 @@ public final class MatchViewImpl extends ScreenView {
         final JLabel secondPlayerLabel = new CHLabel("Giocatore 2", SwingConstants.CENTER);
 
         this.add(playField, BorderLayout.CENTER);
-        playField.setBorder(BorderFactory.createMatteBorder(PADDING_SMALL, PADDING_LARGE,
-                                                                PADDING_NONE, PADDING_LARGE,
+        playField.setBorder(BorderFactory.createMatteBorder(CHStyles.PADDING_SMALL, CHStyles.PADDING_LARGE,
+                                                                CHStyles.PADDING_NONE, CHStyles.PADDING_LARGE,
                                                                 CHStyles.secondaryColor()));
         this.managePlayerPanel(firstPlayerPanel, firstPlayerHandPanel,
                                 firstPlayerShuffleDeckButton, firstPlayerLabel,
@@ -140,7 +140,7 @@ public final class MatchViewImpl extends ScreenView {
         final int cardValue = 10;
         final String cardName = "Exodia il Proibito";
 
-        final JPanel firstRow = new CHPanel(new BorderLayout(PADDING_STANDARD, 0));
+        final JPanel firstRow = new CHPanel(new BorderLayout(CHStyles.PADDING_STANDARD, 0));
         final JPanel secondRow = new CHPanel(new BorderLayout());
         final JPanel handPanelWrapper = new CHPanel(new GridBagLayout());
 
@@ -151,8 +151,8 @@ public final class MatchViewImpl extends ScreenView {
         playerPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED,
                                                                 CHStyles.secondaryColor(), CHStyles.primaryColor()));
 
-        firstRow.setBorder(BorderFactory.createEmptyBorder(PADDING_STANDARD, PADDING_ROW,
-                                                            PADDING_STANDARD, PADDING_ROW));
+        firstRow.setBorder(BorderFactory.createEmptyBorder(CHStyles.PADDING_STANDARD, PADDING_ROW,
+                                                            CHStyles.PADDING_STANDARD, PADDING_ROW));
         firstRow.add(cardInfoLabel, BorderLayout.CENTER);
 
         for (int i = 0; i < maxHandSize; i++) {
@@ -202,8 +202,8 @@ public final class MatchViewImpl extends ScreenView {
         deckLabel.setVerticalTextPosition(SwingConstants.CENTER);
         firstRow.add(deckLabel, mirrored ? BorderLayout.EAST : BorderLayout.WEST);
 
-        secondRow.setBorder(BorderFactory.createEmptyBorder(PADDING_STANDARD, PADDING_STANDARD,
-                                                            PADDING_STANDARD, PADDING_STANDARD));
+        secondRow.setBorder(BorderFactory.createEmptyBorder(CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD,
+                                                            CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD));
         secondRow.add(nameLabel, BorderLayout.CENTER);
         secondRow.add(shuffleButton, mirrored ? BorderLayout.EAST : BorderLayout.WEST);
 
