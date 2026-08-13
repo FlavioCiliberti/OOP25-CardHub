@@ -1,0 +1,70 @@
+cards:
+  - id: goku
+    attribute:
+      type: Saiyan
+      rarity: Common
+    value: 90
+    description: "A powerful Saiyan warrior."
+
+  - id: vegeta
+    attribute:
+      type: Saiyan
+      rarity: Common
+    value: 85
+    description: "The proud Saiyan prince."
+
+  - id: gohan
+    attribute:
+      type: Saiyan
+      rarity: Uncommon
+    value: 80
+    description: "A powerful warrior with great potential."
+
+  - id: piccolo
+    attribute:
+      type: Namekian
+      rarity: Common
+    value: 70
+    description: "A skilled Namekian warrior."
+
+  - id: frieza
+    attribute:
+      type: Alien
+      rarity: Rare
+    value: 95
+    description: "A powerful and ruthless alien."
+
+  - id: cell
+    attribute:
+      type: Android
+      rarity: Rare
+    value: 90
+    description: "A bio-engineered warrior."
+
+  - id: majin-buu
+    attribute:
+      type: Majin
+      rarity: Rare
+    value: 100
+    description: "A powerful and unpredictable warrior."
+
+  - id: trunks
+    attribute:
+      type: Saiyan
+      rarity: Uncommon
+    value: 75
+    description: "A Saiyan warrior from the future."
+
+  - id: krillin
+    attribute:
+      type: Human
+      rarity: Common
+    value: 55
+    description: "A skilled martial artist."
+
+  - id: android-18
+    attribute:
+      type: Android
+      rarity: Uncommon
+    value: 80
+    description: "A powerful artificial human."

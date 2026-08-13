@@ -27,7 +27,7 @@ public interface Match {
      * @param player the player playing the card
      * @throws CardCollectionFullException if the player's side of the field is full
      */
-    void playCard(Card card, Player player) throws CardCollectionFullException;
+    void playCard(Card<?> card, Player player) throws CardCollectionFullException;
 
     /**
      * Moves a card from the field to the discard pile.
@@ -35,7 +35,7 @@ public interface Match {
      * @param card the card to move
      * @param player the player the card belongs to
      */
-    void moveCardFromFieldToPile(Card card, Player player);
+    void moveCardFromFieldToPile(Card<?> card, Player player);
 
     /**
      * Shuffles the player's discard pile into the deck.
@@ -51,7 +51,7 @@ public interface Match {
      * @param secondPlayerCard the card of player2 to be compared
      * @return the result of the comparison
      */
-    ComparisonWinner compareCard(Card firstPlayerCard, Card secondPlayerCard);
+    ComparisonWinner compareCard(Card<?> firstPlayerCard, Card<?> secondPlayerCard);
 
     /**
      * Returns the state of the playfield.
