@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 import java.util.Optional;
 
 import javax.swing.BorderFactory;
@@ -19,6 +20,9 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
 
+import it.unibo.cardhub.model.domain.api.Card;
+import it.unibo.cardhub.model.domain.api.Player;
+import it.unibo.cardhub.view.api.MatchView;
 import it.unibo.cardhub.view.components.CHButton;
 import it.unibo.cardhub.view.components.CHLabel;
 import it.unibo.cardhub.view.components.CHPanel;
@@ -28,13 +32,14 @@ import it.unibo.cardhub.view.components.ScreenView;
 /**
  * Builds the match view.
  */
-public final class MatchViewImpl extends ScreenView {
+public final class MatchViewImpl extends ScreenView implements MatchView{
     public static final int WIDTH = 1200;
     public static final int HEIGHT = 960;
+    static final int CARD_WIDTH = 66;
+    static final int CARD_HEIGHT = 96;
 
     private static final int PADDING_ROW = 13;
-    private static final int CARD_WIDTH = 66;
-    private static final int CARD_HEIGHT = 96;
+    private static final int HIGHLIGHT_BORDER = 2;
 
     private static final long serialVersionUID = 1L;
 
@@ -140,7 +145,7 @@ public final class MatchViewImpl extends ScreenView {
         final int cardValue = 10;
         final String cardName = "Exodia il Proibito";
 
-        final JPanel firstRow = new CHPanel(new BorderLayout(CHStyles.PADDING_STANDARD, 0));
+        final JPanel firstRow = new CHPanel(new BorderLayout(CHStyles.PADDING_STANDARD, CHStyles.PADDING_NONE));
         final JPanel secondRow = new CHPanel(new BorderLayout());
         final JPanel handPanelWrapper = new CHPanel(new GridBagLayout());
 
@@ -222,5 +227,58 @@ public final class MatchViewImpl extends ScreenView {
         });
 
         timer.start();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void changeSelectedCard(JLabel cardLabel) {
+        //removes highlight from the last selected card
+        this.selectedCard.ifPresent(previous ->
+            previous.setBorder(BorderFactory.createEmptyBorder())
+        );
+
+        //stores selected card
+        cardLabel.setBorder(BorderFactory.createLineBorder(CHStyles.tertiaryColor(), HIGHLIGHT_BORDER));
+
+        //highlights clicked card
+        selectedCard = Optional.of(cardLabel);
+    }
+
+    @Override
+    public void updateHand(Player player, List<Card> cards) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateHand'");
+    }
+
+    @Override
+    public void updatePlayfield(Player player, List<Card> cards) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updatePlayfield'");
+    }
+
+    @Override
+    public void updateDiscardPile(Player player, Optional<Card> topCard) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateDiscardPile'");
+    }
+
+    @Override
+    public void updateDeckCount(Player player, int remainingCards) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateDeckCount'");
+    }
+
+    @Override
+    public void showCurrentPlayer(Player player) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'showCurrentPlayer'");
+    }
+
+    @Override
+    public void showMatchEnded(Player winner) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'showMatchEnded'");
     }
 }
