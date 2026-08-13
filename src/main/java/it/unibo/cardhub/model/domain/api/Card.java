@@ -67,4 +67,11 @@ public interface Card<T> {
      * @param rarity the rarity of the Dragon Ball card
      */
     record DragonBall(String type, String rarity) { }
+
+    /**
+     * Enum representing card suits.
+     */
+    enum Suit {
+        HEARTS, DIAMONDS, CLUBS, SPADES
+    }
 }
