@@ -26,6 +26,10 @@ public class PlayfieldImpl implements Playfield {
      * @param maxFieldSize of the game
      */
     public PlayfieldImpl(final List<Player> players, final int maxFieldSize) {
+        if (maxFieldSize <= 0) {
+            throw new IllegalArgumentException("Maximum field size must be positive.");
+        }
+
         this.playerCards = new LinkedHashMap<>();
         players.forEach(p -> this.playerCards.put(Objects.requireNonNull(p), new ArrayList<>()));
         this.maxFieldSize = maxFieldSize;

@@ -12,7 +12,16 @@ import it.unibo.cardhub.model.domain.api.CardCollection;
  */
 public abstract class AbstractCardCollection implements CardCollection {
 
-    private final List<Card<?>> cards = new ArrayList<>();
+    private final List<Card<?>> cards;
+
+    /**
+     * Card collection constructor.
+     * 
+     * @param cards card collection cards
+     */
+    protected AbstractCardCollection(final List<? extends Card<?>> cards) {
+        this.cards = new ArrayList<>(Objects.requireNonNull(cards));
+    }
 
     /**
      * {@inheritDoc}
@@ -31,15 +40,6 @@ public abstract class AbstractCardCollection implements CardCollection {
     }
 
     /**
-     * Returns a mutable list of all the cards of the collection.
-     * 
-     * @return a list of all the cards
-     */
-    protected List<Card<?>> getMutableCards() {
-        return this.cards;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @Override
@@ -53,5 +53,14 @@ public abstract class AbstractCardCollection implements CardCollection {
     @Override
     public boolean isEmpty() {
         return this.cards.isEmpty();
+    }
+
+    /**
+     * Returns deck cards that can be modified. It's needed for incapsulation purposes.
+     * 
+     * @return a mutable list of cards
+     */
+    protected List<Card<?>> getMutableCards() {
+        return this.cards;
     }
 }

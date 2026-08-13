@@ -1,5 +1,7 @@
 package it.unibo.cardhub.model.domain.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import it.unibo.cardhub.model.domain.api.Card;
@@ -14,9 +16,11 @@ public class DiscardPileImpl extends AbstractCardCollection implements DiscardPi
 
     /**
      * Discard pile constructor.
+     * 
+     * @param cards discard pile cards
      */
-    public DiscardPileImpl() {
-        super();
+    public DiscardPileImpl(final List<? extends Card<?>> cards) {
+        super(new ArrayList<>(cards));
     }
 
     /**

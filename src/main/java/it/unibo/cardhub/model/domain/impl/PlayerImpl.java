@@ -1,5 +1,8 @@
 package it.unibo.cardhub.model.domain.impl;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.Deck;
@@ -26,15 +29,21 @@ public final class PlayerImpl implements Player {
      * @param startingHandSize the amount of card in hand at match start
      * @param deck player deck
      */
-    @SuppressFBWarnings(value = "EI2", justification = "The player's deck is intentionally shared with the match lifecycle.")
     public PlayerImpl(final String name, final int maxHandSize, final int startingHandSize, final Deck deck) {
-        this.name = name;
-        this.hand = new HandImpl(maxHandSize);
-        this.deck = deck;
-        this.discardPile = new DiscardPileImpl();
+        if (startingHandSize > maxHandSize) {
+            throw new IllegalArgumentException("Starting hand size cannot be greater than maximum hand size.");
+        }
+        if (startingHandSize <= 0 || maxHandSize <= 0) {
+            throw new IllegalArgumentException("Starting hand size and maximum hand size must be positive.");
+        }
+
+        this.name = Objects.requireNonNull(name);
+        this.hand = new HandImpl(new ArrayList<>(), maxHandSize);
+        this.deck = Objects.requireNonNull(deck);
+        this.discardPile = new DiscardPileImpl(new ArrayList<>());
 
         //draw initial cards
-        for (int i = 0; i <= startingHandSize; i++) {
+        for (int i = 0; i < startingHandSize; i++) {
             try {
                 this.drawCard();
             } catch (final CardCollectionFullException e) {
