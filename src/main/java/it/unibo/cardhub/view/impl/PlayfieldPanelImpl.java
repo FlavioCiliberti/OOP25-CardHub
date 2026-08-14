@@ -24,8 +24,8 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
 
     private static final long serialVersionUID = 1L;
     private final PlayfieldAreaPanel playfieldArea;
-    private final DiscardPileAreaPanel playerDiscardPileArea;
-    private final DiscardPileAreaPanel opponentDiscardPileArea;
+    private final DiscardPileAreaPanel playerOneDiscardPileArea;
+    private final DiscardPileAreaPanel playerTwoDiscardPileArea;
 
     /**
      * Constructs a new playfield panel.
@@ -39,28 +39,28 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
                                             CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD)));
 
         this.playfieldArea = new PlayfieldAreaPanel();
-        this.playerDiscardPileArea = new DiscardPileAreaPanel(BorderLayout.SOUTH);
-        this.opponentDiscardPileArea = new DiscardPileAreaPanel(BorderLayout.NORTH);
+        this.playerOneDiscardPileArea = new DiscardPileAreaPanel(BorderLayout.SOUTH);
+        this.playerTwoDiscardPileArea = new DiscardPileAreaPanel(BorderLayout.NORTH);
 
         this.add(this.playfieldArea, BorderLayout.CENTER);
-        this.add(this.playerDiscardPileArea, BorderLayout.EAST);
-        this.add(this.opponentDiscardPileArea, BorderLayout.WEST);
+        this.add(this.playerOneDiscardPileArea, BorderLayout.EAST);
+        this.add(this.playerTwoDiscardPileArea, BorderLayout.WEST);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void updatePlayerDiscardPile(final Optional<Card> card) {
-        this.playerDiscardPileArea.updateCard(Objects.requireNonNull(card, "Card cannot be null"));
+    public void updatePlayerOneDiscardPile(final Optional<Card> card) {
+        this.playerOneDiscardPileArea.updateCard(Objects.requireNonNull(card, "Card cannot be null"));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void updateOpponentDiscardPile(final Optional<Card> card) {
-        this.opponentDiscardPileArea.updateCard(Objects.requireNonNull(card, "Card cannot be null"));
+    public void updatePlayerTwoDiscardPile(final Optional<Card> card) {
+        this.playerTwoDiscardPileArea.updateCard(Objects.requireNonNull(card, "Card cannot be null"));
     }
 
     /**

@@ -16,14 +16,14 @@ public interface PlayfieldPanel {
      *
      * @param card the card to display in the discard pile
      */
-    void updatePlayerDiscardPile(Optional<Card> card);
+    void updatePlayerOneDiscardPile(Optional<Card> card);
 
     /**
      * Updates the opponent's discard pile with the specified card.
      *
      * @param card the card to display in the discard pile
      */
-    void updateOpponentDiscardPile(Optional<Card> card);
+    void updatePlayerTwoDiscardPile(Optional<Card> card);
 
     /**
      * Updates the playfield with the specified list of cards.
