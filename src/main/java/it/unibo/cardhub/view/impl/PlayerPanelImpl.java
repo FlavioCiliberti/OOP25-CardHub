@@ -127,7 +127,7 @@ final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
 
                 @Override
                 public void mouseClicked(final MouseEvent e) {
-                    controller.changeSelectedCard(cardLabel, player);
+                    controller.changeSelectedCard(cardLabel, card, player);
                 }
             });
             handPanel.add(cardLabel);

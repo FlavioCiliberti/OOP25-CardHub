@@ -68,7 +68,7 @@ public interface MatchView {
     /**
      * Sets the card to be highlighted, eventually de-highlighting the previous one.
      * 
-     * @param cardLabel the card to be highlited
+     * @param cardLabel the card label to be highlited
      */
     void changeSelectedCard(JLabel cardLabel);
 }

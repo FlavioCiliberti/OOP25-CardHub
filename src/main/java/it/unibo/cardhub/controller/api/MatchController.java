@@ -102,10 +102,11 @@ public interface MatchController extends ScreenController {
     /**
      * Sets the card to be highlighted, eventually de-highlighting the previous one.
      * 
-     * @param cardLabel the card to be highlited
+     * @param cardLabel the card label to be highlited
+     * @param selectedCard the selected card
      * @param player the player that tried to select the card
      */
-    void changeSelectedCard(JLabel cardLabel, Player player);
-    //if player == turnPlayer then call MatchView.changeSelectedCard(cardLabel)
+    void changeSelectedCard(JLabel cardLabel, Card selectedCard, Player player);
+    //if player == turnPlayer store selectedCard, then call MatchView.changeSelectedCard(cardLabel)
 }
 
