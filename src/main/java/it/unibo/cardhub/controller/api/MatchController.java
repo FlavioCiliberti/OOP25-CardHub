@@ -1,5 +1,7 @@
 package it.unibo.cardhub.controller.api;
 
+import javax.swing.JLabel;
+
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.Player;
 
@@ -96,5 +98,14 @@ public interface MatchController extends ScreenController {
      * Ends the match with the current player conceding.
      */
     void concede();
+
+    /**
+     * Sets the card to be highlighted, eventually de-highlighting the previous one.
+     * 
+     * @param cardLabel the card to be highlited
+     * @param player the player that tried to select the card
+     */
+    void changeSelectedCard(JLabel cardLabel, Player player);
+    //if player == turnPlayer then call MatchView.changeSelectedCard(cardLabel)
 }
 

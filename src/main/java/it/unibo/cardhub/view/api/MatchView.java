@@ -28,12 +28,12 @@ public interface MatchView {
     void updateHand(Player player, List<Card> cards);
 
     /**
-     * Refreshes a player's section of the playfield.
+     * Refreshes the playfield.
      *
-     * @param player the player whose playfield section changed
-     * @param cards the cards on that section of the playfield
+     * @param cards the cards on the playfield
+     * @param columns the number of columns in the playfield
      */
-    void updatePlayfield(Player player, List<Card> cards);
+    void updatePlayfield(List<Card> cards, int columns);
 
     /**
      * Refreshes a player's discard pile.
@@ -44,12 +44,12 @@ public interface MatchView {
     void updateDiscardPile(Player player, Optional<Card> topCard);
 
     /**
-     * Refreshes a player's remaining deck size.
+     * Refreshes a player's remaining deck size and makes the deck invisible if empty.
      *
      * @param player the player whose deck changed
      * @param remainingCards the number of cards left in the deck
      */
-    void updateDeckCount(Player player, int remainingCards);
+    void updateDeck(Player player, int remainingCards);
 
     /**
      * Signals whose turn it currently is.

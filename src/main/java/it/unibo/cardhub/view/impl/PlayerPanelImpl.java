@@ -16,19 +16,25 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
+import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.model.domain.api.Card;
-import it.unibo.cardhub.view.api.MatchView;
+import it.unibo.cardhub.model.domain.api.Player;
+import it.unibo.cardhub.view.api.PlayerPanel;
 import it.unibo.cardhub.view.components.CHLabel;
 import it.unibo.cardhub.view.components.CHPanel;
 import it.unibo.cardhub.view.components.CHStyles;
 
 /**
- * Represents the player area of the match view, containing the hand, the deck and the card descriptions.
+ * Implementation of PlayerPanel.
  */
-class PlayerPanel extends CHPanel {
+final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
     private static final int PADDING_ROW = 13;
+    private static final int PADDING_DECK_SIZE = 30;
 
-    private final MatchView matchView;
+    private static final long serialVersionUID = 1L;
+
+    private final transient MatchController controller;
+    private final transient Player player;
 
     private final JPanel handPanel;
     private final JLabel nameLabel;
@@ -40,17 +46,18 @@ class PlayerPanel extends CHPanel {
     /**
      * Constructor for PlayerPanel.
      * 
-     * @param matchView the view this panle belongs to
-     * @param playerName the name of the player
+     * @param controller the Match controller
+     * @param player the player this panel belongs to
      * @param mirrored if true, the elements are going to be arranged in reverse order to create a mirrored version
      */
-    public PlayerPanel(final MatchView matchView, final String playerName, final int deckSize, final boolean mirrored) {
-        this.matchView = matchView;
+    PlayerPanelImpl(final MatchController controller, final Player player, final boolean mirrored) {
+        this.controller = controller;
+        this.player = player;
 
         handPanel = new CHPanel(new FlowLayout(FlowLayout.LEFT, CHStyles.PADDING_STANDARD, CHStyles.PADDING_NONE));
-        nameLabel = new CHLabel(playerName, SwingConstants.CENTER);
+        nameLabel = new CHLabel(player.getName(), SwingConstants.CENTER);
         deckLabel = new CHLabel(new ImageIcon(getClass().getResource("/it/unibo/cardhub/view/Back.png")));
-        deckSizeLabel = new CHLabel(String.valueOf(deckSize), SwingConstants.CENTER);
+        deckSizeLabel = new CHLabel(String.valueOf(controller.getDeckCount(player)), CHStyles.primaryColor());
         cardInfoLabel = new CHLabel("", SwingConstants.CENTER);
         this.mirrored = mirrored;
 
@@ -76,11 +83,19 @@ class PlayerPanel extends CHPanel {
 
         deckWrapper.add(deckLabel);
         deckLabel.setPreferredSize(new Dimension(MatchViewImpl.CARD_WIDTH, MatchViewImpl.CARD_HEIGHT));
+        deckLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(final MouseEvent e) {
+                controller.drawFromDeck(player);
+            }
+        });
         firstRow.add(deckWrapper, mirrored ? BorderLayout.EAST : BorderLayout.WEST);
 
         secondRow.setBorder(BorderFactory.createEmptyBorder(CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD,
                                                             CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD));
         secondRow.add(nameLabel, BorderLayout.CENTER);
+        deckSizeLabel.setBorder(BorderFactory.createEmptyBorder(CHStyles.PADDING_NONE, PADDING_DECK_SIZE,
+                                                                CHStyles.PADDING_NONE, PADDING_DECK_SIZE));
         secondRow.add(deckSizeLabel, mirrored ? BorderLayout.EAST : BorderLayout.WEST);
 
         this.add(mirrored ? firstRow : secondRow);
@@ -88,12 +103,11 @@ class PlayerPanel extends CHPanel {
     }
 
     /**
-     * Repaints the hand.
-     * 
-     * @param cards the list of cards in the hand
+     * {@inheritDoc}
      */
+    @Override
     public void updateHandPanel(final List<Card> cards) {
-        for(Card card : cards) {
+        for (final Card card : cards) {
             final JLabel cardLabel = new CHLabel(new ImageIcon(getClass().getResource("/it/unibo/cardhub/io/Exodia.png")));
             cardLabel.setPreferredSize(new Dimension(MatchViewImpl.CARD_WIDTH, MatchViewImpl.CARD_HEIGHT));
             cardLabel.addMouseListener(new MouseAdapter() {
@@ -113,7 +127,7 @@ class PlayerPanel extends CHPanel {
 
                 @Override
                 public void mouseClicked(final MouseEvent e) {
-                    matchView.changeSelectedCard(cardLabel);
+                    controller.changeSelectedCard(cardLabel, player);
                 }
             });
             handPanel.add(cardLabel);
@@ -124,14 +138,19 @@ class PlayerPanel extends CHPanel {
     }
 
     /**
-     * Updates the deckSizeLabel and sets the deck to invisible if it's empty.
-     * 
-     * @param deckSize the current size of the deck
+     * {@inheritDoc}
      */
-    public void updateDeck(final int deckSize) {
-        deckSizeLabel.setText(String.valueOf(deckSize));
-        if (deckSize == 0) {
-            deckLabel.setVisible(false);
-        }
+    @Override
+    public void updateDeck() {
+        deckSizeLabel.setText(String.valueOf(controller.getDeckCount(player)));
+        deckLabel.setVisible(!controller.isEmptyDeck(player));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addToPanel(final JPanel panel, final Object constraints) {
+        panel.add(this, constraints);
     }
 }
