@@ -170,7 +170,12 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
      */
     @Override
     public void updateDiscardPile(final Player player, final Optional<Card> topCard) {
-        //TODO
+        if (player.equals(player1)) {
+            playfield.updatePlayerDiscardPile(topCard);
+        } else if (player.equals(player2)) {
+            playfield.updateOpponentDiscardPile(topCard);
+        }
+        throw new IllegalStateException("Player does not exist");
     }
 
     @Override
