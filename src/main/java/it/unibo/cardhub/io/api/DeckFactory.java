@@ -8,6 +8,13 @@ import it.unibo.cardhub.model.domain.api.Deck;
 public interface DeckFactory {
 
     /**
+     * Creates a deck of italian traditional cards.
+     * 
+     * @return italian cards deck
+     */
+    Deck createItalianDeck();
+
+    /**
      * Creates a Pokemon deck.
      * 
      * @return Pokemon deck

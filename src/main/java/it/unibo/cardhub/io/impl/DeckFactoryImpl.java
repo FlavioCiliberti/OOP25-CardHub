@@ -10,8 +10,11 @@ import java.util.function.Function;
 import org.yaml.snakeyaml.Yaml;
 
 import it.unibo.cardhub.io.api.DeckFactory;
-import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.Deck;
+import it.unibo.cardhub.model.domain.attributes.DragonBall;
+import it.unibo.cardhub.model.domain.attributes.Pokemon;
+import it.unibo.cardhub.model.domain.attributes.Suit;
+import it.unibo.cardhub.model.domain.attributes.YuGiOh;
 import it.unibo.cardhub.model.domain.impl.CardImpl;
 import it.unibo.cardhub.model.domain.impl.DeckImpl;
 
@@ -41,8 +44,30 @@ public final class DeckFactoryImpl implements DeckFactory {
      * {@inheritDoc}
      */
     @Override
+    public Deck createItalianDeck() {
+        final Deck deck = new DeckImpl(new ArrayList<>());
+
+        for (final Suit suit : Suit.values()) {
+            for (int value = 1; value <= 10; value++) {
+                deck.addCard(new CardImpl<>(
+                    suit.name() + "_" + value, 
+                    suit, 
+                    value, 
+                    Optional.empty(), 
+                    suit.name() + "_" + value + ".png")
+                );
+            }
+        }
+
+        return deck;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Deck createPokemonDeck() {
-        return loadDeck(CardType.POKEMON, attributes -> new Card.Pokemon(
+        return loadDeck(CardType.POKEMON, attributes -> new Pokemon(
             (String) attributes.get(TYPE_ATTRIBUTE),
             (String) attributes.get(RARITY_ATTRIBUTE)
         ));
@@ -53,7 +78,7 @@ public final class DeckFactoryImpl implements DeckFactory {
      */
     @Override
     public Deck createDragonBallDeck() {
-        return loadDeck(CardType.DRAGONBALL, attributes -> new Card.DragonBall(
+        return loadDeck(CardType.DRAGONBALL, attributes -> new DragonBall(
             (String) attributes.get(TYPE_ATTRIBUTE),
             (String) attributes.get(RARITY_ATTRIBUTE)
         ));
@@ -64,7 +89,7 @@ public final class DeckFactoryImpl implements DeckFactory {
      */
     @Override
     public Deck createYuGiOhDeck() {
-        return loadDeck(CardType.YUGIOH, attributes -> new Card.YuGiOh(
+        return loadDeck(CardType.YUGIOH, attributes -> new YuGiOh(
             (String) attributes.get(TYPE_ATTRIBUTE),
             (String) attributes.get(RACE_ATTRIBUTE)
         ));
