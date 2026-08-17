@@ -25,7 +25,7 @@ public interface MatchView {
      * @param player the player whose hand changed
      * @param cards the player's hand, in order
      */
-    void updateHand(Player player, List<Card> cards);
+    void updateHand(Player player, List<Card<?>> cards);
 
     /**
      * Refreshes the playfield.
@@ -33,7 +33,7 @@ public interface MatchView {
      * @param cards the cards on the playfield
      * @param columns the number of columns in the playfield
      */
-    void updatePlayfield(List<Card> cards, int columns);
+    void updatePlayfield(Player player, List<Card<?>> cards);
 
     /**
      * Refreshes a player's discard pile.
@@ -41,7 +41,7 @@ public interface MatchView {
      * @param player the player whose discard pile changed
      * @param topCard the top card of the pile, if any
      */
-    void updateDiscardPile(Player player, Optional<Card> topCard);
+    void updateDiscardPile(Player player, Optional<Card<?>> topCard);
 
     /**
      * Refreshes a player's remaining deck size and makes the deck invisible if empty.

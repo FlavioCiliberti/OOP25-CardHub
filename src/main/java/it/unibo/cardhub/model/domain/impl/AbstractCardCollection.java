@@ -12,13 +12,13 @@ import it.unibo.cardhub.model.domain.api.CardCollection;
  */
 public abstract class AbstractCardCollection implements CardCollection {
 
-    private final List<Card> cards = new ArrayList<>();
+    private final List<Card<?>> cards = new ArrayList<>();
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addCard(final Card card) {
+    public void addCard(final Card<?> card) {
         this.cards.add(Objects.requireNonNull(card, "No such card."));
     }
 
@@ -26,7 +26,7 @@ public abstract class AbstractCardCollection implements CardCollection {
      * {@inheritDoc}
      */
     @Override
-    public List<Card> getCards() {
+    public List<Card<?>> getCards() {
         return List.copyOf(this.cards);
     }
 
@@ -35,7 +35,7 @@ public abstract class AbstractCardCollection implements CardCollection {
      * 
      * @return a list of all the cards
      */
-    protected List<Card> getMutableCards() {
+    protected List<Card<?>> getMutableCards() {
         return this.cards;
     }
 

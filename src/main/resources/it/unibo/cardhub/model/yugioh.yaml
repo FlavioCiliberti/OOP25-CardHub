@@ -1,0 +1,70 @@
+cards:
+  - id: dark-magician
+    attribute:
+      type: Spellcaster
+      race: Dark
+    value: 2500
+    description: "A powerful spellcaster."
+
+  - id: dark-magician-girl
+    attribute:
+      type: Spellcaster
+      race: Dark
+    value: 2000
+    description: "A skilled spellcaster."
+
+  - id: blue-eyes-white-dragon
+    attribute:
+      type: Dragon
+      race: Light
+    value: 3000
+    description: "A legendary dragon."
+
+  - id: red-eyes-black-dragon
+    attribute:
+      type: Dragon
+      race: Dark
+    value: 2400
+    description: "A fierce black dragon."
+
+  - id: summoned-skull
+    attribute:
+      type: Fiend
+      race: Dark
+    value: 2500
+    description: "A powerful fiend."
+
+  - id: kuriboh
+    attribute:
+      type: Fiend
+      race: Dark
+    value: 300
+    description: "A small but useful monster."
+
+  - id: jinzo
+    attribute:
+      type: Machine
+      race: Dark
+    value: 2400
+    description: "A machine that controls traps."
+
+  - id: celtic-guardian
+    attribute:
+      type: Warrior
+      race: Earth
+    value: 1400
+    description: "A skilled warrior."
+
+  - id: gaia-the-fierce-knight
+    attribute:
+      type: Warrior
+      race: Earth
+    value: 2300
+    description: "A powerful knight."
+
+  - id: summoned-sorcerer
+    attribute:
+      type: Spellcaster
+      race: Dark
+    value: 1800
+    description: "A mysterious sorcerer."
