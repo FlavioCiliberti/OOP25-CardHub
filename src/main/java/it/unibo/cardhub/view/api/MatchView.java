@@ -3,6 +3,9 @@ package it.unibo.cardhub.view.api;
 import java.util.List;
 import java.util.Optional;
 
+import javax.swing.JLabel;
+
+import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.Player;
 
@@ -25,12 +28,12 @@ public interface MatchView {
     void updateHand(Player player, List<Card> cards);
 
     /**
-     * Refreshes a player's section of the playfield.
+     * Refreshes the playfield.
      *
-     * @param player the player whose playfield section changed
-     * @param cards the cards on that section of the playfield
+     * @param cards the cards on the playfield
+     * @param columns the number of columns in the playfield
      */
-    void updatePlayfield(Player player, List<Card> cards);
+    void updatePlayfield(List<Card> cards, int columns);
 
     /**
      * Refreshes a player's discard pile.
@@ -41,12 +44,12 @@ public interface MatchView {
     void updateDiscardPile(Player player, Optional<Card> topCard);
 
     /**
-     * Refreshes a player's remaining deck size.
+     * Refreshes a player's remaining deck size and makes the deck invisible if empty.
      *
      * @param player the player whose deck changed
      * @param remainingCards the number of cards left in the deck
      */
-    void updateDeckCount(Player player, int remainingCards);
+    void updateDeck(Player player, int remainingCards);
 
     /**
      * Signals whose turn it currently is.
@@ -61,4 +64,11 @@ public interface MatchView {
      * @param winner the match's winner
      */
     void showMatchEnded(Player winner); //important: match stats parameters must be added
+
+    /**
+     * Sets the card to be highlighted, eventually de-highlighting the previous one.
+     * 
+     * @param cardLabel the card label to be highlited
+     */
+    void changeSelectedCard(JLabel cardLabel);
 }

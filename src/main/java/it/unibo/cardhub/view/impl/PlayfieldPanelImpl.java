@@ -1,7 +1,7 @@
 package it.unibo.cardhub.view.impl;
 
 import it.unibo.cardhub.model.domain.api.Card;
-
+import it.unibo.cardhub.view.api.PlayfieldPanel;
 import it.unibo.cardhub.view.components.CHButton;
 import it.unibo.cardhub.view.components.CHLabel;
 import it.unibo.cardhub.view.components.CHPanel;
@@ -15,66 +15,72 @@ import java.util.Optional;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 /**
- * Represents the playfield area of the match view, including the central playfield and the discard piles for both players.
+ * Implementation of PlayfieldPanel.
  */
-public final class PlayfieldPanel extends CHPanel {
+final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
 
     private static final long serialVersionUID = 1L;
     private final PlayfieldAreaPanel playfieldArea;
-    private final DiscardPileAreaPanel playerDiscardPileArea;
-    private final DiscardPileAreaPanel opponentDiscardPileArea;
+    private final DiscardPileAreaPanel playerOneDiscardPileArea;
+    private final DiscardPileAreaPanel playerTwoDiscardPileArea;
 
     /**
      * Constructs a new playfield panel.
      */
-    public PlayfieldPanel() {
+    PlayfieldPanelImpl() {
         super(new BorderLayout());
 
         this.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(CHStyles.primaryColor()),
-            BorderFactory.createEmptyBorder(CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING)));
+            BorderFactory.createEmptyBorder(CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD,
+                                            CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD)));
 
         this.playfieldArea = new PlayfieldAreaPanel();
-        this.playerDiscardPileArea = new DiscardPileAreaPanel(BorderLayout.SOUTH);
-        this.opponentDiscardPileArea = new DiscardPileAreaPanel(BorderLayout.NORTH);
+        this.playerOneDiscardPileArea = new DiscardPileAreaPanel(BorderLayout.SOUTH);
+        this.playerTwoDiscardPileArea = new DiscardPileAreaPanel(BorderLayout.NORTH);
 
         this.add(this.playfieldArea, BorderLayout.CENTER);
-        this.add(this.playerDiscardPileArea, BorderLayout.EAST);
-        this.add(this.opponentDiscardPileArea, BorderLayout.WEST);
+        this.add(this.playerOneDiscardPileArea, BorderLayout.EAST);
+        this.add(this.playerTwoDiscardPileArea, BorderLayout.WEST);
     }
 
     /**
-     * Updates the player's discard pile with the specified card.
-     *
-     * @param card the card to display in the discard pile
+     * {@inheritDoc}
      */
-    public void updatePlayerDiscardPile(final Optional<Card> card) {
-        this.playerDiscardPileArea.updateCard(Objects.requireNonNull(card, "Card cannot be null"));
+    @Override
+    public void updatePlayerOneDiscardPile(final Optional<Card> card) {
+        this.playerOneDiscardPileArea.updateCard(Objects.requireNonNull(card, "Card cannot be null"));
     }
 
     /**
-     * Updates the opponent's discard pile with the specified card.
-     *
-     * @param card the card to display in the discard pile
+     * {@inheritDoc}
      */
-    public void updateOpponentDiscardPile(final Optional<Card> card) {
-        this.opponentDiscardPileArea.updateCard(Objects.requireNonNull(card, "Card cannot be null"));
+    @Override
+    public void updatePlayerTwoDiscardPile(final Optional<Card> card) {
+        this.playerTwoDiscardPileArea.updateCard(Objects.requireNonNull(card, "Card cannot be null"));
     }
 
     /**
-     * Updates the playfield with the specified list of cards.
-     *
-     * @param cards the list of cards to display on the playfield
-     * @param rows the number of rows in the playfield
-     * @param columns the number of columns in the playfield
+     * {@inheritDoc}
      */
-    public void updatePlayfield(final List<Card> cards, final int rows, final int columns) {
-        this.playfieldArea.update(Objects.requireNonNull(cards, "Cards list cannot be null"), rows, columns);
+    @Override
+    public void updatePlayfield(final List<Card> cards, final int columns) {
+        this.playfieldArea.update(Objects.requireNonNull(cards, "Cards list cannot be null"), columns);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addToPanel(final JPanel panel, final Object constraints) {
+        panel.add(this, constraints);
     }
 
     private static final class PlayfieldAreaPanel extends CHPanel {
+        private static final int ROWS = 2;
 
         private static final long serialVersionUID = 1L;
 
@@ -83,15 +89,16 @@ public final class PlayfieldPanel extends CHPanel {
 
             this.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(CHStyles.primaryColor()),
-                BorderFactory.createEmptyBorder(CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING)));
+                BorderFactory.createEmptyBorder(CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD,
+                                                CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD)));
         }
 
-        void update(final List<Card> cards, final int rows, final int columns) {
-            if (rows <= 0 || columns <= 0) {
+        void update(final List<Card> cards, final int columns) {
+            if (columns <= 0) {
                 throw new IllegalArgumentException("Rows and columns must be positive integers");
             }
 
-            this.setLayout(new GridLayout(rows, columns, CHStyles.PADDING, CHStyles.PADDING));
+            this.setLayout(new GridLayout(ROWS, columns, CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD));
             this.removeAll();
 
             cards.forEach(c -> this.add(new CHLabel(new ImageIcon(c.imagePath()))));
@@ -116,7 +123,8 @@ public final class PlayfieldPanel extends CHPanel {
 
             this.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(CHStyles.primaryColor()),
-                BorderFactory.createEmptyBorder(CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING)));
+                BorderFactory.createEmptyBorder(CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD,
+                                                CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD)));
 
             this.pile = new CHLabel();
             this.reshuffle = new CHButton("Reshuffle into deck");
