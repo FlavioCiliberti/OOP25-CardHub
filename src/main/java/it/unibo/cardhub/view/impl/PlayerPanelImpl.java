@@ -107,6 +107,7 @@ final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
      */
     @Override
     public void updateHandPanel(final List<Card> cards) {
+        handPanel.removeAll();
         for (final Card card : cards) {
             final JLabel cardLabel = new CHLabel(new ImageIcon(getClass().getResource("/it/unibo/cardhub/io/Exodia.png")));
             cardLabel.setPreferredSize(new Dimension(MatchViewImpl.CARD_WIDTH, MatchViewImpl.CARD_HEIGHT));
