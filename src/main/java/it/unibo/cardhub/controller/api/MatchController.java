@@ -1,5 +1,7 @@
 package it.unibo.cardhub.controller.api;
 
+import javax.swing.JLabel;
+
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.Player;
 
@@ -80,6 +82,14 @@ public interface MatchController extends ScreenController {
     boolean isEmptyDiscardPile(Player owner);
 
     /**
+     * Gets the card count of a player's deck.
+     * 
+     * @param owner the player who owns the deck
+     * @return deck's card count
+     */
+    int getDeckCount(Player owner);
+
+    /**
      * Ends the current player's turn and moves on to the next one.
      */
     void endTurn();
@@ -88,5 +98,15 @@ public interface MatchController extends ScreenController {
      * Ends the match with the current player conceding.
      */
     void concede();
+
+    /**
+     * Sets the card to be highlighted, eventually de-highlighting the previous one.
+     * 
+     * @param cardLabel the card label to be highlited
+     * @param selectedCard the selected card
+     * @param player the player that tried to select the card
+     */
+    void changeSelectedCard(JLabel cardLabel, Card selectedCard, Player player);
+    //if player == turnPlayer store selectedCard, then call MatchView.changeSelectedCard(cardLabel)
 }
 

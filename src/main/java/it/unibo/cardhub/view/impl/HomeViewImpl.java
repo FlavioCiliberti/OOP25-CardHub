@@ -7,7 +7,7 @@ import java.awt.GridLayout;
 import java.util.Objects;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 
 import it.unibo.cardhub.controller.api.HomeController;
 import it.unibo.cardhub.view.api.HomeView;
@@ -27,7 +27,12 @@ import javax.swing.JButton;
  * Home screen view, showing the CardHub title, the main menu and a hero image.
  */
 public final class HomeViewImpl extends ScreenView implements HomeView {
+    public static final int WIDTH = 1200;
+    public static final int HEIGHT = 1000;
+
     private static final long serialVersionUID = 1L;
+
+    private static final String TITLE = "CardHub"; 
 
     private static final int COLS = 2;
     private static final int ROWS = 1;
@@ -36,10 +41,6 @@ public final class HomeViewImpl extends ScreenView implements HomeView {
     private static final int STRUT_HEIGHT = 16;
 
     private final transient HomeController controller;
-
-    private final JPanel north;
-    private final JPanel central;
-    private final JPanel south;
 
     private final JButton newMatchBtn;
     private final JButton loadMatchBtn;
@@ -54,10 +55,6 @@ public final class HomeViewImpl extends ScreenView implements HomeView {
     public HomeViewImpl(final HomeController controller) {
         this.controller = Objects.requireNonNull(controller);
 
-        north = new CHPanel();
-        central = new CHPanel();
-        south = new CHPanel();
-
         exitBtn = new CHButton("Exit to desktop");
         newMatchBtn = new CHButton("New Match");
         loadMatchBtn = new CHButton("Load Match");
@@ -65,73 +62,10 @@ public final class HomeViewImpl extends ScreenView implements HomeView {
 
         setUpListeners();
 
-        manageNorthPanel();
-        manageCentralPanel();
-        manageSouthPanel();
-
         this.setLayout(new BorderLayout());
-        this.add(north, BorderLayout.NORTH);
-        this.add(central, BorderLayout.CENTER);
-        this.add(south, BorderLayout.SOUTH);
-    }
-
-    private void manageNorthPanel() {
-        final JLabel title = new CHTitle("CardHub");
-        north.add(title);
-        title.setHorizontalAlignment(JLabel.CENTER);
-    }
-
-    private void manageCentralPanel() {
-        central.setLayout(new GridLayout(ROWS, COLS));
-
-        final JPanel menu = createMenu();
-        final JPanel heroWrapper = createHeroWrapper();
-
-        central.add(menu);
-        central.add(heroWrapper);
-    }
-
-    private void manageSouthPanel() {
-        south.add(exitBtn);
-        south.setBorder(BorderFactory.createCompoundBorder(
-            this.getBorder(),
-            BorderFactory.createEmptyBorder(CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING)
-        ));
-    }
-
-    private JPanel createMenu() {
-        final JPanel menu = new CHPanel();
-
-        menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
-        menu.setBorder(BorderFactory.createCompoundBorder(
-            this.getBorder(),
-            BorderFactory.createEmptyBorder(CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING, CHStyles.PADDING)
-        ));
-        menu.add(Box.createVerticalGlue());
-        menu.add(newMatchBtn);
-        menu.add(Box.createVerticalStrut(STRUT_HEIGHT));
-        menu.add(loadMatchBtn);
-        menu.add(Box.createVerticalStrut(STRUT_HEIGHT));
-        menu.add(manageDecksBtn);
-        menu.add(Box.createVerticalGlue());
-        for (final Component c : menu.getComponents()) {
-            if (c instanceof JButton button) {
-                button.setAlignmentX(CENTER_ALIGNMENT);
-            }
-        }
-
-        return menu;
-    }
-
-    private JPanel createHeroWrapper() {
-        final JPanel heroWrapper = new CHPanel();
-
-        heroWrapper.setPreferredSize(new Dimension(HERO_WRAPPER_WIDTH, HERO_WRAPPER_HEIGHT));
-        final JLabel hero = new JLabel();
-        hero.setIcon(new ImageIcon(getClass().getResource("/it/unibo/cardhub/view/home_hero.jpg")));
-        heroWrapper.add(hero);
-
-        return heroWrapper;
+        this.add(new NorthPanel(), BorderLayout.NORTH);
+        this.add(new CentralPanel(newMatchBtn, loadMatchBtn, manageDecksBtn), BorderLayout.CENTER);
+        this.add(new SouthPanel(exitBtn), BorderLayout.SOUTH);
     }
 
     private void setUpListeners() {
@@ -170,6 +104,79 @@ public final class HomeViewImpl extends ScreenView implements HomeView {
      */
     @Override
     public void onExit() {
-        controller.exit();
+        if (confirmDialog("Are you sure you want to exit?", "Exit")) {
+            controller.exit();
+        }
     }
+
+    private boolean confirmDialog(final String question, final String name) {
+        return JOptionPane.showConfirmDialog(this, question, name, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+    }
+
+    private static class NorthPanel extends CHPanel {
+        private static final long serialVersionUID = 1L;
+        private final JLabel title;
+
+        NorthPanel() {
+            title = new CHTitle(TITLE);
+            super.add(title);
+            title.setHorizontalAlignment(JLabel.CENTER);
+        }
+    }
+
+    private static class CentralPanel extends CHPanel {
+        private static final long serialVersionUID = 1L;
+
+        CentralPanel(final JButton newMatchBtn, final JButton loadMatchBtn, final JButton manageDecksBtn) {
+            super.setLayout(new GridLayout(ROWS, COLS));
+            super.add(new MenuPanel(newMatchBtn, loadMatchBtn, manageDecksBtn));
+            super.add(new HeroPanel());
+        }
+    }
+
+    private static class SouthPanel extends CHPanel {
+        private static final long serialVersionUID = 1L;
+
+        SouthPanel(final JButton exitBtn) {
+            super.add(exitBtn);
+            super.setBorder(BorderFactory.createEmptyBorder(
+                CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD
+            ));
+        }
+    }
+
+    private static class MenuPanel extends CHPanel {
+        private static final long serialVersionUID = 1L;
+
+        MenuPanel(final JButton newMatchBtn, final JButton loadMatchBtn, final JButton manageDecksBtn) {
+            super.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+            super.setBorder(BorderFactory.createEmptyBorder(
+                CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD
+            ));
+            super.add(Box.createVerticalGlue());
+            super.add(newMatchBtn);
+            super.add(Box.createVerticalStrut(STRUT_HEIGHT));
+            super.add(loadMatchBtn);
+            super.add(Box.createVerticalStrut(STRUT_HEIGHT));
+            super.add(manageDecksBtn);
+            super.add(Box.createVerticalGlue());
+            for (final Component c : super.getComponents()) {
+                if (c instanceof JButton button) {
+                    button.setAlignmentX(CENTER_ALIGNMENT);
+                }
+            }
+        }
+    }
+
+    private static class HeroPanel extends CHPanel {
+        private static final long serialVersionUID = 1L;
+
+        HeroPanel() {
+            super.setPreferredSize(new Dimension(HERO_WRAPPER_WIDTH, HERO_WRAPPER_HEIGHT));
+            final JLabel hero = new JLabel();
+            hero.setIcon(new ImageIcon(HeroPanel.class.getResource("/it/unibo/cardhub/view/home_hero.jpg")));
+            super.add(hero);
+        }
+    }
+
 }
