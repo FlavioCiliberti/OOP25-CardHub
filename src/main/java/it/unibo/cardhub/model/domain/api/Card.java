@@ -38,26 +38,9 @@ public interface Card<T> {
     Optional<String> desc();
 
     /**
-     * Record representing a Yu-Gi-Oh card with its type and race.
+     * Returns the image file name.
      * 
-     * @param type the type of the Yu-Gi-Oh card
-     * @param race the race of the Yu-Gi-Oh card
+     * @return image file name
      */
-    record YuGiOh(String type, String race) { }
-
-    /**
-     * Record representing a Pokemon card with its type and rarity.
-     * 
-     * @param type the type of the Pokemon card
-     * @param rarity the rarity of the Pokemon card
-     */
-    record Pokemon(String type, String rarity) { }
-
-    /**
-     * Record representing a Dragon Ball card with its type and rarity.
-     * 
-     * @param type the type of the Dragon Ball card
-     * @param rarity the rarity of the Dragon Ball card
-     */
-    record DragonBall(String type, String rarity) { }
+    String image();
 }
