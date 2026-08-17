@@ -1,5 +1,7 @@
 package it.unibo.cardhub.model.domain.api;
 
+import java.util.Optional;
+
 /**
  * Represents a deck.
  */
@@ -10,7 +12,14 @@ public interface Deck extends CardCollection {
      * 
      * @return the drawn card
      */
-    Card drawCard();
+    Card<?> drawCard();
+
+    /**
+     * Peeks a card without removing it.
+     * 
+     * @return the peeked card
+     */
+    Optional<Card<?>> peekCard();
 
     /**
      * Shuffles the deck's cards.

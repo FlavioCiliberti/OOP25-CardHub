@@ -1,6 +1,6 @@
 package it.unibo.cardhub.model.domain.api;
 
-import java.util.Optional;
+import java.util.List;
 
 /**
  * Represent a match, the heart of the game.
@@ -8,40 +8,16 @@ import java.util.Optional;
 public interface MatchState {
 
     /**
-     * Starts a match.
-     */
-    void start();
-
-    /**
-     * Sets a new turn for the next player.
-     */
-    void nextTurn();
-
-    /**
-     * A getter for the player of the current turn.
+     * Returns all the players of the match.
      * 
-     * @return the current player
+     * @return all the players
      */
-    Player getCurrentPlayer();
+    List<Player> getPlayers();
 
     /**
-     * A getter for the match's winner.
+     * Returns the state of the playfield.
      * 
-     * @return the winner, if present
+     * @return the playfield
      */
-    Optional<Player> getWinner();
-
-    /**
-     * A setter for the match's winner.
-     * 
-     * @param player who is the winner
-     */
-    void setWinner(Player player);
-
-    /**
-     * Informs about the match's state.
-     * 
-     * @return true if finished, false otherwise
-     */
-    boolean isFinished();
+    Playfield getPlayfield();
 }

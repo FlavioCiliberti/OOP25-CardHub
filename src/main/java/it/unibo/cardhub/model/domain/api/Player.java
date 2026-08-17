@@ -1,5 +1,7 @@
 package it.unibo.cardhub.model.domain.api;
 
+import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
+
 /**
  * Represents a player in a match.
  */
@@ -9,15 +11,29 @@ public interface Player {
      * Draws a card from the player's deck.
      * 
      * @return the drawn card
+     * @throws CardCollectionFullException if the hand is full
      */
-    Card drawCard();
+    Card<?> drawCard() throws CardCollectionFullException;
 
     /**
      * Puts a card onto the table from the player's hand.
      * 
      * @param card to be played
+     * @return the card
      */
-    void playCard(Card card);
+    Card<?> playCard(Card<?> card);
+
+    /**
+     * Puts a card in the player's discard pile.
+     * 
+     * @param card the card to be put in the discard pile
+     */
+    void putInPile(Card<?> card);
+
+    /**
+     * Shuffles the player's discard pile into the deck.
+     */
+    void shufflePileIntoDeck();
 
     /**
      * A getter for the player's name.
@@ -32,11 +48,4 @@ public interface Player {
      * @return the player's hand
      */
     Hand getHand();
-
-    /**
-     * A getter for the player's deck.
-     * 
-     * @return the player's deck
-     */
-    Deck getDeck();
 }

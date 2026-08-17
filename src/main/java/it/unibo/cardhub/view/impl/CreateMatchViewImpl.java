@@ -39,20 +39,13 @@ import it.unibo.cardhub.view.components.ScreenView;
 /**
  * Create Match View, showing the setting needed to create the match.
  */
-public final class CreateMatchImpl extends ScreenView {
+public final class CreateMatchViewImpl extends ScreenView {
     public static final int WIDTH = 470;
     public static final int HEIGHT = 710;
 
     private static final long serialVersionUID = 42L;
 
-    //logic constraints
-    private static final int MIN_HAND_SIZE = 1;
-    private static final int MIN_FIELD_SIZE = 1;
-    private static final int MAX_HAND_SIZE = 7;
-    private static final int MAX_FIELD_SIZE = 6;
     private static final int SPINNER_STEP_SIZE = 1;
-    private static final int HAND_DEFAULT_VALUE = 4;
-    private static final int FIELD_DEFAULT_VALUE = 3;
 
     //GUI padding and panel size
     private static final int TOP_PANEL_PADDING = 7;
@@ -120,7 +113,7 @@ public final class CreateMatchImpl extends ScreenView {
      * 
      * @param controller the controller for the current screen
      */
-    public CreateMatchImpl(final CreateMatchController controller) {
+    public CreateMatchViewImpl(final CreateMatchController controller) {
         playersPanel = new CHPanel(CHStyles.primaryColor(), new BorderLayout());
         firstPlayerPanel = new CHPanel(new GridBagLayout());
         secondPlayerPanel = new CHPanel(new GridBagLayout());
@@ -140,12 +133,14 @@ public final class CreateMatchImpl extends ScreenView {
         fullGameRadioButton = new JRadioButton("Full Game");
         gameModesGroup = new ButtonGroup();
 
-        handSizeModel = new SpinnerNumberModel(HAND_DEFAULT_VALUE, MIN_HAND_SIZE, MAX_HAND_SIZE, SPINNER_STEP_SIZE);
+        handSizeModel = new SpinnerNumberModel(controller.getDefaultHandSize(), controller.getMaxHandSize(), 
+                                                controller.getMaxHandSize(), SPINNER_STEP_SIZE);
         handSizeSpinner = new JSpinner(handSizeModel);
-        fieldSizeModel = new SpinnerNumberModel(FIELD_DEFAULT_VALUE, MIN_FIELD_SIZE, MAX_FIELD_SIZE, SPINNER_STEP_SIZE);
+        fieldSizeModel = new SpinnerNumberModel(controller.getDefaultFieldSize(), controller.getMinFieldSize(), 
+                                                controller.getMaxFieldSize(), SPINNER_STEP_SIZE);
         fieldSizeSpinner = new JSpinner(fieldSizeModel);
         //Starting hand size needs to always be lower or equal to max hand size
-        startingHandModel = new SpinnerNumberModel(HAND_DEFAULT_VALUE, MIN_HAND_SIZE,
+        startingHandModel = new SpinnerNumberModel(controller.getDefaultHandSize(), controller.getMaxHandSize(),
                                                     ((Integer) handSizeSpinner.getValue()).intValue(), SPINNER_STEP_SIZE);
         startingHandSpinner = new JSpinner(startingHandModel);
         autoDrawCheckBox = new JCheckBox("Auto Draw on Turn Start");

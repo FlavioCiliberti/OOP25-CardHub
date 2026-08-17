@@ -8,19 +8,35 @@ import java.util.List;
 public interface Playfield {
 
     /**
+     * Returns the maximum amount of cards per player.
+     * 
+     * @return the maxim amount of cards
+     */
+    int getMaxCardsPerPlayer();
+
+    /**
+     * Informs whether a player can add another card to the field.
+     * 
+     * @param player that wants to add a card
+     * @return true if he can, false otherwise
+     */
+    boolean canAddCard(Player player);
+
+    /**
      * Adds a card from the player's hand to the table.
      * 
      * @param player that plays the card
      * @param card to be put on the table
      */
-    void addCard(Player player, Card card);
+    void addCard(Player player, Card<?> card);
 
     /**
      * Removes a card from the table.
      * 
      * @param card to be removed
+     * @return the card
      */
-    void removeCard(Card card);
+    Card<?> removeCard(Card<?> card);
 
     /**
      * A getter for the player's cards.
@@ -28,7 +44,7 @@ public interface Playfield {
      * @param player having cards of interest
      * @return a list of cards
      */
-    List<Card> getCards(Player player);
+    List<Card<?>> getCards(Player player);
 
     /**
      * Removes all cards from the table.
@@ -40,5 +56,5 @@ public interface Playfield {
      * 
      * @return a list of all the cards
      */
-    List<Card> getAllCards();
+    List<Card<?>> getAllCards();
 }
