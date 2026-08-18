@@ -30,6 +30,9 @@ public class MatchStateImpl implements MatchState {
         if (players.isEmpty()) {
             throw new IllegalArgumentException("A match needs at least one player.");
         }
+        if (maxFieldSize <= 0) {
+            throw new IllegalArgumentException("Maximum field size must be positive.");
+        }
 
         this.players = List.copyOf(players);
         this.field = new PlayfieldImpl(players, maxFieldSize);

@@ -2,7 +2,6 @@ package it.unibo.cardhub.model.domain.impl;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import it.unibo.cardhub.model.domain.api.Card;
@@ -16,16 +15,18 @@ public class DeckImpl extends AbstractCardCollection implements Deck {
 
     /**
      * Deck constructor.
+     * 
+     * @param cards deck cards
      */
-    public DeckImpl() {
-        super();
+    public DeckImpl(final List<? extends Card<?>> cards) {
+        super(List.copyOf(cards));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Card drawCard() {
+    public Card<?> drawCard() {
         if (this.isEmpty()) {
             throw new EmptyCardCollectionException();
         }
@@ -45,19 +46,11 @@ public class DeckImpl extends AbstractCardCollection implements Deck {
      * {@inheritDoc}
      */
     @Override
-    public Optional<Card> peekCard() {
+    public Optional<Card<?>> peekCard() {
         if (getMutableCards().isEmpty()) {
             return Optional.empty();
         }
 
         return Optional.of(getMutableCards().get(this.size() - 1));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addCards(final List<Card> cards) {
-        this.getMutableCards().addAll(Objects.requireNonNull(cards, "No such cards."));
     }
 }

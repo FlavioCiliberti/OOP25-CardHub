@@ -12,14 +12,14 @@ public interface CardCollection {
      * 
      * @param card to be added
      */
-    void addCard(Card card);
+    void addCard(Card<?> card);
 
     /**
      * Returns a copy of all the cards of the collection.
      * 
      * @return a list of all the cards
      */
-    List<Card> getCards();
+    List<Card<?>> getCards();
 
     /**
      * Gets the current size of the collection.

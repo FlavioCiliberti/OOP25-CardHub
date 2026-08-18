@@ -13,14 +13,14 @@ public interface DiscardPile extends CardCollection {
      * @param card the chosen card
      * @return the chosen card
      */
-    Card takeCard(Card card);
+    Card<?> takeCard(Card<?> card);
 
     /**
      * Returns the most recently discarded card without removing it.
      *
      * @return the most recently discarded card
      */
-    Optional<Card> peekCard();
+    Optional<Card<?>> peekCard();
 
     /**
      * Reshuffles the cards into the deck.

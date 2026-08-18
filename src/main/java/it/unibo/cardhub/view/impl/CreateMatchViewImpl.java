@@ -48,10 +48,6 @@ public final class CreateMatchViewImpl extends ScreenView {
     private static final int SPINNER_STEP_SIZE = 1;
 
     //GUI padding and panel size
-    private static final int PADDING_LARGE = 20;
-    private static final int PADDING_STANDARD = 10;
-    private static final int PADDING_SMALL = 4;
-    private static final int PADDING_NONE = 0;
     private static final int TOP_PANEL_PADDING = 7;
     private static final int RADIO_BUTTON_PADDING = 27;
     private static final int CENTER_PANEL_Y_PADDING = 15;
@@ -243,8 +239,8 @@ public final class CreateMatchViewImpl extends ScreenView {
     //sets up playersPanel
     private void managePlayersPanel() {
         playersPanel.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * PLAYERS_PANEL_RATIO)));
-        playersPanel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE,
-                                                                CENTER_PANEL_PADDING_BETWEEN, PADDING_NONE,
+        playersPanel.setBorder(BorderFactory.createMatteBorder(CHStyles.PADDING_NONE, CHStyles.PADDING_NONE,
+                                                                CENTER_PANEL_PADDING_BETWEEN, CHStyles.PADDING_NONE,
                                                                 CHStyles.secondaryColor()));
 
         final JLabel playersLabel = new CHLabel("Players", CHStyles.secondaryColor(), SwingConstants.CENTER);
@@ -253,13 +249,13 @@ public final class CreateMatchViewImpl extends ScreenView {
         //contains both players' panels
         final JPanel playersContainer = new CHPanel(CHStyles.primaryColor());
         playersContainer.setLayout(new BoxLayout(playersContainer, BoxLayout.Y_AXIS));
-        playersContainer.setBorder(BorderFactory.createEmptyBorder(PADDING_NONE, PADDING_STANDARD,
-                                                                    PADDING_STANDARD, PADDING_STANDARD));
+        playersContainer.setBorder(BorderFactory.createEmptyBorder(CHStyles.PADDING_NONE, CHStyles.PADDING_STANDARD,
+                                                                    CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD));
         playersPanel.add(playersContainer, BorderLayout.CENTER);
 
         //Player 1 Panel
-        firstPlayerPanel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE,
-                                                                    PADDING_STANDARD, PADDING_NONE,
+        firstPlayerPanel.setBorder(BorderFactory.createMatteBorder(CHStyles.PADDING_NONE, CHStyles.PADDING_NONE,
+                                                                    CHStyles.PADDING_STANDARD, CHStyles.PADDING_NONE,
                                                                     CHStyles.primaryColor()));
         managePlayerPanel(firstPlayerPanel, playersContainer, new CHLabel("Player 1", SwingConstants.CENTER), 
                             new CHLabel("Name"), new CHLabel("Deck"), firstPlayerNameField, firstPlayerDeckBox);
@@ -285,9 +281,10 @@ public final class CreateMatchViewImpl extends ScreenView {
         constraints.gridy++;
         final JPanel namePanel = new CHPanel();
         namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.X_AXIS));
-        namePanel.setBorder(BorderFactory.createEmptyBorder(PADDING_NONE, PADDING_STANDARD, PADDING_NONE, PADDING_LARGE));
-        nameLabel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE,
-                                                            PADDING_NONE, PADDING_STANDARD,
+        namePanel.setBorder(BorderFactory.createEmptyBorder(CHStyles.PADDING_NONE, CHStyles.PADDING_STANDARD,
+                                                            CHStyles.PADDING_NONE, CHStyles.PADDING_LARGE));
+        nameLabel.setBorder(BorderFactory.createMatteBorder(CHStyles.PADDING_NONE, CHStyles.PADDING_NONE,
+                                                            CHStyles.PADDING_NONE, CHStyles.PADDING_STANDARD,
                                                             CHStyles.secondaryColor()));
         namePanel.add(nameLabel);
         namePanel.add(nameTextField);
@@ -296,19 +293,19 @@ public final class CreateMatchViewImpl extends ScreenView {
         constraints.gridy++;
         final JPanel deckPanel = new CHPanel();
         deckPanel.setLayout(new BoxLayout(deckPanel, BoxLayout.X_AXIS));
-        deckLabel.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_NONE,
-                                                            PADDING_NONE, PADDING_SMALL,
+        deckLabel.setBorder(BorderFactory.createMatteBorder(CHStyles.PADDING_NONE, CHStyles.PADDING_NONE,
+                                                            CHStyles.PADDING_NONE, CHStyles.PADDING_SMALL,
                                                             CHStyles.secondaryColor()));
         deckPanel.add(deckLabel);
-        deckBox.setBorder(BorderFactory.createMatteBorder(PADDING_NONE, PADDING_STANDARD,
-                                                            PADDING_NONE, PADDING_STANDARD,
+        deckBox.setBorder(BorderFactory.createMatteBorder(CHStyles.PADDING_NONE, CHStyles.PADDING_STANDARD,
+                                                            CHStyles.PADDING_NONE, CHStyles.PADDING_STANDARD,
                                                             CHStyles.secondaryColor()));
         for (final Map.Entry<Integer, String> entry : decks.entrySet()) {
             deckBox.addItem(new DeckBoxItem<>(entry.getKey(), entry.getValue()));
         }
         deckPanel.add(deckBox);
-        deckPanel.setBorder(BorderFactory.createMatteBorder(PADDING_STANDARD, PADDING_STANDARD,
-                                                            PADDING_STANDARD, PADDING_STANDARD,
+        deckPanel.setBorder(BorderFactory.createMatteBorder(CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD,
+                                                            CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD,
                                                             CHStyles.secondaryColor()));
         panel.add(deckPanel, constraints);
 
@@ -343,8 +340,8 @@ public final class CreateMatchViewImpl extends ScreenView {
         });
         this.createRow(gameModesPanel, customRulesRadioButton);
         customRulesRadioButton.setAlignmentX(CENTER_ALIGNMENT);
-        customRulesRadioButton.setBorder(BorderFactory.createEmptyBorder(PADDING_NONE, RADIO_BUTTON_PADDING,
-                                                                            PADDING_SMALL, PADDING_NONE));
+        customRulesRadioButton.setBorder(BorderFactory.createEmptyBorder(CHStyles.PADDING_NONE, RADIO_BUTTON_PADDING,
+                                                                            CHStyles.PADDING_SMALL, CHStyles.PADDING_NONE));
 
         fullGameRadioButton.addActionListener(e -> {
             selectedGameMode = GameMode.FULL_GAME;
@@ -359,15 +356,16 @@ public final class CreateMatchViewImpl extends ScreenView {
         });
         this.createRow(gameModesPanel, fullGameRadioButton);
         fullGameRadioButton.setAlignmentX(CENTER_ALIGNMENT);
-        fullGameRadioButton.setBorder(BorderFactory.createEmptyBorder(PADDING_NONE, PADDING_SMALL, PADDING_NONE, PADDING_NONE));
+        fullGameRadioButton.setBorder(BorderFactory.createEmptyBorder(CHStyles.PADDING_NONE, CHStyles.PADDING_SMALL,
+                                                                        CHStyles.PADDING_NONE, CHStyles.PADDING_NONE));
     }
 
     //Sets up settingsPanel
     private void manageSettingsPanel() {
         settingsPanel.setVisible(false);
         settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.Y_AXIS));
-        settingsPanel.setBorder(BorderFactory.createMatteBorder(CENTER_PANEL_PADDING_BETWEEN, PADDING_NONE,
-                                                                PADDING_NONE, PADDING_NONE,
+        settingsPanel.setBorder(BorderFactory.createMatteBorder(CENTER_PANEL_PADDING_BETWEEN, CHStyles.PADDING_NONE,
+                                                                CHStyles.PADDING_NONE, CHStyles.PADDING_NONE,
                                                                 CHStyles.secondaryColor()));
 
         final JLabel settingsLabel = new CHLabel("Custom Settings", CHStyles.secondaryColor(), SwingConstants.CENTER);

@@ -1,5 +1,6 @@
 package it.unibo.cardhub.model.domain.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import it.unibo.cardhub.model.domain.api.Card;
@@ -14,16 +15,18 @@ public class DiscardPileImpl extends AbstractCardCollection implements DiscardPi
 
     /**
      * Discard pile constructor.
+     * 
+     * @param cards discard pile cards
      */
-    public DiscardPileImpl() {
-        super();
+    public DiscardPileImpl(final List<? extends Card<?>> cards) {
+        super(List.copyOf(cards));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Card takeCard(final Card card) {
+    public Card<?> takeCard(final Card<?> card) {
         if (!this.getMutableCards().remove(card)) {
             throw new NoSuchCardsException();
         }
@@ -35,7 +38,7 @@ public class DiscardPileImpl extends AbstractCardCollection implements DiscardPi
      * {@inheritDoc}
      */
     @Override
-    public Optional<Card> peekCard() {
+    public Optional<Card<?>> peekCard() {
         if (getMutableCards().isEmpty()) {
             return Optional.empty();
         }
@@ -48,7 +51,7 @@ public class DiscardPileImpl extends AbstractCardCollection implements DiscardPi
      */
     @Override
     public void reshuffleIntoDeck(final Deck deck) {
-        deck.addCards(this.getMutableCards());
+        this.getMutableCards().forEach(deck::addCard);
         this.getMutableCards().clear();
         deck.shuffle();
     }
