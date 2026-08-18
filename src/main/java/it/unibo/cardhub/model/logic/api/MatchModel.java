@@ -10,7 +10,7 @@ import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 /**
  * Handles the match in its entirety.
  */
-public interface Match {
+public interface MatchModel {
 
     /**
      * Makes the player draw a card.
@@ -18,31 +18,24 @@ public interface Match {
      * @param player the player to draw the card
      * @throws CardCollectionFullException if the player's hand is full
      */
-    void drawCard(Player player) throws CardCollectionFullException;
+    void drawCard(PlayerEnum player) throws CardCollectionFullException;
 
     /**
      * Makes the player play a card.
      * 
      * @param card the card to be played
-     * @param player the player playing the card
+     * @param playerEnum the player playing the card
      * @throws CardCollectionFullException if the player's side of the field is full
      */
-    void playCard(Card card, Player player) throws CardCollectionFullException;
+    void playCard(Card card, PlayerEnum playerEnum) throws CardCollectionFullException;
 
     /**
      * Moves a card from the field to the discard pile.
      * 
      * @param card the card to move
-     * @param player the player the card belongs to
+     * @param playerEnum the player the card belongs to
      */
-    void moveCardFromFieldToPile(Card card, Player player);
-
-    /**
-     * Shuffles the player's discard pile into the deck.
-     * 
-     * @param player the player the action is going to be performed on
-     */
-    void shufflePileIntoDeck(Player player);
+    void moveCardFromFieldToPile(Card card, PlayerEnum playerEnum);
 
     /**
      * compares two Cards and proceeds with the corresponding actions.
@@ -52,6 +45,22 @@ public interface Match {
      * @return the result of the comparison
      */
     ComparisonWinner compareCard(Card firstPlayerCard, Card secondPlayerCard);
+
+    /**
+     * returns the specified player.
+     * 
+     * @param player the requested player
+     * @return the player
+     */
+    Player getPlayer(PlayerEnum player);
+
+    /**
+     * returns the PlayerEnum of the specified player.
+     * 
+     * @param player the requested player
+     * @return the player
+     */
+    PlayerEnum getEnum(Player player);
 
     /**
      * Returns the state of the playfield.
@@ -65,7 +74,7 @@ public interface Match {
      * 
      * @return the turn player.
      */
-    Player getTurnPlayer();
+    PlayerEnum getTurnPlayer();
 
     /**
      * changes the turn player.

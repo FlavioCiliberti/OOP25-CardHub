@@ -10,14 +10,15 @@ import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.model.domain.api.Playfield;
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 import it.unibo.cardhub.model.domain.impl.MatchStateImpl;
-import it.unibo.cardhub.model.logic.api.Match;
+import it.unibo.cardhub.model.logic.api.MatchModel;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
+import it.unibo.cardhub.model.logic.api.PlayerEnum;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 
 /**
  * an implementation of Match.
  */
-class MatchImpl implements Match {
+class MatchModelImpl implements MatchModel {
     private final MatchState matchState;
     private final MatchLogic matchLogic;
 
@@ -35,7 +36,7 @@ class MatchImpl implements Match {
      * @param autoDraw should the turn player draw a card on turn start
      * @param matchLogic the match logic
      */
-    MatchImpl(final Player player1, final Player player2,
+    MatchModelImpl(final Player player1, final Player player2,
                         final int playerFieldSize, final boolean autoDraw,
                         final MatchLogic matchLogic) {
         matchState = new MatchStateImpl(new ArrayList<>(Arrays.asList(player1, player2)), playerFieldSize);
@@ -51,15 +52,17 @@ class MatchImpl implements Match {
      * {@inheritDoc}
      */
     @Override
-    public void drawCard(final Player player) throws CardCollectionFullException {
-        player.drawCard();
+    public void drawCard(final PlayerEnum player) throws CardCollectionFullException {
+        this.getPlayer(player).drawCard();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void playCard(final Card card, final Player player) throws CardCollectionFullException {
+    public void playCard(final Card card, final PlayerEnum playerEnum) throws CardCollectionFullException {
+        final Player player = matchState.getPlayer(playerEnum);
+
         if (matchState.getPlayfield().canAddCard(player)) {
             player.playCard(card);
             matchState.getPlayfield().addCard(player, card);
@@ -73,17 +76,8 @@ class MatchImpl implements Match {
      * {@inheritDoc}
      */
     @Override
-    public void shufflePileIntoDeck(final Player player) {
-        player.shufflePileIntoDeck();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void moveCardFromFieldToPile(final Card card, final Player player) {
-        matchState.getPlayfield().removeCard(card);
-        player.putInPile(card);
+    public void moveCardFromFieldToPile(final Card card, final PlayerEnum playerEnum) {
+        matchState.getPlayer(playerEnum).putInPile(card);
     }
 
     /**
@@ -98,7 +92,23 @@ class MatchImpl implements Match {
      * {@inheritDoc}
      */
     @Override
-    public Player getTurnPlayer() {
+    public Player getPlayer(final PlayerEnum player) {
+        return matchState.getPlayer(player);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PlayerEnum getEnum(final Player player) {
+        return matchState.getEnum(player);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PlayerEnum getTurnPlayer() {
         return matchLogic.getCurrentPlayer();
     }
 
