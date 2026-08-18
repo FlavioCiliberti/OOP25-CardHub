@@ -94,6 +94,20 @@ public interface Match {
     void changeTurn();
 
     /**
+     * getter for the winner card action.
+     * 
+     * @return the action that must be done with the winner card
+     */
+    CardAction getWinnerCardAction();
+
+    /**
+     * getter for the looser card action.
+     * 
+     * @return the action that must be done with the winner card
+     */
+    CardAction getLooserCardAction();
+
+    /**
      * A getter for the match's winner.
      * 
      * @return the winner, if present

@@ -12,6 +12,7 @@ import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 import it.unibo.cardhub.model.domain.impl.MatchStateImpl;
 import it.unibo.cardhub.model.logic.api.Match;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
+import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 
 /**
@@ -189,6 +190,22 @@ class MatchImpl implements Match {
     @Override
     public int getPlayFieldSize() {
         return getPlayfield().getMaxCardsPerPlayer();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CardAction getWinnerCardAction() {
+        return matchLogic.getWinnerCardAction();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CardAction getLooserCardAction() {
+        return matchLogic.getLooserCardAction();
     }
 
     /**
