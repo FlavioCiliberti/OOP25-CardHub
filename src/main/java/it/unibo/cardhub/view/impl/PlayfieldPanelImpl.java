@@ -2,7 +2,7 @@ package it.unibo.cardhub.view.impl;
 
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.model.domain.api.Card;
-import it.unibo.cardhub.model.domain.api.Player;
+import it.unibo.cardhub.model.logic.api.PlayerEnum;
 import it.unibo.cardhub.view.api.PlayfieldPanel;
 import it.unibo.cardhub.view.components.CHButton;
 import it.unibo.cardhub.view.components.CHLabel;
@@ -12,9 +12,8 @@ import it.unibo.cardhub.view.util.ImageResolver;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -29,7 +28,7 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
     private static final long serialVersionUID = 1L;
     private final PlayfieldAreaPanel bottomArea;
     private final PlayfieldAreaPanel topArea;
-    private final Map<Player, PlayfieldAreaPanel> playfieldAreas;
+    private final List<PlayfieldAreaPanel> playfieldAreas;
 
     private final DiscardPileAreaPanel playerOneDiscardPileArea;
     private final DiscardPileAreaPanel playerTwoDiscardPileArea;
@@ -50,9 +49,9 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
 
         this.bottomArea = new PlayfieldAreaPanel(controller);
         this.topArea = new PlayfieldAreaPanel(controller);
-        this.playfieldAreas = new HashMap<>();
-        this.playfieldAreas.put(controller.getPlayerOne(), bottomArea);
-        this.playfieldAreas.put(controller.getPlayerTwo(), topArea);
+        this.playfieldAreas = new ArrayList<>();
+        this.playfieldAreas.add(bottomArea);
+        this.playfieldAreas.add(topArea);
         final JPanel centralArea = new JPanel(
             new GridLayout(2, 1, CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD));
         centralArea.add(this.topArea);
@@ -86,11 +85,11 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
      * {@inheritDoc}
      */
     @Override
-    public void updatePlayfield(final Player player, final List<Card<?>> cards) {
+    public void updatePlayfield(final PlayerEnum player, final List<Card<?>> cards) {
         Objects.requireNonNull(player, "Player cannot be null");
         Objects.requireNonNull(cards, "Cards list cannot be null");
 
-        final PlayfieldAreaPanel area = this.playfieldAreas.get(player);
+        final PlayfieldAreaPanel area = this.playfieldAreas.get(player.getIndex());
         if (area == null) {
             throw new IllegalArgumentException("Unknown player: " + player);
         }
