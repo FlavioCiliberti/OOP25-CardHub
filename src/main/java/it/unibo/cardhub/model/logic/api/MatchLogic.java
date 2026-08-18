@@ -43,4 +43,18 @@ public interface MatchLogic {
      * changes the turn player.
      */
     void changeTurn();
+
+    /**
+     * getter for the winner card action.
+     * 
+     * @return the action that must be done with the winner card
+     */
+    CardAction getWinnerCardAction();
+
+    /**
+     * getter for the looser card action.
+     * 
+     * @return the action that must be done with the winner card
+     */
+    CardAction getLooserCardAction();
 }

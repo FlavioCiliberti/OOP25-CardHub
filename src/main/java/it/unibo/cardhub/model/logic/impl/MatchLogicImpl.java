@@ -26,6 +26,9 @@ class MatchLogicImpl implements MatchLogic {
         currentPlayer = player1;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ComparisonWinner compareCard(final Card<?> firstPlayerCard, 
         final Card<?> secondPlayerCard, 
@@ -85,14 +88,36 @@ class MatchLogicImpl implements MatchLogic {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Player getPlayerOne() {
         return player1;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Player getPlayerTwo() {
         return player2;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CardAction getWinnerCardAction() {
+        return winnerCardAction;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public CardAction getLooserCardAction() {
+        return loserCardAction;
     }
 
 }
