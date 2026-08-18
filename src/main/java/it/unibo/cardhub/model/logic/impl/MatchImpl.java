@@ -184,6 +184,14 @@ class MatchImpl implements Match {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getPlayFieldSize() {
+        return getPlayfield().getMaxCardsPerPlayer();
+    }
+
+    /**
      * Represents the status of the match.
      */
     enum MatchStatus {

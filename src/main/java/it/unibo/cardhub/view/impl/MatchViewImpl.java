@@ -62,7 +62,7 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
 
         firstPlayerPanel = new PlayerPanelImpl(controller, controller.getPlayerOne(), true);
         secondPlayerPanel = new PlayerPanelImpl(controller, controller.getPlayerTwo(), false);
-        playfield = new PlayfieldPanelImpl();
+        playfield = new PlayfieldPanelImpl(controller);
 
         exitButton = new CHButton("Exit");
         endTurnButton = new CHButton("End Turn");
@@ -118,9 +118,9 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
 
     //selects the panel that belongs to given player
     private PlayerPanel selectPlayerPanel(final Player player) {
-        if (player.equals(player1)) {
+        if (player.equals(controller.getPlayerOne())) {
             return firstPlayerPanel;
-        } else if (player.equals(player2)) {
+        } else if (player.equals(controller.getPlayerTwo())) {
             return secondPlayerPanel;
         }
         throw new IllegalStateException("Player does not exist");
@@ -155,8 +155,8 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
      * {@inheritDoc}
      */
     @Override
-    public void updatePlayfield(final List<Card> cards, final int columns) {
-        playfield.updatePlayfield(cards, columns);
+    public void updatePlayfield(final Player player, final List<Card<?>> cards) {
+        playfield.updatePlayfield(player, cards);
     }
 
     /**

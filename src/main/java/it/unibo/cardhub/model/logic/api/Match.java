@@ -61,6 +61,13 @@ public interface Match {
     Playfield getPlayfield();
 
     /**
+     * Returns playField size (per player).
+     * 
+     * @return playField size (per player) 
+     */
+    int getPlayFieldSize();
+
+    /**
      * getter for the turn player.
      * 
      * @return the turn player.

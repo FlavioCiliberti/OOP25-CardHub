@@ -106,7 +106,7 @@ public interface MatchController extends ScreenController {
      * @param selectedCard the selected card
      * @param player the player that tried to select the card
      */
-    void changeSelectedCard (JLabel cardLabel, Card<?> selectedCard, Player player);
+    void changeSelectedCard(JLabel cardLabel, Card<?> selectedCard, Player player);
     //if player == turnPlayer store selectedCard, then call MatchView.changeSelectedCard(cardLabel)
 
     /**
@@ -129,5 +129,12 @@ public interface MatchController extends ScreenController {
      * @return player 2.
      */
     Player getPlayerTwo();
+
+    /**
+     * Returns playField size (per player).
+     * 
+     * @return playField size (per player) 
+     */
+    int getPlayFieldSize();
 }
 

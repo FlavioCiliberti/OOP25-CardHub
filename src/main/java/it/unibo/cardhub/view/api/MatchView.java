@@ -28,10 +28,10 @@ public interface MatchView {
     void updateHand(Player player, List<Card<?>> cards);
 
     /**
-     * Refreshes the playfield.
+     * Updates the playfield with the specified list of cards.
      *
-     * @param cards the cards on the playfield
-     * @param columns the number of columns in the playfield
+     * @param cards the list of cards to display on the playfield
+     * @param player the owner of the playfield
      */
     void updatePlayfield(Player player, List<Card<?>> cards);
 

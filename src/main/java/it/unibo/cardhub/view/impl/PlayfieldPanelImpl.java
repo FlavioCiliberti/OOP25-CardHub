@@ -1,20 +1,24 @@
 package it.unibo.cardhub.view.impl;
 
+import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.model.domain.api.Card;
+import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.view.api.PlayfieldPanel;
 import it.unibo.cardhub.view.components.CHButton;
 import it.unibo.cardhub.view.components.CHLabel;
 import it.unibo.cardhub.view.components.CHPanel;
 import it.unibo.cardhub.view.components.CHStyles;
+import it.unibo.cardhub.view.util.ImageResolver;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
@@ -23,26 +27,41 @@ import javax.swing.JPanel;
 final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
 
     private static final long serialVersionUID = 1L;
-    private final PlayfieldAreaPanel playfieldArea;
+    private final PlayfieldAreaPanel bottomArea;
+    private final PlayfieldAreaPanel topArea;
+    private final Map<Player, PlayfieldAreaPanel> playfieldAreas;
+
     private final DiscardPileAreaPanel playerOneDiscardPileArea;
     private final DiscardPileAreaPanel playerTwoDiscardPileArea;
 
     /**
      * Constructs a new playfield panel.
+     * 
+     * @param controller the controller that can provide the players
      */
-    PlayfieldPanelImpl() {
+    PlayfieldPanelImpl(final MatchController controller) {
         super(new BorderLayout());
+        Objects.requireNonNull(controller, "no such controller");
 
         this.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(CHStyles.primaryColor()),
             BorderFactory.createEmptyBorder(CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD,
                                             CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD)));
 
-        this.playfieldArea = new PlayfieldAreaPanel();
+        this.bottomArea = new PlayfieldAreaPanel(controller);
+        this.topArea = new PlayfieldAreaPanel(controller);
+        this.playfieldAreas = new HashMap<>();
+        this.playfieldAreas.put(controller.getPlayerOne(), bottomArea);
+        this.playfieldAreas.put(controller.getPlayerTwo(), topArea);
+        final JPanel centralArea = new JPanel(
+            new GridLayout(2, 1, CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD));
+        centralArea.add(this.topArea);
+        centralArea.add(this.bottomArea);
+
         this.playerOneDiscardPileArea = new DiscardPileAreaPanel(BorderLayout.SOUTH);
         this.playerTwoDiscardPileArea = new DiscardPileAreaPanel(BorderLayout.NORTH);
 
-        this.add(this.playfieldArea, BorderLayout.CENTER);
+        this.add(centralArea, BorderLayout.CENTER);
         this.add(this.playerOneDiscardPileArea, BorderLayout.EAST);
         this.add(this.playerTwoDiscardPileArea, BorderLayout.WEST);
     }
@@ -67,8 +86,15 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
      * {@inheritDoc}
      */
     @Override
-    public void updatePlayfield(final List<Card<?>> cards, final int columns) {
-        this.playfieldArea.update(Objects.requireNonNull(cards, "Cards list cannot be null"), columns);
+    public void updatePlayfield(final Player player, final List<Card<?>> cards) {
+        Objects.requireNonNull(player, "Player cannot be null");
+        Objects.requireNonNull(cards, "Cards list cannot be null");
+
+        final PlayfieldAreaPanel area = this.playfieldAreas.get(player);
+        if (area == null) {
+            throw new IllegalArgumentException("Unknown player: " + player);
+        }
+        area.update(cards);
     }
 
     /**
@@ -80,12 +106,12 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
     }
 
     private static final class PlayfieldAreaPanel extends CHPanel {
-        private static final int ROWS = 2;
+        private static final int ROWS = 1;
 
         private static final long serialVersionUID = 1L;
 
-        PlayfieldAreaPanel() {
-            super();
+        PlayfieldAreaPanel(final MatchController controller) {
+            super(new GridLayout(ROWS, controller.getPlayFieldSize(), CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD));
 
             this.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(CHStyles.primaryColor()),
@@ -93,15 +119,10 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
                                                 CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD)));
         }
 
-        void update(final List<Card<?>> cards, final int columns) {
-            if (columns <= 0) {
-                throw new IllegalArgumentException("Rows and columns must be positive integers");
-            }
-
-            this.setLayout(new GridLayout(ROWS, columns, CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD));
+        void update(final List<Card<?>> cards) {
             this.removeAll();
 
-            cards.forEach(c -> this.add(new CHLabel(new ImageIcon(c.imagePath()))));
+            cards.forEach(c -> this.add(new CHLabel(ImageResolver.resolve(c))));
 
             this.revalidate();
             this.repaint();
@@ -134,7 +155,7 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
         }
 
         void updateCard(final Optional<Card<?>> card) {
-            card.ifPresentOrElse(c -> this.pile.setIcon(new ImageIcon(c.imagePath())), () -> this.pile.setIcon(null));
+            card.ifPresentOrElse(c -> this.pile.setIcon(ImageResolver.resolve(c)), () -> this.pile.setIcon(null));
 
             this.pile.revalidate();
             this.pile.repaint();
