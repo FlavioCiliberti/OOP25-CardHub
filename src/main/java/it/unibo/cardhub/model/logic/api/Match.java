@@ -70,6 +70,13 @@ public interface Match {
     Playfield getPlayfield();
 
     /**
+     * Returns playField size (per player).
+     * 
+     * @return playField size (per player) 
+     */
+    int getPlayFieldSize();
+
+    /**
      * getter for the turn player.
      * 
      * @return the turn player.
@@ -77,9 +84,37 @@ public interface Match {
     PlayerEnum getTurnPlayer();
 
     /**
+     * getter for the player 1.
+     * 
+     * @return player 1.
+     */
+    Player getPlayerOne();
+
+    /**
+     * getter for the player 2.
+     * 
+     * @return player 2.
+     */
+    Player getPlayerTwo();
+
+    /**
      * changes the turn player.
      */
     void changeTurn();
+
+    /**
+     * getter for the winner card action.
+     * 
+     * @return the action that must be done with the winner card
+     */
+    CardAction getWinnerCardAction();
+
+    /**
+     * getter for the looser card action.
+     * 
+     * @return the action that must be done with the winner card
+     */
+    CardAction getLooserCardAction();
 
     /**
      * A getter for the match's winner.

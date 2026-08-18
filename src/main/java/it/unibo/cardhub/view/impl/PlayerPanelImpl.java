@@ -106,7 +106,7 @@ final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
      * {@inheritDoc}
      */
     @Override
-    public void updateHandPanel(final List<Card> cards) {
+    public void updateHandPanel(final List<Card<?>> cards) {
         handPanel.removeAll();
         for (final Card card : cards) {
             final JLabel cardLabel = new CHLabel(new ImageIcon(getClass().getResource("/it/unibo/cardhub/io/Exodia.png")));

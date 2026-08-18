@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.swing.JPanel;
 
 import it.unibo.cardhub.model.domain.api.Card;
+import it.unibo.cardhub.model.domain.api.Player;
 
 /**
  * JPanel representing the playfield of the match view, including the central playfield and the discard piles for both players.
@@ -16,22 +17,22 @@ public interface PlayfieldPanel {
      *
      * @param card the card to display in the discard pile
      */
-    void updatePlayerOneDiscardPile(Optional<Card> card);
+    void updatePlayerOneDiscardPile(Optional<Card<?>> card);
 
     /**
      * Updates the opponent's discard pile with the specified card.
      *
      * @param card the card to display in the discard pile
      */
-    void updatePlayerTwoDiscardPile(Optional<Card> card);
+    void updatePlayerTwoDiscardPile(Optional<Card<?>> card);
 
     /**
      * Updates the playfield with the specified list of cards.
      *
      * @param cards the list of cards to display on the playfield
-     * @param columns the number of columns in the playfield
+     * @param player the owner of the playfield
      */
-    void updatePlayfield(List<Card> cards, int columns);
+    void updatePlayfield(Player player, List<Card<?>> cards);
 
     /**
      * Adds this panel to a parent panel.
