@@ -4,6 +4,7 @@ import javax.swing.JLabel;
 
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.Player;
+import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 
 /**
  * Controller responsible for handling the main actions available
@@ -136,5 +137,15 @@ public interface MatchController extends ScreenController {
      * @return playField size (per player) 
      */
     int getPlayFieldSize();
+
+    /**
+     * compares two Cards and proceeds with the corresponding actions.
+     * 
+     * @param firstPlayerCard the card of player1 to be compared
+     * @param secondPlayerCard the card of player2 to be compared
+     * @return the result of the comparison
+     */
+    ComparisonWinner compareCard(Card<?> firstPlayerCard, Card<?> secondPlayerCard);
+
 }
 
