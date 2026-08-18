@@ -26,6 +26,20 @@ public interface MatchLogic {
     Player getCurrentPlayer();
 
     /**
+     * getter for the player 1.
+     * 
+     * @return player 1.
+     */
+    Player getPlayerOne();
+
+    /**
+     * getter for the player 2.
+     * 
+     * @return player 2.
+     */
+    Player getPlayerTwo();
+
+    /**
      * changes the turn player.
      */
     void changeTurn();

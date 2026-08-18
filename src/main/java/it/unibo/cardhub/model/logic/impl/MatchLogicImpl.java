@@ -85,4 +85,14 @@ class MatchLogicImpl implements MatchLogic {
         }
     }
 
+    @Override
+    public Player getPlayerOne() {
+        return player1;
+    }
+
+    @Override
+    public Player getPlayerTwo() {
+        return player2;
+    }
+
 }

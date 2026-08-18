@@ -15,7 +15,7 @@ public interface PlayerPanel {
      * 
      * @param cards the list of cards in the hand
      */
-    void updateHandPanel(List<Card> cards);
+    void updateHandPanel(List<Card<?>> cards);
 
     /**
      * Updates the deckSizeLabel and sets the deck to invisible if it's empty.

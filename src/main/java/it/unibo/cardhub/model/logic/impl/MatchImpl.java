@@ -106,6 +106,22 @@ class MatchImpl implements Match {
      * {@inheritDoc}
      */
     @Override
+    public Player getPlayerOne() {
+        return matchLogic.getPlayerOne();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Player getPlayerTwo() {
+        return matchLogic.getPlayerTwo();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @SuppressWarnings("PMD.EmptyCatchBlock")
     public void changeTurn() {
         this.matchLogic.changeTurn();
@@ -165,6 +181,14 @@ class MatchImpl implements Match {
     @Override
     public Playfield getPlayfield() {
         return matchState.getPlayfield();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getPlayFieldSize() {
+        return getPlayfield().getMaxCardsPerPlayer();
     }
 
     /**
