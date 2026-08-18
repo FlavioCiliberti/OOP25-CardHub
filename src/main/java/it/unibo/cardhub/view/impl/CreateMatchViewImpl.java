@@ -91,11 +91,11 @@ public final class CreateMatchViewImpl extends ScreenView {
     private final SpinnerNumberModel startingHandModel;
     private final JCheckBox autoDrawCheckBox;
     private final JRadioButton winPileRadioButton;
-    private final JRadioButton winLoserPileRadioButton;
+    private final JRadioButton winHandRadioButton;
     private final JRadioButton winNoneRadioButton;
     private final ButtonGroup winnerActionGroup;
     private final JRadioButton losePileRadioButton;
-    private final JRadioButton loseWinnerPileRadioButton;
+    private final JRadioButton loseHandRadioButton;
     private final JRadioButton loseNoneRadioButton;
     private final ButtonGroup loserActionGroup;
 
@@ -144,11 +144,11 @@ public final class CreateMatchViewImpl extends ScreenView {
         startingHandSpinner = new JSpinner(startingHandModel);
         autoDrawCheckBox = new JCheckBox("Auto Draw on Turn Start");
         winPileRadioButton = new JRadioButton("To Pile");
-        winLoserPileRadioButton = new JRadioButton("To Loser's Pile");
+        winHandRadioButton = new JRadioButton("To Loser's Pile");
         winNoneRadioButton = new JRadioButton("None");
         winnerActionGroup = new ButtonGroup();
         losePileRadioButton = new JRadioButton("To Pile");
-        loseWinnerPileRadioButton = new JRadioButton("To Winner's Pile");
+        loseHandRadioButton = new JRadioButton("To Winner's Pile");
         loseNoneRadioButton = new JRadioButton("None");
         loserActionGroup = new ButtonGroup();
 
@@ -397,14 +397,14 @@ public final class CreateMatchViewImpl extends ScreenView {
         winPileRadioButton.addItemListener(e -> {
             selectedWinnerCardAction = CardAction.TO_PILE;
         });
-        winLoserPileRadioButton.addItemListener(e -> {
+        winHandRadioButton.addItemListener(e -> {
             selectedWinnerCardAction = CardAction.TO_HAND;
         });
         winNoneRadioButton.addItemListener(e -> {
             selectedWinnerCardAction = CardAction.NONE;
         });
-        this.manageRadioButton(winnerActionGroup, winPileRadioButton, winLoserPileRadioButton, winNoneRadioButton);
-        this.createRow(settingsPanel, winPileRadioButton, winLoserPileRadioButton, winNoneRadioButton);
+        this.manageRadioButton(winnerActionGroup, winPileRadioButton, winHandRadioButton, winNoneRadioButton);
+        this.createRow(settingsPanel, winPileRadioButton, winHandRadioButton, winNoneRadioButton);
 
         final JLabel loserActionLabel = new CHLabel("Loser Card Action", CHStyles.secondaryColor(), SwingConstants.CENTER);
         loserActionLabel.setAlignmentX(CENTER_ALIGNMENT);
@@ -413,14 +413,14 @@ public final class CreateMatchViewImpl extends ScreenView {
         losePileRadioButton.addItemListener(e -> {
             selectedLoserCardAction = CardAction.TO_PILE;
         });
-        loseWinnerPileRadioButton.addItemListener(e -> {
+        loseHandRadioButton.addItemListener(e -> {
             selectedLoserCardAction = CardAction.TO_HAND;
         });
         loseNoneRadioButton.addItemListener(e -> {
             selectedLoserCardAction = CardAction.NONE;
         });
-        this.manageRadioButton(loserActionGroup, losePileRadioButton, loseWinnerPileRadioButton, loseNoneRadioButton);
-        this.createRow(settingsPanel, losePileRadioButton, loseWinnerPileRadioButton, loseNoneRadioButton);
+        this.manageRadioButton(loserActionGroup, losePileRadioButton, loseHandRadioButton, loseNoneRadioButton);
+        this.createRow(settingsPanel, losePileRadioButton, loseHandRadioButton, loseNoneRadioButton);
     }
 
     //creates a horizontal jPanel with the given components
