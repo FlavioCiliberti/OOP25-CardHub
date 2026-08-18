@@ -51,7 +51,7 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
      * {@inheritDoc}
      */
     @Override
-    public void updatePlayerOneDiscardPile(final Optional<Card> card) {
+    public void updatePlayerOneDiscardPile(final Optional<Card<?>> card) {
         this.playerOneDiscardPileArea.updateCard(Objects.requireNonNull(card, "Card cannot be null"));
     }
 
@@ -59,7 +59,7 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
      * {@inheritDoc}
      */
     @Override
-    public void updatePlayerTwoDiscardPile(final Optional<Card> card) {
+    public void updatePlayerTwoDiscardPile(final Optional<Card<?>> card) {
         this.playerTwoDiscardPileArea.updateCard(Objects.requireNonNull(card, "Card cannot be null"));
     }
 
@@ -67,7 +67,7 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
      * {@inheritDoc}
      */
     @Override
-    public void updatePlayfield(final List<Card> cards, final int columns) {
+    public void updatePlayfield(final List<Card<?>> cards, final int columns) {
         this.playfieldArea.update(Objects.requireNonNull(cards, "Cards list cannot be null"), columns);
     }
 
@@ -93,7 +93,7 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
                                                 CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD)));
         }
 
-        void update(final List<Card> cards, final int columns) {
+        void update(final List<Card<?>> cards, final int columns) {
             if (columns <= 0) {
                 throw new IllegalArgumentException("Rows and columns must be positive integers");
             }
@@ -133,7 +133,7 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
             this.add(pile, BorderLayout.CENTER);
         }
 
-        void updateCard(final Optional<Card> card) {
+        void updateCard(final Optional<Card<?>> card) {
             card.ifPresentOrElse(c -> this.pile.setIcon(new ImageIcon(c.imagePath())), () -> this.pile.setIcon(null));
 
             this.pile.revalidate();
