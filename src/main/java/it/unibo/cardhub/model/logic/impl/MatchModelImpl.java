@@ -60,7 +60,7 @@ class MatchModelImpl implements MatchModel {
      * {@inheritDoc}
      */
     @Override
-    public void playCard(final Card card, final PlayerEnum playerEnum) throws CardCollectionFullException {
+    public void playCard(final Card<?> card, final PlayerEnum playerEnum) throws CardCollectionFullException {
         final Player player = matchState.getPlayer(playerEnum);
 
         if (matchState.getPlayfield().canAddCard(player)) {
@@ -76,7 +76,7 @@ class MatchModelImpl implements MatchModel {
      * {@inheritDoc}
      */
     @Override
-    public void moveCardFromFieldToPile(final Card card, final PlayerEnum playerEnum) {
+    public void moveCardFromFieldToPile(final Card<?> card, final PlayerEnum playerEnum) {
         matchState.getPlayer(playerEnum).putInPile(card);
     }
 
@@ -84,7 +84,7 @@ class MatchModelImpl implements MatchModel {
      * {@inheritDoc}
      */
     @Override
-    public ComparisonWinner compareCard(final Card firstPlayerCard, final Card secondPlayerCard) {
+    public ComparisonWinner compareCard(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard) {
         return matchLogic.compareCard(firstPlayerCard, secondPlayerCard, matchState);
     }
 

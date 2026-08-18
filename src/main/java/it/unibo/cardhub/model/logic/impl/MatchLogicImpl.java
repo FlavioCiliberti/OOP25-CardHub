@@ -20,7 +20,10 @@ class MatchLogicImpl implements MatchLogic {
     }
 
     @Override
-    public ComparisonWinner compareCard(final Card firstPlayerCard, final Card secondPlayerCard, final MatchState matchState) {
+    public ComparisonWinner compareCard(final Card<?> firstPlayerCard, 
+        final Card<?> secondPlayerCard, 
+            final MatchState matchState) {
+
         if (firstPlayerCard.value() > secondPlayerCard.value()) {
             //player1 winner action
             this.executeCardAction(firstPlayerCard, PlayerEnum.PLAYER_ONE, winnerCardAction, matchState);
@@ -51,7 +54,7 @@ class MatchLogicImpl implements MatchLogic {
         }
     }
 
-    private void executeCardAction(final Card card, final PlayerEnum player,
+    private void executeCardAction(final Card<?> card, final PlayerEnum player,
                                     final CardAction action, final MatchState matchState) {
 
         if (action == CardAction.TO_PILE) {

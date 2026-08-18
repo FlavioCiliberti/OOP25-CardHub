@@ -27,7 +27,7 @@ public interface MatchModel {
      * @param playerEnum the player playing the card
      * @throws CardCollectionFullException if the player's side of the field is full
      */
-    void playCard(Card card, PlayerEnum playerEnum) throws CardCollectionFullException;
+    void playCard(Card<?> card, PlayerEnum playerEnum) throws CardCollectionFullException;
 
     /**
      * Moves a card from the field to the discard pile.
@@ -35,7 +35,7 @@ public interface MatchModel {
      * @param card the card to move
      * @param playerEnum the player the card belongs to
      */
-    void moveCardFromFieldToPile(Card card, PlayerEnum playerEnum);
+    void moveCardFromFieldToPile(Card<?> card, PlayerEnum playerEnum);
 
     /**
      * compares two Cards and proceeds with the corresponding actions.
@@ -44,7 +44,7 @@ public interface MatchModel {
      * @param secondPlayerCard the card of player2 to be compared
      * @return the result of the comparison
      */
-    ComparisonWinner compareCard(Card firstPlayerCard, Card secondPlayerCard);
+    ComparisonWinner compareCard(Card<?> firstPlayerCard, Card<?> secondPlayerCard);
 
     /**
      * returns the specified player.

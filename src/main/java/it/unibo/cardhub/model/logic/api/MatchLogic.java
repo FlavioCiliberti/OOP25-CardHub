@@ -15,7 +15,7 @@ public interface MatchLogic {
      * @param matchState the matchState to be updated with the actions
      * @return the result of the comparison
      */
-    ComparisonWinner compareCard(Card firstPlayerCard, Card secondPlayerCard, MatchState matchState);
+    ComparisonWinner compareCard(Card<?> firstPlayerCard, Card<?> secondPlayerCard, MatchState matchState);
 
     /**
      * getter for the turn player.
