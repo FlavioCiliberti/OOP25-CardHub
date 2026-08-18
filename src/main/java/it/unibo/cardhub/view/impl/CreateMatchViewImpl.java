@@ -26,8 +26,7 @@ import javax.swing.SwingConstants;
 import it.unibo.cardhub.controller.api.CreateMatchController;
 import it.unibo.cardhub.model.domain.exceptions.EmptyFieldException;
 import it.unibo.cardhub.model.logic.GameMode;
-import it.unibo.cardhub.model.logic.LoserCardAction;
-import it.unibo.cardhub.model.logic.WinnerCardAction;
+import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.view.components.CHButton;
 import it.unibo.cardhub.view.components.CHLabel;
 import it.unibo.cardhub.view.components.CHPanel;
@@ -104,8 +103,8 @@ public final class CreateMatchViewImpl extends ScreenView {
     private final transient CreateMatchController controller;
     private final Map<Integer, String> decks;
     private GameMode selectedGameMode;
-    private WinnerCardAction selectedWinnerCardAction;
-    private LoserCardAction selectedLoserCardAction;
+    private CardAction selectedWinnerCardAction;
+    private CardAction selectedLoserCardAction;
 
     /**
      * Builds the create match view,
@@ -161,10 +160,10 @@ public final class CreateMatchViewImpl extends ScreenView {
         selectedGameMode = GameMode.FREE_PLAY;
 
         winPileRadioButton.setSelected(true);
-        selectedWinnerCardAction = WinnerCardAction.TO_PILE;
+        selectedWinnerCardAction = CardAction.TO_PILE;
 
         losePileRadioButton.setSelected(true);
-        selectedLoserCardAction = LoserCardAction.TO_PILE;
+        selectedLoserCardAction = CardAction.TO_PILE;
 
         this.manageContentPane();
     }
@@ -396,13 +395,13 @@ public final class CreateMatchViewImpl extends ScreenView {
         settingsPanel.add(winnerActionLabel);
 
         winPileRadioButton.addItemListener(e -> {
-            selectedWinnerCardAction = WinnerCardAction.TO_PILE;
+            selectedWinnerCardAction = CardAction.TO_PILE;
         });
         winLoserPileRadioButton.addItemListener(e -> {
-            selectedWinnerCardAction = WinnerCardAction.TO_LOSER_PILE;
+            selectedWinnerCardAction = CardAction.TO_HAND;
         });
         winNoneRadioButton.addItemListener(e -> {
-            selectedWinnerCardAction = WinnerCardAction.NONE;
+            selectedWinnerCardAction = CardAction.NONE;
         });
         this.manageRadioButton(winnerActionGroup, winPileRadioButton, winLoserPileRadioButton, winNoneRadioButton);
         this.createRow(settingsPanel, winPileRadioButton, winLoserPileRadioButton, winNoneRadioButton);
@@ -412,13 +411,13 @@ public final class CreateMatchViewImpl extends ScreenView {
         settingsPanel.add(loserActionLabel);
 
         losePileRadioButton.addItemListener(e -> {
-            selectedLoserCardAction = LoserCardAction.TO_PILE;
+            selectedLoserCardAction = CardAction.TO_PILE;
         });
         loseWinnerPileRadioButton.addItemListener(e -> {
-            selectedLoserCardAction = LoserCardAction.TO_WINNER_PILE;
+            selectedLoserCardAction = CardAction.TO_HAND;
         });
         loseNoneRadioButton.addItemListener(e -> {
-            selectedLoserCardAction = LoserCardAction.NONE;
+            selectedLoserCardAction = CardAction.NONE;
         });
         this.manageRadioButton(loserActionGroup, losePileRadioButton, loseWinnerPileRadioButton, loseNoneRadioButton);
         this.createRow(settingsPanel, losePileRadioButton, loseWinnerPileRadioButton, loseNoneRadioButton);

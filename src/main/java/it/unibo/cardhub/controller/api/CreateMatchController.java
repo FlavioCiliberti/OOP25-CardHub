@@ -4,8 +4,7 @@ import java.util.Map;
 
 import it.unibo.cardhub.model.domain.exceptions.EmptyFieldException;
 import it.unibo.cardhub.model.logic.GameMode;
-import it.unibo.cardhub.model.logic.LoserCardAction;
-import it.unibo.cardhub.model.logic.WinnerCardAction;
+import it.unibo.cardhub.model.logic.api.CardAction;
 
 /**
  * Provides operations to create a match between two players,
@@ -70,7 +69,7 @@ public interface CreateMatchController extends BackNavigableScreen {
                         String player2Name, int player2DeckId,
                         int maxHandSize, int startingHandSize,
                         int playerFieldSize, boolean autoDraw,
-                        WinnerCardAction winnerAction, LoserCardAction loserAction,
+                        CardAction winnerAction, CardAction loserAction,
                         GameMode gameMode) throws EmptyFieldException;
 
     /**
@@ -113,6 +112,6 @@ public interface CreateMatchController extends BackNavigableScreen {
                         String player2Name, int player2DeckId,
                         int maxHandSize, int startingHandSize,
                         int playerFieldSize, boolean autoDraw,
-                        WinnerCardAction winnerAction, LoserCardAction loserAction);
+                        CardAction winnerAction, CardAction loserAction);
 
 }
