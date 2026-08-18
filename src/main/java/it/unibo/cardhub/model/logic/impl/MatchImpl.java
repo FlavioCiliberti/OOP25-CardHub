@@ -13,6 +13,7 @@ import it.unibo.cardhub.model.domain.impl.MatchStateImpl;
 import it.unibo.cardhub.model.logic.api.Match;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
 import it.unibo.cardhub.model.logic.api.PlayerEnum;
+import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 
 /**
@@ -110,22 +111,6 @@ class MatchImpl implements Match {
     @Override
     public PlayerEnum getTurnPlayer() {
         return matchLogic.getCurrentPlayer();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Player getPlayerOne() {
-        return matchLogic.getPlayerOne();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Player getPlayerTwo() {
-        return matchLogic.getPlayerTwo();
     }
 
     /**

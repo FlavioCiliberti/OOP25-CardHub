@@ -73,22 +73,6 @@ class MatchLogicImpl implements MatchLogic {
      * {@inheritDoc}
      */
     @Override
-    public Player getPlayerOne() {
-        return player1;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Player getPlayerTwo() {
-        return player2;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public CardAction getWinnerCardAction() {
         return winnerCardAction;
     }
