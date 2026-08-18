@@ -10,7 +10,7 @@ import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.model.domain.api.Playfield;
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 import it.unibo.cardhub.model.domain.impl.MatchStateImpl;
-import it.unibo.cardhub.model.logic.api.MatchModel;
+import it.unibo.cardhub.model.logic.api.Match;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
 import it.unibo.cardhub.model.logic.api.PlayerEnum;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
@@ -18,7 +18,7 @@ import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 /**
  * an implementation of Match.
  */
-class MatchModelImpl implements MatchModel {
+class MatchImpl implements Match {
     private final MatchState matchState;
     private final MatchLogic matchLogic;
 
@@ -36,7 +36,7 @@ class MatchModelImpl implements MatchModel {
      * @param autoDraw should the turn player draw a card on turn start
      * @param matchLogic the match logic
      */
-    MatchModelImpl(final Player player1, final Player player2,
+    MatchImpl(final Player player1, final Player player2,
                         final int playerFieldSize, final boolean autoDraw,
                         final MatchLogic matchLogic) {
         matchState = new MatchStateImpl(new ArrayList<>(Arrays.asList(player1, player2)), playerFieldSize);

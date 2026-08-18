@@ -10,7 +10,7 @@ import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 /**
  * Handles the match in its entirety.
  */
-public interface MatchModel {
+public interface Match {
 
     /**
      * Makes the player draw a card.
