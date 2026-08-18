@@ -106,7 +106,28 @@ public interface MatchController extends ScreenController {
      * @param selectedCard the selected card
      * @param player the player that tried to select the card
      */
-    void changeSelectedCard(JLabel cardLabel, Card selectedCard, Player player);
+    void changeSelectedCard (JLabel cardLabel, Card<?> selectedCard, Player player);
     //if player == turnPlayer store selectedCard, then call MatchView.changeSelectedCard(cardLabel)
+
+    /**
+     * getter for the turn player.
+     * 
+     * @return the turn player.
+     */
+    Player getTurnPlayer();
+
+    /**
+     * getter for the player 1.
+     * 
+     * @return player 1.
+     */
+    Player getPlayerOne();
+
+    /**
+     * getter for the player 2.
+     * 
+     * @return player 2.
+     */
+    Player getPlayerTwo();
 }
 
