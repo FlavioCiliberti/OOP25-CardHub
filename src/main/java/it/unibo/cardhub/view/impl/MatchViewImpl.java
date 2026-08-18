@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.model.domain.api.Card;
-import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.model.logic.api.PlayerEnum;
 import it.unibo.cardhub.view.api.MatchView;
 import it.unibo.cardhub.view.api.PlayerPanel;
@@ -61,8 +60,8 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
 
         matchAreaPanel = new CHPanel(CHStyles.tertiaryColor(), new BorderLayout());
 
-        firstPlayerPanel = new PlayerPanelImpl(controller, controller.getPlayerOne(), true);
-        secondPlayerPanel = new PlayerPanelImpl(controller, controller.getPlayerTwo(), false);
+        firstPlayerPanel = new PlayerPanelImpl(controller, PlayerEnum.PLAYER_ONE, true);
+        secondPlayerPanel = new PlayerPanelImpl(controller, PlayerEnum.PLAYER_TWO, false);
         playfield = new PlayfieldPanelImpl(controller);
 
         exitButton = new CHButton("Exit");
@@ -118,10 +117,10 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
     }
 
     //selects the panel that belongs to given player
-    private PlayerPanel selectPlayerPanel(final Player player) {
-        if (player.equals(controller.getPlayerOne())) {
+    private PlayerPanel selectPlayerPanel(final PlayerEnum player) {
+        if (player == PlayerEnum.PLAYER_ONE) {
             return firstPlayerPanel;
-        } else if (player.equals(controller.getPlayerTwo())) {
+        } else if (player == PlayerEnum.PLAYER_TWO) {
             return secondPlayerPanel;
         }
         throw new IllegalStateException("Player does not exist");
@@ -148,7 +147,7 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
      * {@inheritDoc}
      */
     @Override
-    public void updateHand(final Player player, final List<Card<?>> cards) {
+    public void updateHand(final PlayerEnum player, final List<Card<?>> cards) {
         this.selectPlayerPanel(player).updateHandPanel(cards);
     }
 
@@ -164,17 +163,17 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
      * {@inheritDoc}
      */
     @Override
-    public void updateDiscardPile(final Player player, final Optional<Card<?>> topCard) {
-        if (player.equals(controller.getPlayerOne())) {
+    public void updateDiscardPile(final PlayerEnum player, final Optional<Card<?>> topCard) {
+        if (player == PlayerEnum.PLAYER_ONE) {
             playfield.updatePlayerOneDiscardPile(topCard);
-        } else if (player.equals(controller.getPlayerTwo())) {
+        } else if (player == PlayerEnum.PLAYER_TWO) {
             playfield.updatePlayerTwoDiscardPile(topCard);
         }
         throw new IllegalStateException("Player does not exist");
     }
 
     @Override
-    public void updateDeck(final Player player, final int remainingCards) {
+    public void updateDeck(final PlayerEnum player, final int remainingCards) {
         this.selectPlayerPanel(player).updateDeck();
     }
 
@@ -182,10 +181,10 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
      * {@inheritDoc}
      */
     @Override
-    public void showCurrentPlayer(final Player player) {
+    public void showCurrentPlayer(final PlayerEnum player) {
         JOptionPane.showMessageDialog(
             this,
-            "It's" + player.getName() + "'s turn",
+            "It's" + controller.getPlayerName(player) + "'s turn",
             "Turn Start",
             JOptionPane.INFORMATION_MESSAGE
         );
@@ -195,10 +194,10 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
      * {@inheritDoc}
      */
     @Override
-    public void showMatchEnded(final Player winner) {
+    public void showMatchEnded(final PlayerEnum winner) {
         JOptionPane.showMessageDialog(
             this,
-            winner.getName() + " Wins!",
+            controller.getPlayerName(winner) + " Wins!",
             "Match Over",
             JOptionPane.INFORMATION_MESSAGE
         );

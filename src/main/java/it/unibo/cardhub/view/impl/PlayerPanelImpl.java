@@ -16,9 +16,10 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.model.domain.api.Card;
-import it.unibo.cardhub.model.domain.api.Player;
+import it.unibo.cardhub.model.logic.api.PlayerEnum;
 import it.unibo.cardhub.view.api.PlayerPanel;
 import it.unibo.cardhub.view.components.CHLabel;
 import it.unibo.cardhub.view.components.CHPanel;
@@ -27,6 +28,12 @@ import it.unibo.cardhub.view.components.CHStyles;
 /**
  * Implementation of PlayerPanel.
  */
+@SuppressFBWarnings(
+    value = "SE_TRANSIENT_FIELD_NOT_RESTORED",
+    justification = "Questa classe non viene mai salvata su file o trasmessa: è solo "
+        + "una view Swing. È 'Serializable' solo perché lo eredita da JPanel, non "
+        + "perché ci serve davvero."
+)
 final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
     private static final int PADDING_ROW = 13;
     private static final int PADDING_DECK_SIZE = 30;
@@ -34,7 +41,7 @@ final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
     private static final long serialVersionUID = 1L;
 
     private final transient MatchController controller;
-    private final transient Player player;
+    private final transient PlayerEnum player;
 
     private final JPanel handPanel;
     private final JLabel nameLabel;
@@ -50,12 +57,12 @@ final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
      * @param player the player this panel belongs to
      * @param mirrored if true, the elements are going to be arranged in reverse order to create a mirrored version
      */
-    PlayerPanelImpl(final MatchController controller, final Player player, final boolean mirrored) {
+    PlayerPanelImpl(final MatchController controller, final PlayerEnum player, final boolean mirrored) {
         this.controller = controller;
         this.player = player;
 
         handPanel = new CHPanel(new FlowLayout(FlowLayout.LEFT, CHStyles.PADDING_STANDARD, CHStyles.PADDING_NONE));
-        nameLabel = new CHLabel(player.getName(), SwingConstants.CENTER);
+        nameLabel = new CHLabel(controller.getPlayerName(player), SwingConstants.CENTER);
         deckLabel = new CHLabel(new ImageIcon(getClass().getResource("/it/unibo/cardhub/view/Back.png")));
         deckSizeLabel = new CHLabel(String.valueOf(controller.getDeckCount(player)), CHStyles.primaryColor());
         cardInfoLabel = new CHLabel("", SwingConstants.CENTER);
@@ -108,7 +115,7 @@ final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
     @Override
     public void updateHandPanel(final List<Card<?>> cards) {
         handPanel.removeAll();
-        for (final Card card : cards) {
+        for (final Card<?> card : cards) {
             final JLabel cardLabel = new CHLabel(new ImageIcon(getClass().getResource("/it/unibo/cardhub/io/Exodia.png")));
             cardLabel.setPreferredSize(new Dimension(MatchViewImpl.CARD_WIDTH, MatchViewImpl.CARD_HEIGHT));
             cardLabel.addMouseListener(new MouseAdapter() {

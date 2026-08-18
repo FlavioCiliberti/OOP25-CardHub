@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.model.domain.api.Card;
-import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.model.logic.api.PlayerEnum;
 
 /**
@@ -26,7 +25,7 @@ public interface MatchView {
      * @param player the player whose hand changed
      * @param cards the player's hand, in order
      */
-    void updateHand(Player player, List<Card<?>> cards);
+    void updateHand(PlayerEnum player, List<Card<?>> cards);
 
     /**
      * Updates the playfield with the specified list of cards.
@@ -42,7 +41,7 @@ public interface MatchView {
      * @param player the player whose discard pile changed
      * @param topCard the top card of the pile, if any
      */
-    void updateDiscardPile(Player player, Optional<Card<?>> topCard);
+    void updateDiscardPile(PlayerEnum player, Optional<Card<?>> topCard);
 
     /**
      * Refreshes a player's remaining deck size and makes the deck invisible if empty.
@@ -50,21 +49,21 @@ public interface MatchView {
      * @param player the player whose deck changed
      * @param remainingCards the number of cards left in the deck
      */
-    void updateDeck(Player player, int remainingCards);
+    void updateDeck(PlayerEnum player, int remainingCards);
 
     /**
      * Signals whose turn it currently is.
      *
      * @param player the current player
      */
-    void showCurrentPlayer(Player player);
+    void showCurrentPlayer(PlayerEnum player);
 
     /**
      * Signals that the match has ended.
      *
      * @param winner the match's winner
      */
-    void showMatchEnded(Player winner); //important: match stats parameters must be added
+    void showMatchEnded(PlayerEnum winner); //important: match stats parameters must be added
 
     /**
      * Sets the card to be highlighted, eventually de-highlighting the previous one.
