@@ -113,4 +113,25 @@ public final class PlayerImpl implements Player {
     public Hand getHand() {
         return this.hand;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasEmptyDeck() {
+        return this.deck.isEmpty();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasEmptyDiscardPile() {
+        return this.discardPile.isEmpty();
+    }
+
+    @Override
+    public int getDeckCount() {
+        return this.deck.size();
+    }
 }

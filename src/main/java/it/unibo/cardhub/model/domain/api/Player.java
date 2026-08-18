@@ -48,4 +48,25 @@ public interface Player {
      * @return the player's hand
      */
     Hand getHand();
+
+    /**
+     * Checks if the player's deck is empty.
+     * 
+     * @return {@code true} if the deck is empty
+     */
+    boolean hasEmptyDeck();
+
+    /**
+     * Checks if the player's discard pile is empty.
+     * 
+     * @return {@code true} if the discard pile is empty
+     */
+    boolean hasEmptyDiscardPile();
+
+    /**
+     * Gets the current size of the deck.
+     * 
+     * @return deck size
+     */
+    int getDeckCount();
 }

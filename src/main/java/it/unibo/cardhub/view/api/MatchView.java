@@ -63,7 +63,14 @@ public interface MatchView {
      *
      * @param winner the match's winner
      */
-    void showMatchEnded(PlayerEnum winner); //important: match stats parameters must be added
+    void showMatchEnded(PlayerEnum winner);
+
+    /**
+     * Signals that an action was unsuccessful.
+     * 
+     * @param message the message to show
+     */
+    void showInvalidAction(String message);
 
     /**
      * Sets the card to be highlighted, eventually de-highlighting the previous one.

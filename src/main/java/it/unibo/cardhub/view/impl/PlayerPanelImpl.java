@@ -30,9 +30,9 @@ import it.unibo.cardhub.view.components.CHStyles;
  */
 @SuppressFBWarnings(
     value = "SE_TRANSIENT_FIELD_NOT_RESTORED",
-    justification = "Questa classe non viene mai salvata su file o trasmessa: è solo "
-        + "una view Swing. È 'Serializable' solo perché lo eredita da JPanel, non "
-        + "perché ci serve davvero."
+    justification = "This class is never saved on fil or transmited: is just "
+        + "a Swing view. It is 'Serializable' just by inheritance form JPanel, "
+        + "not by choice or because it is usefull."
 )
 final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
     private static final int PADDING_ROW = 13;

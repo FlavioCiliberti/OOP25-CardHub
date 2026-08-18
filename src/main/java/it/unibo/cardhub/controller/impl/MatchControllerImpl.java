@@ -1,0 +1,210 @@
+package it.unibo.cardhub.controller.impl;
+
+import java.util.Objects;
+import java.util.Optional;
+
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.cardhub.controller.api.MatchController;
+import it.unibo.cardhub.model.domain.api.Card;
+import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
+import it.unibo.cardhub.model.logic.api.ComparisonWinner;
+import it.unibo.cardhub.model.logic.api.Match;
+import it.unibo.cardhub.model.logic.api.PlayerEnum;
+import it.unibo.cardhub.view.api.MatchView;
+import it.unibo.cardhub.view.impl.MatchViewImpl;
+
+/**
+ * implementation of {@link MatchController}.
+ */
+public class MatchControllerImpl implements MatchController {
+
+    private final Match model;
+    private final MatchView view;
+
+    MatchControllerImpl(final Match model) {
+        this.model = Objects.requireNonNull(model, "no model loaded");
+        view = new MatchViewImpl(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @SuppressFBWarnings(value = "EI", justification =
+            "The view JComponent must be returned by reference so it "
+                    + "can be embedded in the real application window; "
+                    + "cannot return a defensive copy for this purpuse.")
+    public JComponent getView() {
+        return (JComponent) view;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void startMatch() {
+        view.updateHand(PlayerEnum.PLAYER_ONE, model.getPlayer(PlayerEnum.PLAYER_ONE).getHand().getCards());
+        view.updateHand(PlayerEnum.PLAYER_TWO, model.getPlayer(PlayerEnum.PLAYER_TWO).getHand().getCards());
+        view.showCurrentPlayer(getTurnPlayer());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void playCard(final PlayerEnum owner, final Card<?> card) {
+        checkTurn(owner, card);
+        tryPlayCard(owner, card);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void discardCard(final PlayerEnum owner, final Card<?> card) {
+        checkTurn(owner, card);
+        moveCardFromFieldToPile(owner, card);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void drawFromDeck(final PlayerEnum owner) {
+        checkTurn(owner);
+        tryDrawCard(owner);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void reshuffleIntoDeck(final PlayerEnum owner) {
+        checkTurn(owner);
+        model.shufflePileIntoDeck(owner);
+        view.updateDeck(owner, getDeckCount(owner));
+        view.updateDiscardPile(owner, Optional.empty());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isEmptyDeck(final PlayerEnum owner) {
+        return model.isEmptyDeck(owner);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isEmptyDiscardPile(final PlayerEnum owner) {
+        return model.isEmptyDiscardPile(owner);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getDeckCount(final PlayerEnum owner) {
+        return model.getPlayer(owner).getDeckCount();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void endTurn() {
+        model.changeTurn();
+        view.showCurrentPlayer(getTurnPlayer());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void concede() {
+        model.changeTurn();
+        model.endMatch(model.getPlayer(getTurnPlayer()));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void changeSelectedCard(final JLabel cardLabel, final Card<?> selectedCard, final PlayerEnum player) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'changeSelectedCard'");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PlayerEnum getTurnPlayer() {
+        return model.getTurnPlayer();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getPlayerName(final PlayerEnum player) {
+        return model.getPlayer(player).getName();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getPlayFieldSize() {
+        return model.getPlayFieldSize();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ComparisonWinner compareCard(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'compareCard'");
+    }
+
+    private void checkTurn(final PlayerEnum owner, final Card<?> card) {
+        Objects.requireNonNull(card, "no card passed");
+        checkTurn(owner);
+    }
+
+    private void checkTurn(final PlayerEnum owner) {
+        Objects.requireNonNull(owner, "no player passed");
+        if (getTurnPlayer() != owner) {
+            throw new IllegalStateException("it is not the player's turn");
+        }
+    }
+
+    private void tryPlayCard(final PlayerEnum owner, final Card<?> card) {
+        try {
+            model.playCard(card, owner);
+            view.updatePlayfield(owner, model.getPlayfield().getCards(model.getPlayer(owner)));
+        } catch (final CardCollectionFullException e) {
+            view.showInvalidAction(e.getMessage());
+        }
+    }
+
+    private void moveCardFromFieldToPile(final PlayerEnum owner, final Card<?> card) {
+        model.moveCardFromFieldToPile(card, owner);
+        view.updateDiscardPile(owner, Optional.of(card));
+    }
+
+    private void tryDrawCard(final PlayerEnum player) {
+        try {
+            model.drawCard(player);
+            view.updateHand(player, model.getPlayer(player).getHand().getCards());
+        } catch (final CardCollectionFullException e) {
+            view.showInvalidAction(e.getMessage());
+        }
+    }
+}

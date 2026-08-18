@@ -202,4 +202,17 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
             JOptionPane.INFORMATION_MESSAGE
         );
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showInvalidAction(final String message) {
+        JOptionPane.showMessageDialog(
+            this,
+            message,
+            "Invalid Action!",
+            JOptionPane.ERROR_MESSAGE
+        );
+    }
 }
