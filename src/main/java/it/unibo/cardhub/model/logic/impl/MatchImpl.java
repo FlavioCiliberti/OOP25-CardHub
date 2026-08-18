@@ -183,4 +183,9 @@ class MatchImpl implements Match {
     enum MatchStatus {
         CREATED, RUNNING, FINISHED
     }
+
+    @Override
+    public void shufflePileIntoDeck(final PlayerEnum player) {
+        this.getPlayer(player).shufflePileIntoDeck();
+    }
 }
