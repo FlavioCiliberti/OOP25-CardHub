@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.Player;
+import it.unibo.cardhub.model.logic.api.PlayerEnum;
 
 /**
  * Represents the view of a match, updated by the {@link MatchController} 
@@ -33,7 +34,7 @@ public interface MatchView {
      * @param cards the list of cards to display on the playfield
      * @param player the owner of the playfield
      */
-    void updatePlayfield(Player player, List<Card<?>> cards);
+    void updatePlayfield(PlayerEnum player, List<Card<?>> cards);
 
     /**
      * Refreshes a player's discard pile.

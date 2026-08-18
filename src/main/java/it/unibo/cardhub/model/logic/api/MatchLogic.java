@@ -2,7 +2,6 @@ package it.unibo.cardhub.model.logic.api;
 
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
-import it.unibo.cardhub.model.domain.api.Player;
 
 /**
  * handles the match logic.
@@ -23,21 +22,7 @@ public interface MatchLogic {
      * 
      * @return the turn player.
      */
-    Player getCurrentPlayer();
-
-    /**
-     * getter for the player 1.
-     * 
-     * @return player 1.
-     */
-    Player getPlayerOne();
-
-    /**
-     * getter for the player 2.
-     * 
-     * @return player 2.
-     */
-    Player getPlayerTwo();
+    PlayerEnum getCurrentPlayer();
 
     /**
      * changes the turn player.

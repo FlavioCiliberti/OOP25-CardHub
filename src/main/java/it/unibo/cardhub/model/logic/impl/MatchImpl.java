@@ -12,6 +12,7 @@ import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 import it.unibo.cardhub.model.domain.impl.MatchStateImpl;
 import it.unibo.cardhub.model.logic.api.Match;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
+import it.unibo.cardhub.model.logic.api.PlayerEnum;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 
@@ -52,15 +53,17 @@ class MatchImpl implements Match {
      * {@inheritDoc}
      */
     @Override
-    public void drawCard(final Player player) throws CardCollectionFullException {
-        player.drawCard();
+    public void drawCard(final PlayerEnum player) throws CardCollectionFullException {
+        this.getPlayer(player).drawCard();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void playCard(final Card<?> card, final Player player) throws CardCollectionFullException {
+    public void playCard(final Card<?> card, final PlayerEnum playerEnum) throws CardCollectionFullException {
+        final Player player = matchState.getPlayer(playerEnum);
+
         if (matchState.getPlayfield().canAddCard(player)) {
             player.playCard(card);
             matchState.getPlayfield().addCard(player, card);
@@ -74,17 +77,8 @@ class MatchImpl implements Match {
      * {@inheritDoc}
      */
     @Override
-    public void shufflePileIntoDeck(final Player player) {
-        player.shufflePileIntoDeck();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void moveCardFromFieldToPile(final Card<?> card, final Player player) {
-        matchState.getPlayfield().removeCard(card);
-        player.putInPile(card);
+    public void moveCardFromFieldToPile(final Card<?> card, final PlayerEnum playerEnum) {
+        matchState.getPlayer(playerEnum).putInPile(card);
     }
 
     /**
@@ -99,24 +93,24 @@ class MatchImpl implements Match {
      * {@inheritDoc}
      */
     @Override
-    public Player getTurnPlayer() {
+    public Player getPlayer(final PlayerEnum player) {
+        return matchState.getPlayer(player);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PlayerEnum getEnum(final Player player) {
+        return matchState.getEnum(player);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PlayerEnum getTurnPlayer() {
         return matchLogic.getCurrentPlayer();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Player getPlayerOne() {
-        return matchLogic.getPlayerOne();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Player getPlayerTwo() {
-        return matchLogic.getPlayerTwo();
     }
 
     /**

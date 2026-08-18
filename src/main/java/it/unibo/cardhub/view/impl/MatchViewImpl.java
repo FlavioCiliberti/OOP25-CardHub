@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.Player;
+import it.unibo.cardhub.model.logic.api.PlayerEnum;
 import it.unibo.cardhub.view.api.MatchView;
 import it.unibo.cardhub.view.api.PlayerPanel;
 import it.unibo.cardhub.view.api.PlayfieldPanel;
@@ -155,7 +156,7 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
      * {@inheritDoc}
      */
     @Override
-    public void updatePlayfield(final Player player, final List<Card<?>> cards) {
+    public void updatePlayfield(final PlayerEnum player, final List<Card<?>> cards) {
         playfield.updatePlayfield(player, cards);
     }
 

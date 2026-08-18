@@ -37,8 +37,7 @@ public final class MatchFactory {
 
         return new MatchImpl(player1, player2, 
                                 DEFAULT_PLAYFIELD_SIZE, true, 
-                                new MatchLogicImpl(player1, player2,
-                                                    CardAction.TO_PILE, CardAction.TO_PILE));
+                                new MatchLogicImpl(CardAction.TO_PILE, CardAction.TO_PILE));
     }
 
     /**
@@ -69,8 +68,7 @@ public final class MatchFactory {
 
         return new MatchImpl(player1, player2,
                                 playerFieldSize, autoDraw,
-                                new MatchLogicImpl(player1, player2,
-                                                    winnerAction, loserAction));
+                                new MatchLogicImpl(winnerAction, loserAction));
 
     }
 
