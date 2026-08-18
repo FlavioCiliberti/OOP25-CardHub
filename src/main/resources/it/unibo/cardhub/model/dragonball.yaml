@@ -1,0 +1,80 @@
+cards:
+  - id: dragonball-001
+    attributes:
+      type: warrior
+      rarity: common
+    value: 10
+    description: "A skilled martial artist."
+    image: goku.png
+
+  - id: dragonball-002
+    attributes:
+      type: warrior
+      rarity: common
+    value: 10
+    description: "A proud Saiyan warrior."
+    image: vegeta.png
+
+  - id: dragonball-003
+    attributes:
+      type: warrior
+      rarity: uncommon
+    value: 20
+    description: "A powerful martial artist."
+    image: gohan.png
+
+  - id: dragonball-004
+    attributes:
+      type: warrior
+      rarity: rare
+    value: 30
+    description: "A legendary Saiyan transformation."
+    image: goku-super-saiyan.png
+
+  - id: dragonball-005
+    attributes:
+      type: villain
+      rarity: rare
+    value: 30
+    description: "A dangerous enemy."
+    image: frieza.png
+
+  - id: dragonball-006
+    attributes:
+      type: villain
+      rarity: uncommon
+    value: 20
+    description: "A powerful artificial warrior."
+    image: cell.png
+
+  - id: dragonball-007
+    attributes:
+      type: villain
+      rarity: common
+    value: 10
+    description: "A dangerous opponent."
+    image: buu.png
+
+  - id: dragonball-008
+    attributes:
+      type: warrior
+      rarity: rare
+    value: 30
+    description: "A powerful fusion warrior."
+    image: gogeta.png
+
+  - id: dragonball-009
+    attributes:
+      type: warrior
+      rarity: uncommon
+    value: 20
+    description: "A young Saiyan warrior."
+    image: trunks.png
+
+  - id: dragonball-010
+    attributes:
+      type: warrior
+      rarity: common
+    value: 10
+    description: "A Namekian warrior."
+    image: piccolo.png

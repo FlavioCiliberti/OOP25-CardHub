@@ -1,0 +1,80 @@
+cards:
+  - id: yugioh-001
+    attributes:
+      type: monster
+      race: dragon
+    value: 10
+    description: "A powerful dragon monster."
+    image: blue-eyes-white-dragon.png
+
+  - id: yugioh-002
+    attributes:
+      type: monster
+      race: spellcaster
+    value: 10
+    description: "A skilled spellcaster."
+    image: dark-magician.png
+
+  - id: yugioh-003
+    attributes:
+      type: monster
+      race: spellcaster
+    value: 20
+    description: "A powerful spellcaster."
+    image: dark-magician-girl.png
+
+  - id: yugioh-004
+    attributes:
+      type: monster
+      race: warrior
+    value: 10
+    description: "A legendary warrior."
+    image: summoned-skull.png
+
+  - id: yugioh-005
+    attributes:
+      type: monster
+      race: dragon
+    value: 30
+    description: "A legendary red dragon."
+    image: red-eyes-black-dragon.png
+
+  - id: yugioh-006
+    attributes:
+      type: monster
+      race: fiend
+    value: 20
+    description: "A mysterious fiend."
+    image: summoned-skull.png
+
+  - id: yugioh-007
+    attributes:
+      type: spell
+      race: normal
+    value: 10
+    description: "A spell card."
+    image: monster-reborn.png
+
+  - id: yugioh-008
+    attributes:
+      type: trap
+      race: normal
+    value: 10
+    description: "A trap card."
+    image: mirror-force.png
+
+  - id: yugioh-009
+    attributes:
+      type: monster
+      race: machine
+    value: 20
+    description: "A powerful machine monster."
+    image: jinzo.png
+
+  - id: yugioh-010
+    attributes:
+      type: monster
+      race: warrior
+    value: 20
+    description: "A legendary warrior monster."
+    image: dark-swordsman.png

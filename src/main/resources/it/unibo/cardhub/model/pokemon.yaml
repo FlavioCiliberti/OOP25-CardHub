@@ -1,0 +1,80 @@
+cards:
+  - id: pokemon-001
+    attributes:
+      type: electric
+      rarity: common
+    value: 10
+    description: "A Pokémon with electric powers."
+    image: pikachu.png
+
+  - id: pokemon-002
+    attributes:
+      type: fire
+      rarity: common
+    value: 10
+    description: "A Pokémon with fire powers."
+    image: charmander.png
+
+  - id: pokemon-003
+    attributes:
+      type: water
+      rarity: common
+    value: 10
+    description: "A Pokémon with water powers."
+    image: squirtle.png
+
+  - id: pokemon-004
+    attributes:
+      type: grass
+      rarity: uncommon
+    value: 20
+    description: "A Pokémon with grass powers."
+    image: bulbasaur.png
+
+  - id: pokemon-005
+    attributes:
+      type: psychic
+      rarity: rare
+    value: 30
+    description: "A Pokémon with psychic abilities."
+    image: abra.png
+
+  - id: pokemon-006
+    attributes:
+      type: electric
+      rarity: rare
+    value: 30
+    description: "A powerful electric Pokémon."
+    image: pikachu.png
+
+  - id: pokemon-007
+    attributes:
+      type: fire
+      rarity: uncommon
+    value: 20
+    description: "A Pokémon with strong fire attacks."
+    image: charmeleon.png
+
+  - id: pokemon-008
+    attributes:
+      type: water
+      rarity: uncommon
+    value: 20
+    description: "A Pokémon with strong water attacks."
+    image: wartortle.png
+
+  - id: pokemon-009
+    attributes:
+      type: grass
+      rarity: rare
+    value: 30
+    description: "A powerful grass Pokémon."
+    image: bulbasaur.png
+
+  - id: pokemon-010
+    attributes:
+      type: normal
+      rarity: rare
+    value: 30
+    description: "A versatile Pokémon."
+    image: eevee.png

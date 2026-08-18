@@ -16,7 +16,7 @@ import it.unibo.cardhub.model.domain.exceptions.NoSuchCardsException;
  */
 public class PlayfieldImpl implements Playfield {
 
-    private final Map<Player, List<Card>> playerCards;
+    private final Map<Player, List<Card<?>>> playerCards;
     private final int maxFieldSize;
 
     /**
@@ -26,6 +26,10 @@ public class PlayfieldImpl implements Playfield {
      * @param maxFieldSize of the game
      */
     public PlayfieldImpl(final List<Player> players, final int maxFieldSize) {
+        if (maxFieldSize <= 0) {
+            throw new IllegalArgumentException("Maximum field size must be positive.");
+        }
+
         this.playerCards = new LinkedHashMap<>();
         players.forEach(p -> this.playerCards.put(Objects.requireNonNull(p), new ArrayList<>()));
         this.maxFieldSize = maxFieldSize;
@@ -44,7 +48,7 @@ public class PlayfieldImpl implements Playfield {
      */
     @Override
     public boolean canAddCard(final Player player) {
-        final List<Card> cards = Objects.requireNonNull(this.playerCards.get(player), "No such player.");
+        final List<Card<?>> cards = Objects.requireNonNull(this.playerCards.get(player), "No such player.");
         return cards.size() < this.maxFieldSize;
     }
 
@@ -52,7 +56,7 @@ public class PlayfieldImpl implements Playfield {
      * {@inheritDoc}
      */
     @Override
-    public void addCard(final Player player, final Card card) {
+    public void addCard(final Player player, final Card<?> card) {
         if (!canAddCard(player)) {
             throw new IllegalStateException("The player cannot add more cards.");
         }
@@ -64,8 +68,8 @@ public class PlayfieldImpl implements Playfield {
      * {@inheritDoc}
      */
     @Override
-    public Card removeCard(final Card card) {
-        for (final List<Card> cards : this.playerCards.values()) {
+    public Card<?> removeCard(final Card<?> card) {
+        for (final List<Card<?>> cards : this.playerCards.values()) {
             if (cards.remove(card)) {
                 return card;
             }
@@ -78,7 +82,7 @@ public class PlayfieldImpl implements Playfield {
      * {@inheritDoc}
      */
     @Override
-    public List<Card> getCards(final Player player) {
+    public List<Card<?>> getCards(final Player player) {
         return List.copyOf(Objects.requireNonNull(this.playerCards.get(player), "No such player."));
     }
 
@@ -94,7 +98,7 @@ public class PlayfieldImpl implements Playfield {
      * {@inheritDoc}
      */
     @Override
-    public List<Card> getAllCards() {
+    public List<Card<?>> getAllCards() {
         return this.playerCards.values().stream().flatMap(List::stream).toList();
     }
 }
