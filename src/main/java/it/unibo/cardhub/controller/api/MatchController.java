@@ -21,11 +21,6 @@ import it.unibo.cardhub.model.logic.api.PlayerEnum;
 public interface MatchController extends ScreenController {
 
     /**
-     * Starts the match and notifies the view of the initial state.
-     */
-    void startMatch();
-
-    /**
      * Moves a card from a player's hand to that player's section of the
      * playfield.
      *

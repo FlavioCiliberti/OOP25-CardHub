@@ -2,6 +2,7 @@ package it.unibo.cardhub.model.domain.impl;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Optional;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.model.domain.api.Card;
@@ -59,6 +60,14 @@ public final class PlayerImpl implements Player {
     @Override
     public void putInPile(final Card<?> card) {
         this.discardPile.addCard(card);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<Card<?>> peekDiscardPile() {
+        return discardPile.peekCard();
     }
 
     /**

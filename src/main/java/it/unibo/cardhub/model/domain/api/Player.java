@@ -1,5 +1,7 @@
 package it.unibo.cardhub.model.domain.api;
 
+import java.util.Optional;
+
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 
 /**
@@ -29,6 +31,13 @@ public interface Player {
      * @param card the card to be put in the discard pile
      */
     void putInPile(Card<?> card);
+
+    /**
+     * Gets the card on top of the discard pile without taking it out.
+     * 
+     * @return an optional of the card on the top of the pile
+     */
+    Optional<Card<?>> peekDiscardPile();
 
     /**
      * Shuffles the player's discard pile into the deck.

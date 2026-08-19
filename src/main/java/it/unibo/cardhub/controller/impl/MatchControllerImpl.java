@@ -10,6 +10,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
+import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 import it.unibo.cardhub.model.logic.api.Match;
 import it.unibo.cardhub.model.logic.api.PlayerEnum;
@@ -27,6 +28,7 @@ public class MatchControllerImpl implements MatchController {
     MatchControllerImpl(final Match model) {
         this.model = Objects.requireNonNull(model, "no model loaded");
         view = new MatchViewImpl(this);
+        startMatch();
     }
 
     /**
@@ -39,16 +41,6 @@ public class MatchControllerImpl implements MatchController {
                     + "cannot return a defensive copy for this purpuse.")
     public JComponent getView() {
         return (JComponent) view;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void startMatch() {
-        view.updateHand(PlayerEnum.PLAYER_ONE, model.getPlayer(PlayerEnum.PLAYER_ONE).getHand().getCards());
-        view.updateHand(PlayerEnum.PLAYER_TWO, model.getPlayer(PlayerEnum.PLAYER_TWO).getHand().getCards());
-        view.showCurrentPlayer(getTurnPlayer());
     }
 
     /**
@@ -135,15 +127,6 @@ public class MatchControllerImpl implements MatchController {
      * {@inheritDoc}
      */
     @Override
-    public void changeSelectedCard(final JLabel cardLabel, final Card<?> selectedCard, final PlayerEnum player) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'changeSelectedCard'");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public PlayerEnum getTurnPlayer() {
         return model.getTurnPlayer();
     }
@@ -169,17 +152,39 @@ public class MatchControllerImpl implements MatchController {
      */
     @Override
     public ComparisonWinner compareCard(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard) {
+        Objects.requireNonNull(firstPlayerCard, "no firstPlayerCard provided");
+        Objects.requireNonNull(secondPlayerCard, "no secondPlayerCard provided");
+        final ComparisonWinner winner = model.compareCard(firstPlayerCard, secondPlayerCard);
+        switch (winner) {
+            case ComparisonWinner.TIE:
+                break;
+            case ComparisonWinner.PLAYER_1:
+                updateWithCardAction(PlayerEnum.PLAYER_ONE, Competitor.WINNER);
+                updateWithCardAction(PlayerEnum.PLAYER_TWO, Competitor.LOOSER);
+                break;
+            case ComparisonWinner.PLAYER_2:
+                updateWithCardAction(PlayerEnum.PLAYER_TWO, Competitor.WINNER);
+                updateWithCardAction(PlayerEnum.PLAYER_ONE, Competitor.LOOSER);
+        }
+        return winner;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void changeSelectedCard(final JLabel cardLabel, final Card<?> selectedCard, final PlayerEnum player) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'compareCard'");
+        throw new UnsupportedOperationException("Unimplemented method 'changeSelectedCard'");
     }
 
     private void checkTurn(final PlayerEnum owner, final Card<?> card) {
-        Objects.requireNonNull(card, "no card passed");
+        Objects.requireNonNull(card, "no card provided");
         checkTurn(owner);
     }
 
     private void checkTurn(final PlayerEnum owner) {
-        Objects.requireNonNull(owner, "no player passed");
+        Objects.requireNonNull(owner, "no player provided");
         if (getTurnPlayer() != owner) {
             throw new IllegalStateException("it is not the player's turn");
         }
@@ -207,4 +212,34 @@ public class MatchControllerImpl implements MatchController {
             view.showInvalidAction(e.getMessage());
         }
     }
+
+    private void updateWithCardAction(final PlayerEnum player, final Competitor competitor) {
+        final CardAction action = competitor == Competitor.LOOSER ? model.getLooserCardAction() : model.getWinnerCardAction();
+        switch (action) {
+            case CardAction.NONE:
+                return;
+            case CardAction.TO_HAND:
+                view.updateHand(player, model.getPlayer(player).getHand().getCards());
+                break;
+            case CardAction.TO_PILE:
+                view.updateDiscardPile(player, model.getPlayer(player).peekDiscardPile());
+                break;
+        }
+        view.updatePlayfield(player, model.getPlayfield().getCards(model.getPlayer(player)));
+    }
+
+    /**
+     * Starts the match and notifies the view of the initial state.
+     */
+    private void startMatch() {
+        view.updateHand(PlayerEnum.PLAYER_ONE, model.getPlayer(PlayerEnum.PLAYER_ONE).getHand().getCards());
+        view.updateHand(PlayerEnum.PLAYER_TWO, model.getPlayer(PlayerEnum.PLAYER_TWO).getHand().getCards());
+        view.showCurrentPlayer(model.getTurnPlayer());
+    }
+
+    enum Competitor {
+        WINNER,
+        LOOSER
+    }
+
 }
