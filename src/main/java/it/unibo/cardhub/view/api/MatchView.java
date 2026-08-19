@@ -23,7 +23,16 @@ public interface MatchView {
      * @param player the player whose hand changed
      * @param cards the player's hand, in order
      */
-    void updateHand(PlayerEnum player, List<Card<?>> cards);
+    void updateShowingHand(PlayerEnum player, List<Card<?>> cards);
+
+    /**
+     * Updates the player hand showing only face-down cards, without
+     * exposing any card data to the view.
+     * 
+     * @param player the player whose hand changed
+     * @param cardCount number of cards on hand
+     */
+    void updateHiddenHand(PlayerEnum player, int cardCount);
 
     /**
      * Updates the playfield with the specified list of cards.

@@ -124,8 +124,13 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
      * {@inheritDoc}
      */
     @Override
-    public void updateHand(final PlayerEnum player, final List<Card<?>> cards) {
-        this.selectPlayerPanel(player).updateHandPanel(cards);
+    public void updateShowingHand(final PlayerEnum player, final List<Card<?>> cards) {
+        this.selectPlayerPanel(player).updateShowingHandPanel(cards);
+    }
+
+    @Override
+    public void updateHiddenHand(final PlayerEnum player, final int cardCount) {
+        this.selectPlayerPanel(player).updateHiddenHandPanel(cardCount);
     }
 
     /**

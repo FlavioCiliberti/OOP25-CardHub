@@ -206,7 +206,7 @@ public class MatchControllerImpl implements MatchController {
     private void tryDrawCard(final PlayerEnum player) {
         try {
             model.drawCard(player);
-            view.updateHand(player, model.getPlayer(player).getHand().getCards());
+            view.updateShowingHand(player, model.getPlayer(player).getHand().getCards());
         } catch (final CardCollectionFullException e) {
             view.showInvalidAction(e.getMessage());
         }
@@ -218,7 +218,7 @@ public class MatchControllerImpl implements MatchController {
             case CardAction.NONE:
                 return;
             case CardAction.TO_HAND:
-                view.updateHand(player, model.getPlayer(player).getHand().getCards());
+                view.updateShowingHand(player, model.getPlayer(player).getHand().getCards());
                 break;
             case CardAction.TO_PILE:
                 view.updateDiscardPile(player, model.getPlayer(player).peekDiscardPile());
@@ -231,8 +231,8 @@ public class MatchControllerImpl implements MatchController {
      * Starts the match and notifies the view of the initial state.
      */
     private void startMatch() {
-        view.updateHand(PlayerEnum.PLAYER_ONE, model.getPlayer(PlayerEnum.PLAYER_ONE).getHand().getCards());
-        view.updateHand(PlayerEnum.PLAYER_TWO, model.getPlayer(PlayerEnum.PLAYER_TWO).getHand().getCards());
+        view.updateShowingHand(PlayerEnum.PLAYER_ONE, model.getPlayer(PlayerEnum.PLAYER_ONE).getHand().getCards());
+        view.updateShowingHand(PlayerEnum.PLAYER_TWO, model.getPlayer(PlayerEnum.PLAYER_TWO).getHand().getCards());
         view.showCurrentPlayer(model.getTurnPlayer());
     }
 

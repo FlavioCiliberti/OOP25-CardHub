@@ -24,6 +24,7 @@ import it.unibo.cardhub.view.api.PlayerPanel;
 import it.unibo.cardhub.view.components.CHLabel;
 import it.unibo.cardhub.view.components.CHPanel;
 import it.unibo.cardhub.view.components.CHStyles;
+import it.unibo.cardhub.view.util.ImageResolver;
 
 /**
  * Implementation of PlayerPanel.
@@ -113,10 +114,10 @@ final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
      * {@inheritDoc}
      */
     @Override
-    public void updateHandPanel(final List<Card<?>> cards) {
+    public void updateShowingHandPanel(final List<Card<?>> cards) {
         handPanel.removeAll();
         for (final Card<?> card : cards) {
-            final JLabel cardLabel = new CHLabel(new ImageIcon(getClass().getResource("/it/unibo/cardhub/io/Exodia.png")));
+            final JLabel cardLabel = new CHLabel(ImageResolver.resolve(card));
             cardLabel.setPreferredSize(new Dimension(MatchViewImpl.CARD_WIDTH, MatchViewImpl.CARD_HEIGHT));
             cardLabel.addMouseListener(new MouseAdapter() {
                 @Override
@@ -138,6 +139,22 @@ final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
                     controller.playCard(player, card);
                 }
             });
+            handPanel.add(cardLabel);
+        }
+
+        this.validate();
+        this.repaint();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void updateHiddenHandPanel(final int cardCount) {
+        handPanel.removeAll();
+        for (int i = 0; i < cardCount; i++) {
+            final JLabel cardLabel = new CHLabel(ImageResolver.resolveBack());
+            cardLabel.setPreferredSize(new Dimension(MatchViewImpl.CARD_WIDTH, MatchViewImpl.CARD_HEIGHT));
             handPanel.add(cardLabel);
         }
 
