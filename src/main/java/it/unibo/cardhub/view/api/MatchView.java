@@ -3,8 +3,6 @@ package it.unibo.cardhub.view.api;
 import java.util.List;
 import java.util.Optional;
 
-import javax.swing.JLabel;
-
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.logic.api.PlayerEnum;
@@ -72,10 +70,4 @@ public interface MatchView {
      */
     void showInvalidAction(String message);
 
-    /**
-     * Sets the card to be highlighted, eventually de-highlighting the previous one.
-     * 
-     * @param cardLabel the card label to be highlited
-     */
-    void changeSelectedCard(JLabel cardLabel);
 }

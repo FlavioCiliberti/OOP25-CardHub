@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -32,8 +31,6 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
     static final int CARD_WIDTH = 66;
     static final int CARD_HEIGHT = 96;
 
-    private static final int HIGHLIGHT_BORDER = 2;
-
     private static final long serialVersionUID = 1L;
 
     private final JPanel matchAreaPanel;
@@ -47,8 +44,6 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
     private final JButton concedeButton;
 
     private final transient MatchController controller;
-
-    private transient Optional<JLabel> selectedCard;
 
     /**
      * Constructor for MatchViewImpl.
@@ -67,7 +62,6 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
         exitButton = new CHButton("Exit");
         endTurnButton = new CHButton("End Turn");
         concedeButton = new CHButton("Concede");
-        this.selectedCard = Optional.empty();
 
         this.manageContentPane();
     }
@@ -124,23 +118,6 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
             return secondPlayerPanel;
         }
         throw new IllegalStateException("Player does not exist");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void changeSelectedCard(final JLabel cardLabel) {
-        //removes highlight from the last selected card
-        this.selectedCard.ifPresent(previous ->
-            previous.setBorder(BorderFactory.createEmptyBorder())
-        );
-
-        //stores selected card
-        cardLabel.setBorder(BorderFactory.createLineBorder(CHStyles.tertiaryColor(), HIGHLIGHT_BORDER));
-
-        //highlights clicked card
-        selectedCard = Optional.of(cardLabel);
     }
 
     /**
