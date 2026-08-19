@@ -12,20 +12,39 @@ import it.unibo.cardhub.view.util.ImageResolver;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Implementation of PlayfieldPanel.
  */
+@SuppressFBWarnings(
+    value = "SE_TRANSIENT_FIELD_NOT_RESTORED",
+    justification = "This class is never saved on fil or transmited: is just "
+        + "a Swing view. It is 'Serializable' just by inheritance form JPanel, "
+        + "not by choice or because it is usefull."
+)
 final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
 
     private static final long serialVersionUID = 1L;
+    private static final int HIGHLIGHT_BORDER = 2;
+
+    private final transient MatchController controller;
+    private final transient Map<PlayerEnum, Card<?>> selectedCards = new EnumMap<>(PlayerEnum.class);
+
     private final PlayfieldAreaPanel bottomArea;
     private final PlayfieldAreaPanel topArea;
     private final List<PlayfieldAreaPanel> playfieldAreas;
@@ -40,15 +59,15 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
      */
     PlayfieldPanelImpl(final MatchController controller) {
         super(new BorderLayout());
-        Objects.requireNonNull(controller, "no such controller");
+        this.controller = Objects.requireNonNull(controller, "no such controller");
 
         this.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(CHStyles.primaryColor()),
             BorderFactory.createEmptyBorder(CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD,
                                             CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD)));
 
-        this.bottomArea = new PlayfieldAreaPanel(controller);
-        this.topArea = new PlayfieldAreaPanel(controller);
+        this.bottomArea = new PlayfieldAreaPanel(controller, PlayerEnum.PLAYER_ONE, this::onSelectionChanged);
+        this.topArea = new PlayfieldAreaPanel(controller, PlayerEnum.PLAYER_TWO, this::onSelectionChanged);
         this.playfieldAreas = new ArrayList<>();
         this.playfieldAreas.add(bottomArea);
         this.playfieldAreas.add(topArea);
@@ -57,8 +76,10 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
         centralArea.add(this.topArea);
         centralArea.add(this.bottomArea);
 
-        this.playerOneDiscardPileArea = new DiscardPileAreaPanel(BorderLayout.SOUTH);
-        this.playerTwoDiscardPileArea = new DiscardPileAreaPanel(BorderLayout.NORTH);
+        this.playerOneDiscardPileArea = new DiscardPileAreaPanel(
+            BorderLayout.SOUTH, PlayerEnum.PLAYER_ONE, controller, this::getSelectedCard, this::deselectAll);
+        this.playerTwoDiscardPileArea = new DiscardPileAreaPanel(
+            BorderLayout.NORTH, PlayerEnum.PLAYER_TWO, controller, this::getSelectedCard, this::deselectAll);
 
         this.add(centralArea, BorderLayout.CENTER);
         this.add(this.playerOneDiscardPileArea, BorderLayout.EAST);
@@ -104,13 +125,56 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
         panel.add(this, constraints);
     }
 
+    /**
+     * Handles a selection or deselection event coming from either playfield area.
+     * When both players have an active selection, the controller is asked to
+     * compare the two selected cards, and both selections are then cleared.
+     *
+     * @param player the player whose selection changed
+     * @param card   the newly selected card, or {@link Optional#empty()} on deselection
+     */
+    private void onSelectionChanged(final PlayerEnum player, final Optional<Card<?>> card) {
+        card.ifPresentOrElse(
+            c -> this.selectedCards.put(player, c),
+            () -> this.selectedCards.remove(player));
+
+        if (this.selectedCards.containsKey(PlayerEnum.PLAYER_ONE)
+            && this.selectedCards.containsKey(PlayerEnum.PLAYER_TWO)) {
+            final Card<?> firstPlayerCard = this.selectedCards.get(PlayerEnum.PLAYER_ONE);
+            final Card<?> secondPlayerCard = this.selectedCards.get(PlayerEnum.PLAYER_TWO);
+
+            this.deselectAll();
+
+            this.controller.compareCard(firstPlayerCard, secondPlayerCard);
+        }
+    }
+
+    private Optional<Card<?>> getSelectedCard(final PlayerEnum player) {
+        return Optional.ofNullable(this.selectedCards.get(player));
+    }
+
+    private void deselectAll() {
+        this.selectedCards.clear();
+        this.bottomArea.deselect();
+        this.topArea.deselect();
+    }
+
     private static final class PlayfieldAreaPanel extends CHPanel {
         private static final int ROWS = 1;
 
         private static final long serialVersionUID = 1L;
 
-        PlayfieldAreaPanel(final MatchController controller) {
+        private final PlayerEnum player;
+        private final transient BiConsumer<PlayerEnum, Optional<Card<?>>> selectionListener;
+
+        private transient Optional<CHLabel> selectedLabel = Optional.empty();
+        private transient Optional<Card<?>> selectedCard = Optional.empty();
+
+        PlayfieldAreaPanel(final MatchController controller, final PlayerEnum player,
+                            final BiConsumer<PlayerEnum, Optional<Card<?>>> selectionListener) {
             super(new GridLayout(ROWS, controller.getPlayFieldSize(), CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD));
+            this.player = Objects.requireNonNull(player, "Player must be provided to PlayfieldAreaPanel");
+            this.selectionListener = Objects.requireNonNull(selectionListener, "Selection listener cannot be null");
 
             this.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(CHStyles.primaryColor()),
@@ -120,9 +184,57 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
 
         void update(final List<Card<?>> cards) {
             this.removeAll();
+            this.clearSelection();
 
-            cards.forEach(c -> this.add(new CHLabel(ImageResolver.resolve(c))));
+            cards.forEach(card -> {
+                final CHLabel label = new CHLabel(ImageResolver.resolve(card));
+                label.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(final MouseEvent e) {
+                        toggleSelection(card, label);
+                    }
+                });
+                this.add(label);
+            });
 
+            this.revalidate();
+            this.repaint();
+        }
+
+        /**
+         * Clears the current selection and notifies the listener.
+         */
+        void deselect() {
+            this.clearSelection();
+            this.selectionListener.accept(this.player, Optional.empty());
+        }
+
+        private void toggleSelection(final Card<?> card, final CHLabel label) {
+            if (this.selectedLabel.isPresent() && label.equals(this.selectedLabel.get())) {
+                this.clearSelection();
+            } else {
+                this.selectedLabel.ifPresent(this::unHighlightLabel);
+                this.selectedLabel = Optional.of(label);
+                this.selectedCard = Optional.of(card);
+                highlightLabel(label);
+                this.revalidate();
+                this.repaint();
+            }
+            this.selectionListener.accept(this.player, this.selectedCard);
+        }
+
+        private void highlightLabel(final CHLabel label) {
+            label.setBorder(BorderFactory.createLineBorder(CHStyles.tertiaryColor(), HIGHLIGHT_BORDER));
+        }
+
+        private void unHighlightLabel(final CHLabel label) {
+            label.setBorder(null);
+        }
+
+        private void clearSelection() {
+            this.selectedLabel.ifPresent(this::unHighlightLabel);
+            this.selectedLabel = Optional.empty();
+            this.selectedCard = Optional.empty();
             this.revalidate();
             this.repaint();
         }
@@ -133,9 +245,20 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
         private static final long serialVersionUID = 1L;
         private final CHLabel pile;
         private final CHButton reshuffle;
+        private final PlayerEnum player;
+        private final transient MatchController controller;
+        private final transient Function<PlayerEnum, Optional<Card<?>>> selectedCardProvider;
+        private final transient Runnable deselectAllCallback;
 
-        DiscardPileAreaPanel(final String position) {
+        DiscardPileAreaPanel(final String position, final PlayerEnum player, final MatchController controller,
+                              final Function<PlayerEnum, Optional<Card<?>>> selectedCardProvider,
+                              final Runnable deselectAllCallback) {
             super(new BorderLayout());
+
+            this.controller = Objects.requireNonNull(controller, "Controller cannot be null");
+            this.player = Objects.requireNonNull(player, "Player must be provided to DiscardPileAreaPanel");
+            this.selectedCardProvider = Objects.requireNonNull(selectedCardProvider, "Selected card provider cannot be null");
+            this.deselectAllCallback = Objects.requireNonNull(deselectAllCallback, "Deselect callback cannot be null");
 
             if (!Objects.equals(position, BorderLayout.NORTH) && !Objects.equals(position, BorderLayout.SOUTH)) {
                 throw new IllegalArgumentException("Position must be either BorderLayout.NORTH or BorderLayout.SOUTH");
@@ -147,7 +270,22 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
                                                 CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD)));
 
             this.pile = new CHLabel();
+            this.pile.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(final MouseEvent e) {
+                    discardSelectedCard();
+                }
+            });
             this.reshuffle = new CHButton("Reshuffle into deck");
+            this.reshuffle.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(final MouseEvent e) {
+                    if (controller.getTurnPlayer() != player) {
+                        return;
+                    }
+                    controller.reshuffleIntoDeck(player);
+                }
+            });
 
             this.add(reshuffle, position);
             this.add(pile, BorderLayout.CENTER);
@@ -158,6 +296,16 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
 
             this.pile.revalidate();
             this.pile.repaint();
+        }
+
+        private void discardSelectedCard() {
+            final Optional<Card<?>> selected = this.selectedCardProvider.apply(this.player);
+            if (selected.isEmpty() || this.controller.getTurnPlayer() != this.player) {
+                return;
+            }
+
+            this.controller.discardCard(this.player, selected.get());
+            this.deselectAllCallback.run();
         }
     }
 }

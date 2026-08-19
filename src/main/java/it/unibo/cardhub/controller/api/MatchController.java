@@ -1,10 +1,7 @@
 package it.unibo.cardhub.controller.api;
 
-import javax.swing.JLabel;
-
 import it.unibo.cardhub.model.domain.api.Card;
-import it.unibo.cardhub.model.domain.api.Player;
-import it.unibo.cardhub.model.logic.api.ComparisonWinner;
+import it.unibo.cardhub.model.logic.api.PlayerEnum;
 
 /**
  * Controller responsible for handling the main actions available
@@ -21,11 +18,6 @@ import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 public interface MatchController extends ScreenController {
 
     /**
-     * Starts the match and notifies the view of the initial state.
-     */
-    void startMatch();
-
-    /**
      * Moves a card from a player's hand to that player's section of the
      * playfield.
      *
@@ -34,7 +26,7 @@ public interface MatchController extends ScreenController {
      * @throws IllegalStateException if {@code owner} is not the current
      *         player, or {@code card} is not in their hand
      */
-    void playCard(Player owner, Card<?> card);
+    void playCard(PlayerEnum owner, Card<?> card);
 
     /**
      * Moves a card from a player's section of the playfield to that
@@ -46,7 +38,7 @@ public interface MatchController extends ScreenController {
      *         player, or {@code card} is not on their section of the
      *         playfield
      */
-    void discardCard(Player owner, Card<?> card);
+    void discardCard(PlayerEnum owner, Card<?> card);
 
     /**
      * Draws the top card of a player's deck into that player's hand.
@@ -55,7 +47,7 @@ public interface MatchController extends ScreenController {
      * @throws IllegalStateException if {@code owner} is not the current
      *         player
      */
-    void drawFromDeck(Player owner);
+    void drawFromDeck(PlayerEnum owner);
 
     /**
      * Reshuffles a player's discard pile back into their deck.
@@ -64,7 +56,7 @@ public interface MatchController extends ScreenController {
      * @throws IllegalStateException if {@code owner} is not the current
      *         player
      */
-    void reshuffleIntoDeck(Player owner);
+    void reshuffleIntoDeck(PlayerEnum owner);
 
     /**
      * Checks if the player's deck is empty.
@@ -72,7 +64,7 @@ public interface MatchController extends ScreenController {
      * @param owner the player who owns the deck
      * @return {@code true} if the deck is empty
      */
-    boolean isEmptyDeck(Player owner);
+    boolean isEmptyDeck(PlayerEnum owner);
 
     /**
      * Checks if the player's discard pile is empty.
@@ -80,7 +72,7 @@ public interface MatchController extends ScreenController {
      * @param owner the player who owns the discard pile
      * @return {@code true} if the discard pile is empty
      */
-    boolean isEmptyDiscardPile(Player owner);
+    boolean isEmptyDiscardPile(PlayerEnum owner);
 
     /**
      * Gets the card count of a player's deck.
@@ -88,7 +80,7 @@ public interface MatchController extends ScreenController {
      * @param owner the player who owns the deck
      * @return deck's card count
      */
-    int getDeckCount(Player owner);
+    int getDeckCount(PlayerEnum owner);
 
     /**
      * Ends the current player's turn and moves on to the next one.
@@ -101,35 +93,19 @@ public interface MatchController extends ScreenController {
     void concede();
 
     /**
-     * Sets the card to be highlighted, eventually de-highlighting the previous one.
-     * 
-     * @param cardLabel the card label to be highlited
-     * @param selectedCard the selected card
-     * @param player the player that tried to select the card
-     */
-    void changeSelectedCard(JLabel cardLabel, Card<?> selectedCard, Player player);
-    //if player == turnPlayer store selectedCard, then call MatchView.changeSelectedCard(cardLabel)
-
-    /**
      * getter for the turn player.
      * 
      * @return the turn player.
      */
-    Player getTurnPlayer();
+    PlayerEnum getTurnPlayer();
 
     /**
-     * getter for the player 1.
+     * getter for the player name.
      * 
-     * @return player 1.
+     * @param player the player
+     * @return player's name.
      */
-    Player getPlayerOne();
-
-    /**
-     * getter for the player 2.
-     * 
-     * @return player 2.
-     */
-    Player getPlayerTwo();
+    String getPlayerName(PlayerEnum player);
 
     /**
      * Returns playField size (per player).
@@ -143,9 +119,17 @@ public interface MatchController extends ScreenController {
      * 
      * @param firstPlayerCard the card of player1 to be compared
      * @param secondPlayerCard the card of player2 to be compared
-     * @return the result of the comparison
      */
-    ComparisonWinner compareCard(Card<?> firstPlayerCard, Card<?> secondPlayerCard);
+    void compareCard(Card<?> firstPlayerCard, Card<?> secondPlayerCard);
 
+    /**
+     * Shows what the current player should see.
+     */
+    void startTurn();
+
+    /**
+     * Navigates to the home screen.
+     */
+    void goToHome();
 }
 

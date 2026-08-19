@@ -1,5 +1,7 @@
 package it.unibo.cardhub.model.domain.api;
 
+import java.util.Optional;
+
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 
 /**
@@ -31,6 +33,13 @@ public interface Player {
     void putInPile(Card<?> card);
 
     /**
+     * Gets the card on top of the discard pile without taking it out.
+     * 
+     * @return an optional of the card on the top of the pile
+     */
+    Optional<Card<?>> peekDiscardPile();
+
+    /**
      * Shuffles the player's discard pile into the deck.
      */
     void shufflePileIntoDeck();
@@ -48,4 +57,25 @@ public interface Player {
      * @return the player's hand
      */
     Hand getHand();
+
+    /**
+     * Checks if the player's deck is empty.
+     * 
+     * @return {@code true} if the deck is empty
+     */
+    boolean hasEmptyDeck();
+
+    /**
+     * Checks if the player's discard pile is empty.
+     * 
+     * @return {@code true} if the discard pile is empty
+     */
+    boolean hasEmptyDiscardPile();
+
+    /**
+     * Gets the current size of the deck.
+     * 
+     * @return deck size
+     */
+    int getDeckCount();
 }

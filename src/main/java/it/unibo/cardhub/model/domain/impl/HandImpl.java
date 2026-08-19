@@ -1,6 +1,8 @@
 package it.unibo.cardhub.model.domain.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.Hand;
@@ -21,7 +23,7 @@ public class HandImpl extends AbstractCardCollection implements Hand {
      * @throws IllegalArgumentException if max hand size is null or negative
      */
     public HandImpl(final List<? extends Card<?>> cards, final int maxSize) {
-        super(List.copyOf(cards));
+        super(new ArrayList<>(Objects.requireNonNull(cards)));
         if (maxSize <= 0) {
             throw new IllegalArgumentException("Maximum hand size must be positive.");
         }

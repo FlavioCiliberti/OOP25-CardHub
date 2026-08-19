@@ -2,6 +2,7 @@ package it.unibo.cardhub.model.domain.impl;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Optional;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.model.domain.api.Card;
@@ -65,6 +66,14 @@ public final class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
+    public Optional<Card<?>> peekDiscardPile() {
+        return discardPile.peekCard();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void shufflePileIntoDeck() {
         this.discardPile.reshuffleIntoDeck(deck);
     }
@@ -112,5 +121,26 @@ public final class PlayerImpl implements Player {
     )
     public Hand getHand() {
         return this.hand;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasEmptyDeck() {
+        return this.deck.isEmpty();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasEmptyDiscardPile() {
+        return this.discardPile.isEmpty();
+    }
+
+    @Override
+    public int getDeckCount() {
+        return this.deck.size();
     }
 }

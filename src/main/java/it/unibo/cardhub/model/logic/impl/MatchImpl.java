@@ -41,6 +41,7 @@ class MatchImpl implements Match {
                         final int playerFieldSize, final boolean autoDraw,
                         final MatchLogic matchLogic) {
         matchState = new MatchStateImpl(new ArrayList<>(Arrays.asList(player1, player2)), playerFieldSize);
+        status = MatchStatus.CREATED;
 
         this.matchLogic = matchLogic;
         this.autoDraw = autoDraw;
@@ -70,7 +71,6 @@ class MatchImpl implements Match {
         } else {
             throw new CardCollectionFullException("Player's field is full!");
         }
-
     }
 
     /**
@@ -200,6 +200,24 @@ class MatchImpl implements Match {
     @Override
     public CardAction getLooserCardAction() {
         return matchLogic.getLooserCardAction();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void shufflePileIntoDeck(final PlayerEnum player) {
+        matchState.getPlayer(player).shufflePileIntoDeck();
+    }
+
+    @Override
+    public boolean isEmptyDeck(final PlayerEnum owner) {
+        return matchState.getPlayer(owner).hasEmptyDeck();
+    }
+
+    @Override
+    public boolean isEmptyDiscardPile(final PlayerEnum owner) {
+        return matchState.getPlayer(owner).hasEmptyDiscardPile();
     }
 
     /**
