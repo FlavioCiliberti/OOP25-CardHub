@@ -5,6 +5,13 @@
             "name": "App",
             "request": "launch",
             "mainClass": "it.unibo.cardhub.App",
+            "projectName": "sample-gradle-project-CardHub"
+        },
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "it.unibo.cardhub.App",
             "projectName": "OOP25-CardHub"
         },
         {

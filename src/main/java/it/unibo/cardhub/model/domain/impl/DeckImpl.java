@@ -1,7 +1,9 @@
 package it.unibo.cardhub.model.domain.impl;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import it.unibo.cardhub.model.domain.api.Card;
@@ -19,7 +21,7 @@ public class DeckImpl extends AbstractCardCollection implements Deck {
      * @param cards deck cards
      */
     public DeckImpl(final List<? extends Card<?>> cards) {
-        super(List.copyOf(cards));
+        super(new ArrayList<>(Objects.requireNonNull(cards)));
     }
 
     /**

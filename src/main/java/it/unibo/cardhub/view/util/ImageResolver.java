@@ -11,8 +11,8 @@ import it.unibo.cardhub.model.domain.api.Card;
  */
 public final class ImageResolver {
 
-    private static final String IMAGE_BASE_PATH = "it/unibo/cardhub/view/images/resources/";
-    private static final String CARD_BACK_IMAGE = "CardBack.png";
+    private static final String IMAGE_BASE_PATH = "it/unibo/cardhub/view/";
+    private static final String CARD_BACK_IMAGE = "Back.png";
 
     private ImageResolver() {
         // Private constructor to prevent instantiation

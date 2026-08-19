@@ -41,6 +41,7 @@ class MatchImpl implements Match {
                         final int playerFieldSize, final boolean autoDraw,
                         final MatchLogic matchLogic) {
         matchState = new MatchStateImpl(new ArrayList<>(Arrays.asList(player1, player2)), playerFieldSize);
+        status = MatchStatus.CREATED;
 
         this.matchLogic = matchLogic;
         this.autoDraw = autoDraw;
