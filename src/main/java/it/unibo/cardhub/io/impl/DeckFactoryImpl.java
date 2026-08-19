@@ -12,6 +12,7 @@ import org.yaml.snakeyaml.Yaml;
 import it.unibo.cardhub.io.api.DeckFactory;
 import it.unibo.cardhub.model.domain.api.Deck;
 import it.unibo.cardhub.model.domain.attributes.DragonBall;
+import it.unibo.cardhub.model.domain.attributes.ECard;
 import it.unibo.cardhub.model.domain.attributes.Pokemon;
 import it.unibo.cardhub.model.domain.attributes.Suit;
 import it.unibo.cardhub.model.domain.attributes.YuGiOh;
@@ -95,6 +96,16 @@ public final class DeckFactoryImpl implements DeckFactory {
         ));
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Deck createECardDeck() {
+        return loadDeck(CardType.ECARD, attributes -> new ECard(
+            (String) attributes.get(TYPE_ATTRIBUTE)
+        ));
+    }
+
     private <T> Deck loadDeck(final CardType cardType, final Function<Map<String, Object>, T> attributeFactory) {
         try (var inputStream = getClass().getResourceAsStream(cardType.getResourcePath())) {
             if (inputStream == null) {
@@ -134,7 +145,8 @@ public final class DeckFactoryImpl implements DeckFactory {
     private enum CardType {
         POKEMON("/it/unibo/cardhub/model/pokemon.yaml"), 
         DRAGONBALL("/it/unibo/cardhub/model/dragonball.yaml"), 
-        YUGIOH("/it/unibo/cardhub/model/yugioh.yaml");
+        YUGIOH("/it/unibo/cardhub/model/yugioh.yaml"),
+        ECARD("/it/unibo/cardhub/model/ecard.yaml");
 
         private final String resourcePath;
 

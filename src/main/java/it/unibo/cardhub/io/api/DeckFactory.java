@@ -34,4 +34,11 @@ public interface DeckFactory {
      * @return Yu-Gi-Oh! deck
      */
     Deck createYuGiOhDeck();
+
+    /**
+     * Creates an E-card deck.
+     * 
+     * @return E-card deck
+     */
+    Deck createECardDeck();
 }
