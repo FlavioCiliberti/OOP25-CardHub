@@ -166,13 +166,13 @@ public class MatchControllerImpl implements MatchController {
         Objects.requireNonNull(secondPlayerCard, "no secondPlayerCard provided");
         final ComparisonWinner winner = model.compareCard(firstPlayerCard, secondPlayerCard);
         switch (winner) {
-            case ComparisonWinner.TIE:
+            case TIE:
                 break;
-            case ComparisonWinner.PLAYER_1:
+            case PLAYER_1:
                 updateWithCardAction(PlayerEnum.PLAYER_ONE, Competitor.WINNER);
                 updateWithCardAction(PlayerEnum.PLAYER_TWO, Competitor.LOOSER);
                 break;
-            case ComparisonWinner.PLAYER_2:
+            case PLAYER_2:
                 updateWithCardAction(PlayerEnum.PLAYER_TWO, Competitor.WINNER);
                 updateWithCardAction(PlayerEnum.PLAYER_ONE, Competitor.LOOSER);
         }
@@ -235,12 +235,12 @@ public class MatchControllerImpl implements MatchController {
     private void updateWithCardAction(final PlayerEnum player, final Competitor competitor) {
         final CardAction action = competitor == Competitor.LOOSER ? model.getLooserCardAction() : model.getWinnerCardAction();
         switch (action) {
-            case CardAction.NONE:
+            case NONE:
                 return;
-            case CardAction.TO_HAND:
+            case TO_HAND:
                 view.updateShowingHand(player, model.getPlayer(player).getHand().getCards());
                 break;
-            case CardAction.TO_PILE:
+            case TO_PILE:
                 view.updateDiscardPile(player, model.getPlayer(player).peekDiscardPile());
                 break;
         }
