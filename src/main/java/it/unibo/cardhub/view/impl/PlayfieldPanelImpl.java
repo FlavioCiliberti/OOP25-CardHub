@@ -277,6 +277,15 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
                 }
             });
             this.reshuffle = new CHButton("Reshuffle into deck");
+            this.reshuffle.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(final MouseEvent e) {
+                    if (controller.getTurnPlayer() != player) {
+                        return;
+                    }
+                    controller.reshuffleIntoDeck(player);
+                }
+            });
 
             this.add(reshuffle, position);
             this.add(pile, BorderLayout.CENTER);
@@ -291,7 +300,7 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
 
         private void discardSelectedCard() {
             final Optional<Card<?>> selected = this.selectedCardProvider.apply(this.player);
-            if (selected.isEmpty() || this.controller.getTurnPlayer() == this.player) {
+            if (selected.isEmpty() || this.controller.getTurnPlayer() != this.player) {
                 return;
             }
 
