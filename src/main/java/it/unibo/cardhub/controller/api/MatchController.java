@@ -122,5 +122,9 @@ public interface MatchController extends ScreenController {
      */
     void compareCard(Card<?> firstPlayerCard, Card<?> secondPlayerCard);
 
+    /**
+     * Shows what the current player should see.
+     */
+    void showCurrentPlayerHand();
 }
 

@@ -109,6 +109,8 @@ public class MatchControllerImpl implements MatchController {
      */
     @Override
     public void endTurn() {
+        view.updateHiddenHand(getTurnPlayer(), 
+                            model.getPlayer(getTurnPlayer()).getHand().size());
         model.changeTurn();
         view.showCurrentPlayer(getTurnPlayer());
     }
@@ -167,6 +169,14 @@ public class MatchControllerImpl implements MatchController {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showCurrentPlayerHand() {
+        view.updateShowingHand(model.getTurnPlayer(), model.getPlayer(model.getTurnPlayer()).getHand().getCards());
+    }
+
     private void checkTurn(final PlayerEnum owner, final Card<?> card) {
         Objects.requireNonNull(card, "no card provided");
         checkTurn(owner);
@@ -221,8 +231,10 @@ public class MatchControllerImpl implements MatchController {
      * Starts the match and notifies the view of the initial state.
      */
     private void startMatch() {
-        view.updateShowingHand(PlayerEnum.PLAYER_ONE, model.getPlayer(PlayerEnum.PLAYER_ONE).getHand().getCards());
-        view.updateShowingHand(PlayerEnum.PLAYER_TWO, model.getPlayer(PlayerEnum.PLAYER_TWO).getHand().getCards());
+        view.updateHiddenHand(PlayerEnum.PLAYER_ONE, 
+                            model.getPlayer(PlayerEnum.PLAYER_ONE).getHand().size());
+        view.updateHiddenHand(PlayerEnum.PLAYER_TWO, 
+                            model.getPlayer(PlayerEnum.PLAYER_TWO).getHand().size());
         view.showCurrentPlayer(model.getTurnPlayer());
     }
 
