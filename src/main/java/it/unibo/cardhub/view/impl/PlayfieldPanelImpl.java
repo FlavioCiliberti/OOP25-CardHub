@@ -12,26 +12,44 @@ import it.unibo.cardhub.view.util.ImageResolver;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Implementation of PlayfieldPanel.
  */
+@SuppressFBWarnings(
+    value = "SE_TRANSIENT_FIELD_NOT_RESTORED",
+    justification = "This class is never saved on fil or transmited: is just "
+        + "a Swing view. It is 'Serializable' just by inheritance form JPanel, "
+        + "not by choice or because it is usefull."
+)
 final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
 
     private static final long serialVersionUID = 1L;
+    private static final int HIGHLIGHT_BORDER = 2;
+
+    private final transient MatchController controller;
     private final PlayfieldAreaPanel bottomArea;
     private final PlayfieldAreaPanel topArea;
     private final List<PlayfieldAreaPanel> playfieldAreas;
 
     private final DiscardPileAreaPanel playerOneDiscardPileArea;
     private final DiscardPileAreaPanel playerTwoDiscardPileArea;
+
+    private final transient Map<PlayerEnum, Card<?>> selectedCards = new EnumMap<>(PlayerEnum.class);
 
     /**
      * Constructs a new playfield panel.
@@ -40,15 +58,15 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
      */
     PlayfieldPanelImpl(final MatchController controller) {
         super(new BorderLayout());
-        Objects.requireNonNull(controller, "no such controller");
+        this.controller = Objects.requireNonNull(controller, "no such controller");
 
         this.setBorder(BorderFactory.createCompoundBorder(
             BorderFactory.createLineBorder(CHStyles.primaryColor()),
             BorderFactory.createEmptyBorder(CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD,
                                             CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD)));
 
-        this.bottomArea = new PlayfieldAreaPanel(controller);
-        this.topArea = new PlayfieldAreaPanel(controller);
+        this.bottomArea = new PlayfieldAreaPanel(controller, PlayerEnum.PLAYER_ONE, this::onSelectionChanged);
+        this.topArea = new PlayfieldAreaPanel(controller, PlayerEnum.PLAYER_TWO, this::onSelectionChanged);
         this.playfieldAreas = new ArrayList<>();
         this.playfieldAreas.add(bottomArea);
         this.playfieldAreas.add(topArea);
@@ -104,13 +122,48 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
         panel.add(this, constraints);
     }
 
+    /**
+     * Handles a selection or deselection event coming from either playfield area.
+     * When both players have an active selection, the controller is asked to
+     * compare the two selected cards, and both selections are then cleared.
+     *
+     * @param player the player whose selection changed
+     * @param card   the newly selected card, or {@link Optional#empty()} on deselection
+     */
+    private void onSelectionChanged(final PlayerEnum player, final Optional<Card<?>> card) {
+        card.ifPresentOrElse(
+            c -> this.selectedCards.put(player, c),
+            () -> this.selectedCards.remove(player));
+
+        if (this.selectedCards.containsKey(PlayerEnum.PLAYER_ONE)
+            && this.selectedCards.containsKey(PlayerEnum.PLAYER_TWO)) {
+            final Card<?> firstPlayerCard = this.selectedCards.get(PlayerEnum.PLAYER_ONE);
+            final Card<?> secondPlayerCard = this.selectedCards.get(PlayerEnum.PLAYER_TWO);
+
+            this.selectedCards.clear();
+            this.bottomArea.deselect();
+            this.topArea.deselect();
+
+            this.controller.compareCard(firstPlayerCard, secondPlayerCard);
+        }
+    }
+
     private static final class PlayfieldAreaPanel extends CHPanel {
         private static final int ROWS = 1;
 
         private static final long serialVersionUID = 1L;
 
-        PlayfieldAreaPanel(final MatchController controller) {
+        private final PlayerEnum player;
+        private final transient BiConsumer<PlayerEnum, Optional<Card<?>>> selectionListener;
+
+        private transient Optional<CHLabel> selectedLabel;
+        private transient Optional<Card<?>> selectedCard;
+
+        PlayfieldAreaPanel(final MatchController controller, final PlayerEnum player,
+                            final BiConsumer<PlayerEnum, Optional<Card<?>>> selectionListener) {
             super(new GridLayout(ROWS, controller.getPlayFieldSize(), CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD));
+            this.player = Objects.requireNonNull(player, "Player cannot be null");
+            this.selectionListener = Objects.requireNonNull(selectionListener, "Selection listener cannot be null");
 
             this.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(CHStyles.primaryColor()),
@@ -120,9 +173,56 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
 
         void update(final List<Card<?>> cards) {
             this.removeAll();
+            this.clearSelection();
 
-            cards.forEach(c -> this.add(new CHLabel(ImageResolver.resolve(c))));
+            cards.forEach(card -> {
+                final CHLabel label = new CHLabel(ImageResolver.resolve(card));
+                label.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseClicked(final MouseEvent e) {
+                        toggleSelection(card, label);
+                    }
+                });
+                this.add(label);
+            });
 
+            this.revalidate();
+            this.repaint();
+        }
+
+        /**
+         * Clears the current selection and notifies the listener.
+         */
+        void deselect() {
+            this.clearSelection();
+            this.selectionListener.accept(this.player, Optional.empty());
+        }
+
+        private void toggleSelection(final Card<?> card, final CHLabel label) {
+            if (label.equals(this.selectedLabel.get())) {
+                this.clearSelection();
+            } else {
+                this.selectedLabel = Optional.of(label);
+                this.selectedCard = Optional.of(card);
+                highlightLabel(label);
+                this.revalidate();
+                this.repaint();
+            }
+            this.selectionListener.accept(this.player, this.selectedCard);
+        }
+
+        private void highlightLabel(final CHLabel label) {
+            label.setBorder(BorderFactory.createLineBorder(CHStyles.tertiaryColor(), HIGHLIGHT_BORDER));
+        }
+
+        private void unHighlightLabel(final CHLabel label) {
+            label.setBorder(null);
+        }
+
+        private void clearSelection() {
+            this.selectedLabel.ifPresent(this::unHighlightLabel);
+            this.selectedLabel = Optional.empty();
+            this.selectedCard = Optional.empty();
             this.revalidate();
             this.repaint();
         }

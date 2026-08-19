@@ -3,7 +3,6 @@ package it.unibo.cardhub.controller.api;
 import javax.swing.JLabel;
 
 import it.unibo.cardhub.model.domain.api.Card;
-import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 import it.unibo.cardhub.model.logic.api.PlayerEnum;
 
 /**
@@ -132,9 +131,8 @@ public interface MatchController extends ScreenController {
      * 
      * @param firstPlayerCard the card of player1 to be compared
      * @param secondPlayerCard the card of player2 to be compared
-     * @return the result of the comparison
      */
-    ComparisonWinner compareCard(Card<?> firstPlayerCard, Card<?> secondPlayerCard);
+    void compareCard(Card<?> firstPlayerCard, Card<?> secondPlayerCard);
 
 }
 

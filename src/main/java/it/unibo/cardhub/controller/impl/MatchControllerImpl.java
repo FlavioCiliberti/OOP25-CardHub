@@ -151,7 +151,7 @@ public class MatchControllerImpl implements MatchController {
      * {@inheritDoc}
      */
     @Override
-    public ComparisonWinner compareCard(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard) {
+    public void compareCard(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard) {
         Objects.requireNonNull(firstPlayerCard, "no firstPlayerCard provided");
         Objects.requireNonNull(secondPlayerCard, "no secondPlayerCard provided");
         final ComparisonWinner winner = model.compareCard(firstPlayerCard, secondPlayerCard);
@@ -166,7 +166,6 @@ public class MatchControllerImpl implements MatchController {
                 updateWithCardAction(PlayerEnum.PLAYER_TWO, Competitor.WINNER);
                 updateWithCardAction(PlayerEnum.PLAYER_ONE, Competitor.LOOSER);
         }
-        return winner;
     }
 
     /**
