@@ -26,7 +26,13 @@ public class MatchControllerImpl implements MatchController {
     private final MatchView view;
     private final Navigator navigator;
 
-    MatchControllerImpl(final Match model, final Navigator navigator) {
+    /**
+     * Constructor for the controller.
+     * 
+     * @param model match model
+     * @param navigator screen navigator
+     */
+    public MatchControllerImpl(final Match model, final Navigator navigator) {
         this.model = Objects.requireNonNull(model, "no model loaded");
         this.navigator = Objects.requireNonNull(navigator, "no navigator loaded");
         view = new MatchViewImpl(this);
