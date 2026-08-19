@@ -7,6 +7,7 @@ import javax.swing.JComponent;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.controller.api.MatchController;
+import it.unibo.cardhub.controller.api.Navigator;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 import it.unibo.cardhub.model.logic.api.CardAction;
@@ -23,9 +24,11 @@ public class MatchControllerImpl implements MatchController {
 
     private final Match model;
     private final MatchView view;
+    private final Navigator navigator;
 
-    MatchControllerImpl(final Match model) {
+    MatchControllerImpl(final Match model, final Navigator navigator) {
         this.model = Objects.requireNonNull(model, "no model loaded");
+        this.navigator = Objects.requireNonNull(navigator, "no navigator loaded");
         view = new MatchViewImpl(this);
         startMatch();
     }
@@ -175,6 +178,14 @@ public class MatchControllerImpl implements MatchController {
     @Override
     public void showCurrentPlayerHand() {
         view.updateShowingHand(model.getTurnPlayer(), model.getPlayer(model.getTurnPlayer()).getHand().getCards());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void goToHome() {
+        navigator.goHome();
     }
 
     private void checkTurn(final PlayerEnum owner, final Card<?> card) {
