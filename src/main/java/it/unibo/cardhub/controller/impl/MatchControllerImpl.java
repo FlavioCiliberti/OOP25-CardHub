@@ -4,7 +4,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.controller.api.MatchController;
@@ -166,15 +165,6 @@ public class MatchControllerImpl implements MatchController {
                 updateWithCardAction(PlayerEnum.PLAYER_TWO, Competitor.WINNER);
                 updateWithCardAction(PlayerEnum.PLAYER_ONE, Competitor.LOOSER);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void changeSelectedCard(final JLabel cardLabel, final Card<?> selectedCard, final PlayerEnum player) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'changeSelectedCard'");
     }
 
     private void checkTurn(final PlayerEnum owner, final Card<?> card) {
