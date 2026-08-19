@@ -210,6 +210,7 @@ public class MatchControllerImpl implements MatchController {
         try {
             model.playCard(card, owner);
             view.updatePlayfield(owner, model.getPlayfield().getCards(model.getPlayer(owner)));
+            view.updateShowingHand(owner, model.getPlayer(owner).getHand().getCards());
         } catch (final CardCollectionFullException e) {
             view.showInvalidAction(e.getMessage());
         }
@@ -218,12 +219,14 @@ public class MatchControllerImpl implements MatchController {
     private void moveCardFromFieldToPile(final PlayerEnum owner, final Card<?> card) {
         model.moveCardFromFieldToPile(card, owner);
         view.updateDiscardPile(owner, Optional.of(card));
+        view.updatePlayfield(owner, model.getPlayfield().getCards(model.getPlayer(owner)));
     }
 
     private void tryDrawCard(final PlayerEnum player) {
         try {
             model.drawCard(player);
             view.updateShowingHand(player, model.getPlayer(player).getHand().getCards());
+            view.updateDeck(player, model.getPlayer(player).getDeckCount());
         } catch (final CardCollectionFullException e) {
             view.showInvalidAction(e.getMessage());
         }
