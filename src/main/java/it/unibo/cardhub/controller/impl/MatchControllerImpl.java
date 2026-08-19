@@ -176,7 +176,7 @@ public class MatchControllerImpl implements MatchController {
      * {@inheritDoc}
      */
     @Override
-    public void showCurrentPlayerHand() {
+    public void startTurn() {
         view.updateShowingHand(model.getTurnPlayer(), model.getPlayer(model.getTurnPlayer()).getHand().getCards());
     }
 

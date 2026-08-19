@@ -170,7 +170,7 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
             "Turn Start",
             JOptionPane.INFORMATION_MESSAGE
         );
-        controller.showCurrentPlayerHand();
+        controller.startTurn();
     }
 
     /**

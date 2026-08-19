@@ -125,7 +125,7 @@ public interface MatchController extends ScreenController {
     /**
      * Shows what the current player should see.
      */
-    void showCurrentPlayerHand();
+    void startTurn();
 
     /**
      * Navigates to the home screen.
