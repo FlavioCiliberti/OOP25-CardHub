@@ -1,0 +1,42 @@
+cards:
+  - id: ecard-001
+    attributes:
+      type: slave
+    value: 1
+    image: slave.jpg
+
+  - id: ecard-002
+    attributes:
+      type: citizen
+    value: 2
+    image: citizen.jpg
+
+  - id: ecard-003
+    attributes:
+      type: citizen
+    value: 2
+    image: citizen.jpg
+
+  - id: ecard-004
+    attributes:
+      type: citizen
+    value: 2
+    image: citizen.jpg
+
+  - id: ecard-005
+    attributes:
+      type: citizen
+    value: 2
+    image: citizen.jpg
+
+  - id: ecard-006
+    attributes:
+      type: citizen
+    value: 2
+    image: citizen.jpg
+
+  - id: ecard-007
+    attributes:
+      type: emperor
+    value: 3
+    image: emperor.jpg
