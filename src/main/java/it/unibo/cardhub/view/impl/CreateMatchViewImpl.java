@@ -469,7 +469,7 @@ public final class CreateMatchViewImpl extends ScreenView implements CreateMatch
     }
 
     @Override
-    public void showInvalidForm() {
-        JOptionPane.showMessageDialog(this, "Must fill all fields!", "error", JOptionPane.ERROR_MESSAGE);
+    public void showInvalidForm(final String message) {
+        JOptionPane.showMessageDialog(this, message, "Must fill all fields!", JOptionPane.ERROR_MESSAGE);
     }
 }
