@@ -3,40 +3,47 @@ cards:
     attributes:
       type: slave
     value: 0
+    description: "Wins against the Emperor, loses against the Citizen"
     image: slave.jpg
 
   - id: ecard-002
     attributes:
       type: slave
     value: 0
+    description: "Wins against the Emperor, loses against the Citizen"
     image: slave.jpg
 
   - id: ecard-003
     attributes:
       type: citizen
     value: 1
+    description: "Wins against the Slave, loses against the Emperor"
     image: citizen.jpg
 
   - id: ecard-004
     attributes:
       type: citizen
     value: 1
+    description: "Wins against the Slave, loses against the Emperor"
     image: citizen.jpg
 
   - id: ecard-005
     attributes:
       type: citizen
     value: 1
+    description: "Wins against the Slave, loses against the Emperor"
     image: citizen.jpg
 
   - id: ecard-006
     attributes:
       type: emperor
     value: 2
+    description: "Wins against the Citizen, loses against the Slave"
     image: emperor.jpg
 
   - id: ecard-007
     attributes:
       type: emperor
     value: 2
+    description: "Wins against the Citizen, loses against the Slave"
     image: emperor.jpg
