@@ -21,6 +21,7 @@ public final class PlayerImpl implements Player {
     private final Hand hand;
     private final Deck deck;
     private final DiscardPile discardPile;
+    private int points;
 
     /**
      * Player constructor.
@@ -42,6 +43,7 @@ public final class PlayerImpl implements Player {
         this.hand = new HandImpl(new ArrayList<>(), maxHandSize);
         this.deck = Objects.requireNonNull(deck);
         this.discardPile = new DiscardPileImpl(new ArrayList<>());
+        this.points = 0;
 
         //draw initial cards
         for (int i = 0; i < startingHandSize; i++) {
@@ -142,5 +144,25 @@ public final class PlayerImpl implements Player {
     @Override
     public int getDeckCount() {
         return this.deck.size();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addPoints(final int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("point value can't be negative");
+        }
+
+        points += amount;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getPoints() {
+        return points;
     }
 }

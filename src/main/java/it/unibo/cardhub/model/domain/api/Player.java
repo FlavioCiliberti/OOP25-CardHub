@@ -78,4 +78,18 @@ public interface Player {
      * @return deck size
      */
     int getDeckCount();
+
+    /**
+     * Adds the specified amount of points to the player.
+     * 
+     * @param amount the points to be added
+     */
+    void addPoints(int amount);
+
+    /**
+     * A getter for the points.
+     * 
+     * @return the player's points
+     */
+    int getPoints();
 }

@@ -24,8 +24,8 @@ class MatchLogicImpl implements MatchLogic {
      */
     @Override
     public ComparisonWinner compareCard(final Card<?> firstPlayerCard, 
-        final Card<?> secondPlayerCard, 
-            final MatchState matchState) {
+                                        final Card<?> secondPlayerCard, 
+                                        final MatchState matchState) {
 
         if (firstPlayerCard.value() > secondPlayerCard.value()) {
             //player1 winner action

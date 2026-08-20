@@ -145,4 +145,19 @@ public interface Match {
      * @return true if finished, false otherwise
      */
     boolean isFinished();
+
+    /**
+     * A getter for the player's points.
+     * 
+     * @param player the enum of the player
+     * @return the points of the corresponding player
+     */
+    int getPlayerPoints(PlayerEnum player);
+
+    /**
+     * A getter for the player with the most points.
+     * 
+     * @return the enum of the player with the most points
+     */
+    ComparisonWinner getWinningPlayer();
 }

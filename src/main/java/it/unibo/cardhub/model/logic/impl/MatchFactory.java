@@ -1,5 +1,7 @@
 package it.unibo.cardhub.model.logic.impl;
 
+import it.unibo.cardhub.io.api.DeckFactory;
+import it.unibo.cardhub.io.impl.DeckFactoryImpl;
 import it.unibo.cardhub.model.domain.api.Deck;
 import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.model.domain.impl.PlayerImpl;
@@ -13,6 +15,10 @@ public final class MatchFactory {
     private static final int DEFAULT_MAX_HAND_SIZE = 5;
     private static final int DEFAULT_STARTING_HAND_SIZE = 5;
     private static final int DEFAULT_PLAYFIELD_SIZE = 3;
+
+    private static final int ECARD_MAX_HAND_SIZE = 7;
+    private static final int ECARD_STARTING_HAND_SIZE = 7;
+    private static final int ECARD_PLAYFIELD_SIZE = 1;
 
     private MatchFactory() {
 
@@ -70,6 +76,25 @@ public final class MatchFactory {
                                 playerFieldSize, autoDraw,
                                 new MatchLogicImpl(winnerAction, loserAction));
 
+    }
+
+    /**
+     * Creates an E-Card match.
+     * 
+     * @param firstPlayerName player1 name
+     * @param secondPlayerName player2 name
+     * @return a MatchImpl for E-Card match
+     */
+    public static Match createECardMatch(final String firstPlayerName, final String secondPlayerName) {
+        final DeckFactory deckFactory = new DeckFactoryImpl();
+
+        final Player player1 = new PlayerImpl(firstPlayerName, ECARD_MAX_HAND_SIZE,
+                                                ECARD_STARTING_HAND_SIZE, deckFactory.createECardDeck());
+        final Player player2 = new PlayerImpl(secondPlayerName, ECARD_MAX_HAND_SIZE,
+                                                ECARD_STARTING_HAND_SIZE, deckFactory.createECardDeck());
+
+        return new MatchImpl(player1, player2, 
+                            ECARD_PLAYFIELD_SIZE, false, new ECardLogic());
     }
 
 }
