@@ -7,10 +7,16 @@ import javax.swing.JComponent;
 
 import it.unibo.cardhub.controller.api.CreateMatchController;
 import it.unibo.cardhub.controller.api.Navigator;
+import it.unibo.cardhub.io.api.DeckFactory;
+import it.unibo.cardhub.io.impl.DeckFactoryImpl;
 import it.unibo.cardhub.model.api.CreateMatchModel;
+import it.unibo.cardhub.model.domain.DeckEnum;
+import it.unibo.cardhub.model.domain.api.Deck;
 import it.unibo.cardhub.model.domain.exceptions.EmptyFieldException;
 import it.unibo.cardhub.model.logic.GameMode;
 import it.unibo.cardhub.model.logic.api.CardAction;
+import it.unibo.cardhub.model.logic.api.Match;
+import it.unibo.cardhub.model.logic.impl.MatchFactory;
 import it.unibo.cardhub.view.api.CreateMatchView;
 import it.unibo.cardhub.view.impl.CreateMatchViewImpl;
 
@@ -22,11 +28,13 @@ public class CreateMatchControllerImpl implements CreateMatchController {
     private final CreateMatchModel model;
     private final Navigator navigator;
     private final CreateMatchView view;
+    private final DeckFactory deckFactory;
 
     public CreateMatchControllerImpl(final CreateMatchModel model, final Navigator navigator) {
         this.model = Objects.requireNonNull(model, "no model loaded");
         this.navigator = Objects.requireNonNull(navigator, "no navigator loaded");
         this.view = new CreateMatchViewImpl(this);
+        this.deckFactory = new DeckFactoryImpl();
     }
 
     /**
@@ -98,8 +106,7 @@ public class CreateMatchControllerImpl implements CreateMatchController {
      */
     @Override
     public Map<Integer, String> getDecks() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDecks'");
+        return model.getDecks();
     }
 
     /**
@@ -113,9 +120,24 @@ public class CreateMatchControllerImpl implements CreateMatchController {
             checkMatchParams(player1Name, player1DeckId, player2Name, player2DeckId, 
                             maxHandSize, startingHandSize, playerFieldSize, autoDraw, 
                             winnerAction, loserAction, gameMode);
-        } catch (final EmptyFieldException e) {
+        } catch(final EmptyFieldException e) {
             view.showInvalidForm(e.getMessage());
         }
+
+        switch (gameMode) {
+            case GameMode.FREE_PLAY:
+                createFreeGame(player1Name, player1DeckId, player2Name, player2DeckId);
+                break;
+            case GameMode.CUSTOM:
+                createCustomGame(player1Name, player1DeckId, player2Name, player2DeckId, 
+                                maxHandSize, startingHandSize, playerFieldSize, autoDraw, 
+                                winnerAction, loserAction);
+                break;
+            case GameMode.FULL_GAME:
+                createFullGame(player1Name, player2Name);
+                break;
+        }
+
     }
 
     /**
@@ -127,8 +149,9 @@ public class CreateMatchControllerImpl implements CreateMatchController {
      * @param player2DeckId the deck id chosen by the second player
      */
     private void createFreeGame(String player1Name, int player1DeckId, String player2Name, int player2DeckId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createFreeGame'");
+        final Match model = MatchFactory.createFreeMatch(player1Name, player2Name, 
+            getDeck(player2DeckId), getDeck(player2DeckId));
+        createMatch(model);
     }
 
     /**
@@ -152,8 +175,12 @@ public class CreateMatchControllerImpl implements CreateMatchController {
     private void createCustomGame(String player1Name, int player1DeckId, String player2Name, int player2DeckId,
             int maxHandSize, int startingHandSize, int playerFieldSize, boolean autoDraw, CardAction winnerAction,
             CardAction loserAction) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createCustomGame'");
+        final Match model = MatchFactory.createCustomMatch(player1Name, player2Name,
+                                    getDeck(player2DeckId), getDeck(player2DeckId), 
+                                    maxHandSize, startingHandSize, 
+                                    playerFieldSize, autoDraw, 
+                                    winnerAction, loserAction);
+        createMatch(model);
     }
 
     /**
@@ -184,7 +211,7 @@ public class CreateMatchControllerImpl implements CreateMatchController {
             Objects.requireNonNull(winnerAction);
             Objects.requireNonNull(loserAction);
             Objects.requireNonNull(gameMode);
-        } catch(final NullPointerException e) {
+        } catch(final Exception e) {
             throw new EmptyFieldException(e.getMessage());
         }
 
@@ -194,6 +221,30 @@ public class CreateMatchControllerImpl implements CreateMatchController {
 
         if (player2Name.isBlank()) {
             throw new EmptyFieldException("Player two name is required");
+        }
+    }
+
+    /**
+     * creates a match with the given model.
+     * 
+     * @param model the model of the game
+     */
+    private void createMatch(final Match model){
+        
+    }
+
+    Deck getDeck(final int deckId) { //temporary non-dinamic solution
+        final DeckEnum deck = DeckEnum.fromId(deckId);
+
+        switch (deck) {
+            case POKEMON:
+                return this.deckFactory.createPokemonDeck();
+            case DRAGONBALL:
+                return this.deckFactory.createDragonBallDeck();
+            case YUGIOH:
+                return this.deckFactory.createYuGiOhDeck();
+            default:
+                throw new IllegalArgumentException("Unsupported deck: " + deck);
         }
     }
     
