@@ -33,9 +33,32 @@ public interface Match {
      * Moves a card from the field to the discard pile.
      * 
      * @param card the card to move
-     * @param playerEnum the player the card belongs to
+     * @param player the player the card belongs to
      */
-    void moveCardFromFieldToPile(Card<?> card, PlayerEnum playerEnum);
+    void moveCardFromFieldToPile(Card<?> card, PlayerEnum player);
+
+    /**
+     * Moves all cards from discard pile to deck.
+     * 
+     * @param player the owner of the deck and pile
+     */
+    void shufflePileIntoDeck(PlayerEnum player);
+
+    /**
+     * Checks if the player's deck is empty.
+     * 
+     * @param owner the player who owns the deck
+     * @return {@code true} if the deck is empty
+     */
+    boolean isEmptyDeck(PlayerEnum owner);
+
+    /**
+     * Checks if the player's discard pile is empty.
+     * 
+     * @param owner the player who owns the discard pile
+     * @return {@code true} if the discard pile is empty
+     */
+    boolean isEmptyDiscardPile(PlayerEnum owner);
 
     /**
      * compares two Cards and proceeds with the corresponding actions.

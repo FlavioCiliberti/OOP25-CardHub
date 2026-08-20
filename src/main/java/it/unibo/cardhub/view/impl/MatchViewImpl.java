@@ -7,13 +7,11 @@ import java.util.Optional;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.model.domain.api.Card;
-import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.model.logic.api.PlayerEnum;
 import it.unibo.cardhub.view.api.MatchView;
 import it.unibo.cardhub.view.api.PlayerPanel;
@@ -33,8 +31,6 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
     static final int CARD_WIDTH = 66;
     static final int CARD_HEIGHT = 96;
 
-    private static final int HIGHLIGHT_BORDER = 2;
-
     private static final long serialVersionUID = 1L;
 
     private final JPanel matchAreaPanel;
@@ -49,8 +45,6 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
 
     private final transient MatchController controller;
 
-    private transient Optional<JLabel> selectedCard;
-
     /**
      * Constructor for MatchViewImpl.
      * 
@@ -61,14 +55,13 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
 
         matchAreaPanel = new CHPanel(CHStyles.tertiaryColor(), new BorderLayout());
 
-        firstPlayerPanel = new PlayerPanelImpl(controller, controller.getPlayerOne(), true);
-        secondPlayerPanel = new PlayerPanelImpl(controller, controller.getPlayerTwo(), false);
+        firstPlayerPanel = new PlayerPanelImpl(controller, PlayerEnum.PLAYER_ONE, true);
+        secondPlayerPanel = new PlayerPanelImpl(controller, PlayerEnum.PLAYER_TWO, false);
         playfield = new PlayfieldPanelImpl(controller);
 
         exitButton = new CHButton("Exit");
         endTurnButton = new CHButton("End Turn");
         concedeButton = new CHButton("Concede");
-        this.selectedCard = Optional.empty();
 
         this.manageContentPane();
     }
@@ -118,10 +111,10 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
     }
 
     //selects the panel that belongs to given player
-    private PlayerPanel selectPlayerPanel(final Player player) {
-        if (player.equals(controller.getPlayerOne())) {
+    private PlayerPanel selectPlayerPanel(final PlayerEnum player) {
+        if (player == PlayerEnum.PLAYER_ONE) {
             return firstPlayerPanel;
-        } else if (player.equals(controller.getPlayerTwo())) {
+        } else if (player == PlayerEnum.PLAYER_TWO) {
             return secondPlayerPanel;
         }
         throw new IllegalStateException("Player does not exist");
@@ -131,25 +124,13 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
      * {@inheritDoc}
      */
     @Override
-    public void changeSelectedCard(final JLabel cardLabel) {
-        //removes highlight from the last selected card
-        this.selectedCard.ifPresent(previous ->
-            previous.setBorder(BorderFactory.createEmptyBorder())
-        );
-
-        //stores selected card
-        cardLabel.setBorder(BorderFactory.createLineBorder(CHStyles.tertiaryColor(), HIGHLIGHT_BORDER));
-
-        //highlights clicked card
-        selectedCard = Optional.of(cardLabel);
+    public void updateShowingHand(final PlayerEnum player, final List<Card<?>> cards) {
+        this.selectPlayerPanel(player).updateShowingHandPanel(cards);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public void updateHand(final Player player, final List<Card<?>> cards) {
-        this.selectPlayerPanel(player).updateHandPanel(cards);
+    public void updateHiddenHand(final PlayerEnum player, final int cardCount) {
+        this.selectPlayerPanel(player).updateHiddenHandPanel(cardCount);
     }
 
     /**
@@ -164,17 +145,17 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
      * {@inheritDoc}
      */
     @Override
-    public void updateDiscardPile(final Player player, final Optional<Card<?>> topCard) {
-        if (player.equals(controller.getPlayerOne())) {
+    public void updateDiscardPile(final PlayerEnum player, final Optional<Card<?>> topCard) {
+        if (player == PlayerEnum.PLAYER_ONE) {
             playfield.updatePlayerOneDiscardPile(topCard);
-        } else if (player.equals(controller.getPlayerTwo())) {
+        } else if (player == PlayerEnum.PLAYER_TWO) {
             playfield.updatePlayerTwoDiscardPile(topCard);
         }
         throw new IllegalStateException("Player does not exist");
     }
 
     @Override
-    public void updateDeck(final Player player, final int remainingCards) {
+    public void updateDeck(final PlayerEnum player, final int remainingCards) {
         this.selectPlayerPanel(player).updateDeck();
     }
 
@@ -182,11 +163,25 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
      * {@inheritDoc}
      */
     @Override
-    public void showCurrentPlayer(final Player player) {
+    public void showCurrentPlayer(final PlayerEnum player) {
         JOptionPane.showMessageDialog(
             this,
-            "It's" + player.getName() + "'s turn",
+            "It's" + controller.getPlayerName(player) + "'s turn",
             "Turn Start",
+            JOptionPane.INFORMATION_MESSAGE
+        );
+        controller.startTurn();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showMatchEnded(final PlayerEnum winner) {
+        JOptionPane.showMessageDialog(
+            this,
+            controller.getPlayerName(winner) + " Wins!",
+            "Match Over",
             JOptionPane.INFORMATION_MESSAGE
         );
     }
@@ -195,12 +190,12 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
      * {@inheritDoc}
      */
     @Override
-    public void showMatchEnded(final Player winner) {
+    public void showInvalidAction(final String message) {
         JOptionPane.showMessageDialog(
             this,
-            winner.getName() + " Wins!",
-            "Match Over",
-            JOptionPane.INFORMATION_MESSAGE
+            message,
+            "Invalid Action!",
+            JOptionPane.ERROR_MESSAGE
         );
     }
 }

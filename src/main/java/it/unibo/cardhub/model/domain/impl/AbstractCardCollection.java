@@ -1,5 +1,6 @@
 package it.unibo.cardhub.model.domain.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,7 +20,7 @@ public abstract class AbstractCardCollection implements CardCollection {
      * @param cards card collection cards
      */
     protected AbstractCardCollection(final List<? extends Card<?>> cards) {
-        this.cards = List.copyOf(Objects.requireNonNull(cards));
+        this.cards = new ArrayList<>(Objects.requireNonNull(cards));
     }
 
     /**

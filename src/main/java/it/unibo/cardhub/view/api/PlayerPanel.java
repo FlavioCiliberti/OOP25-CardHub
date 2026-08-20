@@ -15,7 +15,15 @@ public interface PlayerPanel {
      * 
      * @param cards the list of cards in the hand
      */
-    void updateHandPanel(List<Card<?>> cards);
+    void updateShowingHandPanel(List<Card<?>> cards);
+
+    /**
+     * Updates hand showing only face-down cards, without
+     * exposing any card data to the view.
+     * 
+     * @param cardCount number of cards on hand
+     */
+    void updateHiddenHandPanel(int cardCount);
 
     /**
      * Updates the deckSizeLabel and sets the deck to invisible if it's empty.
