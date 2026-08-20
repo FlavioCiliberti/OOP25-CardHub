@@ -24,7 +24,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 
 import it.unibo.cardhub.controller.api.CreateMatchController;
-import it.unibo.cardhub.model.domain.exceptions.EmptyFieldException;
 import it.unibo.cardhub.model.logic.GameMode;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.view.api.CreateMatchView;
@@ -167,6 +166,14 @@ public final class CreateMatchViewImpl extends ScreenView implements CreateMatch
         selectedLoserCardAction = CardAction.TO_PILE;
 
         this.manageContentPane();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showInvalidForm(final String message) {
+        JOptionPane.showMessageDialog(this, message, "Must fill all fields!", JOptionPane.ERROR_MESSAGE);
     }
 
     //sets up the content pane
@@ -468,8 +475,4 @@ public final class CreateMatchViewImpl extends ScreenView implements CreateMatch
         }
     }
 
-    @Override
-    public void showInvalidForm(final String message) {
-        JOptionPane.showMessageDialog(this, message, "Must fill all fields!", JOptionPane.ERROR_MESSAGE);
-    }
 }

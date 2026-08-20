@@ -2,7 +2,6 @@ package it.unibo.cardhub.controller.api;
 
 import java.util.Map;
 
-import it.unibo.cardhub.model.domain.exceptions.EmptyFieldException;
 import it.unibo.cardhub.model.logic.GameMode;
 import it.unibo.cardhub.model.logic.api.CardAction;
 

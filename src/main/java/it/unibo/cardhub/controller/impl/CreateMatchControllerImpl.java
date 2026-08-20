@@ -5,7 +5,10 @@ import java.util.Objects;
 
 import javax.swing.JComponent;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.cardhub.controller.ScreenId;
 import it.unibo.cardhub.controller.api.CreateMatchController;
+import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.controller.api.Navigator;
 import it.unibo.cardhub.io.api.DeckFactory;
 import it.unibo.cardhub.io.impl.DeckFactoryImpl;
@@ -30,6 +33,12 @@ public class CreateMatchControllerImpl implements CreateMatchController {
     private final CreateMatchView view;
     private final DeckFactory deckFactory;
 
+    /**
+     * Constructor for the controller.
+     * 
+     * @param model the create match screen model
+     * @param navigator the screen navigator
+     */
     public CreateMatchControllerImpl(final CreateMatchModel model, final Navigator navigator) {
         this.model = Objects.requireNonNull(model, "no model loaded");
         this.navigator = Objects.requireNonNull(navigator, "no navigator loaded");
@@ -49,6 +58,10 @@ public class CreateMatchControllerImpl implements CreateMatchController {
      * {@inheritDoc}
      */
     @Override
+    @SuppressFBWarnings(value = "EI", justification =
+            "The view JComponent must be returned by reference so it "
+                    + "can be embedded in the real application window; "
+                    + "cannot return a defensive copy for this purpuse.")
     public JComponent getView() {
         return (JComponent) view;
     }
@@ -113,14 +126,16 @@ public class CreateMatchControllerImpl implements CreateMatchController {
      * {@inheritDoc}
      */
     @Override
-    public void tryCreatingMatch(String player1Name, int player1DeckId, String player2Name, int player2DeckId,
-            int maxHandSize, int startingHandSize, int playerFieldSize, boolean autoDraw, CardAction winnerAction,
-            CardAction loserAction, GameMode gameMode) {
+    public void tryCreatingMatch(final String player1Name, final int player1DeckId, 
+                                final String player2Name, final int player2DeckId,
+                                final int maxHandSize, final int startingHandSize, 
+                                final int playerFieldSize, final boolean autoDraw, 
+                                final CardAction winnerAction, final CardAction loserAction, 
+                                final GameMode gameMode) {
         try {
-            checkMatchParams(player1Name, player1DeckId, player2Name, player2DeckId, 
-                            maxHandSize, startingHandSize, playerFieldSize, autoDraw, 
+            checkMatchParams(player1Name, player2Name, 
                             winnerAction, loserAction, gameMode);
-        } catch(final EmptyFieldException e) {
+        } catch (final EmptyFieldException e) {
             view.showInvalidForm(e.getMessage());
         }
 
@@ -148,10 +163,11 @@ public class CreateMatchControllerImpl implements CreateMatchController {
      * @param player2Name the name of the second player
      * @param player2DeckId the deck id chosen by the second player
      */
-    private void createFreeGame(String player1Name, int player1DeckId, String player2Name, int player2DeckId) {
-        final Match model = MatchFactory.createFreeMatch(player1Name, player2Name, 
-            getDeck(player2DeckId), getDeck(player2DeckId));
-        createMatch(model);
+    private void createFreeGame(final String player1Name, final int player1DeckId, 
+                                final String player2Name, final int player2DeckId) {
+        final Match matchModel = MatchFactory.createFreeMatch(player1Name, player2Name, 
+                                    getDeck(player1DeckId), getDeck(player2DeckId));
+        createMatch(matchModel);
     }
 
     /**
@@ -172,15 +188,17 @@ public class CreateMatchControllerImpl implements CreateMatchController {
      * @param winnerAction the action to be done to the winner card
      * @param loserAction the action to be done to the loser card
      */
-    private void createCustomGame(String player1Name, int player1DeckId, String player2Name, int player2DeckId,
-            int maxHandSize, int startingHandSize, int playerFieldSize, boolean autoDraw, CardAction winnerAction,
-            CardAction loserAction) {
-        final Match model = MatchFactory.createCustomMatch(player1Name, player2Name,
-                                    getDeck(player2DeckId), getDeck(player2DeckId), 
+    private void createCustomGame(final String player1Name, final int player1DeckId, 
+                                final String player2Name, final int player2DeckId,
+                                final int maxHandSize, final int startingHandSize, 
+                                final int playerFieldSize, final boolean autoDraw, 
+                                final CardAction winnerAction, final CardAction loserAction) {
+        final Match matchModel = MatchFactory.createCustomMatch(player1Name, player2Name,
+                                    getDeck(player1DeckId), getDeck(player2DeckId), 
                                     maxHandSize, startingHandSize, 
                                     playerFieldSize, autoDraw, 
                                     winnerAction, loserAction);
-        createMatch(model);
+        createMatch(matchModel);
     }
 
     /**
@@ -189,30 +207,23 @@ public class CreateMatchControllerImpl implements CreateMatchController {
      * @param player1Name the name of the first player
      * @param player2Name the name of the second player
      */
-    private void createFullGame(String player1Name, String player2Name) {
+    @SuppressWarnings("unused")
+    private void createFullGame(final String player1Name, final String player2Name) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'createFullGame'");
     }
 
-    void checkMatchParams(final String player1Name, final int player1DeckId, 
-                        final String player2Name, final int player2DeckId,
-                        final int maxHandSize, final int startingHandSize, final int playerFieldSize, final boolean autoDraw, final CardAction winnerAction,
-                        final CardAction loserAction, final GameMode gameMode) 
+    private void checkMatchParams(final String player1Name, 
+                        final String player2Name,
+                        final CardAction winnerAction, final CardAction loserAction, 
+                        final GameMode gameMode) 
                         throws EmptyFieldException {
-        try {
-            Objects.requireNonNull(player1Name);
-            Objects.requireNonNull(player1DeckId);
-            Objects.requireNonNull(player2Name);
-            Objects.requireNonNull(player2DeckId);
-            Objects.requireNonNull(maxHandSize);
-            Objects.requireNonNull(startingHandSize);
-            Objects.requireNonNull(playerFieldSize);
-            Objects.requireNonNull(autoDraw);
-            Objects.requireNonNull(winnerAction);
-            Objects.requireNonNull(loserAction);
-            Objects.requireNonNull(gameMode);
-        } catch(final Exception e) {
-            throw new EmptyFieldException(e.getMessage());
+        if (player1Name == null
+            || player2Name == null
+            || gameMode == null
+            || winnerAction == null
+            || loserAction == null) {
+            throw new EmptyFieldException("A required field is null");
         }
 
         if (player1Name.isBlank()) {
@@ -225,27 +236,23 @@ public class CreateMatchControllerImpl implements CreateMatchController {
     }
 
     /**
-     * creates a match with the given model.
+     * Creates a match with the given model and
+     * then navigaates to it.
      * 
-     * @param model the model of the game
+     * @param matchModel the model of the game
      */
-    private void createMatch(final Match model){
-        
+    private void createMatch(final Match matchModel) {
+        final MatchController matchController = new MatchControllerImpl(matchModel, navigator);
+        navigator.show(ScreenId.MATCH, matchController.getView());
     }
 
-    Deck getDeck(final int deckId) { //temporary non-dinamic solution
+    private Deck getDeck(final int deckId) {
         final DeckEnum deck = DeckEnum.fromId(deckId);
 
-        switch (deck) {
-            case POKEMON:
-                return this.deckFactory.createPokemonDeck();
-            case DRAGONBALL:
-                return this.deckFactory.createDragonBallDeck();
-            case YUGIOH:
-                return this.deckFactory.createYuGiOhDeck();
-            default:
-                throw new IllegalArgumentException("Unsupported deck: " + deck);
-        }
+        return switch (deck) {
+            case POKEMON -> this.deckFactory.createPokemonDeck();
+            case DRAGONBALL -> this.deckFactory.createDragonBallDeck();
+            case YUGIOH -> this.deckFactory.createYuGiOhDeck();
+        };
     }
-    
 }

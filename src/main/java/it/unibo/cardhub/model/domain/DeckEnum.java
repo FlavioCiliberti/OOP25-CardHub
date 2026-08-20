@@ -1,5 +1,8 @@
 package it.unibo.cardhub.model.domain;
 
+/**
+ * Temporary non-dinamic enumeration of available decks.
+ */
 public enum DeckEnum {
         POKEMON("Pokemon", 0), 
         DRAGONBALL("Dragon Ball", 1), 
@@ -11,7 +14,8 @@ public enum DeckEnum {
     /**
      * Creates a deck enum.
      * 
-     * @param displayName the mode
+     * @param displayName the name of the deck
+     * @param id the id of the deck
      */
     DeckEnum(final String displayName, final int id) {
         this.displayName = displayName;
@@ -36,6 +40,12 @@ public enum DeckEnum {
         return this.id;
     }
 
+    /**
+     * Enum getter.
+     * 
+     * @param id id of the deck
+     * @return the enum corrisponding to the deck id
+     */
     public static DeckEnum fromId(final int id) {
         for (final DeckEnum deck : values()) {
             if (deck.getId() == id) {

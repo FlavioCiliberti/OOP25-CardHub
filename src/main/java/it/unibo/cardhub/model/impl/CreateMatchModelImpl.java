@@ -50,7 +50,7 @@ public final class CreateMatchModelImpl implements CreateMatchModel {
     @Override
     public Map<Integer, String> getDecks() {
         final Map<Integer, String> decks = new HashMap<>();
-        
+
         for (final DeckEnum deck : DeckEnum.values()) {
             decks.put(deck.getId(), deck.getDisplayName());
         }
