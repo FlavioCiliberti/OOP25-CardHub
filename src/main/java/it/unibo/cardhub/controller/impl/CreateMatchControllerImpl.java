@@ -40,8 +40,8 @@ public class CreateMatchControllerImpl implements CreateMatchController {
      * @param navigator the screen navigator
      */
     public CreateMatchControllerImpl(final CreateMatchModel model, final Navigator navigator) {
-        this.model = Objects.requireNonNull(model, "no model loaded");
-        this.navigator = Objects.requireNonNull(navigator, "no navigator loaded");
+        this.model = Objects.requireNonNull(model, "no model supplied");
+        this.navigator = Objects.requireNonNull(navigator, "no navigator supplied");
         this.view = new CreateMatchViewImpl(this);
         this.deckFactory = new DeckFactoryImpl();
     }

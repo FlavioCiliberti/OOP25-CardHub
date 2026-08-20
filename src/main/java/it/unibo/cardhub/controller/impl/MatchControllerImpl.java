@@ -33,8 +33,8 @@ public class MatchControllerImpl implements MatchController {
      * @param navigator screen navigator
      */
     public MatchControllerImpl(final Match model, final Navigator navigator) {
-        this.model = Objects.requireNonNull(model, "no model loaded");
-        this.navigator = Objects.requireNonNull(navigator, "no navigator loaded");
+        this.model = Objects.requireNonNull(model, "no model supplied");
+        this.navigator = Objects.requireNonNull(navigator, "no navigator supplied");
         view = new MatchViewImpl(this);
         startMatch();
     }
