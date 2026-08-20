@@ -11,6 +11,7 @@ import it.unibo.cardhub.view.components.CHStyles;
 import it.unibo.cardhub.view.util.ImageResolver;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -269,7 +270,7 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
                 BorderFactory.createEmptyBorder(CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD,
                                                 CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD)));
 
-            this.pile = new CHLabel();
+            this.pile = new DiscardPileLabel();
             this.pile.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(final MouseEvent e) {
@@ -306,6 +307,19 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
 
             this.controller.discardCard(this.player, selected.get());
             this.deselectAllCallback.run();
+        }
+    }
+
+    private static final class DiscardPileLabel extends CHLabel {
+
+        private static final long serialVersionUID = 1L;
+        private static final int PILE_WIDTH = 66;
+        private static final int PILE_HEIGHT = 96;
+
+        DiscardPileLabel() {
+            super();
+            super.setPreferredSize(new Dimension(PILE_WIDTH, PILE_HEIGHT));
+            super.setBackground(CHStyles.primaryColor());
         }
     }
 }
