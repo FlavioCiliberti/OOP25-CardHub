@@ -63,14 +63,13 @@ public interface CreateMatchController extends BackNavigableScreen {
      * @param winnerAction the action to be done to the winner card
      * @param loserAction the action to be done to the loser card
      * @param gameMode the selected gameMode
-     * @throws EmptyFieldException if player1Name or player2Name are empty
      */
     void tryCreatingMatch(String player1Name, int player1DeckId, 
                         String player2Name, int player2DeckId,
                         int maxHandSize, int startingHandSize,
                         int playerFieldSize, boolean autoDraw,
                         CardAction winnerAction, CardAction loserAction,
-                        GameMode gameMode) throws EmptyFieldException;
+                        GameMode gameMode);
 
     /**
      * Creates a new game using default (free) rules.
