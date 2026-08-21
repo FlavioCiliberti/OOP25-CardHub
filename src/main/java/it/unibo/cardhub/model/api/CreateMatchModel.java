@@ -1,5 +1,7 @@
 package it.unibo.cardhub.model.api;
 
+import java.util.Map;
+
 /**
  * Provides the domain constraints and default values for creating a new match.
  */
@@ -34,5 +36,12 @@ public interface CreateMatchModel {
      * @return the maximum allowed field size
      */
     int getMaxFieldSize();
+
+    /**
+     * Retrieves the available decks indexed by their identifier.
+     *
+     * @return an unmodifiable map associating each deck id with its name
+     */
+    Map<Integer, String> getDecks();
 
 }

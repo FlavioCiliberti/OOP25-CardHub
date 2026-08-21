@@ -1,6 +1,10 @@
 package it.unibo.cardhub.model.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import it.unibo.cardhub.model.api.CreateMatchModel;
+import it.unibo.cardhub.model.domain.DeckEnum;
 
 /**
  * Default implementation of {@link CreateMatchModel}, exposing fixed domain constraints.
@@ -41,5 +45,16 @@ public final class CreateMatchModelImpl implements CreateMatchModel {
     @Override
     public int getDefaultFieldSize() {
         return FIELD_DEFAULT_VALUE;
+    }
+
+    @Override
+    public Map<Integer, String> getDecks() {
+        final Map<Integer, String> decks = new HashMap<>();
+
+        for (final DeckEnum deck : DeckEnum.values()) {
+            decks.put(deck.getId(), deck.getDisplayName());
+        }
+
+        return decks;
     }
 }

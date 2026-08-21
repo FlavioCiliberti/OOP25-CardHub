@@ -1,6 +1,8 @@
 package it.unibo.cardhub.view.util;
 
+import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.ImageIcon;
 
@@ -13,6 +15,7 @@ public final class ImageResolver {
 
     private static final String IMAGE_BASE_PATH = "/it/unibo/cardhub/view/";
     private static final String CARD_BACK_IMAGE = "Back.png";
+    private static final Map<String, ImageIcon> CACHE = new ConcurrentHashMap<>();
 
     private ImageResolver() {
         // Private constructor to prevent instantiation
@@ -27,7 +30,7 @@ public final class ImageResolver {
      */
     public static ImageIcon resolve(final Card<?> card) {
         final String path = IMAGE_BASE_PATH + card.image();
-        return load(path);
+        return CACHE.computeIfAbsent(path, ImageResolver::load);
     }
 
     /**
@@ -38,7 +41,7 @@ public final class ImageResolver {
      */
     public static ImageIcon resolveBack() {
         final String path = IMAGE_BASE_PATH + CARD_BACK_IMAGE;
-        return load(path);
+        return CACHE.computeIfAbsent(path, ImageResolver::load);
     }
 
     private static ImageIcon load(final String path) {
