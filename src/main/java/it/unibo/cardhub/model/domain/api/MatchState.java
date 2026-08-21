@@ -2,6 +2,7 @@ package it.unibo.cardhub.model.domain.api;
 
 import java.util.List;
 
+import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 import it.unibo.cardhub.model.logic.api.PlayerEnum;
 
 /**
@@ -38,4 +39,19 @@ public interface MatchState {
      * @return the playfield
      */
     Playfield getPlayfield();
+
+    /**
+     * A getter for the player's points.
+     * 
+     * @param player the enum of the player
+     * @return the points of the corresponding player
+     */
+    int getPlayerPoints(PlayerEnum player);
+
+    /**
+     * A getter for the player with the most points.
+     * 
+     * @return the enum of the player with the most points
+     */
+    ComparisonWinner getWinningPlayer();
 }

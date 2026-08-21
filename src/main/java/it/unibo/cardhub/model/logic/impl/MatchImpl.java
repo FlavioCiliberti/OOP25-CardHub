@@ -226,4 +226,14 @@ class MatchImpl implements Match {
     enum MatchStatus {
         CREATED, RUNNING, FINISHED
     }
+
+    @Override
+    public int getPlayerPoints(final PlayerEnum player) {
+        return matchState.getPlayerPoints(player);
+    }
+
+    @Override
+    public ComparisonWinner getWinningPlayer() {
+        return matchState.getWinningPlayer();
+    }
 }

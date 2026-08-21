@@ -7,6 +7,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.model.domain.api.Playfield;
+import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 import it.unibo.cardhub.model.logic.api.PlayerEnum;
 
 /**
@@ -79,5 +80,30 @@ public class MatchStateImpl implements MatchState {
     )
     public Playfield getPlayfield() {
         return this.field;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getPlayerPoints(final PlayerEnum player) {
+        return this.getPlayer(player).getPoints();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ComparisonWinner getWinningPlayer() {
+        final int firstPlayerPoints = this.getPlayer(PlayerEnum.PLAYER_ONE).getPoints();
+        final int secondPlayerPoints = this.getPlayer(PlayerEnum.PLAYER_TWO).getPoints();
+
+        if (firstPlayerPoints > secondPlayerPoints) {
+            return ComparisonWinner.PLAYER_1;
+        } else if (firstPlayerPoints < secondPlayerPoints) {
+            return ComparisonWinner.PLAYER_2;
+        } else {
+            return ComparisonWinner.TIE;
+        }
     }
 }
