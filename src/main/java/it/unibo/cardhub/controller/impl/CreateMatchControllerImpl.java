@@ -140,15 +140,15 @@ public class CreateMatchControllerImpl implements CreateMatchController {
         }
 
         switch (gameMode) {
-            case GameMode.FREE_PLAY:
+            case FREE_PLAY:
                 createFreeGame(player1Name, player1DeckId, player2Name, player2DeckId);
                 break;
-            case GameMode.CUSTOM:
+            case CUSTOM:
                 createCustomGame(player1Name, player1DeckId, player2Name, player2DeckId, 
                                 maxHandSize, startingHandSize, playerFieldSize, autoDraw, 
                                 winnerAction, loserAction);
                 break;
-            case GameMode.FULL_GAME:
+            case FULL_GAME:
                 createFullGame(player1Name, player2Name);
                 break;
         }
