@@ -13,6 +13,7 @@ import it.unibo.cardhub.model.domain.impl.MatchStateImpl;
 import it.unibo.cardhub.model.logic.api.Match;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
 import it.unibo.cardhub.model.logic.api.PlayerEnum;
+import it.unibo.cardhub.model.logic.api.PointTracker;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 
@@ -229,11 +230,19 @@ class MatchImpl implements Match {
 
     @Override
     public int getPlayerPoints(final PlayerEnum player) {
-        return matchState.getPlayerPoints(player);
+        if (matchLogic instanceof PointTracker pointTracker) {
+            return pointTracker.getPoints(player);
+        }
+
+        throw new UnsupportedOperationException("This match does not track points");
     }
 
     @Override
     public ComparisonWinner getWinningPlayer() {
-        return matchState.getWinningPlayer();
+        if (matchLogic instanceof PointTracker pointTracker) {
+            return pointTracker.getWinningPlayer();
+        }
+
+        throw new UnsupportedOperationException("This match does not track points");
     }
 }
