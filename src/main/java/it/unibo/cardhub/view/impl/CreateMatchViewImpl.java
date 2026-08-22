@@ -24,9 +24,9 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 
 import it.unibo.cardhub.controller.api.CreateMatchController;
-import it.unibo.cardhub.model.domain.exceptions.EmptyFieldException;
 import it.unibo.cardhub.model.logic.GameMode;
 import it.unibo.cardhub.model.logic.api.CardAction;
+import it.unibo.cardhub.view.api.CreateMatchView;
 import it.unibo.cardhub.view.components.CHButton;
 import it.unibo.cardhub.view.components.CHLabel;
 import it.unibo.cardhub.view.components.CHPanel;
@@ -38,7 +38,7 @@ import it.unibo.cardhub.view.components.ScreenView;
 /**
  * Create Match View, showing the setting needed to create the match.
  */
-public final class CreateMatchViewImpl extends ScreenView {
+public final class CreateMatchViewImpl extends ScreenView implements CreateMatchView {
     public static final int WIDTH = 470;
     public static final int HEIGHT = 710;
 
@@ -166,6 +166,14 @@ public final class CreateMatchViewImpl extends ScreenView {
         selectedLoserCardAction = CardAction.TO_PILE;
 
         this.manageContentPane();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void showInvalidForm(final String message) {
+        JOptionPane.showMessageDialog(this, message, "Must fill all fields!", JOptionPane.ERROR_MESSAGE);
     }
 
     //sets up the content pane
@@ -451,15 +459,12 @@ public final class CreateMatchViewImpl extends ScreenView {
         final DeckBoxItem<Integer, String> player2Deck =
                 (DeckBoxItem<Integer, String>) secondPlayerDeckBox.getSelectedItem();
 
-        try {
-            controller.tryCreatingMatch(firstPlayerName, player1Deck.key(),
+        controller.tryCreatingMatch(firstPlayerName, player1Deck.key(),
                                             secondPlayerName, player2Deck.key(),
                                             (Integer) handSizeSpinner.getValue(), (Integer) startingHandSpinner.getValue(),
                                             (Integer) fieldSizeSpinner.getValue(), autoDrawCheckBox.isSelected(),
                                             selectedWinnerCardAction, selectedLoserCardAction, selectedGameMode);
-        } catch (final EmptyFieldException e) {
-            JOptionPane.showMessageDialog(null, "Must fill all fields!", "error", JOptionPane.ERROR_MESSAGE);
-        }
+
     }
 
     //a record for the items to populate deckBox
@@ -469,4 +474,5 @@ public final class CreateMatchViewImpl extends ScreenView {
             return value.toString();
         }
     }
+
 }
