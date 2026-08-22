@@ -1,6 +1,7 @@
 package it.unibo.cardhub.model.domain.api;
 
 import java.util.List;
+import java.util.Optional;
 
 import it.unibo.cardhub.model.logic.api.PlayerEnum;
 
@@ -38,4 +39,25 @@ public interface MatchState {
      * @return the playfield
      */
     Playfield getPlayfield();
+
+    /**
+     * Ends a match and sets the winner.
+     * 
+     * @param player the winner
+     */
+    void endMatch(Player player);
+
+    /**
+     * Informs about the match's state.
+     * 
+     * @return true if finished, false otherwise
+     */
+    boolean isFinished();
+
+    /**
+     * A getter for the match's winner.
+     * 
+     * @return the winner, if present
+     */
+    Optional<Player> getWinner();
 }

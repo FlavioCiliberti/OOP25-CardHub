@@ -2,6 +2,7 @@ package it.unibo.cardhub.model.domain.impl;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.model.domain.api.MatchState;
@@ -16,6 +17,9 @@ public class MatchStateImpl implements MatchState {
 
     private final List<Player> players;
     private final Playfield field;
+
+    private MatchStatus status;
+    private Optional<Player> winner;
 
     /**
      * Match state constructor.
@@ -36,6 +40,11 @@ public class MatchStateImpl implements MatchState {
 
         this.players = List.copyOf(players);
         this.field = new PlayfieldImpl(players, maxFieldSize);
+
+        this.winner = Optional.empty();
+
+        status = MatchStatus.CREATED;
+        this.start();
     }
 
     /**
@@ -79,5 +88,53 @@ public class MatchStateImpl implements MatchState {
     )
     public Playfield getPlayfield() {
         return this.field;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void endMatch(final Player player) {
+        if (this.status != MatchStatus.RUNNING) {
+            throw new IllegalStateException("A winner can only be set while the match is running.");
+        }
+
+        if (!this.getPlayers().contains(player)) {
+            throw new IllegalArgumentException("The winner must be a player of this match.");
+        }
+
+        this.winner = Optional.of(player);
+        this.status = MatchStatus.FINISHED;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<Player> getWinner() {
+        return this.winner;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isFinished() {
+        return this.status == MatchStatus.FINISHED;
+    }
+
+    private void start() {
+        if (this.status != MatchStatus.CREATED) {
+            throw new IllegalStateException("The match has already started.");
+        }
+
+        this.status = MatchStatus.RUNNING;
+    }
+
+    /**
+     * Represents the status of the match.
+     */
+    enum MatchStatus {
+        CREATED, RUNNING, FINISHED
     }
 }
