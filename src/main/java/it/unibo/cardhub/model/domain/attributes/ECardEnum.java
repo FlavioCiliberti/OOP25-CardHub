@@ -33,4 +33,16 @@ public enum ECardEnum {
         }
         throw new IllegalArgumentException("Unknown Value");
     }
+
+    /**
+     * Returns wether this card wins against another card.
+     * 
+     * @param opponentCard the type of the opponent card
+     * @return true if this card beats the opponent card
+     */
+    public boolean beats(final ECardEnum opponentCard) {
+        return this == SLAVE && opponentCard == EMPEROR
+                || this == CITIZEN && opponentCard == SLAVE
+                || this == EMPEROR && opponentCard == CITIZEN;
+    }
 }

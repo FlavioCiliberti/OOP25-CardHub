@@ -37,43 +37,19 @@ class ECardLogic extends AbstractMatchLogic implements PointTracker {
 
         this.executeCardActions(firstPlayerCard, secondPlayerCard, matchState);
 
-        switch (firstCardType) {
-            case SLAVE:
-                switch (secondCardType) {
-                    case CITIZEN:
-                        this.addPoints(PlayerEnum.PLAYER_TWO, NORMAL_WIN_POINTS);
-                        return ComparisonWinner.PLAYER_2;
-                    case EMPEROR:
-                        this.addPoints(PlayerEnum.PLAYER_ONE, SLAVE_WIN_POINTS);
-                        return ComparisonWinner.PLAYER_1;
-                    default:
-                        return ComparisonWinner.TIE;
-                }
-            case CITIZEN:
-                switch (secondCardType) {
-                    case SLAVE:
-                        this.addPoints(PlayerEnum.PLAYER_ONE, NORMAL_WIN_POINTS);
-                        return ComparisonWinner.PLAYER_1;
-                    case EMPEROR:
-                        this.addPoints(PlayerEnum.PLAYER_TWO, NORMAL_WIN_POINTS);
-                        return ComparisonWinner.PLAYER_2;
-                    default:
-                        return ComparisonWinner.TIE;
-                }
-            case EMPEROR:
-                switch (secondCardType) {
-                    case SLAVE:
-                        this.addPoints(PlayerEnum.PLAYER_TWO, SLAVE_WIN_POINTS);
-                        return ComparisonWinner.PLAYER_2;
-                    case CITIZEN:
-                        this.addPoints(PlayerEnum.PLAYER_ONE, NORMAL_WIN_POINTS);
-                        return ComparisonWinner.PLAYER_1;
-                    default:
-                        return ComparisonWinner.TIE;
-                }
+        if (firstCardType == secondCardType) {
+            return ComparisonWinner.TIE;
         }
 
-        throw new IllegalStateException("ECard values error");
+        if (firstCardType.beats(secondCardType)) {
+            this.addPoints(PlayerEnum.PLAYER_ONE,
+                            firstCardType == ECardEnum.SLAVE ? SLAVE_WIN_POINTS : NORMAL_WIN_POINTS);
+            return ComparisonWinner.PLAYER_1;
+        }
+
+        this.addPoints(PlayerEnum.PLAYER_TWO,
+                        secondCardType == ECardEnum.SLAVE ? SLAVE_WIN_POINTS : NORMAL_WIN_POINTS);
+        return ComparisonWinner.PLAYER_2;
     }
 
     private void executeCardActions(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard,
