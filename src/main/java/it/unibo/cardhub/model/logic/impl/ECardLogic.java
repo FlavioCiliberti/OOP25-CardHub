@@ -5,17 +5,14 @@ import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.attributes.ECardEnum;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
-import it.unibo.cardhub.model.logic.api.MatchLogic;
 import it.unibo.cardhub.model.logic.api.PlayerEnum;
 
-class ECardLogic implements MatchLogic {
+class ECardLogic extends AbstractMatchLogic {
     private static final int NORMAL_WIN_POINTS = 1;
     private static final int SLAVE_WIN_POINTS = 3;
 
-    private PlayerEnum currentPlayer;
-
     ECardLogic() {
-        currentPlayer = PlayerEnum.PLAYER_ONE;
+        super(CardAction.TO_PILE, CardAction.TO_PILE);
     }
 
     /**
@@ -66,42 +63,6 @@ class ECardLogic implements MatchLogic {
         }
 
         throw new IllegalStateException("ECard values error");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public PlayerEnum getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void changeTurn() {
-        if (currentPlayer == PlayerEnum.PLAYER_ONE) {
-            currentPlayer = PlayerEnum.PLAYER_TWO;
-        } else {
-            currentPlayer = PlayerEnum.PLAYER_ONE;
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public CardAction getWinnerCardAction() {
-        return CardAction.TO_PILE;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public CardAction getLooserCardAction() {
-        return CardAction.TO_PILE;
     }
 
     private void executeCardActions(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard,
