@@ -1,8 +1,8 @@
 package it.unibo.cardhub.model.domain.api;
 
 import java.util.List;
+import java.util.Optional;
 
-import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 import it.unibo.cardhub.model.logic.api.PlayerEnum;
 
 /**
@@ -41,17 +41,23 @@ public interface MatchState {
     Playfield getPlayfield();
 
     /**
-     * A getter for the player's points.
+     * Ends a match and sets the winner.
      * 
-     * @param player the enum of the player
-     * @return the points of the corresponding player
+     * @param player the winner
      */
-    int getPlayerPoints(PlayerEnum player);
+    void endMatch(Player player);
 
     /**
-     * A getter for the player with the most points.
+     * Informs about the match's state.
      * 
-     * @return the enum of the player with the most points
+     * @return true if finished, false otherwise
      */
-    ComparisonWinner getWinningPlayer();
+    boolean isFinished();
+
+    /**
+     * A getter for the match's winner.
+     * 
+     * @return the winner, if present
+     */
+    Optional<Player> getWinner();
 }

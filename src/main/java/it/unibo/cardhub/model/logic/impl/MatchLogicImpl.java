@@ -3,20 +3,13 @@ package it.unibo.cardhub.model.logic.impl;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.logic.api.CardAction;
-import it.unibo.cardhub.model.logic.api.MatchLogic;
 import it.unibo.cardhub.model.logic.api.PlayerEnum;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 
-class MatchLogicImpl implements MatchLogic {
-    private PlayerEnum currentPlayer;
-    private final CardAction winnerCardAction;
-    private final CardAction loserCardAction;
+class MatchLogicImpl extends AbstractMatchLogic {
 
     MatchLogicImpl(final CardAction winnerCardAction, final CardAction loserCardAction) {
-        this.winnerCardAction = winnerCardAction;
-        this.loserCardAction = loserCardAction;
-
-        currentPlayer = PlayerEnum.PLAYER_ONE;
+        super(winnerCardAction, loserCardAction);
     }
 
     /**
@@ -29,32 +22,18 @@ class MatchLogicImpl implements MatchLogic {
 
         if (firstPlayerCard.value() > secondPlayerCard.value()) {
             //player1 winner action
-            this.executeCardAction(firstPlayerCard, PlayerEnum.PLAYER_ONE, winnerCardAction, matchState);
+            this.executeCardAction(firstPlayerCard, PlayerEnum.PLAYER_ONE, super.getWinnerCardAction(), matchState);
             //player2 loser action
-            this.executeCardAction(secondPlayerCard, PlayerEnum.PLAYER_TWO, loserCardAction, matchState);
+            this.executeCardAction(secondPlayerCard, PlayerEnum.PLAYER_TWO, super.getLooserCardAction(), matchState);
             return ComparisonWinner.PLAYER_1;
         } else if (firstPlayerCard.value() < secondPlayerCard.value()) {
             //player2 winner action
-            this.executeCardAction(firstPlayerCard, PlayerEnum.PLAYER_TWO, winnerCardAction, matchState);
+            this.executeCardAction(firstPlayerCard, PlayerEnum.PLAYER_TWO, super.getWinnerCardAction(), matchState);
             //player1 loser action
-            this.executeCardAction(secondPlayerCard, PlayerEnum.PLAYER_ONE, loserCardAction, matchState);
+            this.executeCardAction(secondPlayerCard, PlayerEnum.PLAYER_ONE, super.getLooserCardAction(), matchState);
             return ComparisonWinner.PLAYER_2;
         }
         return ComparisonWinner.TIE;
-    }
-
-    @Override
-    public PlayerEnum getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    @Override
-    public void changeTurn() {
-        if (currentPlayer == PlayerEnum.PLAYER_ONE) {
-            currentPlayer = PlayerEnum.PLAYER_TWO;
-        } else {
-            currentPlayer = PlayerEnum.PLAYER_ONE;
-        }
     }
 
     private void executeCardAction(final Card<?> card, final PlayerEnum player,
@@ -67,22 +46,6 @@ class MatchLogicImpl implements MatchLogic {
             matchState.getPlayfield().removeCard(card);
             matchState.getPlayer(player).getHand().addCard(card);
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public CardAction getWinnerCardAction() {
-        return winnerCardAction;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public CardAction getLooserCardAction() {
-        return loserCardAction;
     }
 
 }

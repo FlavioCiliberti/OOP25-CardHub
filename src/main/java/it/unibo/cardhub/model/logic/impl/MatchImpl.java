@@ -13,6 +13,7 @@ import it.unibo.cardhub.model.domain.impl.MatchStateImpl;
 import it.unibo.cardhub.model.logic.api.Match;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
 import it.unibo.cardhub.model.logic.api.PlayerEnum;
+import it.unibo.cardhub.model.logic.api.PointTracker;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 
@@ -24,9 +25,6 @@ class MatchImpl implements Match {
     private final MatchLogic matchLogic;
 
     private final boolean autoDraw;
-
-    private MatchStatus status;
-    private Optional<Player> winner;
 
     /**
      * Match constructor.
@@ -41,13 +39,9 @@ class MatchImpl implements Match {
                         final int playerFieldSize, final boolean autoDraw,
                         final MatchLogic matchLogic) {
         matchState = new MatchStateImpl(new ArrayList<>(Arrays.asList(player1, player2)), playerFieldSize);
-        status = MatchStatus.CREATED;
 
         this.matchLogic = matchLogic;
         this.autoDraw = autoDraw;
-        this.winner = Optional.empty();
-
-        this.start();
     }
 
     /**
@@ -129,20 +123,12 @@ class MatchImpl implements Match {
         }
     }
 
-    private void start() {
-        if (this.status != MatchStatus.CREATED) {
-            throw new IllegalStateException("The match has already started.");
-        }
-
-        this.status = MatchStatus.RUNNING;
-    }
-
     /**
      * {@inheritDoc}
      */
     @Override
     public Optional<Player> getWinner() {
-        return this.winner;
+        return matchState.getWinner();
     }
 
     /**
@@ -150,16 +136,7 @@ class MatchImpl implements Match {
      */
     @Override
     public void endMatch(final Player player) {
-        if (this.status != MatchStatus.RUNNING) {
-            throw new IllegalStateException("A winner can only be set while the match is running.");
-        }
-
-        if (!matchState.getPlayers().contains(player)) {
-            throw new IllegalArgumentException("The winner must be a player of this match.");
-        }
-
-        this.winner = Optional.of(player);
-        this.status = MatchStatus.FINISHED;
+        matchState.endMatch(player);
     }
 
     /**
@@ -167,7 +144,7 @@ class MatchImpl implements Match {
      */
     @Override
     public boolean isFinished() {
-        return this.status == MatchStatus.FINISHED;
+        return matchState.isFinished();
     }
 
     /**
@@ -220,20 +197,21 @@ class MatchImpl implements Match {
         return matchState.getPlayer(owner).hasEmptyDiscardPile();
     }
 
-    /**
-     * Represents the status of the match.
-     */
-    enum MatchStatus {
-        CREATED, RUNNING, FINISHED
-    }
-
     @Override
     public int getPlayerPoints(final PlayerEnum player) {
-        return matchState.getPlayerPoints(player);
+        if (matchLogic instanceof PointTracker pointTracker) {
+            return pointTracker.getPoints(player);
+        }
+
+        throw new UnsupportedOperationException("This match does not track points");
     }
 
     @Override
     public ComparisonWinner getWinningPlayer() {
-        return matchState.getWinningPlayer();
+        if (matchLogic instanceof PointTracker pointTracker) {
+            return pointTracker.getWinningPlayer();
+        }
+
+        throw new UnsupportedOperationException("This match does not track points");
     }
 }

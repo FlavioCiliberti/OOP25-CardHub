@@ -1,21 +1,29 @@
 package it.unibo.cardhub.model.logic.impl;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.attributes.ECardEnum;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
-import it.unibo.cardhub.model.logic.api.MatchLogic;
 import it.unibo.cardhub.model.logic.api.PlayerEnum;
+import it.unibo.cardhub.model.logic.api.PointTracker;
 
-class ECardLogic implements MatchLogic {
+class ECardLogic extends AbstractMatchLogic implements PointTracker {
     private static final int NORMAL_WIN_POINTS = 1;
     private static final int SLAVE_WIN_POINTS = 3;
 
-    private PlayerEnum currentPlayer;
+    private final Map<PlayerEnum, Integer> playerPoints;
 
     ECardLogic() {
-        currentPlayer = PlayerEnum.PLAYER_ONE;
+        super(CardAction.TO_PILE, CardAction.TO_PILE);
+
+        playerPoints = new EnumMap<>(PlayerEnum.class);
+        for (final PlayerEnum player : PlayerEnum.values()) {
+            playerPoints.put(player, 0);
+        }
     }
 
     /**
@@ -29,79 +37,19 @@ class ECardLogic implements MatchLogic {
 
         this.executeCardActions(firstPlayerCard, secondPlayerCard, matchState);
 
-        switch (firstCardType) {
-            case SLAVE:
-                switch (secondCardType) {
-                    case CITIZEN:
-                        matchState.getPlayer(PlayerEnum.PLAYER_TWO).addPoints(NORMAL_WIN_POINTS);
-                        return ComparisonWinner.PLAYER_2;
-                    case EMPEROR:
-                        matchState.getPlayer(PlayerEnum.PLAYER_ONE).addPoints(SLAVE_WIN_POINTS);
-                        return ComparisonWinner.PLAYER_1;
-                    default:
-                        return ComparisonWinner.TIE;
-                }
-            case CITIZEN:
-                switch (secondCardType) {
-                    case SLAVE:
-                        matchState.getPlayer(PlayerEnum.PLAYER_ONE).addPoints(NORMAL_WIN_POINTS);
-                        return ComparisonWinner.PLAYER_1;
-                    case EMPEROR:
-                        matchState.getPlayer(PlayerEnum.PLAYER_TWO).addPoints(NORMAL_WIN_POINTS);
-                        return ComparisonWinner.PLAYER_2;
-                    default:
-                        return ComparisonWinner.TIE;
-                }
-            case EMPEROR:
-                switch (secondCardType) {
-                    case SLAVE:
-                        matchState.getPlayer(PlayerEnum.PLAYER_TWO).addPoints(SLAVE_WIN_POINTS);
-                        return ComparisonWinner.PLAYER_2;
-                    case CITIZEN:
-                        matchState.getPlayer(PlayerEnum.PLAYER_ONE).addPoints(NORMAL_WIN_POINTS);
-                        return ComparisonWinner.PLAYER_1;
-                    default:
-                        return ComparisonWinner.TIE;
-                }
+        if (firstCardType == secondCardType) {
+            return ComparisonWinner.TIE;
         }
 
-        throw new IllegalStateException("ECard values error");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public PlayerEnum getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void changeTurn() {
-        if (currentPlayer == PlayerEnum.PLAYER_ONE) {
-            currentPlayer = PlayerEnum.PLAYER_TWO;
-        } else {
-            currentPlayer = PlayerEnum.PLAYER_ONE;
+        if (firstCardType.beats(secondCardType)) {
+            this.addPoints(PlayerEnum.PLAYER_ONE,
+                            firstCardType == ECardEnum.SLAVE ? SLAVE_WIN_POINTS : NORMAL_WIN_POINTS);
+            return ComparisonWinner.PLAYER_1;
         }
-    }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public CardAction getWinnerCardAction() {
-        return CardAction.TO_PILE;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public CardAction getLooserCardAction() {
-        return CardAction.TO_PILE;
+        this.addPoints(PlayerEnum.PLAYER_TWO,
+                        secondCardType == ECardEnum.SLAVE ? SLAVE_WIN_POINTS : NORMAL_WIN_POINTS);
+        return ComparisonWinner.PLAYER_2;
     }
 
     private void executeCardActions(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard,
@@ -111,5 +59,28 @@ class ECardLogic implements MatchLogic {
 
         matchState.getPlayfield().removeCard(secondPlayerCard);
         matchState.getPlayer(PlayerEnum.PLAYER_TWO).putInPile(secondPlayerCard);
+    }
+
+    private void addPoints(final PlayerEnum player, final int value) {
+        playerPoints.put(player, playerPoints.get(player) + value);
+    }
+
+    @Override
+    public int getPoints(final PlayerEnum player) {
+        return playerPoints.get(player);
+    }
+
+    @Override
+    public ComparisonWinner getWinningPlayer() {
+        final int firstPlayerPoints = playerPoints.get(PlayerEnum.PLAYER_ONE);
+        final int secondPlayerPoints = playerPoints.get(PlayerEnum.PLAYER_TWO);
+
+        if (firstPlayerPoints > secondPlayerPoints) {
+            return ComparisonWinner.PLAYER_1;
+        } else if (firstPlayerPoints < secondPlayerPoints) {
+            return ComparisonWinner.PLAYER_2;
+        } else {
+            return ComparisonWinner.TIE;
+        }
     }
 }

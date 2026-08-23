@@ -2,12 +2,12 @@ package it.unibo.cardhub.model.domain.impl;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.model.domain.api.Playfield;
-import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 import it.unibo.cardhub.model.logic.api.PlayerEnum;
 
 /**
@@ -17,6 +17,9 @@ public class MatchStateImpl implements MatchState {
 
     private final List<Player> players;
     private final Playfield field;
+
+    private MatchStatus status;
+    private Optional<Player> winner;
 
     /**
      * Match state constructor.
@@ -37,6 +40,11 @@ public class MatchStateImpl implements MatchState {
 
         this.players = List.copyOf(players);
         this.field = new PlayfieldImpl(players, maxFieldSize);
+
+        this.winner = Optional.empty();
+
+        status = MatchStatus.CREATED;
+        this.start();
     }
 
     /**
@@ -86,24 +94,47 @@ public class MatchStateImpl implements MatchState {
      * {@inheritDoc}
      */
     @Override
-    public int getPlayerPoints(final PlayerEnum player) {
-        return this.getPlayer(player).getPoints();
+    public void endMatch(final Player player) {
+        if (this.status != MatchStatus.RUNNING) {
+            throw new IllegalStateException("A winner can only be set while the match is running.");
+        }
+
+        if (!this.getPlayers().contains(player)) {
+            throw new IllegalArgumentException("The winner must be a player of this match.");
+        }
+
+        this.winner = Optional.of(player);
+        this.status = MatchStatus.FINISHED;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public ComparisonWinner getWinningPlayer() {
-        final int firstPlayerPoints = this.getPlayer(PlayerEnum.PLAYER_ONE).getPoints();
-        final int secondPlayerPoints = this.getPlayer(PlayerEnum.PLAYER_TWO).getPoints();
+    public Optional<Player> getWinner() {
+        return this.winner;
+    }
 
-        if (firstPlayerPoints > secondPlayerPoints) {
-            return ComparisonWinner.PLAYER_1;
-        } else if (firstPlayerPoints < secondPlayerPoints) {
-            return ComparisonWinner.PLAYER_2;
-        } else {
-            return ComparisonWinner.TIE;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isFinished() {
+        return this.status == MatchStatus.FINISHED;
+    }
+
+    private void start() {
+        if (this.status != MatchStatus.CREATED) {
+            throw new IllegalStateException("The match has already started.");
         }
+
+        this.status = MatchStatus.RUNNING;
+    }
+
+    /**
+     * Represents the status of the match.
+     */
+    enum MatchStatus {
+        CREATED, RUNNING, FINISHED
     }
 }
