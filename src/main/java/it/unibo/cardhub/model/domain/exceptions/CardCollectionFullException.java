@@ -3,7 +3,7 @@ package it.unibo.cardhub.model.domain.exceptions;
 /**
  * An exception for trying to add a card to a full CardCollection.
  */
-public class CardCollectionFullException extends Exception {
+public class CardCollectionFullException extends RuntimeException {
 
     private static final long serialVersionUID = 42L;
 
