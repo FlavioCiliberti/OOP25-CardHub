@@ -1,5 +1,6 @@
 cards:
   - id: dragonball-001
+    name: Goku
     attributes:
       type: warrior
       rarity: common
@@ -8,6 +9,7 @@ cards:
     image: goku.png
 
   - id: dragonball-002
+    name: Vegeta
     attributes:
       type: warrior
       rarity: common
@@ -16,6 +18,7 @@ cards:
     image: vegeta.png
 
   - id: dragonball-003
+    name: Gohan
     attributes:
       type: warrior
       rarity: uncommon
@@ -24,6 +27,7 @@ cards:
     image: gohan.png
 
   - id: dragonball-004
+    name: Goku
     attributes:
       type: warrior
       rarity: rare
@@ -32,6 +36,7 @@ cards:
     image: goku-super-saiyan.png
 
   - id: dragonball-005
+    name: Frieza
     attributes:
       type: villain
       rarity: rare
@@ -40,6 +45,7 @@ cards:
     image: frieza.png
 
   - id: dragonball-006
+    name: Cell
     attributes:
       type: villain
       rarity: uncommon
@@ -48,6 +54,7 @@ cards:
     image: cell.png
 
   - id: dragonball-007
+    name: Buu
     attributes:
       type: villain
       rarity: common
@@ -56,6 +63,7 @@ cards:
     image: buu.png
 
   - id: dragonball-008
+    name: Gogeta
     attributes:
       type: warrior
       rarity: rare
@@ -64,6 +72,7 @@ cards:
     image: gogeta.png
 
   - id: dragonball-009
+    name: Trunks
     attributes:
       type: warrior
       rarity: uncommon
@@ -72,6 +81,7 @@ cards:
     image: trunks.png
 
   - id: dragonball-010
+    name: Piccolo
     attributes:
       type: warrior
       rarity: common

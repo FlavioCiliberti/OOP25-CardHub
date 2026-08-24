@@ -2,7 +2,7 @@ package it.unibo.cardhub.view.impl;
 
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.model.domain.api.Card;
-import it.unibo.cardhub.model.logic.api.PlayerEnum;
+import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.view.api.PlayfieldPanel;
 import it.unibo.cardhub.view.components.CHButton;
 import it.unibo.cardhub.view.components.CHLabel;

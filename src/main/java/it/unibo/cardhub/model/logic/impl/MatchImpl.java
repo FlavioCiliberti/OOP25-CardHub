@@ -7,12 +7,12 @@ import java.util.Optional;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.Player;
+import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.domain.api.Playfield;
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 import it.unibo.cardhub.model.domain.impl.MatchStateImpl;
 import it.unibo.cardhub.model.logic.api.Match;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
-import it.unibo.cardhub.model.logic.api.PlayerEnum;
 import it.unibo.cardhub.model.logic.api.PointTracker;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
@@ -48,7 +48,7 @@ class MatchImpl implements Match {
      * {@inheritDoc}
      */
     @Override
-    public void drawCard(final PlayerEnum player) throws CardCollectionFullException {
+    public void drawCard(final PlayerEnum player) {
         this.getPlayer(player).drawCard();
     }
 
@@ -56,12 +56,12 @@ class MatchImpl implements Match {
      * {@inheritDoc}
      */
     @Override
-    public void playCard(final Card<?> card, final PlayerEnum playerEnum) throws CardCollectionFullException {
+    public void playCard(final Card<?> card, final PlayerEnum playerEnum) {
         final Player player = matchState.getPlayer(playerEnum);
 
-        if (matchState.getPlayfield().canAddCard(player)) {
+        if (matchState.getPlayfield().canAddCard(playerEnum)) {
             player.playCard(card);
-            matchState.getPlayfield().addCard(player, card);
+            matchState.getPlayfield().addCard(playerEnum, card);
         } else {
             throw new CardCollectionFullException("Player's field is full!");
         }

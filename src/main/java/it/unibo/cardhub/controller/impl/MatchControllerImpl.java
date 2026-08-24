@@ -9,11 +9,11 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.controller.api.Navigator;
 import it.unibo.cardhub.model.domain.api.Card;
+import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 import it.unibo.cardhub.model.logic.api.Match;
-import it.unibo.cardhub.model.logic.api.PlayerEnum;
 import it.unibo.cardhub.view.api.MatchView;
 import it.unibo.cardhub.view.impl.MatchViewImpl;
 
@@ -209,7 +209,7 @@ public class MatchControllerImpl implements MatchController {
     private void tryPlayCard(final PlayerEnum owner, final Card<?> card) {
         try {
             model.playCard(card, owner);
-            view.updatePlayfield(owner, model.getPlayfield().getCards(model.getPlayer(owner)));
+            view.updatePlayfield(owner, model.getPlayfield().getCards(owner));
             view.updateShowingHand(owner, model.getPlayer(owner).getHand().getCards());
         } catch (final CardCollectionFullException e) {
             view.showInvalidAction(e.getMessage());
@@ -219,7 +219,7 @@ public class MatchControllerImpl implements MatchController {
     private void moveCardFromFieldToPile(final PlayerEnum owner, final Card<?> card) {
         model.moveCardFromFieldToPile(card, owner);
         view.updateDiscardPile(owner, Optional.of(card));
-        view.updatePlayfield(owner, model.getPlayfield().getCards(model.getPlayer(owner)));
+        view.updatePlayfield(owner, model.getPlayfield().getCards(owner));
     }
 
     private void tryDrawCard(final PlayerEnum player) {
@@ -244,7 +244,7 @@ public class MatchControllerImpl implements MatchController {
                 view.updateDiscardPile(player, model.getPlayer(player).peekDiscardPile());
                 break;
         }
-        view.updatePlayfield(player, model.getPlayfield().getCards(model.getPlayer(player)));
+        view.updatePlayfield(player, model.getPlayfield().getCards(player));
     }
 
     /**

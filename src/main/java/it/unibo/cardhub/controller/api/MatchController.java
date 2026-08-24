@@ -1,7 +1,7 @@
 package it.unibo.cardhub.controller.api;
 
 import it.unibo.cardhub.model.domain.api.Card;
-import it.unibo.cardhub.model.logic.api.PlayerEnum;
+import it.unibo.cardhub.model.domain.api.PlayerEnum;
 
 /**
  * Controller responsible for handling the main actions available

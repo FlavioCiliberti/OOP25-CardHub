@@ -19,7 +19,7 @@ import javax.swing.border.EtchedBorder;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.model.domain.api.Card;
-import it.unibo.cardhub.model.logic.api.PlayerEnum;
+import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.view.api.PlayerPanel;
 import it.unibo.cardhub.view.components.CHLabel;
 import it.unibo.cardhub.view.components.CHPanel;
