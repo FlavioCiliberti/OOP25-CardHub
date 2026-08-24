@@ -6,6 +6,7 @@ import it.unibo.cardhub.io.api.DeckFactory;
 import it.unibo.cardhub.io.impl.DeckFactoryImpl;
 import it.unibo.cardhub.model.domain.api.Deck;
 import it.unibo.cardhub.model.domain.api.Player;
+import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 import it.unibo.cardhub.model.domain.impl.PlayerImpl;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.Match;
@@ -141,6 +142,17 @@ public final class MatchFactory {
                                                 startingHandSize, firstPlayerDeck);
         final Player player2 = new PlayerImpl(secondPlayerName, maxHandSize,
                                                 startingHandSize, secondPlayerDeck);
+
+        //draw initial cards
+        for (int i = 0; i < startingHandSize; i++) {
+            try {
+                player1.drawCard();
+                player2.drawCard();
+            } catch (final CardCollectionFullException e) {
+                //startingHandSize <= maxHandSize so the exception should never trigger
+                throw new IllegalStateException("Hand already had cards in it on instantiation", e);
+            }
+        }
 
         return new MatchImpl(player1, player2, playfieldSize, autoDraw, logic);
     }

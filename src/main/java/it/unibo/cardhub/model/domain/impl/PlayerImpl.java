@@ -42,16 +42,6 @@ public final class PlayerImpl implements Player {
         this.hand = new HandImpl(new ArrayList<>(), maxHandSize);
         this.deck = Objects.requireNonNull(deck);
         this.discardPile = new DiscardPileImpl(new ArrayList<>());
-
-        //draw initial cards
-        for (int i = 0; i < startingHandSize; i++) {
-            try {
-                this.drawCard();
-            } catch (final CardCollectionFullException e) {
-                //startingHandSize <= maxHandSize so the exception should never trigger
-                throw new IllegalStateException("Hand already had cards in it on instantiation", e);
-            }
-        }
     }
 
     /**
