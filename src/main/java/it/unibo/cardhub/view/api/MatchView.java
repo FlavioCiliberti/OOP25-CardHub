@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.model.domain.api.Card;
-import it.unibo.cardhub.model.logic.api.PlayerEnum;
+import it.unibo.cardhub.model.domain.api.PlayerEnum;
 
 /**
  * Represents the view of a match, updated by the {@link MatchController} 

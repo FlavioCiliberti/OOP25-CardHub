@@ -7,8 +7,8 @@ import java.util.Optional;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.Player;
+import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.domain.api.Playfield;
-import it.unibo.cardhub.model.logic.api.PlayerEnum;
 
 /**
  * Match state implementation.
@@ -31,8 +31,8 @@ public class MatchStateImpl implements MatchState {
     public MatchStateImpl(final List<Player> players, final int maxFieldSize) {
         Objects.requireNonNull(players);
 
-        if (players.isEmpty()) {
-            throw new IllegalArgumentException("A match needs at least one player.");
+        if (players.size() != 2) {
+            throw new IllegalArgumentException("A match needs exactly two players.");
         }
         if (maxFieldSize <= 0) {
             throw new IllegalArgumentException("Maximum field size must be positive.");
@@ -68,14 +68,12 @@ public class MatchStateImpl implements MatchState {
      */
     @Override
     public PlayerEnum getEnum(final Player player) {
-        final int index = players.indexOf(player);
-
-        for (final PlayerEnum value: PlayerEnum.values()) {
-            if (value.getIndex() == index) {
-                return value;
-            }
+        if (players.get(0).equals(player)) {
+            return PlayerEnum.PLAYER_ONE;
         }
-
+        if (players.get(1).equals(player)) {
+            return PlayerEnum.PLAYER_TWO;
+        }
         throw new IllegalArgumentException("No such player");
     }
 

@@ -15,7 +15,7 @@ public interface Player {
      * @return the drawn card
      * @throws CardCollectionFullException if the hand is full
      */
-    Card<?> drawCard() throws CardCollectionFullException;
+    Card<?> drawCard();
 
     /**
      * Puts a card onto the table from the player's hand.

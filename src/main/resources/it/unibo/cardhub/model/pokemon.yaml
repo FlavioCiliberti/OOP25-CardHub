@@ -1,5 +1,6 @@
 cards:
   - id: pokemon-001
+    name: Pikachu
     attributes:
       type: electric
       rarity: common
@@ -8,6 +9,7 @@ cards:
     image: pikachu.png
 
   - id: pokemon-002
+    name: Charmander
     attributes:
       type: fire
       rarity: common
@@ -16,6 +18,7 @@ cards:
     image: charmander.png
 
   - id: pokemon-003
+    name: Squirtle
     attributes:
       type: water
       rarity: common
@@ -24,6 +27,7 @@ cards:
     image: squirtle.png
 
   - id: pokemon-004
+    name: Bulbasaur
     attributes:
       type: grass
       rarity: uncommon
@@ -32,6 +36,7 @@ cards:
     image: bulbasaur.png
 
   - id: pokemon-005
+    name: Abra
     attributes:
       type: psychic
       rarity: rare
@@ -40,6 +45,7 @@ cards:
     image: abra.png
 
   - id: pokemon-006
+    name: Pikachu
     attributes:
       type: electric
       rarity: rare
@@ -48,6 +54,7 @@ cards:
     image: pikachu.png
 
   - id: pokemon-007
+    name: Charmeleon
     attributes:
       type: fire
       rarity: uncommon
@@ -56,6 +63,7 @@ cards:
     image: charmeleon.png
 
   - id: pokemon-008
+    name: Wartortle
     attributes:
       type: water
       rarity: uncommon
@@ -64,6 +72,7 @@ cards:
     image: wartortle.png
 
   - id: pokemon-009
+    name: Bulbasaur
     attributes:
       type: grass
       rarity: rare
@@ -72,6 +81,7 @@ cards:
     image: bulbasaur.png
 
   - id: pokemon-010
+    name: Eevee
     attributes:
       type: normal
       rarity: rare

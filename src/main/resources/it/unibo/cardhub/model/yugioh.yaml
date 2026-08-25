@@ -1,5 +1,6 @@
 cards:
   - id: yugioh-001
+    name: Blue-Eyes White Dragon
     attributes:
       type: monster
       race: dragon
@@ -8,6 +9,7 @@ cards:
     image: blue-eyes-white-dragon.png
 
   - id: yugioh-002
+    name: Dark Magician
     attributes:
       type: monster
       race: spellcaster
@@ -16,6 +18,7 @@ cards:
     image: dark-magician.png
 
   - id: yugioh-003
+    name: Dark Magician Girl
     attributes:
       type: monster
       race: spellcaster
@@ -24,6 +27,7 @@ cards:
     image: dark-magician-girl.png
 
   - id: yugioh-004
+    name: Summoned Skull
     attributes:
       type: monster
       race: warrior
@@ -32,6 +36,7 @@ cards:
     image: summoned-skull.png
 
   - id: yugioh-005
+    name: Red-Eyes Black Dragon
     attributes:
       type: monster
       race: dragon
@@ -40,6 +45,7 @@ cards:
     image: red-eyes-black-dragon.png
 
   - id: yugioh-006
+    name: Summoned Skull
     attributes:
       type: monster
       race: fiend
@@ -48,6 +54,7 @@ cards:
     image: summoned-skull.png
 
   - id: yugioh-007
+    name: Monster Reborn
     attributes:
       type: spell
       race: normal
@@ -56,6 +63,7 @@ cards:
     image: monster-reborn.png
 
   - id: yugioh-008
+    name: Mirror Force
     attributes:
       type: trap
       race: normal
@@ -64,6 +72,7 @@ cards:
     image: mirror-force.png
 
   - id: yugioh-009
+    name: Jinzo
     attributes:
       type: monster
       race: machine
@@ -72,6 +81,7 @@ cards:
     image: jinzo.png
 
   - id: yugioh-010
+    name: Dark Swordsman
     attributes:
       type: monster
       race: warrior

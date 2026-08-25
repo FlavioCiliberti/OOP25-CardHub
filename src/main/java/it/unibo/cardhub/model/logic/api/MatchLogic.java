@@ -2,6 +2,7 @@ package it.unibo.cardhub.model.logic.api;
 
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
+import it.unibo.cardhub.model.domain.api.PlayerEnum;
 
 /**
  * handles the match logic.
