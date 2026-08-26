@@ -1,7 +1,6 @@
 package it.unibo.cardhub.model.logic.api;
 
 import it.unibo.cardhub.model.domain.api.Card;
-import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
 
 /**
@@ -13,10 +12,9 @@ public interface MatchLogic {
      * 
      * @param firstPlayerCard the card of player1 to be compared
      * @param secondPlayerCard the card of player2 to be compared
-     * @param matchState the matchState to be updated with the actions
      * @return the result of the comparison
      */
-    ComparisonWinner compareCard(Card<?> firstPlayerCard, Card<?> secondPlayerCard, MatchState matchState);
+    ComparisonWinner compareCard(Card<?> firstPlayerCard, Card<?> secondPlayerCard);
 
     /**
      * getter for the turn player.
@@ -42,5 +40,5 @@ public interface MatchLogic {
      * 
      * @return the action that must be done with the winner card
      */
-    CardAction getLooserCardAction();
+    CardAction getLoserCardAction();
 }

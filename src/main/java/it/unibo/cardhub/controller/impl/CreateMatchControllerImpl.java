@@ -9,6 +9,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.controller.ScreenId;
 import it.unibo.cardhub.controller.api.CreateMatchController;
 import it.unibo.cardhub.controller.api.MatchController;
+import it.unibo.cardhub.controller.api.MatchControllerFactory;
 import it.unibo.cardhub.controller.api.Navigator;
 import it.unibo.cardhub.io.api.DeckFactory;
 import it.unibo.cardhub.io.impl.DeckFactoryImpl;
@@ -18,8 +19,6 @@ import it.unibo.cardhub.model.domain.api.Deck;
 import it.unibo.cardhub.model.domain.exceptions.EmptyFieldException;
 import it.unibo.cardhub.model.logic.GameMode;
 import it.unibo.cardhub.model.logic.api.CardAction;
-import it.unibo.cardhub.model.logic.api.Match;
-import it.unibo.cardhub.model.logic.impl.MatchFactory;
 import it.unibo.cardhub.view.api.CreateMatchView;
 import it.unibo.cardhub.view.impl.CreateMatchViewImpl;
 
@@ -141,37 +140,37 @@ public class CreateMatchControllerImpl implements CreateMatchController {
 
         switch (gameMode) {
             case FREE_PLAY:
-                createFreeGame(player1Name, player1DeckId, player2Name, player2DeckId);
+                createFreeGameController(player1Name, player1DeckId, player2Name, player2DeckId);
                 break;
             case CUSTOM:
-                createCustomGame(player1Name, player1DeckId, player2Name, player2DeckId, 
+                createCustomGameController(player1Name, player1DeckId, player2Name, player2DeckId, 
                                 maxHandSize, startingHandSize, playerFieldSize, autoDraw, 
                                 winnerAction, loserAction);
                 break;
             case FULL_GAME:
-                createFullGame(player1Name, player2Name);
+                createFullGameController(player1Name, player2Name);
                 break;
         }
 
     }
 
     /**
-     * Creates a new game using default (free) rules.
+     * Creates the controller of a new game using default (free) rules.
      *
      * @param player1Name the name of the first player
      * @param player1DeckId the deck id chosen by the first player
      * @param player2Name the name of the second player
      * @param player2DeckId the deck id chosen by the second player
      */
-    private void createFreeGame(final String player1Name, final int player1DeckId, 
+    private void createFreeGameController(final String player1Name, final int player1DeckId, 
                                 final String player2Name, final int player2DeckId) {
-        final Match matchModel = MatchFactory.createFreeMatch(player1Name, player2Name, 
-                                    getDeck(player1DeckId), getDeck(player2DeckId));
-        createMatch(matchModel);
+        final MatchController controller = MatchControllerFactory.createFreeMatchController(player1Name, player2Name,
+                                                                    getDeck(player1DeckId), getDeck(player2DeckId), navigator);
+        showMatch(controller);
     }
 
     /**
-     * Creates a new game using a custom, user-configurable rule set.
+     * Creates the controller of a new game using a custom, user-configurable rule set.
      *
      * <p>TO DO:
      * add winner and looser card actions parameters.
@@ -188,29 +187,27 @@ public class CreateMatchControllerImpl implements CreateMatchController {
      * @param winnerAction the action to be done to the winner card
      * @param loserAction the action to be done to the loser card
      */
-    private void createCustomGame(final String player1Name, final int player1DeckId, 
+    private void createCustomGameController(final String player1Name, final int player1DeckId, 
                                 final String player2Name, final int player2DeckId,
                                 final int maxHandSize, final int startingHandSize, 
                                 final int playerFieldSize, final boolean autoDraw, 
                                 final CardAction winnerAction, final CardAction loserAction) {
-        final Match matchModel = MatchFactory.createCustomMatch(player1Name, player2Name,
-                                    getDeck(player1DeckId), getDeck(player2DeckId), 
-                                    maxHandSize, startingHandSize, 
-                                    playerFieldSize, autoDraw, 
-                                    winnerAction, loserAction);
-        createMatch(matchModel);
+        final MatchController controller = MatchControllerFactory.createCustomMatchController(player1Name,
+                                                                    player2Name, getDeck(player1DeckId), getDeck(player2DeckId),
+                                                                    maxHandSize, startingHandSize, playerFieldSize,
+                                                                    autoDraw, winnerAction, loserAction, navigator);
+        showMatch(controller);
     }
 
     /**
-     * Creates a new game using the full official rule set.
+     * Creates the controller of a new E-Card game.
      *
      * @param player1Name the name of the first player
      * @param player2Name the name of the second player
      */
-    @SuppressWarnings("unused")
-    private void createFullGame(final String player1Name, final String player2Name) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createFullGame'");
+    private void createFullGameController(final String player1Name, final String player2Name) {
+        final MatchController controller = MatchControllerFactory.createECardMatchController(player1Name, player2Name, navigator);
+        showMatch(controller);
     }
 
     private void checkMatchParams(final String player1Name, 
@@ -236,13 +233,11 @@ public class CreateMatchControllerImpl implements CreateMatchController {
     }
 
     /**
-     * Creates a match with the given model and
-     * then navigaates to it.
+     * Navigates to the match corresponding to the controller.
      * 
-     * @param matchModel the model of the game
+     * @param matchController the controller of the game
      */
-    private void createMatch(final Match matchModel) {
-        final MatchController matchController = new MatchControllerImpl(matchModel, navigator);
+    private void showMatch(final MatchController matchController) {
         navigator.show(ScreenId.MATCH, matchController.getView());
     }
 

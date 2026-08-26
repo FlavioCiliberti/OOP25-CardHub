@@ -5,6 +5,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
@@ -14,7 +15,6 @@ import it.unibo.cardhub.model.domain.api.Playfield;
  * Match state implementation.
  */
 public class MatchStateImpl implements MatchState {
-
     private final List<Player> players;
     private final Playfield field;
 
@@ -67,6 +67,32 @@ public class MatchStateImpl implements MatchState {
      * {@inheritDoc}
      */
     @Override
+    public void drawCard(final PlayerEnum player) {
+        this.getPlayer(player).drawCard();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void playCard(final Card<?> card, final PlayerEnum playerEnum) {
+        this.getPlayer(playerEnum).playCard(card);
+        field.addCard(playerEnum, card);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void moveCardFromFieldToPile(final Card<?> card, final PlayerEnum playerEnum) {
+        field.removeCard(card);
+        this.getPlayer(playerEnum).putInPile(card);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public PlayerEnum getEnum(final Player player) {
         if (players.get(0).equals(player)) {
             return PlayerEnum.PLAYER_ONE;
@@ -86,6 +112,38 @@ public class MatchStateImpl implements MatchState {
     )
     public Playfield getPlayfield() {
         return this.field;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getPlayFieldSize() {
+        return field.getMaxCardsPerPlayer();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void shufflePileIntoDeck(final PlayerEnum player) {
+        this.getPlayer(player).shufflePileIntoDeck();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isEmptyDeck(final PlayerEnum owner) {
+        return this.getPlayer(owner).hasEmptyDeck();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isEmptyDiscardPile(final PlayerEnum owner) {
+        return this.getPlayer(owner).hasEmptyDiscardPile();
     }
 
     /**

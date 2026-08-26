@@ -32,11 +32,64 @@ public interface MatchState {
     PlayerEnum getEnum(Player player);
 
     /**
+     * Makes the player draw a card.
+     * 
+     * @param player the player to draw the card
+     */
+    void drawCard(PlayerEnum player);
+
+    /**
+     * Makes the player play a card.
+     * 
+     * @param card the card to be played
+     * @param playerEnum the player playing the card
+     */
+    void playCard(Card<?> card, PlayerEnum playerEnum);
+
+    /**
+     * Moves a card from the field to the discard pile.
+     * 
+     * @param card the card to move
+     * @param player the player the card belongs to
+     */
+    void moveCardFromFieldToPile(Card<?> card, PlayerEnum player);
+
+    /**
      * Returns the state of the playfield.
      * 
      * @return the playfield
      */
     Playfield getPlayfield();
+
+    /**
+     * Returns playField size (per player).
+     * 
+     * @return playField size (per player) 
+     */
+    int getPlayFieldSize();
+
+    /**
+     * Moves all cards from discard pile to deck.
+     * 
+     * @param player the owner of the deck and pile
+     */
+    void shufflePileIntoDeck(PlayerEnum player);
+
+    /**
+     * Checks if the player's deck is empty.
+     * 
+     * @param owner the player who owns the deck
+     * @return {@code true} if the deck is empty
+     */
+    boolean isEmptyDeck(PlayerEnum owner);
+
+    /**
+     * Checks if the player's discard pile is empty.
+     * 
+     * @param owner the player who owns the discard pile
+     * @return {@code true} if the discard pile is empty
+     */
+    boolean isEmptyDiscardPile(PlayerEnum owner);
 
     /**
      * Ends a match and sets the winner.
