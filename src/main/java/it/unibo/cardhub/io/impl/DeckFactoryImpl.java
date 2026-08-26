@@ -28,6 +28,7 @@ public final class DeckFactoryImpl implements DeckFactory {
     private static final String RARITY_ATTRIBUTE = "rarity";
     private static final String RACE_ATTRIBUTE = "race";
     private static final String ID_FIELD = "id";
+    private static final String NAME_FIELD = "name";
     private static final String VALUE_FIELD = "value";
     private static final String DESCRIPTION_FIELD = "description";
     private static final String IMAGE_FIELD = "image";
@@ -51,7 +52,8 @@ public final class DeckFactoryImpl implements DeckFactory {
         for (final Suit suit : Suit.values()) {
             for (int value = 1; value <= 10; value++) {
                 deck.addCard(new CardImpl<>(
-                    suit.name() + "_" + value, 
+                    suit.name() + "_" + value,
+                    Optional.empty(), 
                     suit, 
                     value, 
                     Optional.empty(), 
@@ -125,6 +127,7 @@ public final class DeckFactoryImpl implements DeckFactory {
                 final T cardAttributes = attributeFactory.apply(attributes);
                 return new CardImpl<>(
                     (String) cardData.get(ID_FIELD),
+                    Optional.ofNullable((String) cardData.get(NAME_FIELD)),
                     cardAttributes,
                     (Integer) cardData.get(VALUE_FIELD),
                     Optional.ofNullable((String) cardData.get(DESCRIPTION_FIELD)),

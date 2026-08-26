@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.Player;
+import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.domain.api.Playfield;
-import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 
 /**
  * Handles the match in its entirety.
@@ -16,18 +16,16 @@ public interface Match {
      * Makes the player draw a card.
      * 
      * @param player the player to draw the card
-     * @throws CardCollectionFullException if the player's hand is full
      */
-    void drawCard(PlayerEnum player) throws CardCollectionFullException;
+    void drawCard(PlayerEnum player);
 
     /**
      * Makes the player play a card.
      * 
      * @param card the card to be played
      * @param playerEnum the player playing the card
-     * @throws CardCollectionFullException if the player's side of the field is full
      */
-    void playCard(Card<?> card, PlayerEnum playerEnum) throws CardCollectionFullException;
+    void playCard(Card<?> card, PlayerEnum playerEnum);
 
     /**
      * Moves a card from the field to the discard pile.

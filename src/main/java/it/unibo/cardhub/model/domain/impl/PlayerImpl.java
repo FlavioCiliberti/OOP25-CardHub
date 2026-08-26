@@ -72,7 +72,7 @@ public final class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
-    public Card<?> drawCard() throws CardCollectionFullException {
+    public Card<?> drawCard() {
         if (this.hand.isFull()) {
             throw new CardCollectionFullException("The hand exceeded the max amount of cards.");
         }

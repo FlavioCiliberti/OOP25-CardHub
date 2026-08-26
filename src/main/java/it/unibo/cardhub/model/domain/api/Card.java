@@ -17,6 +17,13 @@ public interface Card<T> {
     String id();
 
     /**
+     * Returns card's name.
+     * 
+     * @return card's name
+     */
+    Optional<String> name();
+
+    /**
      * Returns the card's attribute.
      * 
      * @return the card's attribute

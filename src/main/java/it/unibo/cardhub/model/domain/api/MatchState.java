@@ -3,8 +3,6 @@ package it.unibo.cardhub.model.domain.api;
 import java.util.List;
 import java.util.Optional;
 
-import it.unibo.cardhub.model.logic.api.PlayerEnum;
-
 /**
  * Represent a match, the heart of the game.
  */

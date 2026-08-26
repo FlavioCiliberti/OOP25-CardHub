@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.model.domain.api.Card;
-import it.unibo.cardhub.model.logic.api.PlayerEnum;
+import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.view.api.MatchView;
 import it.unibo.cardhub.view.api.PlayerPanel;
 import it.unibo.cardhub.view.api.PlayfieldPanel;

@@ -1,4 +1,4 @@
-package it.unibo.cardhub.model.logic.api;
+package it.unibo.cardhub.model.domain.api;
 
 /**
  * An enumeration for player1 and player2.

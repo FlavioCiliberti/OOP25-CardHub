@@ -1,6 +1,5 @@
 package it.unibo.cardhub.model.domain.impl;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -21,7 +20,7 @@ public class DiscardPileImpl extends AbstractCardCollection implements DiscardPi
      * @param cards discard pile cards
      */
     public DiscardPileImpl(final List<? extends Card<?>> cards) {
-        super(new LinkedList<>(Objects.requireNonNull(cards)));
+        super(Objects.requireNonNull(cards));
     }
 
     /**

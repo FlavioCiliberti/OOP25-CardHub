@@ -1,5 +1,7 @@
 package it.unibo.cardhub.model.logic.api;
 
+import it.unibo.cardhub.model.domain.api.PlayerEnum;
+
 /**
  * An interface for point-tracking in the match logic.
  */

@@ -6,7 +6,7 @@ import java.util.Optional;
 import javax.swing.JPanel;
 
 import it.unibo.cardhub.model.domain.api.Card;
-import it.unibo.cardhub.model.logic.api.PlayerEnum;
+import it.unibo.cardhub.model.domain.api.PlayerEnum;
 
 /**
  * JPanel representing the playfield of the match view, including the central playfield and the discard piles for both players.
