@@ -11,14 +11,22 @@ import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 import it.unibo.cardhub.model.logic.api.PointTracker;
 
-class ECardLogic extends AbstractMatchLogic implements PointTracker {
+/**
+ * Match logic for an E-Card game.
+ */
+public class ECardLogic extends AbstractMatchLogic implements PointTracker {
     private static final int NORMAL_WIN_POINTS = 1;
     private static final int SLAVE_WIN_POINTS = 3;
 
     private final Map<PlayerEnum, Integer> playerPoints;
 
-    ECardLogic() {
-        super(CardAction.TO_PILE, CardAction.TO_PILE);
+    /**
+     * ECardLogic constructor.
+     * 
+     * @param matchState the state of the match
+     */
+    public ECardLogic(final MatchState matchState) {
+        super(CardAction.TO_PILE, CardAction.TO_PILE, false, matchState);
 
         playerPoints = new EnumMap<>(PlayerEnum.class);
         for (final PlayerEnum player : PlayerEnum.values()) {
@@ -30,12 +38,11 @@ class ECardLogic extends AbstractMatchLogic implements PointTracker {
      * {@inheritDoc}
      */
     @Override
-    public ComparisonWinner compareCard(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard,
-                                        final MatchState matchState) {
+    public ComparisonWinner compareCard(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard) {
         final ECardEnum firstCardType = ECardEnum.fromValue(firstPlayerCard.value());
         final ECardEnum secondCardType = ECardEnum.fromValue(secondPlayerCard.value());
 
-        this.executeCardActions(firstPlayerCard, secondPlayerCard, matchState);
+        this.executeCardActions(firstPlayerCard, secondPlayerCard);
 
         if (firstCardType == secondCardType) {
             return ComparisonWinner.TIE;
@@ -52,24 +59,17 @@ class ECardLogic extends AbstractMatchLogic implements PointTracker {
         return ComparisonWinner.PLAYER_2;
     }
 
-    private void executeCardActions(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard,
-                                    final MatchState matchState) {
-        matchState.getPlayfield().removeCard(firstPlayerCard);
-        matchState.getPlayer(PlayerEnum.PLAYER_ONE).putInPile(firstPlayerCard);
-
-        matchState.getPlayfield().removeCard(secondPlayerCard);
-        matchState.getPlayer(PlayerEnum.PLAYER_TWO).putInPile(secondPlayerCard);
-    }
-
-    private void addPoints(final PlayerEnum player, final int value) {
-        playerPoints.put(player, playerPoints.get(player) + value);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getPoints(final PlayerEnum player) {
         return playerPoints.get(player);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ComparisonWinner getWinningPlayer() {
         final int firstPlayerPoints = playerPoints.get(PlayerEnum.PLAYER_ONE);
@@ -82,5 +82,14 @@ class ECardLogic extends AbstractMatchLogic implements PointTracker {
         } else {
             return ComparisonWinner.TIE;
         }
+    }
+
+    private void executeCardActions(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard) {
+        super.getMatchState().moveCardFromFieldToPile(firstPlayerCard, PlayerEnum.PLAYER_ONE);
+        super.getMatchState().moveCardFromFieldToPile(secondPlayerCard, PlayerEnum.PLAYER_TWO);
+    }
+
+    private void addPoints(final PlayerEnum player, final int value) {
+        playerPoints.put(player, playerPoints.get(player) + value);
     }
 }

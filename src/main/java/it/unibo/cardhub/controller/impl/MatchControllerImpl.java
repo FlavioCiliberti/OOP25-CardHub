@@ -9,11 +9,12 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.controller.api.Navigator;
 import it.unibo.cardhub.model.domain.api.Card;
+import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
-import it.unibo.cardhub.model.logic.api.Match;
+import it.unibo.cardhub.model.logic.api.MatchLogic;
 import it.unibo.cardhub.view.api.MatchView;
 import it.unibo.cardhub.view.impl.MatchViewImpl;
 
@@ -22,18 +23,21 @@ import it.unibo.cardhub.view.impl.MatchViewImpl;
  */
 public class MatchControllerImpl implements MatchController {
 
-    private final Match model;
+    private final MatchState state;
+    private final MatchLogic logic;
     private final MatchView view;
     private final Navigator navigator;
 
     /**
      * Constructor for the controller.
      * 
-     * @param model match model
+     * @param state match state
+     * @param logic match logic
      * @param navigator screen navigator
      */
-    public MatchControllerImpl(final Match model, final Navigator navigator) {
-        this.model = Objects.requireNonNull(model, "no model supplied");
+    public MatchControllerImpl(final MatchState state, final MatchLogic logic, final Navigator navigator) {
+        this.state = Objects.requireNonNull(state, "no MatchState supplied");
+        this.logic = Objects.requireNonNull(logic, "no MatchLogic supplied");
         this.navigator = Objects.requireNonNull(navigator, "no navigator supplied");
         view = new MatchViewImpl(this);
         startMatch();
@@ -84,7 +88,7 @@ public class MatchControllerImpl implements MatchController {
     @Override
     public void reshuffleIntoDeck(final PlayerEnum owner) {
         checkTurn(owner);
-        model.shufflePileIntoDeck(owner);
+        state.shufflePileIntoDeck(owner);
         view.updateDeck(owner, getDeckCount(owner));
         view.updateDiscardPile(owner, Optional.empty());
     }
@@ -94,7 +98,7 @@ public class MatchControllerImpl implements MatchController {
      */
     @Override
     public boolean isEmptyDeck(final PlayerEnum owner) {
-        return model.isEmptyDeck(owner);
+        return state.isEmptyDeck(owner);
     }
 
     /**
@@ -102,7 +106,7 @@ public class MatchControllerImpl implements MatchController {
      */
     @Override
     public boolean isEmptyDiscardPile(final PlayerEnum owner) {
-        return model.isEmptyDiscardPile(owner);
+        return state.isEmptyDiscardPile(owner);
     }
 
     /**
@@ -110,7 +114,7 @@ public class MatchControllerImpl implements MatchController {
      */
     @Override
     public int getDeckCount(final PlayerEnum owner) {
-        return model.getPlayer(owner).getDeckCount();
+        return state.getPlayer(owner).getDeckCount();
     }
 
     /**
@@ -119,8 +123,8 @@ public class MatchControllerImpl implements MatchController {
     @Override
     public void endTurn() {
         view.updateHiddenHand(getTurnPlayer(), 
-                            model.getPlayer(getTurnPlayer()).getHand().size());
-        model.changeTurn();
+                            state.getPlayer(getTurnPlayer()).getHand().size());
+        logic.changeTurn();
         view.showCurrentPlayer(getTurnPlayer());
     }
 
@@ -129,16 +133,16 @@ public class MatchControllerImpl implements MatchController {
      */
     @Override
     public void concede() {
-        model.changeTurn();
-        model.endMatch(model.getPlayer(getTurnPlayer()));
+        logic.changeTurn();
+        state.endMatch(state.getPlayer(getTurnPlayer()));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public PlayerEnum getTurnPlayer() {
-        return model.getTurnPlayer();
+    public final PlayerEnum getTurnPlayer() {
+        return logic.getCurrentPlayer();
     }
 
     /**
@@ -146,7 +150,7 @@ public class MatchControllerImpl implements MatchController {
      */
     @Override
     public String getPlayerName(final PlayerEnum player) {
-        return model.getPlayer(player).getName();
+        return state.getPlayer(player).getName();
     }
 
     /**
@@ -154,7 +158,7 @@ public class MatchControllerImpl implements MatchController {
      */
     @Override
     public int getPlayFieldSize() {
-        return model.getPlayFieldSize();
+        return state.getPlayFieldSize();
     }
 
     /**
@@ -164,7 +168,7 @@ public class MatchControllerImpl implements MatchController {
     public void compareCard(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard) {
         Objects.requireNonNull(firstPlayerCard, "no firstPlayerCard provided");
         Objects.requireNonNull(secondPlayerCard, "no secondPlayerCard provided");
-        final ComparisonWinner winner = model.compareCard(firstPlayerCard, secondPlayerCard);
+        final ComparisonWinner winner = logic.compareCard(firstPlayerCard, secondPlayerCard);
         switch (winner) {
             case TIE:
                 break;
@@ -183,7 +187,7 @@ public class MatchControllerImpl implements MatchController {
      */
     @Override
     public void startTurn() {
-        view.updateShowingHand(model.getTurnPlayer(), model.getPlayer(model.getTurnPlayer()).getHand().getCards());
+        view.updateShowingHand(getTurnPlayer(), state.getPlayer(getTurnPlayer()).getHand().getCards());
     }
 
     /**
@@ -208,43 +212,43 @@ public class MatchControllerImpl implements MatchController {
 
     private void tryPlayCard(final PlayerEnum owner, final Card<?> card) {
         try {
-            model.playCard(card, owner);
-            view.updatePlayfield(owner, model.getPlayfield().getCards(owner));
-            view.updateShowingHand(owner, model.getPlayer(owner).getHand().getCards());
+            state.playCard(card, owner);
+            view.updatePlayfield(owner, state.getPlayfield().getCards(owner));
+            view.updateShowingHand(owner, state.getPlayer(owner).getHand().getCards());
         } catch (final CardCollectionFullException e) {
             view.showInvalidAction(e.getMessage());
         }
     }
 
     private void moveCardFromFieldToPile(final PlayerEnum owner, final Card<?> card) {
-        model.moveCardFromFieldToPile(card, owner);
+        state.moveCardFromFieldToPile(card, owner);
         view.updateDiscardPile(owner, Optional.of(card));
-        view.updatePlayfield(owner, model.getPlayfield().getCards(owner));
+        view.updatePlayfield(owner, state.getPlayfield().getCards(owner));
     }
 
     private void tryDrawCard(final PlayerEnum player) {
         try {
-            model.drawCard(player);
-            view.updateShowingHand(player, model.getPlayer(player).getHand().getCards());
-            view.updateDeck(player, model.getPlayer(player).getDeckCount());
+            state.drawCard(player);
+            view.updateShowingHand(player, state.getPlayer(player).getHand().getCards());
+            view.updateDeck(player, state.getPlayer(player).getDeckCount());
         } catch (final CardCollectionFullException e) {
             view.showInvalidAction(e.getMessage());
         }
     }
 
     private void updateWithCardAction(final PlayerEnum player, final Competitor competitor) {
-        final CardAction action = competitor == Competitor.LOOSER ? model.getLooserCardAction() : model.getWinnerCardAction();
+        final CardAction action = competitor == Competitor.LOOSER ? logic.getLoserCardAction() : logic.getWinnerCardAction();
         switch (action) {
             case NONE:
                 return;
             case TO_HAND:
-                view.updateShowingHand(player, model.getPlayer(player).getHand().getCards());
+                view.updateShowingHand(player, state.getPlayer(player).getHand().getCards());
                 break;
             case TO_PILE:
-                view.updateDiscardPile(player, model.getPlayer(player).peekDiscardPile());
+                view.updateDiscardPile(player, state.getPlayer(player).peekDiscardPile());
                 break;
         }
-        view.updatePlayfield(player, model.getPlayfield().getCards(player));
+        view.updatePlayfield(player, state.getPlayfield().getCards(player));
     }
 
     /**
@@ -252,10 +256,10 @@ public class MatchControllerImpl implements MatchController {
      */
     private void startMatch() {
         view.updateHiddenHand(PlayerEnum.PLAYER_ONE, 
-                            model.getPlayer(PlayerEnum.PLAYER_ONE).getHand().size());
+                            state.getPlayer(PlayerEnum.PLAYER_ONE).getHand().size());
         view.updateHiddenHand(PlayerEnum.PLAYER_TWO, 
-                            model.getPlayer(PlayerEnum.PLAYER_TWO).getHand().size());
-        view.showCurrentPlayer(model.getTurnPlayer());
+                            state.getPlayer(PlayerEnum.PLAYER_TWO).getHand().size());
+        view.showCurrentPlayer(getTurnPlayer());
     }
 
     enum Competitor {
