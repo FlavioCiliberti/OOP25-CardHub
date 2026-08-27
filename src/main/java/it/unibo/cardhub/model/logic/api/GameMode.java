@@ -4,7 +4,7 @@ package it.unibo.cardhub.model.logic.api;
  * An enumeration for game modes.
  */
 public enum GameMode {
-    FREE_PLAY("Free Play"), CUSTOM("Custom"), FULL_GAME("Full Game");
+    FREE_PLAY("Free Play"), CUSTOM("Custom"), E_CARD("E-Card");
 
     private final String displayName;
 
