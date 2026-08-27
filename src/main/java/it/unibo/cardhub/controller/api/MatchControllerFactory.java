@@ -5,7 +5,7 @@ import it.unibo.cardhub.io.api.DeckFactory;
 import it.unibo.cardhub.io.impl.DeckFactoryImpl;
 import it.unibo.cardhub.model.domain.api.Deck;
 import it.unibo.cardhub.model.domain.api.MatchState;
-import it.unibo.cardhub.model.domain.api.MatchStateBuilder;
+import it.unibo.cardhub.model.domain.impl.MatchStateBuilderImpl;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
 import it.unibo.cardhub.model.logic.impl.ECardLogic;
@@ -36,7 +36,7 @@ public final class MatchControllerFactory {
     public static MatchController createFreeMatchController(final String firstPlayerName, final String secondPlayerName,
                                                             final Deck firstPlayerDeck, final Deck secondPlayerDeck,
                                                             final Navigator navigator) {
-        final MatchState state = new MatchStateBuilder(firstPlayerName, secondPlayerName,
+        final MatchState state = new MatchStateBuilderImpl(firstPlayerName, secondPlayerName,
                                                         firstPlayerDeck, secondPlayerDeck).build();
         final MatchLogic logic = new MatchLogicImpl(CardAction.TO_PILE, CardAction.TO_PILE, true, state);
         return new MatchControllerImpl(state, logic, navigator);
@@ -64,7 +64,7 @@ public final class MatchControllerFactory {
                                             final int playerFieldSize, final boolean autoDraw,
                                             final CardAction winnerAction, final CardAction loserAction,
                                             final Navigator navigator) {
-        final MatchState state = new MatchStateBuilder(firstPlayerName, secondPlayerName, firstPlayerDeck, secondPlayerDeck)
+        final MatchState state = new MatchStateBuilderImpl(firstPlayerName, secondPlayerName, firstPlayerDeck, secondPlayerDeck)
                             .maxHandSize(maxHandSize).startingHandSize(startingHandSize).playfieldSize(playerFieldSize).build();
         final MatchLogic logic = new MatchLogicImpl(winnerAction, loserAction, autoDraw, state);
         return new MatchControllerImpl(state, logic, navigator);
@@ -82,7 +82,7 @@ public final class MatchControllerFactory {
                                                     final Navigator navigator) {
         final DeckFactory deckFactory = new DeckFactoryImpl();
 
-        final MatchState state = new MatchStateBuilder(firstPlayerName, secondPlayerName,
+        final MatchState state = new MatchStateBuilderImpl(firstPlayerName, secondPlayerName,
                             deckFactory.createECardDeck(), deckFactory.createECardDeck()).maxHandSize(ECARD_MAX_HAND_SIZE)
                             .startingHandSize(ECARD_STARTING_HAND_SIZE).playfieldSize(ECARD_PLAYFIELD_SIZE).build();
         return new MatchControllerImpl(state, new ECardLogic(state), navigator);
