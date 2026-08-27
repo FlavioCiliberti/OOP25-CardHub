@@ -2,8 +2,6 @@ package it.unibo.cardhub.model.domain.api;
 
 import java.util.Optional;
 
-import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
-
 /**
  * Represents a player in a match.
  */
@@ -13,7 +11,6 @@ public interface Player {
      * Draws a card from the player's deck.
      * 
      * @return the drawn card
-     * @throws CardCollectionFullException if the hand is full
      */
     Card<?> drawCard();
 
