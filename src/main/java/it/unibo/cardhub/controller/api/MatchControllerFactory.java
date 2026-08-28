@@ -12,7 +12,7 @@ import it.unibo.cardhub.model.logic.impl.ECardLogic;
 import it.unibo.cardhub.model.logic.impl.MatchLogicImpl;
 
 /**
- * a factory for MatchController.
+ * A factory for MatchController.
  */
 public final class MatchControllerFactory {
     private static final int ECARD_MAX_HAND_SIZE = 7;

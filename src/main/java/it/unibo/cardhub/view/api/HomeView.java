@@ -11,11 +11,6 @@ public interface HomeView {
     void onNewMatch();
 
     /**
-     * Navigates to the load match screen.
-     */
-    void onLoadMatch();
-
-    /**
      * Navigates to the manage decks screen.
      */
     void onManageDecks();

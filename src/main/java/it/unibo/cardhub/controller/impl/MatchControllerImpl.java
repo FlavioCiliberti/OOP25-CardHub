@@ -134,7 +134,7 @@ public class MatchControllerImpl implements MatchController {
     @Override
     public void concede() {
         logic.changeTurn();
-        state.endMatch(state.getPlayer(getTurnPlayer()));
+        state.endMatch(getTurnPlayer());
     }
 
     /**
@@ -262,7 +262,7 @@ public class MatchControllerImpl implements MatchController {
         view.showCurrentPlayer(getTurnPlayer());
     }
 
-    enum Competitor {
+    private enum Competitor {
         WINNER,
         LOOSER
     }

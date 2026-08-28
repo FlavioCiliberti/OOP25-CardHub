@@ -15,7 +15,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +47,7 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
 
     private final PlayfieldAreaPanel bottomArea;
     private final PlayfieldAreaPanel topArea;
-    private final List<PlayfieldAreaPanel> playfieldAreas;
+    private final Map<PlayerEnum, PlayfieldAreaPanel> playfieldAreas;
 
     private final DiscardPileAreaPanel playerOneDiscardPileArea;
     private final DiscardPileAreaPanel playerTwoDiscardPileArea;
@@ -69,9 +68,9 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
 
         this.bottomArea = new PlayfieldAreaPanel(controller, PlayerEnum.PLAYER_ONE, this::onSelectionChanged);
         this.topArea = new PlayfieldAreaPanel(controller, PlayerEnum.PLAYER_TWO, this::onSelectionChanged);
-        this.playfieldAreas = new ArrayList<>();
-        this.playfieldAreas.add(bottomArea);
-        this.playfieldAreas.add(topArea);
+        this.playfieldAreas = new EnumMap<>(PlayerEnum.class);
+        this.playfieldAreas.put(PlayerEnum.PLAYER_ONE, this.bottomArea);
+        this.playfieldAreas.put(PlayerEnum.PLAYER_TWO, this.topArea);
         final JPanel centralArea = new JPanel(
             new GridLayout(2, 1, CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD));
         centralArea.add(this.topArea);
@@ -111,7 +110,7 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
         Objects.requireNonNull(player, "Player cannot be null");
         Objects.requireNonNull(cards, "Cards list cannot be null");
 
-        final PlayfieldAreaPanel area = this.playfieldAreas.get(player.getIndex());
+        final PlayfieldAreaPanel area = this.playfieldAreas.get(player);
         if (area == null) {
             throw new IllegalArgumentException("Unknown player: " + player);
         }

@@ -17,8 +17,8 @@ import it.unibo.cardhub.model.api.CreateMatchModel;
 import it.unibo.cardhub.model.domain.DeckEnum;
 import it.unibo.cardhub.model.domain.api.Deck;
 import it.unibo.cardhub.model.domain.exceptions.EmptyFieldException;
-import it.unibo.cardhub.model.logic.GameMode;
 import it.unibo.cardhub.model.logic.api.CardAction;
+import it.unibo.cardhub.model.logic.api.GameMode;
 import it.unibo.cardhub.view.api.CreateMatchView;
 import it.unibo.cardhub.view.impl.CreateMatchViewImpl;
 
@@ -147,7 +147,7 @@ public class CreateMatchControllerImpl implements CreateMatchController {
                                 maxHandSize, startingHandSize, playerFieldSize, autoDraw, 
                                 winnerAction, loserAction);
                 break;
-            case FULL_GAME:
+            case E_CARD:
                 createFullGameController(player1Name, player2Name);
                 break;
         }

@@ -62,15 +62,6 @@ public class HomeControllerImpl implements HomeController {
      * {@inheritDoc}
      */
     @Override
-    public void loadMatch() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'loadMatch'");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public void manageDecks() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'manageDecks'");

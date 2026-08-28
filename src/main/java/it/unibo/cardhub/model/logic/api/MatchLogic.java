@@ -4,11 +4,11 @@ import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
 
 /**
- * handles the match logic.
+ * Handles the match logic.
  */
 public interface MatchLogic {
     /**
-     * compares two Cards and proceeds with the corresponding actions.
+     * Compares two Cards and proceeds with the corresponding actions.
      * 
      * @param firstPlayerCard the card of player1 to be compared
      * @param secondPlayerCard the card of player2 to be compared
@@ -17,28 +17,28 @@ public interface MatchLogic {
     ComparisonWinner compareCard(Card<?> firstPlayerCard, Card<?> secondPlayerCard);
 
     /**
-     * getter for the turn player.
+     * Returns the player of the current turn.
      * 
-     * @return the turn player.
+     * @return the player of the current turn.
      */
     PlayerEnum getCurrentPlayer();
 
     /**
-     * changes the turn player.
+     * Passes to the next turn and to the next player.
      */
     void changeTurn();
 
     /**
-     * getter for the winner card action.
+     * Returns the winner of card action.
      * 
      * @return the action that must be done with the winner card
      */
     CardAction getWinnerCardAction();
 
     /**
-     * getter for the looser card action.
+     * Returns the loser card action.
      * 
-     * @return the action that must be done with the winner card
+     * @return the action that must be done with the loser's card
      */
     CardAction getLoserCardAction();
 }
