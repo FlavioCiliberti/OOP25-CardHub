@@ -136,6 +136,7 @@ public class CreateMatchControllerImpl implements CreateMatchController {
                             winnerAction, loserAction, gameMode);
         } catch (final EmptyFieldException e) {
             view.showInvalidForm(e.getMessage());
+            return;
         }
 
         switch (gameMode) {

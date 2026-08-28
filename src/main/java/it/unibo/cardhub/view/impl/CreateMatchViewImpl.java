@@ -132,14 +132,14 @@ public final class CreateMatchViewImpl extends ScreenView implements CreateMatch
         fullGameRadioButton = new JRadioButton("Full Game");
         gameModesGroup = new ButtonGroup();
 
-        handSizeModel = new SpinnerNumberModel(controller.getDefaultHandSize(), controller.getMaxHandSize(), 
+        handSizeModel = new SpinnerNumberModel(controller.getDefaultHandSize(), controller.getMinHandSize(), 
                                                 controller.getMaxHandSize(), SPINNER_STEP_SIZE);
         handSizeSpinner = new JSpinner(handSizeModel);
         fieldSizeModel = new SpinnerNumberModel(controller.getDefaultFieldSize(), controller.getMinFieldSize(), 
                                                 controller.getMaxFieldSize(), SPINNER_STEP_SIZE);
         fieldSizeSpinner = new JSpinner(fieldSizeModel);
         //Starting hand size needs to always be lower or equal to max hand size
-        startingHandModel = new SpinnerNumberModel(controller.getDefaultHandSize(), controller.getMaxHandSize(),
+        startingHandModel = new SpinnerNumberModel(controller.getDefaultHandSize(), controller.getMinHandSize(),
                                                     ((Integer) handSizeSpinner.getValue()).intValue(), SPINNER_STEP_SIZE);
         startingHandSpinner = new JSpinner(startingHandModel);
         autoDrawCheckBox = new JCheckBox("Auto Draw on Turn Start");
