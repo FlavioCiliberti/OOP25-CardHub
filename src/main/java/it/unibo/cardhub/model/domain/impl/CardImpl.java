@@ -41,71 +41,71 @@ public record CardImpl<T>(
         /**
          * ID.
          * 
-         * @param id ID
+         * @param cardId ID
          * @return this
          */
-        public Builder<T> id(final String id) {
-            this.id = id;
+        public Builder<T> id(final String cardId) {
+            this.id = cardId;
             return this;
         }
 
         /**
          * Name.
          * 
-         * @param name name
+         * @param cardName name
          * @return this
          */
-        public Builder<T> name(final String name) {
-            this.name = Optional.ofNullable(name);
+        public Builder<T> name(final String cardName) {
+            this.name = Optional.ofNullable(cardName);
             return this;
         }
 
         /**
          * Attributes.
          * 
-         * @param attributes attributes
+         * @param cardAttributes attributes
          * @return this
          */
-        public Builder<T> attributes(final T attributes) {
-            this.attributes = attributes;
+        public Builder<T> attributes(final T cardAttributes) {
+            this.attributes = cardAttributes;
             return this;
         }
 
         /**
          * Value.
          * 
-         * @param value value
+         * @param cardValue value
          * @return this
          */
-        public Builder<T> value(final int value) {
-            this.value = value;
+        public Builder<T> value(final int cardValue) {
+            this.value = cardValue;
             return this;
         }
 
         /**
          * Description.
          * 
-         * @param desc description
+         * @param cardDesc description
          * @return this
          */
-        public Builder<T> desc(final String desc) {
-            this.desc = Optional.ofNullable(desc);
+        public Builder<T> desc(final String cardDesc) {
+            this.desc = Optional.ofNullable(cardDesc);
             return this;
         }
 
         /**
          * Image.
          * 
-         * @param image image
+         * @param cardImage image
          * @return this
          */
-        public Builder<T> image(final String image) {
-            this.image = image;
+        public Builder<T> image(final String cardImage) {
+            this.image = cardImage;
             return this;
         }
 
         /**
-         * Builds a card
+         * Builds a card.
          * 
          * @return card
          */

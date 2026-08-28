@@ -1,5 +1,8 @@
 package it.unibo.cardhub.model.domain.api;
 
+/**
+ * Builds a MatchState.
+ */
 public interface MatchStateBuilder {
 
     /**
@@ -8,7 +11,7 @@ public interface MatchStateBuilder {
      * @param maxHandSizeValue max hand size
      * @return the Builder
      */
-    MatchStateBuilder maxHandSize(final int maxHandSizeValue);
+    MatchStateBuilder maxHandSize(int maxHandSizeValue);
 
     /**
      * Sets the starting hand size.
@@ -16,7 +19,7 @@ public interface MatchStateBuilder {
      * @param startingHandSizeValue starting hand size
      * @return the Builder
      */
-    MatchStateBuilder startingHandSize(final int startingHandSizeValue);
+    MatchStateBuilder startingHandSize(int startingHandSizeValue);
 
     /**
      * Sets the playfield size.
@@ -24,7 +27,7 @@ public interface MatchStateBuilder {
      * @param playfieldSizeValue playfield size
      * @return the Builder
      */
-    MatchStateBuilder playfieldSize(final int playfieldSizeValue);
+    MatchStateBuilder playfieldSize(int playfieldSizeValue);
 
     /**
      * Builds the Match state.

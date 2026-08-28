@@ -1,6 +1,5 @@
 package it.unibo.cardhub.model.domain.impl;
 
-import java.util.List;
 import java.util.Objects;
 
 import it.unibo.cardhub.model.domain.api.Deck;
@@ -10,7 +9,7 @@ import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 
 /**
- * Builder for matchState.
+ * Implementation of the MatchStateBuilder.
  */
 public class MatchStateBuilderImpl implements MatchStateBuilder {
         private static final int DEFAULT_MAX_HAND_SIZE = 5;
@@ -45,7 +44,7 @@ public class MatchStateBuilderImpl implements MatchStateBuilder {
         }
 
         /**
-         * {@inheritdoc}
+         * {@inheritDoc}
          */
         @Override
         public MatchStateBuilder maxHandSize(final int maxHandSizeValue) {
@@ -54,7 +53,7 @@ public class MatchStateBuilderImpl implements MatchStateBuilder {
         }
 
         /**
-         * {@inheritdoc}
+         * {@inheritDoc}
          */
         @Override
         public MatchStateBuilder startingHandSize(final int startingHandSizeValue) {
@@ -63,7 +62,7 @@ public class MatchStateBuilderImpl implements MatchStateBuilder {
         }
 
         /**
-         * {@inheritdoc}
+         * {@inheritDoc}
          */
         @Override
         public MatchStateBuilder playfieldSize(final int playfieldSizeValue) {
@@ -72,7 +71,7 @@ public class MatchStateBuilderImpl implements MatchStateBuilder {
         }
 
         /**
-         * {@inheritdoc}
+         * {@inheritDoc}
          */
         @Override
         public MatchState build() {

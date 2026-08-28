@@ -22,7 +22,6 @@ public class PlayfieldImpl implements Playfield {
     /**
      * Playfield constructor.
      * 
-     * @param players of the playfield
      * @param maxFieldSize of the game
      */
     public PlayfieldImpl(final int maxFieldSize) {
