@@ -13,13 +13,6 @@ public interface HomeController extends ScreenController {
     void newMatch();
 
     /**
-     * Creates the instances necessary for the LoadMatch screen.
-     * Then navigates to it.
-     */
-
-    void loadMatch();
-
-    /**
      * Creates the instances necessary for the ManageDecks screen.
      * Then navigates to it.
      */

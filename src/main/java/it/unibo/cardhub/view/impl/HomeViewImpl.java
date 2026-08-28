@@ -43,7 +43,6 @@ public final class HomeViewImpl extends ScreenView implements HomeView {
     private final transient HomeController controller;
 
     private final JButton newMatchBtn;
-    private final JButton loadMatchBtn;
     private final JButton manageDecksBtn;
     private final JButton exitBtn;
 
@@ -57,20 +56,18 @@ public final class HomeViewImpl extends ScreenView implements HomeView {
 
         exitBtn = new CHButton("Exit to desktop");
         newMatchBtn = new CHButton("New Match");
-        loadMatchBtn = new CHButton("Load Match");
         manageDecksBtn = new CHButton("Manage Decks");
 
         setUpListeners();
 
         this.setLayout(new BorderLayout());
         this.add(new NorthPanel(), BorderLayout.NORTH);
-        this.add(new CentralPanel(newMatchBtn, loadMatchBtn, manageDecksBtn), BorderLayout.CENTER);
+        this.add(new CentralPanel(newMatchBtn, manageDecksBtn), BorderLayout.CENTER);
         this.add(new SouthPanel(exitBtn), BorderLayout.SOUTH);
     }
 
     private void setUpListeners() {
         newMatchBtn.addActionListener(e -> onNewMatch());
-        loadMatchBtn.addActionListener(e -> onLoadMatch());
         manageDecksBtn.addActionListener(e -> onManageDecks());
         exitBtn.addActionListener(e -> onExit());
     }
@@ -81,14 +78,6 @@ public final class HomeViewImpl extends ScreenView implements HomeView {
     @Override
     public void onNewMatch() {
         controller.newMatch();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void onLoadMatch() {
-        controller.loadMatch();
     }
 
     /**
@@ -127,9 +116,9 @@ public final class HomeViewImpl extends ScreenView implements HomeView {
     private static class CentralPanel extends CHPanel {
         private static final long serialVersionUID = 1L;
 
-        CentralPanel(final JButton newMatchBtn, final JButton loadMatchBtn, final JButton manageDecksBtn) {
+        CentralPanel(final JButton newMatchBtn, final JButton manageDecksBtn) {
             super.setLayout(new GridLayout(ROWS, COLS));
-            super.add(new MenuPanel(newMatchBtn, loadMatchBtn, manageDecksBtn));
+            super.add(new MenuPanel(newMatchBtn, manageDecksBtn));
             super.add(new HeroPanel());
         }
     }
@@ -148,7 +137,7 @@ public final class HomeViewImpl extends ScreenView implements HomeView {
     private static class MenuPanel extends CHPanel {
         private static final long serialVersionUID = 1L;
 
-        MenuPanel(final JButton newMatchBtn, final JButton loadMatchBtn, final JButton manageDecksBtn) {
+        MenuPanel(final JButton newMatchBtn, final JButton manageDecksBtn) {
             super.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             super.setBorder(BorderFactory.createEmptyBorder(
                 CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD
@@ -156,7 +145,6 @@ public final class HomeViewImpl extends ScreenView implements HomeView {
             super.add(Box.createVerticalGlue());
             super.add(newMatchBtn);
             super.add(Box.createVerticalStrut(STRUT_HEIGHT));
-            super.add(loadMatchBtn);
             super.add(Box.createVerticalStrut(STRUT_HEIGHT));
             super.add(manageDecksBtn);
             super.add(Box.createVerticalGlue());

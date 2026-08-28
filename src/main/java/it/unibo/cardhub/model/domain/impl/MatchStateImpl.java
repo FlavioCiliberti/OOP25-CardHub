@@ -1,6 +1,6 @@
 package it.unibo.cardhub.model.domain.impl;
 
-import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -15,7 +15,8 @@ import it.unibo.cardhub.model.domain.api.Playfield;
  * Match state implementation.
  */
 public class MatchStateImpl implements MatchState {
-    private final List<Player> players;
+
+    private final Map<PlayerEnum, Player> players;
     private final Playfield field;
 
     private MatchStatus status;
@@ -24,22 +25,21 @@ public class MatchStateImpl implements MatchState {
     /**
      * Match state constructor.
      * 
-     * @param players of the match
+     * @param playerOne first player
+     * @param playerTwo second player
      * @param maxFieldSize maximum number of cards on the field per player
-     * @throws IllegalArgumentException if the match has no players
+     * @throws IllegalArgumentException if the maximum field size is invalid
      */
-    public MatchStateImpl(final List<Player> players, final int maxFieldSize) {
-        Objects.requireNonNull(players);
+    public MatchStateImpl(final Player playerOne, final Player playerTwo, final int maxFieldSize) {
+        Objects.requireNonNull(playerOne);
+        Objects.requireNonNull(playerTwo);
 
-        if (players.size() != 2) {
-            throw new IllegalArgumentException("A match needs exactly two players.");
-        }
         if (maxFieldSize <= 0) {
             throw new IllegalArgumentException("Maximum field size must be positive.");
         }
 
-        this.players = List.copyOf(players);
-        this.field = new PlayfieldImpl(players, maxFieldSize);
+        this.players = Map.of(PlayerEnum.PLAYER_ONE, playerOne, PlayerEnum.PLAYER_TWO, playerTwo);
+        this.field = new PlayfieldImpl(maxFieldSize);
 
         this.winner = Optional.empty();
 
@@ -51,16 +51,8 @@ public class MatchStateImpl implements MatchState {
      * {@inheritDoc}
      */
     @Override
-    public List<Player> getPlayers() {
-        return List.copyOf(this.players);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Player getPlayer(final PlayerEnum player) {
-        return this.getPlayers().get(player.getIndex());
+        return players.get(Objects.requireNonNull(player));
     }
 
     /**
@@ -75,40 +67,27 @@ public class MatchStateImpl implements MatchState {
      * {@inheritDoc}
      */
     @Override
-    public void playCard(final Card<?> card, final PlayerEnum playerEnum) {
-        this.getPlayer(playerEnum).playCard(card);
-        field.addCard(playerEnum, card);
+    public void playCard(final Card<?> card, final PlayerEnum player) {
+        this.getPlayer(player).playCard(card);
+        this.field.addCard(player, card);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void moveCardFromFieldToPile(final Card<?> card, final PlayerEnum playerEnum) {
-        field.removeCard(card);
-        this.getPlayer(playerEnum).putInPile(card);
+    public void moveCardFromFieldToPile(final Card<?> card, final PlayerEnum player) {
+        this.field.removeCard(card);
+        this.getPlayer(player).putInPile(card);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public PlayerEnum getEnum(final Player player) {
-        if (players.get(0).equals(player)) {
-            return PlayerEnum.PLAYER_ONE;
-        }
-        if (players.get(1).equals(player)) {
-            return PlayerEnum.PLAYER_TWO;
-        }
-        throw new IllegalArgumentException("No such player");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP",
-                        justification = "Playfield is intentionally exposed to let callers mutate its state"
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP",
+        justification = "Playfield is intentionally exposed to let callers mutate its state"
     )
     public Playfield getPlayfield() {
         return this.field;
@@ -119,7 +98,7 @@ public class MatchStateImpl implements MatchState {
      */
     @Override
     public int getPlayFieldSize() {
-        return field.getMaxCardsPerPlayer();
+        return this.field.getMaxCardsPerPlayer();
     }
 
     /**
@@ -150,16 +129,12 @@ public class MatchStateImpl implements MatchState {
      * {@inheritDoc}
      */
     @Override
-    public void endMatch(final Player player) {
+    public void endMatch(final PlayerEnum player) {
         if (this.status != MatchStatus.RUNNING) {
             throw new IllegalStateException("A winner can only be set while the match is running.");
         }
 
-        if (!this.getPlayers().contains(player)) {
-            throw new IllegalArgumentException("The winner must be a player of this match.");
-        }
-
-        this.winner = Optional.of(player);
+        this.winner = Optional.of(this.getPlayer(player));
         this.status = MatchStatus.FINISHED;
     }
 
@@ -190,7 +165,7 @@ public class MatchStateImpl implements MatchState {
     /**
      * Represents the status of the match.
      */
-    enum MatchStatus {
+    private enum MatchStatus {
         CREATED, RUNNING, FINISHED
     }
 }

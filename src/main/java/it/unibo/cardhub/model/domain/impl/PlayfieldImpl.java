@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import it.unibo.cardhub.model.domain.api.Card;
-import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.domain.api.Playfield;
 import it.unibo.cardhub.model.domain.exceptions.NoSuchCardsException;
@@ -23,10 +22,9 @@ public class PlayfieldImpl implements Playfield {
     /**
      * Playfield constructor.
      * 
-     * @param players of the playfield
      * @param maxFieldSize of the game
      */
-    public PlayfieldImpl(final List<Player> players, final int maxFieldSize) {
+    public PlayfieldImpl(final int maxFieldSize) {
         if (maxFieldSize <= 0) {
             throw new IllegalArgumentException("Maximum field size must be positive.");
         }

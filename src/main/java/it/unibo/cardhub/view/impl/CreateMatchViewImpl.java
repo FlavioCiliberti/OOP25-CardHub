@@ -24,8 +24,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 
 import it.unibo.cardhub.controller.api.CreateMatchController;
-import it.unibo.cardhub.model.logic.GameMode;
 import it.unibo.cardhub.model.logic.api.CardAction;
+import it.unibo.cardhub.model.logic.api.GameMode;
 import it.unibo.cardhub.view.api.CreateMatchView;
 import it.unibo.cardhub.view.components.CHButton;
 import it.unibo.cardhub.view.components.CHLabel;
@@ -351,7 +351,7 @@ public final class CreateMatchViewImpl extends ScreenView implements CreateMatch
                                                                             CHStyles.PADDING_SMALL, CHStyles.PADDING_NONE));
 
         fullGameRadioButton.addActionListener(e -> {
-            selectedGameMode = GameMode.FULL_GAME;
+            selectedGameMode = GameMode.E_CARD;
 
             //Makes the settings panel invisible
             settingsPanel.setVisible(false);
