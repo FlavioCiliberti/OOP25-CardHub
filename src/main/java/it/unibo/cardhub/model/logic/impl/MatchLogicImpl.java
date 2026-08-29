@@ -31,20 +31,36 @@ public class MatchLogicImpl extends AbstractMatchLogic {
     public ComparisonWinner compareCard(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard) {
 
         if (firstPlayerCard.value() > secondPlayerCard.value()) {
-            //player1 winner action
-            this.executeCardAction(firstPlayerCard, PlayerEnum.PLAYER_ONE,
-                                    super.getWinnerCardAction(), super.getMatchState());
-            //player2 loser action
-            this.executeCardAction(secondPlayerCard, PlayerEnum.PLAYER_TWO,
-                                    super.getLoserCardAction(), super.getMatchState());
+            // Player1 winner action
+            this.executeCardAction(
+                firstPlayerCard, 
+                PlayerEnum.PLAYER_ONE,
+                super.getWinnerCardAction(), 
+                super.getMatchState()
+            );
+            // Player2 loser action
+            this.executeCardAction(
+                secondPlayerCard, 
+                PlayerEnum.PLAYER_TWO,
+                super.getLoserCardAction(), 
+                super.getMatchState()
+            );
             return ComparisonWinner.PLAYER_1;
         } else if (firstPlayerCard.value() < secondPlayerCard.value()) {
-            //player2 winner action
-            this.executeCardAction(firstPlayerCard, PlayerEnum.PLAYER_TWO,
-                                    super.getWinnerCardAction(), super.getMatchState());
-            //player1 loser action
-            this.executeCardAction(secondPlayerCard, PlayerEnum.PLAYER_ONE,
-                                    super.getLoserCardAction(), super.getMatchState());
+            // Player1 loser action
+            this.executeCardAction(
+                firstPlayerCard, 
+                PlayerEnum.PLAYER_ONE,
+                super.getLoserCardAction(), 
+                super.getMatchState()
+            );
+            // Player2 winner action
+            this.executeCardAction(
+                secondPlayerCard, 
+                PlayerEnum.PLAYER_TWO,
+                super.getWinnerCardAction(), 
+                super.getMatchState()
+            );
             return ComparisonWinner.PLAYER_2;
         }
         return ComparisonWinner.TIE;
