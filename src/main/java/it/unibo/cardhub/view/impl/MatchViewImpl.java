@@ -147,8 +147,9 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
             playfield.updatePlayerOneDiscardPile(topCard);
         } else if (player == PlayerEnum.PLAYER_TWO) {
             playfield.updatePlayerTwoDiscardPile(topCard);
+        } else {
+            throw new IllegalStateException("Player does not exist");
         }
-        throw new IllegalStateException("Player does not exist");
     }
 
     @Override
