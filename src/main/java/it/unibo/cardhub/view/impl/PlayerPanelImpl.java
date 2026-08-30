@@ -90,7 +90,7 @@ final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
         firstRow.add(handPanelWrapper, mirrored ? BorderLayout.WEST : BorderLayout.EAST);
 
         deckWrapper.add(deckLabel);
-        deckLabel.setPreferredSize(new Dimension(MatchViewImpl.CARD_WIDTH, MatchViewImpl.CARD_HEIGHT));
+        deckLabel.setPreferredSize(new Dimension(ImageResolver.CARD_WIDTH, ImageResolver.CARD_HEIGHT));
         deckLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(final MouseEvent e) {
@@ -118,7 +118,7 @@ final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
         handPanel.removeAll();
         for (final Card<?> card : cards) {
             final JLabel cardLabel = new CHLabel(ImageResolver.resolve(card));
-            cardLabel.setPreferredSize(new Dimension(MatchViewImpl.CARD_WIDTH, MatchViewImpl.CARD_HEIGHT));
+            cardLabel.setPreferredSize(new Dimension(ImageResolver.CARD_WIDTH, ImageResolver.CARD_HEIGHT));
             cardLabel.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseEntered(final MouseEvent e) {
@@ -154,7 +154,7 @@ final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
         handPanel.removeAll();
         for (int i = 0; i < cardCount; i++) {
             final JLabel cardLabel = new CHLabel(ImageResolver.resolveBack());
-            cardLabel.setPreferredSize(new Dimension(MatchViewImpl.CARD_WIDTH, MatchViewImpl.CARD_HEIGHT));
+            cardLabel.setPreferredSize(new Dimension(ImageResolver.CARD_WIDTH, ImageResolver.CARD_HEIGHT));
             handPanel.add(cardLabel);
         }
 

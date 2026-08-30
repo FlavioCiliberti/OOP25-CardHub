@@ -188,6 +188,7 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
 
             cards.forEach(card -> {
                 final CHLabel label = new CHLabel(ImageResolver.resolve(card));
+                label.setPreferredSize(new Dimension(ImageResolver.CARD_WIDTH, ImageResolver.CARD_HEIGHT));
                 label.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(final MouseEvent e) {
@@ -270,6 +271,8 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
                                                 CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD)));
 
             this.pile = new DiscardPileLabel();
+            this.pile.setPreferredSize(new Dimension(ImageResolver.CARD_WIDTH, ImageResolver.CARD_HEIGHT));
+            this.pile.setBackground(CHStyles.primaryColor());
             this.pile.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(final MouseEvent e) {
