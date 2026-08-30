@@ -48,7 +48,7 @@ public final class ImageResolver {
     }
 
     private static ImageIcon load(final String path) {
-        URL url = Objects.requireNonNull(ImageResolver.class.getResource(path), "Image not found: " + path);
+        final URL url = Objects.requireNonNull(ImageResolver.class.getResource(path), "Image not found: " + path);
         return new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(
             CARD_WIDTH,
             CARD_HEIGHT,

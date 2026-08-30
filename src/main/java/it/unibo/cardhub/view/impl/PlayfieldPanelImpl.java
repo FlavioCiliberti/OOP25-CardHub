@@ -3,6 +3,7 @@ package it.unibo.cardhub.view.impl;
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
+import it.unibo.cardhub.view.api.PlayerPanelNotifier;
 import it.unibo.cardhub.view.api.PlayfieldPanel;
 import it.unibo.cardhub.view.components.CHButton;
 import it.unibo.cardhub.view.components.CHLabel;
@@ -56,8 +57,9 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
      * Constructs a new playfield panel.
      * 
      * @param controller the controller that can provide the players
+     * @param notifier the PlayerPanelNotifier to be passed to the child panels
      */
-    PlayfieldPanelImpl(final MatchController controller) {
+    PlayfieldPanelImpl(final MatchController controller, final PlayerPanelNotifier notifier) {
         super(new BorderLayout());
         this.controller = Objects.requireNonNull(controller, "no such controller");
 
@@ -66,8 +68,8 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
             BorderFactory.createEmptyBorder(CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD,
                                             CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD)));
 
-        this.bottomArea = new PlayfieldAreaPanel(controller, PlayerEnum.PLAYER_ONE, this::onSelectionChanged);
-        this.topArea = new PlayfieldAreaPanel(controller, PlayerEnum.PLAYER_TWO, this::onSelectionChanged);
+        this.bottomArea = new PlayfieldAreaPanel(controller, PlayerEnum.PLAYER_ONE, this::onSelectionChanged, notifier);
+        this.topArea = new PlayfieldAreaPanel(controller, PlayerEnum.PLAYER_TWO, this::onSelectionChanged, notifier);
         this.playfieldAreas = new EnumMap<>(PlayerEnum.class);
         this.playfieldAreas.put(PlayerEnum.PLAYER_ONE, this.bottomArea);
         this.playfieldAreas.put(PlayerEnum.PLAYER_TWO, this.topArea);
@@ -165,16 +167,20 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
         private static final long serialVersionUID = 1L;
 
         private final PlayerEnum player;
+        private final transient PlayerPanelNotifier notifier;
         private final transient BiConsumer<PlayerEnum, Optional<Card<?>>> selectionListener;
 
         private transient Optional<CHLabel> selectedLabel = Optional.empty();
         private transient Optional<Card<?>> selectedCard = Optional.empty();
 
         PlayfieldAreaPanel(final MatchController controller, final PlayerEnum player,
-                            final BiConsumer<PlayerEnum, Optional<Card<?>>> selectionListener) {
+                            final BiConsumer<PlayerEnum, Optional<Card<?>>> selectionListener,
+                            final PlayerPanelNotifier notifier) {
             super(new GridLayout(ROWS, controller.getPlayFieldSize(), CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD));
             this.player = Objects.requireNonNull(player, "Player must be provided to PlayfieldAreaPanel");
             this.selectionListener = Objects.requireNonNull(selectionListener, "Selection listener cannot be null");
+
+            this.notifier = notifier;
 
             this.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(CHStyles.primaryColor()),
@@ -193,6 +199,16 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
                     @Override
                     public void mouseClicked(final MouseEvent e) {
                         toggleSelection(card, label);
+                    }
+
+                    @Override
+                    public void mouseEntered(final MouseEvent e) {
+                        notifier.mouseHovered(card, player);
+                    }
+
+                    @Override
+                    public void mouseExited(final MouseEvent e) {
+                        notifier.mouseExited(player);
                     }
                 });
                 this.add(label);
@@ -272,7 +288,6 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
 
             this.pile = new DiscardPileLabel();
             this.pile.setPreferredSize(new Dimension(ImageResolver.CARD_WIDTH, ImageResolver.CARD_HEIGHT));
-            this.pile.setBackground(CHStyles.primaryColor());
             this.pile.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(final MouseEvent e) {

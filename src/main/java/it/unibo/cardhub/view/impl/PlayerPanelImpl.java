@@ -122,16 +122,12 @@ final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
             cardLabel.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseEntered(final MouseEvent e) {
-                    cardInfoLabel.setText("<html>"
-                                            + "name" //placeholder for card name
-                                            + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Value: "
-                                            + card.value() + "<br>"
-                                            + card.desc() + "</html>");
+                    PlayerPanelImpl.this.updateDescriptionLabel(card);
                 }
 
                 @Override
                 public void mouseExited(final MouseEvent e) {
-                    cardInfoLabel.setText("");
+                    PlayerPanelImpl.this.removeDescription();
                 }
 
                 @Override
@@ -177,5 +173,25 @@ final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
     @Override
     public void addToPanel(final JPanel panel, final Object constraints) {
         panel.add(this, constraints);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void updateDescriptionLabel(final Card<?> card) {
+        cardInfoLabel.setText("<html>"
+                                + card.name().orElse("")
+                                + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Value: "
+                                + card.value() + "<br>"
+                                + card.desc().orElse("") + "</html>");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeDescription() {
+        cardInfoLabel.setText("");
     }
 }

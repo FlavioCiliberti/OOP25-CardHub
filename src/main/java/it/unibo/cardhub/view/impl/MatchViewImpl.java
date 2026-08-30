@@ -54,7 +54,7 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
 
         firstPlayerPanel = new PlayerPanelImpl(controller, PlayerEnum.PLAYER_ONE, true);
         secondPlayerPanel = new PlayerPanelImpl(controller, PlayerEnum.PLAYER_TWO, false);
-        playfield = new PlayfieldPanelImpl(controller);
+        playfield = new PlayfieldPanelImpl(controller, new PlayerPanelNotifierImpl(firstPlayerPanel, secondPlayerPanel));
 
         exitButton = new CHButton("Exit");
         endTurnButton = new CHButton("End Turn");
@@ -182,7 +182,7 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
         this.showPopup(message, "Invalid Action!", JOptionPane.ERROR_MESSAGE);
     }
 
-    private void showPopup(final String content, final String title, int messageType) {
+    private void showPopup(final String content, final String title, final int messageType) {
         JOptionPane.showMessageDialog(
             this,
             content,
