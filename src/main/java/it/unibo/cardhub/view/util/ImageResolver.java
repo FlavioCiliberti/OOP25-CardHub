@@ -13,8 +13,8 @@ import it.unibo.cardhub.model.domain.api.Card;
  */
 public final class ImageResolver {
 
-    private static final String IMAGE_BASE_PATH = "/it/unibo/cardhub/view/";
-    private static final String CARD_BACK_IMAGE = "Back.png";
+    private static final String IMAGE_BASE_PATH = "/it/unibo/cardhub/io/";
+    private static final String CARD_BACK_IMAGE = "/it/unibo/cardhub/view/Back.png";
     private static final Map<String, ImageIcon> CACHE = new ConcurrentHashMap<>();
 
     private ImageResolver() {
@@ -40,8 +40,7 @@ public final class ImageResolver {
      * @throws NullPointerException if the image resource is not found
      */
     public static ImageIcon resolveBack() {
-        final String path = IMAGE_BASE_PATH + CARD_BACK_IMAGE;
-        return CACHE.computeIfAbsent(path, ImageResolver::load);
+        return CACHE.computeIfAbsent(CARD_BACK_IMAGE, ImageResolver::load);
     }
 
     private static ImageIcon load(final String path) {
