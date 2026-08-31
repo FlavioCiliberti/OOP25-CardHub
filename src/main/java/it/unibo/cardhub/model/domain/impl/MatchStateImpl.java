@@ -68,8 +68,8 @@ public class MatchStateImpl implements MatchState {
      */
     @Override
     public void playCard(final Card<?> card, final PlayerEnum player) {
-        this.getPlayer(player).playCard(card);
         this.field.addCard(player, card);
+        this.getPlayer(player).playCard(card);
     }
 
     /**

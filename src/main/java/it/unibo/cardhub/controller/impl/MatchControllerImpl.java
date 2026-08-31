@@ -215,7 +215,7 @@ public class MatchControllerImpl implements MatchController {
             state.playCard(card, owner);
             view.updatePlayfield(owner, state.getPlayfield().getCards(owner));
             view.updateShowingHand(owner, state.getPlayer(owner).getHand().getCards());
-        } catch (final CardCollectionFullException e) {
+        } catch (final IllegalStateException e) {
             view.showInvalidAction(e.getMessage());
         }
     }
