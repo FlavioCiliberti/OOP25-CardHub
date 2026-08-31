@@ -86,7 +86,7 @@ public class MatchStateBuilderImpl implements MatchStateBuilder {
                     player1.drawCard();
                     player2.drawCard();
                 } catch (final CardCollectionFullException e) {
-                    //startingHandSize <= maxHandSize so the exception should never trigger
+                    // startingHandSize <= maxHandSize so the exception should never trigger
                     throw new IllegalStateException("Hand already had cards in it on instantiation", e);
                 }
             }

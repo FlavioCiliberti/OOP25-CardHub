@@ -10,6 +10,7 @@ import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.domain.api.Playfield;
+import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 
 /**
  * Match state implementation.
@@ -59,8 +60,12 @@ public class MatchStateImpl implements MatchState {
      * {@inheritDoc}
      */
     @Override
-    public void drawCard(final PlayerEnum player) {
-        this.getPlayer(player).drawCard();
+    public void drawCard(final PlayerEnum player) throws CardCollectionFullException {
+        try {
+            this.getPlayer(player).drawCard();
+        } catch (CardCollectionFullException e) {
+            throw new CardCollectionFullException("Tried to add a card to a full hand.");
+        }
     }
 
     /**

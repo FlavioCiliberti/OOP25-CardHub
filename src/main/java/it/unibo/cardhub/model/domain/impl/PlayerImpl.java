@@ -49,7 +49,11 @@ public final class PlayerImpl implements Player {
      */
     @Override
     public void putInPile(final Card<?> card) {
-        this.discardPile.addCard(card);
+        try {
+            this.discardPile.addCard(card);
+        } catch (CardCollectionFullException e) {
+            // Discard pile cannot be full
+        }
     }
 
     /**
@@ -70,19 +74,20 @@ public final class PlayerImpl implements Player {
 
     /**
      * {@inheritDoc}
+     * @throws CardCollectionFullException 
      */
     @Override
-    public Card<?> drawCard() {
-        if (this.hand.isFull()) {
-            throw new CardCollectionFullException("The hand exceeded the max amount of cards.");
-        }
-
+    public Card<?> drawCard() throws CardCollectionFullException {
         if (this.deck.isEmpty()) {
             throw new IllegalStateException("Tried to draw with an empty deck");
         }
 
         final Card<?> card = this.deck.drawCard();
-        this.hand.addCard(card);
+        try {
+            this.hand.addCard(card);
+        } catch (CardCollectionFullException e) {
+            throw new CardCollectionFullException("Tried to add a card to a full hand.");
+        }
         return card;
     }
 

@@ -5,7 +5,6 @@ import java.util.Objects;
 
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.Hand;
-import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 import it.unibo.cardhub.model.domain.exceptions.NoSuchCardsException;
 
 /**
@@ -35,28 +34,8 @@ public class HandImpl extends AbstractCardCollection implements Hand {
      * {@inheritDoc}
      */
     @Override
-    public void addCard(final Card<?> card) {
-        if (isFull()) {
-            throw new CardCollectionFullException("The hand is full.");
-        }
-
-        super.addCard(card);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public int getMaxSize() {
         return this.maxSize;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isFull() {
-        return this.size() >= this.maxSize;
     }
 
     /**
@@ -69,5 +48,13 @@ public class HandImpl extends AbstractCardCollection implements Hand {
         }
 
         return card;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected boolean isFull() {
+        return this.size() >= this.maxSize;
     }
 }

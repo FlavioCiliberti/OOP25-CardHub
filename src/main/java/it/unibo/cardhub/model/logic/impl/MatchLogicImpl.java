@@ -3,6 +3,7 @@ package it.unibo.cardhub.model.logic.impl;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
+import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 
@@ -26,55 +27,76 @@ public class MatchLogicImpl extends AbstractMatchLogic {
 
     /**
      * {@inheritDoc}
+     * @throws CardCollectionFullException 
      */
     @Override
-    public ComparisonWinner compareCard(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard) {
+    public ComparisonWinner compareCard(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard) throws CardCollectionFullException {
 
         if (firstPlayerCard.value() > secondPlayerCard.value()) {
             // Player1 winner action
-            this.executeCardAction(
-                firstPlayerCard, 
-                PlayerEnum.PLAYER_ONE,
-                super.getWinnerCardAction(), 
-                super.getMatchState()
-            );
+            try {
+                this.executeCardAction(
+                    firstPlayerCard, 
+                    PlayerEnum.PLAYER_ONE,
+                    super.getWinnerCardAction(), 
+                    super.getMatchState()
+                );
+            } catch (CardCollectionFullException e) {
+                throw new CardCollectionFullException("Tried to add a card to a full hand.");
+            }
             // Player2 loser action
-            this.executeCardAction(
-                secondPlayerCard, 
-                PlayerEnum.PLAYER_TWO,
-                super.getLoserCardAction(), 
-                super.getMatchState()
-            );
+            try {
+                this.executeCardAction(
+                    secondPlayerCard, 
+                    PlayerEnum.PLAYER_TWO,
+                    super.getLoserCardAction(), 
+                    super.getMatchState()
+                );
+            } catch (CardCollectionFullException e) {
+                throw new CardCollectionFullException("Tried to add a card to a full hand.");
+            }
             return ComparisonWinner.PLAYER_1;
         } else if (firstPlayerCard.value() < secondPlayerCard.value()) {
             // Player1 loser action
-            this.executeCardAction(
-                firstPlayerCard, 
-                PlayerEnum.PLAYER_ONE,
-                super.getLoserCardAction(), 
-                super.getMatchState()
-            );
+            try {
+                this.executeCardAction(
+                    firstPlayerCard, 
+                    PlayerEnum.PLAYER_ONE,
+                    super.getLoserCardAction(), 
+                    super.getMatchState()
+                );
+            } catch (CardCollectionFullException e) {
+                throw new CardCollectionFullException("Tried to add a card to a full hand.");
+            }
             // Player2 winner action
-            this.executeCardAction(
-                secondPlayerCard, 
-                PlayerEnum.PLAYER_TWO,
-                super.getWinnerCardAction(), 
-                super.getMatchState()
-            );
+            try {
+                this.executeCardAction(
+                    secondPlayerCard, 
+                    PlayerEnum.PLAYER_TWO,
+                    super.getWinnerCardAction(), 
+                    super.getMatchState()
+                );
+            } catch (CardCollectionFullException e) {
+                throw new CardCollectionFullException("Tried to add a card to a full hand.");
+            }
             return ComparisonWinner.PLAYER_2;
         }
         return ComparisonWinner.TIE;
     }
 
     private void executeCardAction(final Card<?> card, final PlayerEnum player,
-                                    final CardAction action, final MatchState matchState) {
+                                    final CardAction action, final MatchState matchState) throws CardCollectionFullException {
 
         if (action == CardAction.TO_PILE) {
             matchState.getPlayfield().removeCard(card);
             matchState.getPlayer(player).putInPile(card);
         } else if (action == CardAction.TO_HAND) {
             matchState.getPlayfield().removeCard(card);
-            matchState.getPlayer(player).getHand().addCard(card);
+            try {
+                matchState.getPlayer(player).getHand().addCard(card);
+            } catch (CardCollectionFullException e) {
+                throw new CardCollectionFullException("Tried to add a card to a full hand.");
+            }
         }
     }
 

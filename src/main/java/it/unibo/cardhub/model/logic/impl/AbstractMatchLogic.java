@@ -44,7 +44,7 @@ public abstract class AbstractMatchLogic implements MatchLogic {
      * {@inheritDoc}
      */
     @Override
-    public abstract ComparisonWinner compareCard(Card<?> firstPlayerCard, Card<?> secondPlayerCard);
+    public abstract ComparisonWinner compareCard(Card<?> firstPlayerCard, Card<?> secondPlayerCard) throws CardCollectionFullException;
 
     /**
      * {@inheritDoc}
@@ -58,8 +58,7 @@ public abstract class AbstractMatchLogic implements MatchLogic {
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("PMD.EmptyCatchBlock")
-    public void changeTurn() {
+    public void changeTurn() throws CardCollectionFullException {
         if (currentPlayer == PlayerEnum.PLAYER_ONE) {
             currentPlayer = PlayerEnum.PLAYER_TWO;
         } else {
@@ -68,8 +67,8 @@ public abstract class AbstractMatchLogic implements MatchLogic {
         if (autoDraw) {
             try {
                 matchState.drawCard(this.getCurrentPlayer());
-            } catch (final CardCollectionFullException e) {
-                // Expected: the player doesn't draw if their hand is already full
+            } catch (CardCollectionFullException e) {
+                throw new CardCollectionFullException("Tried to add a card to a full hand.");
             }
         }
     }
