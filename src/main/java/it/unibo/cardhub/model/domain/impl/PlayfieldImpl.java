@@ -14,7 +14,7 @@ import it.unibo.cardhub.model.domain.exceptions.NoSuchCardsException;
 /**
  * Playfield implementation.
  */
-public class PlayfieldImpl implements Playfield {
+public class PlayfieldImpl implements Playfield, Cloneable {
 
     private final Map<PlayerEnum, List<Card<?>>> playerCards;
     private final int maxFieldSize;
@@ -101,5 +101,17 @@ public class PlayfieldImpl implements Playfield {
     @Override
     public List<Card<?>> getAllCards() {
         return this.playerCards.values().stream().flatMap(List::stream).toList();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Playfield clone() {
+        try {
+            return (Playfield) super.clone();
+        } catch (final CloneNotSupportedException e) {
+            throw new AssertionError(e);
+        }
     }
 }

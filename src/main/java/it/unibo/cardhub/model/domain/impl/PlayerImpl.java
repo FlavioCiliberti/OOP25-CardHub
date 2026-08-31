@@ -140,6 +140,9 @@ public final class PlayerImpl implements Player {
         return this.discardPile.isEmpty();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getDeckCount() {
         return this.deck.size();

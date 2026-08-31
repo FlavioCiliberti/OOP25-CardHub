@@ -90,7 +90,7 @@ public class MatchStateImpl implements MatchState {
         justification = "Playfield is intentionally exposed to let callers mutate its state"
     )
     public Playfield getPlayfield() {
-        return this.field;
+        return ((PlayfieldImpl) this.field).clone();
     }
 
     /**
