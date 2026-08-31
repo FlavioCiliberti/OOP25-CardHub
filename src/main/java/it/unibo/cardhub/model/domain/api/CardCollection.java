@@ -13,7 +13,7 @@ public interface CardCollection {
      * Adds a card to another card collection.
      * 
      * @param card to be added
-     * @throws CardCollectionFullException if card collection is full
+     * @throws CardCollectionFullException if the card collection is full
      */
     void addCard(Card<?> card) throws CardCollectionFullException;
 

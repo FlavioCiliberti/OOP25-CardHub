@@ -42,11 +42,11 @@ public interface MatchState {
     void moveCardFromFieldToPile(Card<?> card, PlayerEnum player);
 
     /**
-     * Returns the state of the playfield.
+     * Removes a card from the field.
      * 
-     * @return the playfield
+     * @param card the card to be removed
      */
-    Playfield getPlayfield();
+    void removeCardFromField(Card<?> card);
 
     /**
      * Returns playField size (per player).

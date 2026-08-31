@@ -48,11 +48,12 @@ public final class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("PMD.EmptyCatchBlock")
     public void putInPile(final Card<?> card) {
         try {
             this.discardPile.addCard(card);
         } catch (CardCollectionFullException e) {
-            // Discard pile cannot be full
+            // Cannot occur: DiscardPileImpl.isFull() always returns false
         }
     }
 
@@ -73,21 +74,21 @@ public final class PlayerImpl implements Player {
     }
 
     /**
-     * {@inheritDoc}
-     * @throws CardCollectionFullException 
+     * {@inheritDoc} 
      */
     @Override
     public Card<?> drawCard() throws CardCollectionFullException {
+        if (this.hand.size() >= this.hand.getMaxSize()) {
+            throw new CardCollectionFullException("Tried to add a card to a full hand.");
+        }
+
         if (this.deck.isEmpty()) {
             throw new IllegalStateException("Tried to draw with an empty deck");
         }
 
         final Card<?> card = this.deck.drawCard();
-        try {
-            this.hand.addCard(card);
-        } catch (CardCollectionFullException e) {
-            throw new CardCollectionFullException("Tried to add a card to a full hand.");
-        }
+        this.hand.addCard(card);
+
         return card;
     }
 
@@ -152,5 +153,4 @@ public final class PlayerImpl implements Player {
     public int getDeckCount() {
         return this.deck.size();
     }
-
 }

@@ -16,6 +16,7 @@ import it.unibo.cardhub.model.domain.attributes.ECard;
 import it.unibo.cardhub.model.domain.attributes.Pokemon;
 import it.unibo.cardhub.model.domain.attributes.Suit;
 import it.unibo.cardhub.model.domain.attributes.YuGiOh;
+import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 import it.unibo.cardhub.model.domain.impl.CardImpl;
 import it.unibo.cardhub.model.domain.impl.DeckImpl;
 
@@ -51,14 +52,18 @@ public final class DeckFactoryImpl implements DeckFactory {
 
         for (final Suit suit : Suit.values()) {
             for (int value = 1; value <= 10; value++) {
-                deck.addCard(new CardImpl<>(
-                    suit.name() + "_" + value,
-                    Optional.empty(), 
-                    suit, 
-                    value, 
-                    Optional.empty(), 
-                    suit.name() + "_" + value + ".png")
-                );
+                try {
+                    deck.addCard(new CardImpl<>(
+                        suit.name() + "_" + value,
+                        Optional.empty(), 
+                        suit, 
+                        value, 
+                        Optional.empty(), 
+                        suit.name() + "_" + value + ".png")
+                    );
+                } catch (CardCollectionFullException e) {
+                    // Deck is never full
+                }
             }
         }
 

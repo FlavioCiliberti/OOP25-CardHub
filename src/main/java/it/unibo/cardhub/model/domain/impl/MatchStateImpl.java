@@ -61,11 +61,7 @@ public class MatchStateImpl implements MatchState {
      */
     @Override
     public void drawCard(final PlayerEnum player) throws CardCollectionFullException {
-        try {
-            this.getPlayer(player).drawCard();
-        } catch (CardCollectionFullException e) {
-            throw new CardCollectionFullException("Tried to add a card to a full hand.");
-        }
+        this.getPlayer(player).drawCard();
     }
 
     /**
@@ -73,6 +69,10 @@ public class MatchStateImpl implements MatchState {
      */
     @Override
     public void playCard(final Card<?> card, final PlayerEnum player) {
+        if (!this.field.canAddCard(player)) {
+            throw new IllegalStateException("The player cannot add more cards to the field.");
+        }
+
         this.getPlayer(player).playCard(card);
         this.field.addCard(player, card);
     }
@@ -90,12 +90,8 @@ public class MatchStateImpl implements MatchState {
      * {@inheritDoc}
      */
     @Override
-    @SuppressFBWarnings(
-        value = "EI_EXPOSE_REP",
-        justification = "Playfield is intentionally exposed to let callers mutate its state"
-    )
-    public Playfield getPlayfield() {
-        return ((PlayfieldImpl) this.field).clone();
+    public void removeCardFromField(final Card<?> card) {
+        this.field.removeCard(card);
     }
 
     /**

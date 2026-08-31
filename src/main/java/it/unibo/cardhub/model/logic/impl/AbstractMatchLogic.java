@@ -64,12 +64,9 @@ public abstract class AbstractMatchLogic implements MatchLogic {
         } else {
             currentPlayer = PlayerEnum.PLAYER_ONE;
         }
+
         if (autoDraw) {
-            try {
-                matchState.drawCard(this.getCurrentPlayer());
-            } catch (CardCollectionFullException e) {
-                throw new CardCollectionFullException("Tried to add a card to a full hand.");
-            }
+            matchState.drawCard(this.getCurrentPlayer());
         }
     }
 

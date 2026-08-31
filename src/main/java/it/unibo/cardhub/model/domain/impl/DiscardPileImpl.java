@@ -52,12 +52,13 @@ public class DiscardPileImpl extends AbstractCardCollection implements DiscardPi
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("PMD.EmptyCatchBlock")
     public void reshuffleIntoDeck(final Deck deck) {
         this.getMutableCards().forEach(c -> {
             try {
                 deck.addCard(c);
             } catch (CardCollectionFullException e) {
-                // Deck is never full
+                // Cannot occur: DeckImpl is never full
             }
         });
         this.getMutableCards().clear();

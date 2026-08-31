@@ -23,8 +23,13 @@ public class HandImpl extends AbstractCardCollection implements Hand {
      */
     public HandImpl(final List<? extends Card<?>> cards, final int maxSize) {
         super(Objects.requireNonNull(cards));
+
         if (maxSize <= 0) {
             throw new IllegalArgumentException("Maximum hand size must be positive.");
+        }
+
+        if (cards.size() > maxSize) {
+            throw new IllegalArgumentException("Initial hand size cannot exceed maximum hand size.");
         }
 
         this.maxSize = maxSize;
