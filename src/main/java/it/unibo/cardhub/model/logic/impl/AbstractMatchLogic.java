@@ -6,6 +6,7 @@ import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
+import it.unibo.cardhub.model.domain.exceptions.EmptyCardCollectionException;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
@@ -68,8 +69,8 @@ public abstract class AbstractMatchLogic implements MatchLogic {
         if (autoDraw) {
             try {
                 matchState.drawCard(this.getCurrentPlayer());
-            } catch (final CardCollectionFullException e) {
-                // Expected: the player doesn't draw if their hand is already full
+            } catch (final CardCollectionFullException | EmptyCardCollectionException e) {
+                // Expected: the player doesn't draw if their hand is already full or the deck is empty
             }
         }
     }

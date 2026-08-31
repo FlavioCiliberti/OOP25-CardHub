@@ -5,7 +5,7 @@ cards:
       type: Saiyan
       rarity: SR
     value: 40_000
-    description: "WHEN ATTACKING: play 1 Card with a cost of 4 or less from your hand"
+    description: "WHEN ATTACKING: play 1 Card with a value of 15.000 or less from your hand."
     image: Black.png
 
   - id: dragonball-002
@@ -14,7 +14,7 @@ cards:
       type: Saiyan
       rarity: SR
     value: 40_000
-    description: "WHEN ATTACKING: play 1 Card with a cost of 4 or less from your hand"
+    description: "WHEN ATTACKING: play 1 Card with a value of 15.000 or less from your hand."
     image: Black.png
 
   - id: dragonball-003
@@ -23,7 +23,7 @@ cards:
       type: Kai
       rarity: UC
     value: 5_000
-    description: "ON PLAY: move 1 opponent Card with a cost of 1 to their discard pile"
+    description: "ON PLAY: move 1 opponent Card with a value of 5.000 to their discard pile."
     image: Zamasu.png
 
   - id: dragonball-004
@@ -32,7 +32,7 @@ cards:
       type: Kai
       rarity: UC
     value: 5_000
-    description: "ON PLAY: move 1 opponent Card with a cost of 1 to their discard pile"
+    description: "ON PLAY: move 1 opponent Card with a value of 5.000 to their discard pile."
     image: Zamasu.png
 
   - id: dragonball-005
@@ -41,7 +41,7 @@ cards:
       type: Saiyan/Earthling
       rarity: SR
     value: 20_000
-    description: "ON PLAY: choose 1 Card with a cost of 5 or less and put it in the discard pile"
+    description: "ON PLAY: choose 1 Card with a value of 20.000 or less and put it in the discard pile."
     image: TrunksSR.png
 
   - id: dragonball-006
@@ -50,7 +50,7 @@ cards:
       type: Saiyan/Earthling
       rarity: SR
     value: 20_000
-    description: "ON PLAY: choose 1 Card with a cost of 5 or less and put it in the discard pile"
+    description: "ON PLAY: choose 1 Card with a value of 20.000 or less and put it in the discard pile."
     image: TrunksSR.png
 
   - id: dragonball-007
@@ -59,7 +59,7 @@ cards:
       type: Earthling
       rarity: C
     value: 5_000
-    description: "ON PLAY: draw 1 Card"
+    description: "ON PLAY: draw 1 Card."
     image: Pilaf.png
 
   - id: dragonball-008
@@ -68,7 +68,7 @@ cards:
       type: Saiyan/Earthling
       rarity: UC
     value: 20_000
-    description: "ON ATTACK: play 1 Gotenks with a cost of 4 from your hand"
+    description: "ON ATTACK: play 1 Gotenks with a value of 15.000 from your hand."
     image: Gotenks.png
 
   - id: dragonball-009
@@ -77,7 +77,7 @@ cards:
       type: Universe
       rarity: R
     value: 20_000
-    description: "ON PLAY: shuffle every other Card in their owner's deck"
+    description: "ON PLAY: shuffle every other Card in their owner's deck."
     image: Zeno.png
 
   - id: dragonball-010
@@ -86,7 +86,7 @@ cards:
       type: Earthling
       rarity: R
     value: 5_000
-    description: "ON PLAY: play 1 skill=less Card with a cost of 3 or less"
+    description: "ON PLAY: play 1 skill-less Card with a value of 10.000 or less."
     image: Videl.png
 
   - id: dragonball-011
@@ -95,7 +95,7 @@ cards:
       type: Saiyan/Potara
       rarity: SR
     value: 25_000
-    description: "ON PLAY: reduce the cost of all other Cards by 1, then put 1 Card in the discard Pile"
+    description: "ON PLAY: put 1 Card in the discard Pile."
     image: Vegito.png
 
   - id: dragonball-012
@@ -104,7 +104,7 @@ cards:
       type: Earthling
       rarity: C
     value: 5_000
-    description: "ON PLAY: reduce the cost of one Card by 1"
+    description: "ON PLAY: draw 1 Card."
     image: Mai.png
 
   - id: dragonball-013
@@ -113,7 +113,7 @@ cards:
       type: Kai
       rarity: UC
     value: 15_000
-    description: "ON PLAY: choose 1 Card, it gains 10.000 power"
+    description: "ON PLAY: choose 1 Card, it gains 10.000 power."
     image: OldKai.png
 
   - id: dragonball-014
@@ -122,7 +122,7 @@ cards:
       type: Saiyan/Potara
       rarity: SCR
     value: 30_000
-    description: "ON PLAY: move 1 Card to the discard pile. This card can attack twice"
+    description: "ON PLAY: move 1 Card to the discard pile. This card can attack twice."
     image: VegitoBlue.png
 
   - id: dragonball-015
@@ -131,7 +131,7 @@ cards:
       type: Saiyan/Potara
       rarity: SCR
     value: 30_000
-    description: "ON PLAY: move 1 Card to the discard pile. This card can attack twice"
+    description: "ON PLAY: move 1 Card to the discard pile. This card can attack twice."
     image: VegitoBlue.png
 
   - id: dragonball-016
@@ -140,7 +140,7 @@ cards:
       type: Earthling/SatanCity
       rarity: SR
     value: 20_000
-    description: "WHEN ATTACKING: draw 1 Card"
+    description: "WHEN ATTACKING: draw 1 Card."
     image: VidelSR.png
 
   - id: dragonball-017
@@ -149,7 +149,7 @@ cards:
       type: Saiyan/Earthling
       rarity: C
     value: 15_000
-    description: "WHEN ATTACKING: draw 1 Card"
+    description: "WHEN ATTACKING: draw 1 Card."
     image: GotenKid.png
 
   - id: dragonball-018
@@ -158,7 +158,7 @@ cards:
       type: Saiyan/Earthling
       rarity: C
     value: 5_000
-    description: "ON PLAY: draw 1 Card"
+    description: "ON PLAY: draw 1 Card."
     image: TrunksKid.png
 
   - id: dragonball-019
@@ -167,7 +167,7 @@ cards:
       type: Saiyan/Earthling
       rarity: C
     value: 15_000
-    description: "WHEN ATTACKING: draw 1 Card"
+    description: "WHEN ATTACKING: draw 1 Card."
     image: TrunksKidSSJ.png
 
   - id: dragonball-020
@@ -176,5 +176,5 @@ cards:
       type: Saiyan
       rarity: SR
     value: 35_000
-    description: "This card can attack twice"
+    description: "This card can attack twice."
     image: VegetaSSJ.png
