@@ -6,9 +6,9 @@ import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
 
 /**
- * Base implementation of {@link MatchController}.
+ * Implementation of {@link MatchController} for the ECard full game.
  */
-public class MatchControllerImpl extends AbstractMatchController {
+public class ECardMatchController extends AbstractMatchController {
 
     /**
      * Constructor for the controller.
@@ -17,7 +17,7 @@ public class MatchControllerImpl extends AbstractMatchController {
      * @param logic match logic
      * @param navigator screen navigator
      */
-    public MatchControllerImpl(final MatchState state, final MatchLogic logic, final Navigator navigator) {
+    public ECardMatchController(final MatchState state, final MatchLogic logic, final Navigator navigator) {
         super(state, logic, navigator);
     }
 
@@ -26,7 +26,8 @@ public class MatchControllerImpl extends AbstractMatchController {
      */
     @Override
     protected void onEndTurn() {
-        getLogic().changeTurn();
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'onEndTurn'");
     }
 
 }

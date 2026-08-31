@@ -47,7 +47,12 @@ public abstract class AbstractMatchController implements MatchController {
      * {@inheritDoc}
      */
     @Override
-    public abstract void endTurn();
+    public void endTurn() {
+        getMatchView().updateHiddenHand(getTurnPlayer(), 
+                            getState().getPlayer(getTurnPlayer()).getHand().size());
+        onEndTurn();
+        getMatchView().showCurrentPlayer(getTurnPlayer());
+    }
 
     /**
      * {@inheritDoc}
@@ -193,6 +198,15 @@ public abstract class AbstractMatchController implements MatchController {
     public void goToHome() {
         navigator.goHome();
     }
+
+    /**
+     * Action to be performed during the change of a turn.
+     * 
+     * <p>this happens after the previous player hand gets covered 
+     * but before the next player's turn notification shows up.
+     * </p>
+     */
+    protected abstract void onEndTurn();
 
     /**
      * Match state getter.
