@@ -80,7 +80,7 @@ public class MatchStateBuilderImpl implements MatchStateBuilder {
             final Player player2 = new PlayerImpl(secondPlayerName, maxHandSize,
                                                     startingHandSize, secondPlayerDeck);
 
-            //draw initial cards
+            // Draw initial cards
             for (int i = 0; i < startingHandSize; i++) {
                 try {
                     player1.drawCard();
@@ -90,6 +90,10 @@ public class MatchStateBuilderImpl implements MatchStateBuilder {
                     throw new IllegalStateException("Hand already had cards in it on instantiation", e);
                 }
             }
+
+            // Shuffle dekcs
+            player1.getDeck().shuffle();
+            player2.getDeck().shuffle();
 
             return new MatchStateImpl(player1, player2, playfieldSize);
         }

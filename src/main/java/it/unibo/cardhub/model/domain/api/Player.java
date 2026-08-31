@@ -42,18 +42,25 @@ public interface Player {
     void shufflePileIntoDeck();
 
     /**
-     * A getter for the player's name.
+     * Returns the player's name.
      * 
      * @return the player's name
      */
     String getName();
 
     /**
-     * A getter for the player's hand.
+     * Returns the player's hand.
      * 
      * @return the player's hand
      */
     Hand getHand();
+
+    /**
+     * Returns the player's deck.
+     * 
+     * @return the player's deck
+     */
+    Deck getDeck();
 
     /**
      * Checks if the player's deck is empty.
@@ -70,7 +77,7 @@ public interface Player {
     boolean hasEmptyDiscardPile();
 
     /**
-     * Gets the current size of the deck.
+     * Returns the current size of the deck.
      * 
      * @return deck size
      */
