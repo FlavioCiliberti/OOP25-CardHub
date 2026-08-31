@@ -28,9 +28,6 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
     public static final int WIDTH = 1200;
     public static final int HEIGHT = 960;
 
-    static final int CARD_WIDTH = 66;
-    static final int CARD_HEIGHT = 96;
-
     private static final long serialVersionUID = 1L;
 
     private final JPanel matchAreaPanel;
@@ -57,7 +54,7 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
 
         firstPlayerPanel = new PlayerPanelImpl(controller, PlayerEnum.PLAYER_ONE, true);
         secondPlayerPanel = new PlayerPanelImpl(controller, PlayerEnum.PLAYER_TWO, false);
-        playfield = new PlayfieldPanelImpl(controller);
+        playfield = new PlayfieldPanelImpl(controller, new PlayerPanelNotifierImpl(firstPlayerPanel, secondPlayerPanel));
 
         exitButton = new CHButton("Exit");
         endTurnButton = new CHButton("End Turn");
@@ -165,12 +162,7 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
      */
     @Override
     public void showCurrentPlayer(final PlayerEnum player) {
-        JOptionPane.showMessageDialog(
-            this,
-            "It's" + controller.getPlayerName(player) + "'s turn",
-            "Turn Start",
-            JOptionPane.INFORMATION_MESSAGE
-        );
+        this.showPopup("It's " + controller.getPlayerName(player) + "'s turn", "Turn Start", JOptionPane.INFORMATION_MESSAGE);
         controller.startTurn();
     }
 
@@ -179,12 +171,7 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
      */
     @Override
     public void showMatchEnded(final PlayerEnum winner) {
-        JOptionPane.showMessageDialog(
-            this,
-            controller.getPlayerName(winner) + " Wins!",
-            "Match Over",
-            JOptionPane.INFORMATION_MESSAGE
-        );
+        this.showPopup(controller.getPlayerName(winner) + " Wins!", "Match Over", JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
@@ -192,11 +179,15 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
      */
     @Override
     public void showInvalidAction(final String message) {
+        this.showPopup(message, "Invalid Action!", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void showPopup(final String content, final String title, final int messageType) {
         JOptionPane.showMessageDialog(
             this,
-            message,
-            "Invalid Action!",
-            JOptionPane.ERROR_MESSAGE
+            content,
+            title,
+            messageType
         );
     }
 }

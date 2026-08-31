@@ -1,5 +1,7 @@
 package it.unibo.cardhub.view.util;
 
+import java.awt.Image;
+import java.net.URL;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,6 +14,8 @@ import it.unibo.cardhub.model.domain.api.Card;
  * A utility class for resolving images associated with cards.
  */
 public final class ImageResolver {
+    public static final int CARD_WIDTH = 66;
+    public static final int CARD_HEIGHT = 96;
 
     private static final String IMAGE_BASE_PATH = "/it/unibo/cardhub/io/";
     private static final String CARD_BACK_IMAGE = "/it/unibo/cardhub/view/Back.png";
@@ -44,7 +48,12 @@ public final class ImageResolver {
     }
 
     private static ImageIcon load(final String path) {
-        return new ImageIcon(Objects.requireNonNull(ImageResolver.class.getResource(path), "Image not found: " + path));
+        final URL url = Objects.requireNonNull(ImageResolver.class.getResource(path), "Image not found: " + path);
+        return new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(
+            CARD_WIDTH,
+            CARD_HEIGHT,
+            Image.SCALE_SMOOTH
+        ));
     }
 
 }
