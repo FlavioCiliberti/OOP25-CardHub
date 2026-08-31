@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import it.unibo.cardhub.model.domain.api.Card;
-import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.domain.api.Playfield;
 import it.unibo.cardhub.model.domain.exceptions.NoSuchCardsException;
@@ -102,5 +101,19 @@ public class PlayfieldImpl implements Playfield {
     @Override
     public List<Card<?>> getAllCards() {
         return this.playerCards.values().stream().flatMap(List::stream).toList();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Playfield copy() {
+        final PlayfieldImpl copy = new PlayfieldImpl(this.maxFieldSize);
+
+        for (final PlayerEnum player : PlayerEnum.values()) {
+            copy.playerCards.get(player).addAll(this.playerCards.get(player));
+        }
+
+        return copy;
     }
 }

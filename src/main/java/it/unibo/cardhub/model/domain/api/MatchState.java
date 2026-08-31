@@ -49,6 +49,13 @@ public interface MatchState {
     void removeCardFromField(Card<?> card);
 
     /**
+     * Returns a copy of the playfield
+     * 
+     * @return a copy of the playfield
+     */
+    Playfield getPlayfield();
+
+    /**
      * Returns playField size (per player).
      * 
      * @return playField size (per player) 

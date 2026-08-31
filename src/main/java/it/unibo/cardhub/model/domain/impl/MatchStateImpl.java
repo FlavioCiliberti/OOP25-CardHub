@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.Player;
@@ -92,6 +91,13 @@ public class MatchStateImpl implements MatchState {
     @Override
     public void removeCardFromField(final Card<?> card) {
         this.field.removeCard(card);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Playfield getPlayfield() {
+        return this.field.copy();
     }
 
     /**
