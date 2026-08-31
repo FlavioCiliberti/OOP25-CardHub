@@ -243,7 +243,11 @@ public class MatchControllerImpl implements MatchController {
             case NONE:
                 return;
             case TO_HAND:
-                view.updateShowingHand(player, state.getPlayer(player).getHand().getCards());
+                if (player == getTurnPlayer()) {
+                    view.updateShowingHand(player, state.getPlayer(player).getHand().getCards());
+                } else {
+                    view.updateHiddenHand(player, state.getPlayer(player).getHand().size());
+                }
                 break;
             case TO_PILE:
                 view.updateDiscardPile(player, state.getPlayer(player).peekDiscardPile());
