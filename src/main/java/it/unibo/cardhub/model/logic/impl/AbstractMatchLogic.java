@@ -5,11 +5,6 @@ import java.util.Objects;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
-<<<<<<< HEAD
-=======
-import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
-import it.unibo.cardhub.model.domain.exceptions.EmptyCardCollectionException;
->>>>>>> development
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
