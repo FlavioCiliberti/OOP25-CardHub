@@ -68,8 +68,8 @@ public class MatchStateImpl implements MatchState {
      */
     @Override
     public void playCard(final Card<?> card, final PlayerEnum player) {
-        this.getPlayer(player).playCard(card);
         this.field.addCard(player, card);
+        this.getPlayer(player).playCard(card);
     }
 
     /**
@@ -79,6 +79,15 @@ public class MatchStateImpl implements MatchState {
     public void moveCardFromFieldToPile(final Card<?> card, final PlayerEnum player) {
         this.field.removeCard(card);
         this.getPlayer(player).putInPile(card);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void moveCardFromFieldToDeck(final Card<?> card, final PlayerEnum player) {
+        this.field.removeCard(card);
+        this.getPlayer(player).putInDeck(card);
     }
 
     /**

@@ -30,6 +30,13 @@ public interface Player {
     void putInPile(Card<?> card);
 
     /**
+     * Puts a card in the player's deck.
+     * 
+     * @param card the card to be put in the deck
+     */
+    void putInDeck(Card<?> card);
+
+    /**
      * Gets the card on top of the discard pile without taking it out.
      * 
      * @return an optional of the card on the top of the pile

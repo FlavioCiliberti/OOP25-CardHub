@@ -121,10 +121,18 @@ public class MatchControllerImpl implements MatchController {
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("PMD.EmptyCatchBlock")
     public void endTurn() {
         view.updateHiddenHand(getTurnPlayer(), 
                             state.getPlayer(getTurnPlayer()).getHand().size());
         logic.changeTurn();
+        if (logic.isAutoDrawEnabled()) {
+            try {
+                state.drawCard(logic.getCurrentPlayer());
+            } catch (final CardCollectionFullException e) {
+                // Expected: the player doesn't draw if their hand is already full
+            }
+        }
         view.showCurrentPlayer(getTurnPlayer());
     }
 
@@ -168,7 +176,7 @@ public class MatchControllerImpl implements MatchController {
     public void compareCard(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard) {
         Objects.requireNonNull(firstPlayerCard, "no firstPlayerCard provided");
         Objects.requireNonNull(secondPlayerCard, "no secondPlayerCard provided");
-        final ComparisonWinner winner = logic.compareCard(firstPlayerCard, secondPlayerCard);
+        final ComparisonWinner winner = logic.compareCard(firstPlayerCard, secondPlayerCard, state);
         switch (winner) {
             case TIE:
                 break;
@@ -241,8 +249,8 @@ public class MatchControllerImpl implements MatchController {
         switch (action) {
             case NONE:
                 return;
-            case TO_HAND:
-                view.updateShowingHand(player, state.getPlayer(player).getHand().getCards());
+            case TO_DECK:
+                view.updateDeck(player, state.getPlayer(player).getDeckCount());
                 break;
             case TO_PILE:
                 view.updateDiscardPile(player, state.getPlayer(player).peekDiscardPile());
