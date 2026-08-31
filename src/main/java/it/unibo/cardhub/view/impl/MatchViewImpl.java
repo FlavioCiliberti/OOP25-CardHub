@@ -71,6 +71,12 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
         topPanel.setBorder(BorderFactory.createEmptyBorder(CHStyles.PADDING_SMALL, CHStyles.PADDING_NONE,
                                                             CHStyles.PADDING_NONE, CHStyles.PADDING_SMALL));
         topPanel.add(exitButton);
+        exitButton.addActionListener(e -> {
+            if (confirmDialog("Are you sure you want to exit?", "Exit")) {
+                controller.goToHome();
+            }
+        });
+
         this.add(topPanel, BorderLayout.NORTH);
 
         this.managePlayField();
@@ -90,7 +96,9 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
 
         bottomPanel.add(concedeButton);
         concedeButton.addActionListener(e -> {
-            controller.concede();
+            if (confirmDialog("Are you sure you want to concede?", "Concede")) {
+                controller.concede();
+            }
         });
 
         this.add(bottomPanel, BorderLayout.SOUTH);
@@ -172,6 +180,7 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
     @Override
     public void showMatchEnded(final PlayerEnum winner) {
         this.showPopup(controller.getPlayerName(winner) + " Wins!", "Match Over", JOptionPane.INFORMATION_MESSAGE);
+        controller.goToHome();
     }
 
     /**
@@ -190,4 +199,9 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
             messageType
         );
     }
+
+    private boolean confirmDialog(final String question, final String name) {
+        return JOptionPane.showConfirmDialog(this, question, name, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+    }
+
 }

@@ -135,6 +135,7 @@ public class MatchControllerImpl implements MatchController {
     public void concede() {
         logic.changeTurn();
         state.endMatch(getTurnPlayer());
+        view.showMatchEnded(state.getWinner().get());
     }
 
     /**

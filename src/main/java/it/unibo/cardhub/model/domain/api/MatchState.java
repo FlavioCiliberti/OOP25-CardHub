@@ -94,5 +94,5 @@ public interface MatchState {
      * 
      * @return the winner, if present
      */
-    Optional<Player> getWinner();
+    Optional<PlayerEnum> getWinner();
 }

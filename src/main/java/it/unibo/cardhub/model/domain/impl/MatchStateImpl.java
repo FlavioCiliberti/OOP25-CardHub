@@ -20,7 +20,7 @@ public class MatchStateImpl implements MatchState {
     private final Playfield field;
 
     private MatchStatus status;
-    private Optional<Player> winner;
+    private Optional<PlayerEnum> winner;
 
     /**
      * Match state constructor.
@@ -134,7 +134,7 @@ public class MatchStateImpl implements MatchState {
             throw new IllegalStateException("A winner can only be set while the match is running.");
         }
 
-        this.winner = Optional.of(this.getPlayer(player));
+        this.winner = Optional.of(player);
         this.status = MatchStatus.FINISHED;
     }
 
@@ -142,7 +142,7 @@ public class MatchStateImpl implements MatchState {
      * {@inheritDoc}
      */
     @Override
-    public Optional<Player> getWinner() {
+    public Optional<PlayerEnum> getWinner() {
         return this.winner;
     }
 
