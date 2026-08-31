@@ -75,12 +75,12 @@ public class MatchStateBuilderImpl implements MatchStateBuilder {
          */
         @Override
         public MatchState build() {
-            firstPlayerDeck.shuffle();
-            secondPlayerDeck.shuffle();
             final Player player1 = new PlayerImpl(firstPlayerName, maxHandSize,
                                                     startingHandSize, firstPlayerDeck);
             final Player player2 = new PlayerImpl(secondPlayerName, maxHandSize,
                                                     startingHandSize, secondPlayerDeck);
+            player1.shuffleDeck();
+            player2.shuffleDeck();
 
             //draw initial cards
             for (int i = 0; i < startingHandSize; i++) {

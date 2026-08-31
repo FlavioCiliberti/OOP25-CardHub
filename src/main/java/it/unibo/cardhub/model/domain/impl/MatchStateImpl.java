@@ -69,6 +69,7 @@ public class MatchStateImpl implements MatchState {
     @Override
     public void playCard(final Card<?> card, final PlayerEnum player) {
         this.field.addCard(player, card);
+        this.getPlayer(player).shuffleDeck();
         this.getPlayer(player).playCard(card);
     }
 

@@ -37,6 +37,11 @@ public interface Player {
     void putInDeck(Card<?> card);
 
     /**
+     * Shuffles the deck.
+     */
+    void shuffleDeck();
+
+    /**
      * Gets the card on top of the discard pile without taking it out.
      * 
      * @return an optional of the card on the top of the pile
