@@ -20,7 +20,7 @@ public class MatchStateImpl implements MatchState {
     private final Playfield field;
 
     private MatchStatus status;
-    private Optional<Player> winner;
+    private Optional<PlayerEnum> winner;
 
     /**
      * Match state constructor.
@@ -68,12 +68,8 @@ public class MatchStateImpl implements MatchState {
      */
     @Override
     public void playCard(final Card<?> card, final PlayerEnum player) {
-        if (!this.field.canAddCard(player)) {
-            throw new IllegalStateException("The player cannot add more cards to the field.");
-        }
-
-        this.getPlayer(player).playCard(card);
         this.field.addCard(player, card);
+        this.getPlayer(player).playCard(card);
     }
 
     /**
@@ -133,7 +129,7 @@ public class MatchStateImpl implements MatchState {
             throw new IllegalStateException("A winner can only be set while the match is running.");
         }
 
-        this.winner = Optional.of(this.getPlayer(player));
+        this.winner = Optional.of(player);
         this.status = MatchStatus.FINISHED;
     }
 
@@ -141,7 +137,7 @@ public class MatchStateImpl implements MatchState {
      * {@inheritDoc}
      */
     @Override
-    public Optional<Player> getWinner() {
+    public Optional<PlayerEnum> getWinner() {
         return this.winner;
     }
 

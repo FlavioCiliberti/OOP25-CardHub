@@ -43,6 +43,15 @@ public interface MatchView {
     void updatePlayfield(PlayerEnum player, List<Card<?>> cards);
 
     /**
+     * Updates the playfield showing only face-down cards, without
+     * exposing any card data to the view.
+     *
+     * @param cardCount number of cards on the playfield
+     * @param player the owner of the playfield
+     */
+    void updateHiddenPlayfield(PlayerEnum player, int cardCount);
+
+    /**
      * Refreshes a player's discard pile.
      *
      * @param player the player whose discard pile changed

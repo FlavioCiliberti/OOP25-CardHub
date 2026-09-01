@@ -11,6 +11,7 @@ import it.unibo.cardhub.model.domain.api.DiscardPile;
 import it.unibo.cardhub.model.domain.api.Hand;
 import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
+import it.unibo.cardhub.model.domain.exceptions.EmptyCardCollectionException;
 
 /**
  * Player implementation.
@@ -79,7 +80,7 @@ public final class PlayerImpl implements Player {
         }
 
         if (this.deck.isEmpty()) {
-            throw new IllegalStateException("Tried to draw with an empty deck");
+            throw new EmptyCardCollectionException("Tried to draw with an empty deck");
         }
 
         final Card<?> card = this.deck.drawCard();
