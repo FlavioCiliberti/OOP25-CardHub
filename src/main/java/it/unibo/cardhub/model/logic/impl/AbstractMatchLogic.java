@@ -6,6 +6,7 @@ import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
+import it.unibo.cardhub.model.domain.exceptions.EmptyCardCollectionException;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
@@ -44,7 +45,7 @@ public abstract class AbstractMatchLogic implements MatchLogic {
      * {@inheritDoc}
      */
     @Override
-    public abstract ComparisonWinner compareCard(Card<?> firstPlayerCard, Card<?> secondPlayerCard) throws CardCollectionFullException;
+    public abstract ComparisonWinner compareCard(Card<?> firstPlayerCard, Card<?> secondPlayerCard);
 
     /**
      * {@inheritDoc}
@@ -58,15 +59,19 @@ public abstract class AbstractMatchLogic implements MatchLogic {
      * {@inheritDoc}
      */
     @Override
-    public void changeTurn() throws CardCollectionFullException {
+    @SuppressWarnings("PMD.EmptyCatchBlock")
+    public void changeTurn() {
         if (currentPlayer == PlayerEnum.PLAYER_ONE) {
             currentPlayer = PlayerEnum.PLAYER_TWO;
         } else {
             currentPlayer = PlayerEnum.PLAYER_ONE;
         }
-
         if (autoDraw) {
-            matchState.drawCard(this.getCurrentPlayer());
+            try {
+                matchState.drawCard(this.getCurrentPlayer());
+            } catch (final CardCollectionFullException | EmptyCardCollectionException e) {
+                // Expected: the player doesn't draw if their hand is already full or the deck is empty
+            }
         }
     }
 

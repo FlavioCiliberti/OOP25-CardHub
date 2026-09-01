@@ -2,7 +2,6 @@ package it.unibo.cardhub.model.logic.api;
 
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
-import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 
 /**
  * Handles the match logic.
@@ -14,9 +13,8 @@ public interface MatchLogic {
      * @param firstPlayerCard the card of player1 to be compared
      * @param secondPlayerCard the card of player2 to be compared
      * @return the result of the comparison
-     * @throws CardCollectionFullException if a player's hand is full
      */
-    ComparisonWinner compareCard(Card<?> firstPlayerCard, Card<?> secondPlayerCard) throws CardCollectionFullException;
+    ComparisonWinner compareCard(Card<?> firstPlayerCard, Card<?> secondPlayerCard);
 
     /**
      * Returns the player of the current turn.
@@ -27,9 +25,8 @@ public interface MatchLogic {
 
     /**
      * Passes to the next turn and to the next player.
-     * @throws CardCollectionFullException if the player's hand is full
      */
-    void changeTurn() throws CardCollectionFullException;
+    void changeTurn();
 
     /**
      * Returns the winner of card action.
