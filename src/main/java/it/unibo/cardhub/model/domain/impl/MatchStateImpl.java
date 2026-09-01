@@ -88,14 +88,6 @@ public class MatchStateImpl implements MatchState {
     /**
      * {@inheritDoc}
      */
-    @Override
-    public void removeCardFromField(final Card<?> card) {
-        this.field.removeCard(card);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public Playfield getPlayfield() {
         return this.field.copy();
     }

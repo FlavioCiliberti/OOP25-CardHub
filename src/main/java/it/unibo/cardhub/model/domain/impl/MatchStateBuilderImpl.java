@@ -80,10 +80,6 @@ public class MatchStateBuilderImpl implements MatchStateBuilder {
             final Player player2 = new PlayerImpl(secondPlayerName, maxHandSize,
                                                     startingHandSize, secondPlayerDeck);
 
-            // Shuffle dekcs
-            player1.getDeck().shuffle();
-            player2.getDeck().shuffle();
-
             // Draw initial cards
             for (int i = 0; i < startingHandSize; i++) {
                 try {

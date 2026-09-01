@@ -59,13 +59,6 @@ public interface Player {
     Hand getHand();
 
     /**
-     * Returns the player's deck.
-     * 
-     * @return the player's deck
-     */
-    Deck getDeck();
-
-    /**
      * Checks if the player's deck is empty.
      * 
      * @return {@code true} if the deck is empty

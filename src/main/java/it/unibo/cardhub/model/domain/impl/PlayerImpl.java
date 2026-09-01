@@ -119,17 +119,6 @@ public final class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP",
-                        justification = "Deck is intentionally exposed to let callers mutate its state"
-    )
-    public Deck getDeck() {
-        return this.deck;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public boolean hasEmptyDeck() {
         return this.deck.isEmpty();
     }

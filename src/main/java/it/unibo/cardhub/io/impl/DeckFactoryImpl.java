@@ -51,14 +51,14 @@ public final class DeckFactoryImpl implements DeckFactory {
 
         for (final Suit suit : Suit.values()) {
             for (int value = 1; value <= 10; value++) {
-                    deck.addCard(new CardImpl<>(
-                        suit.name() + "_" + value,
-                        Optional.empty(), 
-                        suit, 
-                        value, 
-                        Optional.empty(), 
-                        suit.name() + "_" + value + ".png")
-                    );
+                deck.addCard(new CardImpl<>(
+                    suit.name() + "_" + value,
+                    Optional.empty(), 
+                    suit, 
+                    value, 
+                    Optional.empty(), 
+                    suit.name() + "_" + value + ".png")
+                );
             }
         }
 
