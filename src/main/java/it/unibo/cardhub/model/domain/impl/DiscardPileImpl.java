@@ -7,7 +7,6 @@ import java.util.Optional;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.Deck;
 import it.unibo.cardhub.model.domain.api.DiscardPile;
-import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 import it.unibo.cardhub.model.domain.exceptions.NoSuchCardsException;
 
 /**
@@ -52,15 +51,8 @@ public class DiscardPileImpl extends AbstractCardCollection implements DiscardPi
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("PMD.EmptyCatchBlock")
     public void reshuffleIntoDeck(final Deck deck) {
-        this.getMutableCards().forEach(c -> {
-            try {
-                deck.addCard(c);
-            } catch (CardCollectionFullException e) {
-                // Cannot occur: DeckImpl is never full
-            }
-        });
+        this.getMutableCards().forEach(deck::addCard);
         this.getMutableCards().clear();
         deck.shuffle();
     }
@@ -69,7 +61,7 @@ public class DiscardPileImpl extends AbstractCardCollection implements DiscardPi
      * {@inheritDoc}
      */
     @Override
-    protected boolean isFull() {
-        return false;
+    public void addCard(Card<?> card) {
+        this.getMutableCards().add(card);
     }
 }

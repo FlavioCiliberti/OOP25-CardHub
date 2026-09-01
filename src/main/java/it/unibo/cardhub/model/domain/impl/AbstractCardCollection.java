@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.CardCollection;
-import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 
 /**
  * Represents an abstract card collection.
@@ -22,18 +21,6 @@ public abstract class AbstractCardCollection implements CardCollection {
      */
     protected AbstractCardCollection(final List<? extends Card<?>> cards) {
         this.cards = new ArrayList<>(Objects.requireNonNull(cards));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void addCard(final Card<?> card) throws CardCollectionFullException {
-        if (this.isFull()) {
-            throw new CardCollectionFullException();
-        }
-
-        this.cards.add(Objects.requireNonNull(card, "No such card."));
     }
 
     /**
@@ -68,11 +55,4 @@ public abstract class AbstractCardCollection implements CardCollection {
     protected List<Card<?>> getMutableCards() {
         return this.cards;
     }
-
-    /**
-     * Checks if the card collection is full.
-     * 
-     * @return {@code true} if the card collection is full
-     */
-    protected abstract boolean isFull();
 }

@@ -50,11 +50,7 @@ public final class PlayerImpl implements Player {
     @Override
     @SuppressWarnings("PMD.EmptyCatchBlock")
     public void putInPile(final Card<?> card) {
-        try {
-            this.discardPile.addCard(card);
-        } catch (CardCollectionFullException e) {
-            // Cannot occur: DiscardPileImpl.isFull() always returns false
-        }
+        this.discardPile.addCard(card);
     }
 
     /**

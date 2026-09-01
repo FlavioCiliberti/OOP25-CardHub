@@ -59,7 +59,7 @@ public class DeckImpl extends AbstractCardCollection implements Deck {
      * {@inheritDoc}
      */
     @Override
-    protected boolean isFull() {
-        return false;
+    public void addCard(Card<?> card) {
+        this.getMutableCards().add(card);
     }
 }
