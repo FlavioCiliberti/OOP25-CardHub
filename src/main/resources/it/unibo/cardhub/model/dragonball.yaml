@@ -1,6 +1,6 @@
 cards:
   - id: dragonball-001
-    name: Black
+    name: Goku Black
     attributes:
       type: Saiyan
       rarity: SR
@@ -9,7 +9,7 @@ cards:
     image: Black.png
 
   - id: dragonball-002
-    name: Black
+    name: Goku Black
     attributes:
       type: Saiyan
       rarity: SR

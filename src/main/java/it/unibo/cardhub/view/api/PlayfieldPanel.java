@@ -35,6 +35,15 @@ public interface PlayfieldPanel {
     void updatePlayfield(PlayerEnum player, List<Card<?>> cards);
 
     /**
+     * Updates the playfield showing only face-down cards, without
+     * exposing any card data to the view.
+     *
+     * @param cardCount number of cards on the playfield
+     * @param player the owner of the playfield
+     */
+    void updateHiddenPlayfield(PlayerEnum player, int cardCount);
+
+    /**
      * Adds this panel to a parent panel.
      * 
      * @param panel the parent panel

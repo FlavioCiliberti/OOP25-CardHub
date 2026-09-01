@@ -1,0 +1,244 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 1048576 bytes for AllocateHeap
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Unscaled Compressed Oops mode in which the Java heap is
+#     placed in the first 4GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 4GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (allocation.cpp:44), pid=28860, tid=11748
+#
+# JRE version:  (21.0+35) (build )
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (21+35-LTS-2513, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -Dorg.gradle.internal.worker.tmpdir=C:\Users\Toba-\OneDrive\Documentos\unibo\OOP\Progetto\CardHub\build\tmp\test\work -javaagent:C:\Users\Toba-\OneDrive\Documentos\unibo\OOP\Progetto\CardHub\build\tmp\.cache\expanded\zip_49786abe1c4ec890a2037eb8852a9679\jacocoagent.jar=destfile=build/jacoco/test.exec,append=true,inclnolocationclasses=false,dumponexit=true,output=file,jmx=false -Xmx512m -Dfile.encoding=UTF-8 -Duser.country=US -Duser.language=en -Duser.variant -ea worker.org.gradle.process.internal.worker.GradleWorkerMain 'Gradle Test Executor 25'
+
+Host: AMD Ryzen 5 5600H with Radeon Graphics         , 12 cores, 15G,  Windows 11 , 64 bit Build 26100 (10.0.26100.9168)
+Time: Mon Aug 31 18:30:26 2026 W. Europe Daylight Time elapsed time: 1.633059 seconds (0d 0h 0m 1s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00000159ed87f240):  JavaThread "Unknown thread" [_thread_in_vm, id=11748, stack(0x0000000100600000,0x0000000100700000) (1024K)]
+
+Stack: [0x0000000100600000,0x0000000100700000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x6c8d39]
+V  [jvm.dll+0x854091]
+V  [jvm.dll+0x85630e]
+V  [jvm.dll+0x8569e3]
+V  [jvm.dll+0x2809a6]
+V  [jvm.dll+0xbea47]
+V  [jvm.dll+0x326da5]
+V  [jvm.dll+0x81c65d]
+V  [jvm.dll+0x3bb2a1]
+V  [jvm.dll+0x805688]
+V  [jvm.dll+0x44ed9e]
+V  [jvm.dll+0x4506a1]
+C  [jli.dll+0x52a3]
+C  [ucrtbase.dll+0x2cd30]
+C  [KERNEL32.DLL+0x2ccb7]
+C  [ntdll.dll+0xaad6c]
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x00007ff8955b7b48, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+Total: 0
+
+Other Threads:
+
+=>0x00000159ed87f240 (exited) JavaThread "Unknown thread"    [_thread_in_vm, id=11748, stack(0x0000000100600000,0x0000000100700000) (1024K)]
+Total: 1
+
+Threads with active compile tasks:
+Total: 0
+
+VM state: not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap address: 0x0000000000000000, size: 0 MB, Compressed Oops mode: 32-bit
+
+CDS archive(s) mapped at: [0x0000000000000000-0x0000000000000000-0x0000000000000000), size 0, SharedBaseAddress: 0x0000000800000000, ArchiveRelocationMode: 1.
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0, Narrow klass range: 0x0
+
+GC Precious Log:
+ CardTable entry size: 512
+ Card Set container configuration: InlinePtr #cards 5 size 8 Array Of Cards #cards 12 size 40 Howl #buckets 4 coarsen threshold 1843 Howl Bitmap #cards 512 size 80 coarsen threshold 460 Card regions per heap region 1 cards per card region 2048
+
+GC Heap History (0 events):
+No events
+
+Dll operation events (1 events):
+Event: 0.203 Loaded shared library C:\Program Files\Java\jdk-21\bin\java.dll
+
+Deoptimization events (0 events):
+No events
+
+Classes loaded (0 events):
+No events
+
+Classes unloaded (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+ZGC Phase Switch (0 events):
+No events
+
+VM Operations (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+0x00007ff6191e0000 - 0x00007ff6191f0000 	C:\Program Files\Java\jdk-21\bin\java.exe
+0x00007ff939900000 - 0x00007ff939b66000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007ff9390b0000 - 0x00007ff939179000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x00007ff936b10000 - 0x00007ff936f0f000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x00007ff936f20000 - 0x00007ff93706c000 	C:\WINDOWS\System32\ucrtbase.dll
+0x00007ff900ff0000 - 0x00007ff901009000 	C:\Program Files\Java\jdk-21\bin\jli.dll
+0x00007ff919c80000 - 0x00007ff919c9b000 	C:\Program Files\Java\jdk-21\bin\VCRUNTIME140.dll
+0x00007ff938f10000 - 0x00007ff938fcc000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x00007ff939380000 - 0x00007ff939429000 	C:\WINDOWS\System32\msvcrt.dll
+0x00007ff937630000 - 0x00007ff9376da000 	C:\WINDOWS\System32\sechost.dll
+0x00007ff937ec0000 - 0x00007ff937fd8000 	C:\WINDOWS\System32\RPCRT4.dll
+0x00007ff937fe0000 - 0x00007ff9381a6000 	C:\WINDOWS\System32\USER32.dll
+0x00007ff9179e0000 - 0x00007ff917c71000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.26100.8972_none_3e0da176e32f9d4b\COMCTL32.dll
+0x00007ff937600000 - 0x00007ff937627000 	C:\WINDOWS\System32\win32u.dll
+0x00007ff939180000 - 0x00007ff9391ab000 	C:\WINDOWS\System32\GDI32.dll
+0x00007ff937420000 - 0x00007ff937549000 	C:\WINDOWS\System32\gdi32full.dll
+0x00007ff937550000 - 0x00007ff9375f3000 	C:\WINDOWS\System32\msvcp_win.dll
+0x00007ff92c550000 - 0x00007ff92c55b000 	C:\WINDOWS\SYSTEM32\VERSION.dll
+0x00007ff939290000 - 0x00007ff9392c2000 	C:\WINDOWS\System32\IMM32.DLL
+0x00007ff921600000 - 0x00007ff92160c000 	C:\Program Files\Java\jdk-21\bin\vcruntime140_1.dll
+0x00007ff8d34d0000 - 0x00007ff8d355e000 	C:\Program Files\Java\jdk-21\bin\msvcp140.dll
+0x00007ff8949f0000 - 0x00007ff895703000 	C:\Program Files\Java\jdk-21\bin\server\jvm.dll
+0x00007ff938550000 - 0x00007ff9385d2000 	C:\WINDOWS\System32\WS2_32.dll
+0x00007ff936990000 - 0x00007ff9369ee000 	C:\WINDOWS\SYSTEM32\POWRPROF.dll
+0x00007ff929370000 - 0x00007ff9293a6000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007ff936970000 - 0x00007ff936985000 	C:\WINDOWS\SYSTEM32\UMPDC.dll
+0x00007ff9357d0000 - 0x00007ff9357eb000 	C:\WINDOWS\SYSTEM32\kernel.appcore.dll
+0x00007ff919c70000 - 0x00007ff919c7a000 	C:\Program Files\Java\jdk-21\bin\jimage.dll
+0x00007ff9341a0000 - 0x00007ff9343e2000 	C:\WINDOWS\SYSTEM32\DBGHELP.DLL
+0x00007ff9381b0000 - 0x00007ff938535000 	C:\WINDOWS\System32\combase.dll
+0x00007ff9376e0000 - 0x00007ff9377b9000 	C:\WINDOWS\System32\OLEAUT32.dll
+0x00007ff916b30000 - 0x00007ff916b6b000 	C:\WINDOWS\SYSTEM32\dbgcore.DLL
+0x00007ff937110000 - 0x00007ff9371bc000 	C:\WINDOWS\System32\bcryptPrimitives.dll
+0x00007ff908cc0000 - 0x00007ff908ccf000 	C:\Program Files\Java\jdk-21\bin\instrument.dll
+0x00007ff900f90000 - 0x00007ff900faf000 	C:\Program Files\Java\jdk-21\bin\java.dll
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Program Files\Java\jdk-21\bin;C:\WINDOWS\SYSTEM32;C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.26100.8972_none_3e0da176e32f9d4b;C:\Program Files\Java\jdk-21\bin\server
+
+VM Arguments:
+jvm_args: -Dorg.gradle.internal.worker.tmpdir=C:\Users\Toba-\OneDrive\Documentos\unibo\OOP\Progetto\CardHub\build\tmp\test\work -javaagent:C:\Users\Toba-\OneDrive\Documentos\unibo\OOP\Progetto\CardHub\build\tmp\.cache\expanded\zip_49786abe1c4ec890a2037eb8852a9679\jacocoagent.jar=destfile=build/jacoco/test.exec,append=true,inclnolocationclasses=false,dumponexit=true,output=file,jmx=false -Xmx512m -Dfile.encoding=UTF-8 -Duser.country=US -Duser.language=en -Duser.variant -ea 
+java_command: worker.org.gradle.process.internal.worker.GradleWorkerMain 'Gradle Test Executor 25'
+java_class_path (initial): C:\\Users\\Toba-\\.gradle\\caches\\9.5.1\\workerMain\\gradle-worker.jar;C:\\Users\\Toba-\\OneDrive\\Documentos\\unibo\\OOP\\Progetto\\CardHub\\build\\classes\\java\\test;C:\\Users\\Toba-\\OneDrive\\Documentos\\unibo\\OOP\\Progetto\\CardHub\\build\\classes\\java\\main;C:\\Users\\Toba-\\OneDrive\\Documentos\\unibo\\OOP\\Progetto\\CardHub\\build\\resources\\main;C:\\Users\\Toba-\\.gradle\\caches\\modules-2\\files-2.1\\com.omertron\\API-OMDB\\1.5\\387ef0612e5e0693d209125681e52a21e2567df4\\API-OMDB-1.5.jar;C:\\Users\\Toba-\\.gradle\\caches\\modules-2\\files-2.1\\org.jooq\\jool\\0.9.15\\2b162c4251820479b336a7437b88fa047ed3e82e\\jool-0.9.15.jar;C:\\Users\\Toba-\\.gradle\\caches\\modules-2\\files-2.1\\org.yaml\\snakeyaml\\2.5\\2d53ddec134280cb384c1e35d094e5f71c1f2316\\snakeyaml-2.5.jar;C:\\Users\\Toba-\\.gradle\\caches\\modules-2\\files-2.1\\ch.qos.logback\\logback-classic\\1.5.34\\e598899bad5824511cd3019299254230468e1fa2\\logback-classic-1.5.34.jar;C:\\Users\\Toba-\\.gradle\\caches\\modules-2\\files-2.1\\org.yamj\\api-common\\2.1\\c7c8855e1149b50ac456a278b8c43a2b7b7cf1fe\\api-common-2.1.jar;C:\\Users\\Toba-\\.gradle\\caches\\modules-2\\files-2.1\\org.slf4j\\slf4j-api\\2.0.18\\78a9e7a37cd6360e0b818e86341b24123d28d4df\\slf4j-api-2.0.18.jar;C:\\Users\\Toba-\\.gradle\\caches\\modules-2\\files-2.1\\org.junit.jupiter\\junit-jupiter-engine\\6.1.0\\82414ee1a0308d2f096c37d317b93b66c13dbb9a\\junit-jupiter-engine-6.1.0.jar;C:\\Users\\Toba-\\.gradle\\caches\\modules-2\\files-2.1\\org.junit.jupiter\\junit-jupiter-api\\6.1.0\\5376d10370f32af4f3b1b7a378906ee58dcdacb3\\junit-jupiter-api-6.1.0.jar;C:\\Users\\Toba-\\.gradle\\caches\\modules-2\\files-2.1\\org.junit.platform\\junit-platform-launcher\\6.1.0\\78124de837a3e0b9e4e32a2c80ba47117f7f8c60\\junit-platform-launcher-6.1.0.jar;C:\\Users\\Toba-\\.gradle\\caches\\modules-2\\files-2.1\\org.junit.platform\\junit-platform-engine\\6.1.0\\754271e8493a0be2838f3500b30971969b8603d0\\junit-platform-engine-6.1.0.jar;C:\\Users\\Toba-\\.gradle\\caches\\modules-2\\files-2.1\\org.junit.platform\\junit-platform-commons\\6.1.0\\3bb0447338b81f4396648c406d3e1c22f65f689\\junit-platform-commons-6.1.0.jar;C:\\Users\\Toba-\\.gradle\\caches\\modules-2\\files-2.1\\org.apache.httpcomponents\\httpclient\\4.5.3\\d1577ae15f01ef5438c5afc62162457c00a34713\\httpclient-4.5.3.jar;C:\\Users\\Toba-\\.gradle\\caches\\modules-2\\files-2.1\\commons-codec\\commons-codec\\1.10\\4b95f4897fa13f2cd904aee711aeafc0c5295cd8\\commons-codec-1.10.jar;C:\\Users\\Toba-\\.gradle\\caches\\modules-2\\files-2.1\\org.apache.commons\\commons-lang3\\3.4\\5fe28b9518e58819180a43a850fbc0dd24b7c050\\commons-lang3-3.4.jar;C:\\Users\\Toba-\\.gradle\\caches\\modules-2\\files-2.1\\com.fasterxml.jackson.core\\jackson-databind\\2.8.7\\6c3257ef458ac58a8da69a6dca3d2a15286d88c8\\jackson-databind-2.8.7.jar;C:\\Users\\Toba-\\.gradle\\caches\\modules-2\\files-2.1\\com.fasterxml.jackson.core\\jackson-core\\2.8.7\\8b46f39c78476fb848c81a49fa807a9e9506dddd\\jackson-core-2.8.7.jar;C:\\Users\\Toba-\\.gradle\\caches\\modules-2\\files-2.1\\com.fasterxml.jackson.core\\jackson-annotations\\2.8.7\\7407d69da9d95d3dcbd17eb9579e2b601889f19\\jackson-annotations-2.8.7.jar;C:\\Users\\Toba-\\.gradle\\caches\\modules-2\\files-2.1\\ch.qos.logback\\logback-core\\1.5.34\\378692f76c337b3325c15bffb89e013dc1f897b4\\logback-core-1.5.34.jar;C:\\Users\\Toba-\\.gradle\\caches\\modules-2\\files-2.1\\org.opentest4j\\opentest4j\\1.3.0\\152ea56b3a72f655d4fd677fc0ef2596c3dd5e6e\\opentest4j-1.3.0.jar;C:\\Users\\Toba-\\.gradle\\caches\\modules-2\\files-2.1\\org.apache.httpcomponents\\httpcore\\4.4.6\\e3fd8ced1f52c7574af952e2e6da0df8df08eb82\\httpcore-4.4.6.jar;C:\\Users\\Toba-\\.gradle\\caches\\modules-2\\files-2.1\\commons-logging\\commons-logging\\1.2\\4bfc12adfe4842bf07b657f0369c4cb522955686\\commons-logging-1.2.jar
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 4                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 3                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 10                                        {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 1048576                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 266338304                                 {product} {ergonomic}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 536870912                                 {product} {command line}
+   size_t MinHeapDeltaBytes                        = 1048576                                   {product} {ergonomic}
+   size_t MinHeapSize                              = 8388608                                   {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 5839372                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122909434                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122909434                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+   size_t SoftMaxHeapSize                          = 536870912                              {manageable} {ergonomic}
+     bool UseCompressedOops                        = true                           {product lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags foldmultilines=false
+ #1: stderr all=off uptime,level,tags foldmultilines=false
+
+Environment Variables:
+PATH=C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\TortoiseGit\bin;C:\Program Files\Git\cmd;C:\Users\Toba-\OneDrive\Documentos\sdk-tool\platform-tools_r34.0.4-windows\platform-tools;C:\Users\Toba-\OneDrive\Documentos\sdk-tool\platform-tools_r34.0.4-windows;C:\Program Files\Java\jdk-21\bin;C:\Program Files\Java\jdk-21;C:\Program Files\dotnet\;C:\php;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Users\Toba-\AppData\Local\nvm;C:\nvm4w\nodejs;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\ProgramData\ComposerSetup\bin;C:\Program Files\NVIDIA Corporation\NVIDIA App\NvDLISR;C:\mingw64\bin;;C:\Program Files\Docker\Docker\resources\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\TortoiseGit\bin;C:\Program Files\Git\cmd;C:\Users\Toba-\AppData\Local\Microsoft\WindowsApps;C:\Users\Toba-\AppD;C:\Users\Toba-\AppData\Local\Microsoft\WindowsApps;C:\Users\Toba-\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Toba-\AppData\Local\nvm;C:\nvm4w\nodejs;C:\Users\Toba-\AppData\Roaming\Composer\vendor\bin;C:\Program Files (x86)\Dr. Memory\bin\;c:\Users\Toba-\.vscode\extensions\vscjava.vscode-java-debug-0.59.0\bundled\scripts\noConfigScripts
+USERNAME=Toba-
+LANG=en_US.UTF-8
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=AMD64 Family 25 Model 80 Stepping 0, AuthenticAMD
+TMP=C:\Users\Toba-\AppData\Local\Temp
+TEMP=C:\Users\Toba-\AppData\Local\Temp
+
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS:
+ Windows 11 , 64 bit Build 26100 (10.0.26100.9168)
+OS uptime: 18 days 13:54 hours
+Hyper-V role detected
+
+CPU: total 12 (initial active 12) (12 cores per cpu, 2 threads per core) family 25 model 80 stepping 0 microcode 0xa50000f, cx8, cmov, fxsr, ht, mmx, 3dnowpref, sse, sse2, sse3, ssse3, sse4a, sse4.1, sse4.2, popcnt, lzcnt, tsc, tscinvbit, avx, avx2, aes, erms, clmul, bmi1, bmi2, adx, sha, fma, vzeroupper, clflush, clflushopt, hv, rdtscp, rdpid, fsrm, f16c, cet_ss
+Processor Information for processor 0
+  Max Mhz: 3301, Current Mhz: 3301, Mhz Limit: 3301
+Processor Information for processor 1
+  Max Mhz: 3301, Current Mhz: 2630, Mhz Limit: 3301
+Processor Information for processor 2
+  Max Mhz: 3301, Current Mhz: 2630, Mhz Limit: 3301
+Processor Information for processor 3
+  Max Mhz: 3301, Current Mhz: 2630, Mhz Limit: 3301
+Processor Information for processor 4
+  Max Mhz: 3301, Current Mhz: 2630, Mhz Limit: 3301
+Processor Information for processor 5
+  Max Mhz: 3301, Current Mhz: 2630, Mhz Limit: 3301
+Processor Information for processor 6
+  Max Mhz: 3301, Current Mhz: 2630, Mhz Limit: 3301
+Processor Information for processor 7
+  Max Mhz: 3301, Current Mhz: 2630, Mhz Limit: 3301
+Processor Information for processor 8
+  Max Mhz: 3301, Current Mhz: 2630, Mhz Limit: 3301
+Processor Information for processor 9
+  Max Mhz: 3301, Current Mhz: 2630, Mhz Limit: 3301
+Processor Information for processor 10
+  Max Mhz: 3301, Current Mhz: 2630, Mhz Limit: 3301
+Processor Information for processor 11
+  Max Mhz: 3301, Current Mhz: 2630, Mhz Limit: 3301
+
+Memory: 4k page, system-wide physical 16236M (2183M free)
+TotalPageFile size 35557M (AvailPageFile size 3M)
+current process WorkingSet (physical memory assigned to process): 12M, peak: 12M
+current process commit charge ("private bytes"): 11M, peak: 12M
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (21+35-LTS-2513) for windows-amd64 JRE (21+35-LTS-2513), built on 2023-08-09T20:25:10Z by "mach5one" with MS VC++ 17.1 (VS2022)
+
+END.

@@ -25,6 +25,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -109,14 +110,19 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
      */
     @Override
     public void updatePlayfield(final PlayerEnum player, final List<Card<?>> cards) {
-        Objects.requireNonNull(player, "Player cannot be null");
         Objects.requireNonNull(cards, "Cards list cannot be null");
 
-        final PlayfieldAreaPanel area = this.playfieldAreas.get(player);
-        if (area == null) {
-            throw new IllegalArgumentException("Unknown player: " + player);
-        }
+        final PlayfieldAreaPanel area = getPlayerArea(player);
         area.update(cards);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void updateHiddenPlayfield(final PlayerEnum player, final int cardCount) {
+        final PlayfieldAreaPanel area = getPlayerArea(player);
+        area.updateHidden(cardCount);
     }
 
     /**
@@ -125,6 +131,17 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
     @Override
     public void addToPanel(final JPanel panel, final Object constraints) {
         panel.add(this, constraints);
+    }
+
+    private PlayfieldAreaPanel getPlayerArea(final PlayerEnum player) {
+        Objects.requireNonNull(player, "Player cannot be null");
+
+        final PlayfieldAreaPanel area = this.playfieldAreas.get(player);
+        if (area == null) {
+            throw new IllegalArgumentException("Unknown player: " + player);
+        }
+
+        return area;
     }
 
     /**
@@ -215,6 +232,18 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
             });
 
             this.revalidate();
+            this.repaint();
+        }
+
+        void updateHidden(final int cardCount) {
+            this.removeAll();
+            for (int i = 0; i < cardCount; i++) {
+                final JLabel cardLabel = new CHLabel(ImageResolver.resolveBack());
+                cardLabel.setPreferredSize(new Dimension(ImageResolver.CARD_WIDTH, ImageResolver.CARD_HEIGHT));
+                this.add(cardLabel);
+            }
+
+            this.validate();
             this.repaint();
         }
 
