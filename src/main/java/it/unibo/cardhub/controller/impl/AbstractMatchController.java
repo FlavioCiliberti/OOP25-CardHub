@@ -16,16 +16,17 @@ import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
 import it.unibo.cardhub.view.api.MatchView;
-import it.unibo.cardhub.view.impl.MatchViewImpl;
 
 /**
  * abstract implementation of {@link MatchController}.
+ * 
+ *  @param <V> MatchView type
  */
-public abstract class AbstractMatchController implements MatchController {
+public abstract class AbstractMatchController<V extends MatchView> implements MatchController {
 
     private final MatchState state;
     private final MatchLogic logic;
-    private final MatchView view;
+    private final V view;
     private final Navigator navigator;
 
     /**
@@ -35,13 +36,23 @@ public abstract class AbstractMatchController implements MatchController {
      * @param logic match logic
      * @param navigator screen navigator
      */
+    @SuppressFBWarnings(value = "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR", justification =
+        "createView() is called only for instantiating the view assotiated with the controller.")
+    @SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
     protected AbstractMatchController(final MatchState state, final MatchLogic logic, final Navigator navigator) {
         this.state = Objects.requireNonNull(state, "no MatchState supplied");
         this.logic = Objects.requireNonNull(logic, "no MatchLogic supplied");
         this.navigator = Objects.requireNonNull(navigator, "no navigator supplied");
-        view = new MatchViewImpl(this);
+        view = createView();
         startMatch();
     }
+
+    /**
+     * Creates the view instance for this controller.
+     *
+     * @return the view to use
+     */
+    protected abstract V createView();
 
     /**
      * {@inheritDoc}
@@ -58,10 +69,6 @@ public abstract class AbstractMatchController implements MatchController {
      * {@inheritDoc}
      */
     @Override
-    @SuppressFBWarnings(value = "EI", justification =
-            "The view JComponent must be returned by reference so it "
-                    + "can be embedded in the real application window; "
-                    + "cannot return a defensive copy for this purpuse.")
     public JComponent getView() {
         return (JComponent) view;
     }
