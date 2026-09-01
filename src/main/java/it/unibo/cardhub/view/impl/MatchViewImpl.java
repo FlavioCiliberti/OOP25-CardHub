@@ -154,6 +154,14 @@ public class MatchViewImpl extends ScreenView implements MatchView {
      * {@inheritDoc}
      */
     @Override
+    public void updateHiddenPlayfield(final PlayerEnum player, final int cardCount) {
+        playfield.updateHiddenPlayfield(player, cardCount);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void updateDiscardPile(final PlayerEnum player, final Optional<Card<?>> topCard) {
         if (player == PlayerEnum.PLAYER_ONE) {
             playfield.updatePlayerOneDiscardPile(topCard);
