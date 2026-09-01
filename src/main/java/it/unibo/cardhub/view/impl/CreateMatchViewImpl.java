@@ -137,11 +137,11 @@ public final class CreateMatchViewImpl extends ScreenView implements CreateMatch
         startingHandSpinner = new JSpinner(startingHandModel);
         autoDrawCheckBox = new JCheckBox("Auto Draw on Turn Start");
         winPileRadioButton = new JRadioButton("To Pile");
-        winHandRadioButton = new JRadioButton("To Loser's Pile");
+        winHandRadioButton = new JRadioButton("To Hand");
         winNoneRadioButton = new JRadioButton("None");
         winnerActionGroup = new ButtonGroup();
         losePileRadioButton = new JRadioButton("To Pile");
-        loseHandRadioButton = new JRadioButton("To Winner's Pile");
+        loseHandRadioButton = new JRadioButton("To Hand");
         loseNoneRadioButton = new JRadioButton("None");
         loserActionGroup = new ButtonGroup();
 
