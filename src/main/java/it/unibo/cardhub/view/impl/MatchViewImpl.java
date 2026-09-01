@@ -24,7 +24,7 @@ import it.unibo.cardhub.view.components.ScreenView;
 /**
  * Builds the match view.
  */
-public final class MatchViewImpl extends ScreenView implements MatchView {
+public class MatchViewImpl extends ScreenView implements MatchView {
     public static final int WIDTH = 1200;
     public static final int HEIGHT = 960;
 
@@ -32,6 +32,7 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
 
     private final JPanel matchAreaPanel;
 
+    private final JPanel topPanel;
     private final PlayerPanel firstPlayerPanel;
     private final PlayerPanel secondPlayerPanel;
     private final PlayfieldPanel playfield;
@@ -52,6 +53,7 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
 
         matchAreaPanel = new CHPanel(CHStyles.tertiaryColor(), new BorderLayout());
 
+        this.topPanel = new CHPanel(new FlowLayout(FlowLayout.RIGHT));
         firstPlayerPanel = new PlayerPanelImpl(controller, PlayerEnum.PLAYER_ONE, true);
         secondPlayerPanel = new PlayerPanelImpl(controller, PlayerEnum.PLAYER_TWO, false);
         playfield = new PlayfieldPanelImpl(controller, new PlayerPanelNotifierImpl(firstPlayerPanel, secondPlayerPanel));
@@ -65,9 +67,8 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
 
     //sets up the content pane
     private void manageContentPane() {
-        this.setLayout(new BorderLayout());
+        super.setLayout(new BorderLayout());
 
-        final JPanel topPanel = new CHPanel(new FlowLayout(FlowLayout.RIGHT));
         topPanel.setBorder(BorderFactory.createEmptyBorder(CHStyles.PADDING_SMALL, CHStyles.PADDING_NONE,
                                                             CHStyles.PADDING_NONE, CHStyles.PADDING_SMALL));
         topPanel.add(exitButton);
@@ -77,7 +78,7 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
             }
         });
 
-        this.add(topPanel, BorderLayout.NORTH);
+        super.add(topPanel, BorderLayout.NORTH);
 
         this.managePlayField();
 
@@ -101,12 +102,12 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
             }
         });
 
-        this.add(bottomPanel, BorderLayout.SOUTH);
+        super.add(bottomPanel, BorderLayout.SOUTH);
     }
 
     //sets up playField
     private void managePlayField() {
-        this.add(matchAreaPanel, BorderLayout.CENTER);
+        super.add(matchAreaPanel, BorderLayout.CENTER);
         matchAreaPanel.setBorder(BorderFactory.createMatteBorder(CHStyles.PADDING_SMALL, CHStyles.PADDING_LARGE,
                                                                 CHStyles.PADDING_NONE, CHStyles.PADDING_LARGE,
                                                                 CHStyles.secondaryColor()));
@@ -133,6 +134,9 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
         this.selectPlayerPanel(player).updateShowingHandPanel(cards);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateHiddenHand(final PlayerEnum player, final int cardCount) {
         this.selectPlayerPanel(player).updateHiddenHandPanel(cardCount);
@@ -160,6 +164,9 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateDeck(final PlayerEnum player, final int remainingCards) {
         this.selectPlayerPanel(player).updateDeck();
@@ -189,6 +196,24 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
     @Override
     public void showInvalidAction(final String message) {
         this.showPopup(message, "Invalid Action!", JOptionPane.ERROR_MESSAGE);
+    }
+
+    /**
+     * Getter for the top panel.
+     * 
+     * @return the top panel
+     */
+    protected JPanel getTopPanel() {
+        return topPanel;
+    }
+
+    /**
+     * Getter for the end turn button.
+     * 
+     * @return the end turn button
+     */
+    protected JButton getEndTurnButton() {
+        return endTurnButton;
     }
 
     private void showPopup(final String content, final String title, final int messageType) {
