@@ -179,6 +179,8 @@ public abstract class AbstractMatchController<V extends MatchView> implements Ma
         final ComparisonWinner winner = logic.compareCard(firstPlayerCard, secondPlayerCard);
         switch (winner) {
             case TIE:
+                updateWithCardAction(PlayerEnum.PLAYER_ONE, Competitor.LOOSER);
+                updateWithCardAction(PlayerEnum.PLAYER_TWO, Competitor.LOOSER);
                 break;
             case PLAYER_1:
                 updateWithCardAction(PlayerEnum.PLAYER_ONE, Competitor.WINNER);
@@ -238,7 +240,7 @@ public abstract class AbstractMatchController<V extends MatchView> implements Ma
      * 
      * @return the match state
      */
-    protected MatchView getMatchView() {
+    protected V getMatchView() {
         return view;
     }
 
