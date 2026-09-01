@@ -224,7 +224,14 @@ public class MatchViewImpl extends ScreenView implements MatchView {
         return endTurnButton;
     }
 
-    private void showPopup(final String content, final String title, final int messageType) {
+    /**
+     * Shows a pop-up with the given information.
+     * 
+     * @param content the content
+     * @param title the title
+     * @param messageType the message type
+     */
+    protected void showPopup(final String content, final String title, final int messageType) {
         JOptionPane.showMessageDialog(
             this,
             content,

@@ -13,7 +13,7 @@ import it.unibo.cardhub.view.components.CHPanel;
 /**
  * implementation of {@link MatchView}.
  */
-public final class ScoredMatchViewImpl extends MatchViewImpl implements ScoredMatchView {
+public class ScoredMatchViewImpl extends MatchViewImpl implements ScoredMatchView {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,9 +37,9 @@ public final class ScoredMatchViewImpl extends MatchViewImpl implements ScoredMa
         scorePanel.add(new JLabel("P2:"));
         scorePanel.add(p2ScoreLabel);
 
-        getTopPanel().add(scorePanel);
-        getTopPanel().revalidate();
-        getTopPanel().repaint();
+        super.getTopPanel().add(scorePanel);
+        super.getTopPanel().revalidate();
+        super.getTopPanel().repaint();
     }
 
     /**

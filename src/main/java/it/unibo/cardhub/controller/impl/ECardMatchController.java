@@ -8,14 +8,13 @@ import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
-import it.unibo.cardhub.view.api.ScoredMatchView;
-import it.unibo.cardhub.view.impl.ScoredMatchViewImpl;
+import it.unibo.cardhub.view.api.ECardMatchView;
+import it.unibo.cardhub.view.impl.ECardMatchViewImpl;
 
 /**
  * Implementation of {@link MatchController} for the ECard full game.
  */
-public class ECardMatchController extends AbstractMatchController<ScoredMatchView> {
-    private static final int FREEZED_TIME_IN_MS = 5000;
+public class ECardMatchController extends AbstractMatchController<ECardMatchView> {
 
     /**
      * Constructor for the controller.
@@ -32,8 +31,8 @@ public class ECardMatchController extends AbstractMatchController<ScoredMatchVie
      * {@inheritDoc}
      */
     @Override
-    protected ScoredMatchView createView() {
-        return new ScoredMatchViewImpl(this);
+    protected ECardMatchView createView() {
+        return new ECardMatchViewImpl(this);
     }
 
     /**
@@ -71,11 +70,7 @@ public class ECardMatchController extends AbstractMatchController<ScoredMatchVie
     }
 
     private void freeze() {
-        try {
-            Thread.sleep(FREEZED_TIME_IN_MS);
-        } catch (final InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        getMatchView().showComparisonResult("Watch the result!");
     }
 
 }
