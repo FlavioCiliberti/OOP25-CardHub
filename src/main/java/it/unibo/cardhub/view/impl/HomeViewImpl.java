@@ -85,7 +85,13 @@ public final class HomeViewImpl extends ScreenView implements HomeView {
      */
     @Override
     public void onManageDecks() {
-        controller.manageDecks();
+        // controller.manageDecks();
+        JOptionPane.showMessageDialog(
+            this,
+            "Support us on patreon if you want us to develop this and more",
+            "Functionality temporarily unavailable",
+            JOptionPane.INFORMATION_MESSAGE
+        );
     }
 
     /**
