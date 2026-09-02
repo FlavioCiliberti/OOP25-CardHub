@@ -40,11 +40,21 @@ public class ECardMatchController extends AbstractMatchController<ECardMatchView
      */
     @Override
     protected void onEndTurn() {
-        if (getTurnPlayer() == PlayerEnum.PLAYER_ONE) {
-            getMatchView().updateHiddenPlayfield(getTurnPlayer(), 
-                                getPlayerPlayedCards(PlayerEnum.PLAYER_ONE).size());
+        final PlayerEnum currentPlayer = getTurnPlayer();
+        final List<Card<?>> playerOneCards = getPlayerPlayedCards(PlayerEnum.PLAYER_ONE);
+        final List<Card<?>> playerTwoCards = getPlayerPlayedCards(PlayerEnum.PLAYER_TWO);
+
+        if (currentPlayer == PlayerEnum.PLAYER_ONE) {
+            getMatchView().updateHiddenPlayfield(
+                currentPlayer, 
+                playerOneCards.size()
+            );
         } else {
-            getMatchView().updatePlayfield(PlayerEnum.PLAYER_ONE, getPlayerPlayedCards(PlayerEnum.PLAYER_ONE));
+            if (playerOneCards.isEmpty() || playerTwoCards.isEmpty()) {
+                throw new IllegalStateException("Both players must have played at least one card before comparing.");
+            }
+
+            getMatchView().updatePlayfield(PlayerEnum.PLAYER_ONE, playerOneCards);
 
             freeze(); // time given for players to see their played cards
 
