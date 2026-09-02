@@ -2,12 +2,12 @@ package it.unibo.cardhub.view.impl;
 
 import java.awt.FlowLayout;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.view.api.MatchView;
 import it.unibo.cardhub.view.api.ScoredMatchView;
+import it.unibo.cardhub.view.components.CHLabel;
 import it.unibo.cardhub.view.components.CHPanel;
 
 /**
@@ -17,8 +17,8 @@ public class ScoredMatchViewImpl extends MatchViewImpl implements ScoredMatchVie
 
     private static final long serialVersionUID = 1L;
 
-    private final JLabel p1ScoreLabel;
-    private final JLabel p2ScoreLabel;
+    private final CHLabel p1ScoreLabel;
+    private final CHLabel p2ScoreLabel;
 
     /**
      * default constructor.
@@ -28,13 +28,13 @@ public class ScoredMatchViewImpl extends MatchViewImpl implements ScoredMatchVie
     public ScoredMatchViewImpl(final MatchController controller) {
         super(controller);
 
-        p1ScoreLabel = new JLabel("0");
-        p2ScoreLabel = new JLabel("0");
+        p1ScoreLabel = new CHLabel("0");
+        p2ScoreLabel = new CHLabel("0");
 
         final JPanel scorePanel = new CHPanel(new FlowLayout(FlowLayout.LEFT));
-        scorePanel.add(new JLabel("P1:"));
+        scorePanel.add(new CHLabel("P1:"));
         scorePanel.add(p1ScoreLabel);
-        scorePanel.add(new JLabel("P2:"));
+        scorePanel.add(new CHLabel("P2:"));
         scorePanel.add(p2ScoreLabel);
 
         super.getTopPanel().add(scorePanel);
