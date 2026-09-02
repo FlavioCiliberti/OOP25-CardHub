@@ -20,6 +20,7 @@ import it.unibo.cardhub.view.components.CHButton;
 import it.unibo.cardhub.view.components.CHPanel;
 import it.unibo.cardhub.view.components.CHStyles;
 import it.unibo.cardhub.view.components.ScreenView;
+import it.unibo.cardhub.view.impl.PlayerPanelImpl.PlayerPanelNotifier;
 
 /**
  * Builds the match view.
@@ -56,7 +57,7 @@ public class MatchViewImpl extends ScreenView implements MatchView {
         this.topPanel = new CHPanel(new FlowLayout(FlowLayout.RIGHT));
         firstPlayerPanel = new PlayerPanelImpl(controller, PlayerEnum.PLAYER_ONE, true);
         secondPlayerPanel = new PlayerPanelImpl(controller, PlayerEnum.PLAYER_TWO, false);
-        playfield = new PlayfieldPanelImpl(controller, new PlayerPanelNotifierImpl(firstPlayerPanel, secondPlayerPanel));
+        playfield = new PlayfieldPanelImpl(controller, new PlayerPanelNotifier(firstPlayerPanel, secondPlayerPanel));
 
         exitButton = new CHButton("Exit");
         endTurnButton = new CHButton("End Turn");

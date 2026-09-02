@@ -37,16 +37,4 @@ public interface PlayerPanel {
      * @param constraints an object expressing layout constraints for this component
      */
     void addToPanel(JPanel panel, Object constraints);
-
-    /**
-     * Updates the description label.
-     * 
-     * @param card the card the description is going to show
-     */
-    void updateDescriptionLabel(Card<?> card);
-
-    /**
-     * Removes the description.
-     */
-    void removeDescription();
 }

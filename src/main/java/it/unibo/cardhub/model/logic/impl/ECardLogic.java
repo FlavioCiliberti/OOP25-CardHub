@@ -22,11 +22,9 @@ public class ECardLogic extends AbstractMatchLogic implements PointTracker {
 
     /**
      * ECardLogic constructor.
-     * 
-     * @param matchState the state of the match
      */
-    public ECardLogic(final MatchState matchState) {
-        super(CardAction.TO_PILE, CardAction.TO_PILE, false, matchState);
+    public ECardLogic() {
+        super(CardAction.TO_PILE, CardAction.TO_PILE, false);
 
         playerPoints = new EnumMap<>(PlayerEnum.class);
         for (final PlayerEnum player : PlayerEnum.values()) {
@@ -38,11 +36,12 @@ public class ECardLogic extends AbstractMatchLogic implements PointTracker {
      * {@inheritDoc}
      */
     @Override
-    public ComparisonWinner compareCard(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard) {
+    public ComparisonWinner compareCard(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard,
+                                        final MatchState state) {
         final ECardEnum firstCardType = ECardEnum.fromValue(firstPlayerCard.value());
         final ECardEnum secondCardType = ECardEnum.fromValue(secondPlayerCard.value());
 
-        this.executeCardActions(firstPlayerCard, secondPlayerCard);
+        this.executeCardActions(firstPlayerCard, secondPlayerCard, state);
 
         if (firstCardType == secondCardType) {
             return ComparisonWinner.TIE;
@@ -84,9 +83,10 @@ public class ECardLogic extends AbstractMatchLogic implements PointTracker {
         }
     }
 
-    private void executeCardActions(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard) {
-        super.getMatchState().moveCardFromFieldToPile(firstPlayerCard, PlayerEnum.PLAYER_ONE);
-        super.getMatchState().moveCardFromFieldToPile(secondPlayerCard, PlayerEnum.PLAYER_TWO);
+    private void executeCardActions(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard,
+                                    final MatchState state) {
+        state.moveCardFromFieldToPile(firstPlayerCard, PlayerEnum.PLAYER_ONE);
+        state.moveCardFromFieldToPile(secondPlayerCard, PlayerEnum.PLAYER_TWO);
     }
 
     private void addPoints(final PlayerEnum player, final int value) {

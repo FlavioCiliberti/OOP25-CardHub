@@ -85,6 +85,16 @@ public class MatchStateImpl implements MatchState {
      * {@inheritDoc}
      */
     @Override
+    public void moveCardFromFieldToDeck(final Card<?> card, final PlayerEnum player) {
+        this.field.removeCard(card);
+        this.getPlayer(player).putInDeck(card);
+        this.getPlayer(player).shuffleDeck();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     @SuppressFBWarnings(
         value = "EI_EXPOSE_REP",
         justification = "Playfield is intentionally exposed to let callers mutate its state"

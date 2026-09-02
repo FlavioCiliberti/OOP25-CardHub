@@ -137,11 +137,11 @@ public final class CreateMatchViewImpl extends ScreenView implements CreateMatch
         startingHandSpinner = new JSpinner(startingHandModel);
         autoDrawCheckBox = new JCheckBox("Auto Draw on Turn Start");
         winPileRadioButton = new JRadioButton("To Pile");
-        winHandRadioButton = new JRadioButton("To Hand");
+        winHandRadioButton = new JRadioButton("To Deck");
         winNoneRadioButton = new JRadioButton("None");
         winnerActionGroup = new ButtonGroup();
         losePileRadioButton = new JRadioButton("To Pile");
-        loseHandRadioButton = new JRadioButton("To Hand");
+        loseHandRadioButton = new JRadioButton("To Deck");
         loseNoneRadioButton = new JRadioButton("None");
         loserActionGroup = new ButtonGroup();
 
@@ -409,7 +409,7 @@ public final class CreateMatchViewImpl extends ScreenView implements CreateMatch
             selectedWinnerCardAction = CardAction.TO_PILE;
         });
         winHandRadioButton.addItemListener(e -> {
-            selectedWinnerCardAction = CardAction.TO_HAND;
+            selectedWinnerCardAction = CardAction.TO_DECK;
         });
         winNoneRadioButton.addItemListener(e -> {
             selectedWinnerCardAction = CardAction.NONE;
@@ -424,7 +424,7 @@ public final class CreateMatchViewImpl extends ScreenView implements CreateMatch
             selectedLoserCardAction = CardAction.TO_PILE;
         });
         loseHandRadioButton.addItemListener(e -> {
-            selectedLoserCardAction = CardAction.TO_HAND;
+            selectedLoserCardAction = CardAction.TO_DECK;
         });
         loseNoneRadioButton.addItemListener(e -> {
             selectedLoserCardAction = CardAction.NONE;
