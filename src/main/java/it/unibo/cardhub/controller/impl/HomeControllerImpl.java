@@ -2,9 +2,6 @@ package it.unibo.cardhub.controller.impl;
 
 import java.util.Objects;
 
-import javax.swing.JComponent;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.controller.ScreenId;
 import it.unibo.cardhub.controller.api.CreateMatchController;
 import it.unibo.cardhub.controller.api.HomeController;
@@ -12,6 +9,7 @@ import it.unibo.cardhub.controller.api.Navigator;
 import it.unibo.cardhub.model.api.CreateMatchModel;
 import it.unibo.cardhub.model.impl.CreateMatchModelImpl;
 import it.unibo.cardhub.view.api.HomeView;
+import it.unibo.cardhub.view.components.ScreenView;
 import it.unibo.cardhub.view.impl.HomeViewImpl;
 
 /**
@@ -40,12 +38,8 @@ public class HomeControllerImpl implements HomeController {
      * {@inheritDoc}
      */
     @Override
-    @SuppressFBWarnings(value = "EI", justification =
-            "The view JComponent must be returned by reference so it "
-                    + "can be embedded in the real application window; "
-                    + "cannot return a defensive copy for this purpuse.")
-    public JComponent getView() {
-        return (JComponent) view;
+    public void showScreen() {
+        navigator.show(ScreenId.HOME, (ScreenView) view);
     }
 
     /**
@@ -55,7 +49,7 @@ public class HomeControllerImpl implements HomeController {
     public void newMatch() {
         final CreateMatchModel createMatchModel = new CreateMatchModelImpl();
         final CreateMatchController createMatchController = new CreateMatchControllerImpl(createMatchModel, navigator);
-        navigator.show(ScreenId.CREATE_MATCH, createMatchController.getView());
+        createMatchController.showScreen();
     }
 
     /**

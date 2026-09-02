@@ -7,14 +7,14 @@ import it.unibo.cardhub.controller.api.Navigator;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
-import it.unibo.cardhub.model.logic.api.MatchLogic;
+import it.unibo.cardhub.model.logic.impl.ECardLogic;
 import it.unibo.cardhub.view.api.ECardMatchView;
 import it.unibo.cardhub.view.impl.ECardMatchViewImpl;
 
 /**
  * Implementation of {@link MatchController} for the ECard full game.
  */
-public class ECardMatchController extends AbstractMatchController<ECardMatchView> {
+public class ECardMatchController extends AbstractMatchController<ECardMatchView, ECardLogic> {
 
     /**
      * Constructor for the controller.
@@ -23,7 +23,7 @@ public class ECardMatchController extends AbstractMatchController<ECardMatchView
      * @param logic match logic
      * @param navigator screen navigator
      */
-    public ECardMatchController(final MatchState state, final MatchLogic logic, final Navigator navigator) {
+    public ECardMatchController(final MatchState state, final ECardLogic logic, final Navigator navigator) {
         super(state, logic, navigator);
     }
 
@@ -58,11 +58,10 @@ public class ECardMatchController extends AbstractMatchController<ECardMatchView
 
             freeze(); // time given for players to see their played cards
 
-            super.compareCard(
-                playerOneCards.get(playerOneCards.size() - 1),
-                playerTwoCards.get(playerTwoCards.size() - 1)
-            );
-            // getMatchView().updateScore(1,2);
+            super.compareCard(getPlayerPlayedCards(PlayerEnum.PLAYER_ONE).getLast(), 
+                                getPlayerPlayedCards(PlayerEnum.PLAYER_TWO).getLast());
+
+            showUpdatedScore();
         }
 
         getLogic().changeTurn();
@@ -85,4 +84,12 @@ public class ECardMatchController extends AbstractMatchController<ECardMatchView
         getMatchView().showComparisonResult("Watch the result!");
     }
 
+    private int getScore(final PlayerEnum player) {
+        return getLogic().getPoints(player);
+    }
+
+    private void showUpdatedScore() {
+        getMatchView().updateScore(getScore(PlayerEnum.PLAYER_ONE), 
+                                    getScore(PlayerEnum.PLAYER_TWO));
+    }
 }
