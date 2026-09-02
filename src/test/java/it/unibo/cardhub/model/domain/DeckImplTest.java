@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.cardhub.model.domain.api.Card;
+import it.unibo.cardhub.model.domain.api.Deck;
 import it.unibo.cardhub.model.domain.attributes.Suit;
 import it.unibo.cardhub.model.domain.exceptions.EmptyCardCollectionException;
 import it.unibo.cardhub.model.domain.impl.CardImpl;
@@ -18,7 +19,7 @@ import it.unibo.cardhub.model.domain.impl.DeckImpl;
 
 class DeckImplTest {
 
-    private DeckImpl deck;
+    private Deck deck;
     private Card<Suit> card1;
     private Card<Suit> card2;
 

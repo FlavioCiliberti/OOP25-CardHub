@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.unibo.cardhub.model.domain.api.Card;
+import it.unibo.cardhub.model.domain.api.Hand;
 import it.unibo.cardhub.model.domain.attributes.Suit;
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 import it.unibo.cardhub.model.domain.exceptions.NoSuchCardsException;
@@ -18,7 +19,7 @@ import it.unibo.cardhub.model.domain.impl.HandImpl;
 
 public class HandImplTest {
 
-    private HandImpl hand;
+    private Hand hand;
     private Card<Suit> card1;
     private Card<Suit> card2;
     private Card<Suit> card3;
