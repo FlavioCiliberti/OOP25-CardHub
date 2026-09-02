@@ -205,7 +205,8 @@ public class CreateMatchControllerImpl implements CreateMatchController {
      * @param player2Name the name of the second player
      */
     private void createFullGameController(final String player1Name, final String player2Name) {
-        final MatchController controller = MatchControllerFactory.createECardMatchController(player1Name, player2Name, navigator);
+        final ECardMatchController controller = MatchControllerFactory.createECardMatchController(player1Name, 
+                                                                                                player2Name, navigator);
         showMatch(controller);
     }
 

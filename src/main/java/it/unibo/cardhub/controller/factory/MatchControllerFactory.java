@@ -2,6 +2,7 @@ package it.unibo.cardhub.controller.factory;
 
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.controller.api.Navigator;
+import it.unibo.cardhub.controller.impl.ECardMatchController;
 import it.unibo.cardhub.controller.impl.MatchControllerImpl;
 import it.unibo.cardhub.io.api.DeckFactory;
 import it.unibo.cardhub.io.impl.DeckFactoryImpl;
@@ -80,13 +81,13 @@ public final class MatchControllerFactory {
      * @param navigator the navigator
      * @return a MatchControllerImpl for E-Card match
      */
-    public static MatchController createECardMatchController(final String firstPlayerName, final String secondPlayerName,
+    public static ECardMatchController createECardMatchController(final String firstPlayerName, final String secondPlayerName,
                                                     final Navigator navigator) {
         final DeckFactory deckFactory = new DeckFactoryImpl();
 
         final MatchState state = new MatchStateBuilderImpl(firstPlayerName, secondPlayerName,
                             deckFactory.createECardDeck(), deckFactory.createECardDeck()).maxHandSize(ECARD_MAX_HAND_SIZE)
                             .startingHandSize(ECARD_STARTING_HAND_SIZE).playfieldSize(ECARD_PLAYFIELD_SIZE).build();
-        return new MatchControllerImpl(state, new ECardLogic(), navigator);
+        return new ECardMatchController(state, new ECardLogic(), navigator);
     }
 }

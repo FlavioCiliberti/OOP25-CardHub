@@ -50,7 +50,8 @@ public class ECardMatchController extends AbstractMatchController<ECardMatchView
 
             super.compareCard(getPlayerPlayedCards(PlayerEnum.PLAYER_ONE).getLast(), 
                                 getPlayerPlayedCards(PlayerEnum.PLAYER_TWO).getLast());
-            // getMatchView().updateScore(1,2);
+
+            showUpdatedScore();
         }
 
         getLogic().changeTurn();
@@ -73,4 +74,12 @@ public class ECardMatchController extends AbstractMatchController<ECardMatchView
         getMatchView().showComparisonResult("Watch the result!");
     }
 
+    private int getScore(final PlayerEnum player) {
+        return getLogic().getPoints(player);
+    }
+
+    private void showUpdatedScore() {
+        getMatchView().updateScore(getScore(PlayerEnum.PLAYER_ONE), 
+                                    getScore(PlayerEnum.PLAYER_TWO));
+    }
 }
