@@ -45,9 +45,9 @@ public interface MatchLogic {
     CardAction getLoserCardAction();
 
     /**
-     * Getter for autoDraw.
+     * Return whether the turn player should automatically draw a card on turn start.
      * 
-     * @return whether the autodraw is enabled
+     * @return whether the player should autodraw
      */
-    boolean isAutoDrawEnabled();
+    boolean shouldAutoDraw();
 }

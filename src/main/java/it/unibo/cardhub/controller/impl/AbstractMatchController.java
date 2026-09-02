@@ -199,14 +199,17 @@ public abstract class AbstractMatchController<V extends MatchView> implements Ma
     @Override
     @SuppressWarnings("PMD.EmptyCatchBlock")
     public void startTurn() {
-        if (logic.isAutoDrawEnabled()) {
+        final PlayerEnum player = getTurnPlayer();
+
+        if (logic.shouldAutoDraw()) {
             try {
-                state.drawCard(logic.getCurrentPlayer());
+                state.drawCard(player);
+                view.updateDeck(player, state.getPlayer(player).getDeckCount());
             } catch (final CardCollectionFullException | EmptyCardCollectionException e) {
                 // Expected: the player doesn't draw if their hand is already full or the deck is empty
             }
         }
-        view.updateShowingHand(getTurnPlayer(), state.getPlayer(getTurnPlayer()).getHand().getCards());
+        view.updateShowingHand(player, state.getPlayer(player).getHand().getCards());
     }
 
     /**
