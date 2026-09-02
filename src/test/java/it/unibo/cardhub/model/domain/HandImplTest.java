@@ -31,21 +31,19 @@ public class HandImplTest {
                 .id("1")
                 .attributes(Suit.HEARTS)
                 .value(10)
-                .image(null)
+                
                 .build();
         
         card2 = new CardImpl.Builder<Suit>()
                 .id("2")
                 .attributes(Suit.SPADES)
                 .value(5)
-                .image(null)
                 .build();
 
         card3 = new CardImpl.Builder<Suit>()
                 .id("3")
                 .attributes(Suit.CLUBS)
                 .value(1)
-                .image(null)
                 .build();
     }
 
