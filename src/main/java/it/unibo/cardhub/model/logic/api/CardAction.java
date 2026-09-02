@@ -5,6 +5,6 @@ package it.unibo.cardhub.model.logic.api;
  */
 public enum CardAction {
     TO_PILE,
-    TO_HAND,
+    TO_DECK,
     NONE
 }

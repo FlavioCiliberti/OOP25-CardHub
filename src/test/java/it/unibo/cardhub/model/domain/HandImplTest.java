@@ -31,7 +31,6 @@ public class HandImplTest {
                 .id("1")
                 .attributes(Suit.HEARTS)
                 .value(10)
-                
                 .build();
         
         card2 = new CardImpl.Builder<Suit>()

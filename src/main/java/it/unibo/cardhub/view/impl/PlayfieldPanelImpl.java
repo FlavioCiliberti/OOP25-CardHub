@@ -3,7 +3,7 @@ package it.unibo.cardhub.view.impl;
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
-import it.unibo.cardhub.view.api.PlayerPanelNotifier;
+import it.unibo.cardhub.view.api.PlayfieldListener;
 import it.unibo.cardhub.view.api.PlayfieldPanel;
 import it.unibo.cardhub.view.components.CHButton;
 import it.unibo.cardhub.view.components.CHLabel;
@@ -25,6 +25,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Function;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -57,9 +58,9 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
      * Constructs a new playfield panel.
      * 
      * @param controller the controller that can provide the players
-     * @param notifier the PlayerPanelNotifier to be passed to the child panels
+     * @param listener the listener to be passed to the child panels
      */
-    PlayfieldPanelImpl(final MatchController controller, final PlayerPanelNotifier notifier) {
+    PlayfieldPanelImpl(final MatchController controller, final PlayfieldListener listener) {
         super(new BorderLayout());
         this.controller = Objects.requireNonNull(controller, "no such controller");
 
@@ -68,8 +69,8 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
             BorderFactory.createEmptyBorder(CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD,
                                             CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD)));
 
-        this.bottomArea = new PlayfieldAreaPanel(controller, PlayerEnum.PLAYER_ONE, this::onSelectionChanged, notifier);
-        this.topArea = new PlayfieldAreaPanel(controller, PlayerEnum.PLAYER_TWO, this::onSelectionChanged, notifier);
+        this.bottomArea = new PlayfieldAreaPanel(controller, PlayerEnum.PLAYER_ONE, this::onSelectionChanged, listener);
+        this.topArea = new PlayfieldAreaPanel(controller, PlayerEnum.PLAYER_TWO, this::onSelectionChanged, listener);
         this.playfieldAreas = new EnumMap<>(PlayerEnum.class);
         this.playfieldAreas.put(PlayerEnum.PLAYER_ONE, this.bottomArea);
         this.playfieldAreas.put(PlayerEnum.PLAYER_TWO, this.topArea);
@@ -109,14 +110,19 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
      */
     @Override
     public void updatePlayfield(final PlayerEnum player, final List<Card<?>> cards) {
-        Objects.requireNonNull(player, "Player cannot be null");
         Objects.requireNonNull(cards, "Cards list cannot be null");
 
-        final PlayfieldAreaPanel area = this.playfieldAreas.get(player);
-        if (area == null) {
-            throw new IllegalArgumentException("Unknown player: " + player);
-        }
+        final PlayfieldAreaPanel area = getPlayerArea(player);
         area.update(cards);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void updateHiddenPlayfield(final PlayerEnum player, final int cardCount) {
+        final PlayfieldAreaPanel area = getPlayerArea(player);
+        area.updateHidden(cardCount);
     }
 
     /**
@@ -125,6 +131,17 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
     @Override
     public void addToPanel(final JPanel panel, final Object constraints) {
         panel.add(this, constraints);
+    }
+
+    private PlayfieldAreaPanel getPlayerArea(final PlayerEnum player) {
+        Objects.requireNonNull(player, "Player cannot be null");
+
+        final PlayfieldAreaPanel area = this.playfieldAreas.get(player);
+        if (area == null) {
+            throw new IllegalArgumentException("Unknown player: " + player);
+        }
+
+        return area;
     }
 
     /**
@@ -167,7 +184,7 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
         private static final long serialVersionUID = 1L;
 
         private final PlayerEnum player;
-        private final transient PlayerPanelNotifier notifier;
+        private final transient PlayfieldListener listener;
         private final transient BiConsumer<PlayerEnum, Optional<Card<?>>> selectionListener;
 
         private transient Optional<CHLabel> selectedLabel = Optional.empty();
@@ -175,12 +192,12 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
 
         PlayfieldAreaPanel(final MatchController controller, final PlayerEnum player,
                             final BiConsumer<PlayerEnum, Optional<Card<?>>> selectionListener,
-                            final PlayerPanelNotifier notifier) {
+                            final PlayfieldListener listener) {
             super(new GridLayout(ROWS, controller.getPlayFieldSize(), CHStyles.PADDING_STANDARD, CHStyles.PADDING_STANDARD));
             this.player = Objects.requireNonNull(player, "Player must be provided to PlayfieldAreaPanel");
             this.selectionListener = Objects.requireNonNull(selectionListener, "Selection listener cannot be null");
 
-            this.notifier = notifier;
+            this.listener = listener;
 
             this.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(CHStyles.primaryColor()),
@@ -203,18 +220,30 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
 
                     @Override
                     public void mouseEntered(final MouseEvent e) {
-                        notifier.mouseHovered(card, player);
+                        listener.mouseHovered(card, player);
                     }
 
                     @Override
                     public void mouseExited(final MouseEvent e) {
-                        notifier.mouseExited(player);
+                        listener.mouseExited(player);
                     }
                 });
                 this.add(label);
             });
 
             this.revalidate();
+            this.repaint();
+        }
+
+        void updateHidden(final int cardCount) {
+            this.removeAll();
+            for (int i = 0; i < cardCount; i++) {
+                final JLabel cardLabel = new CHLabel(ImageResolver.resolveBack());
+                cardLabel.setPreferredSize(new Dimension(ImageResolver.CARD_WIDTH, ImageResolver.CARD_HEIGHT));
+                this.add(cardLabel);
+            }
+
+            this.validate();
             this.repaint();
         }
 

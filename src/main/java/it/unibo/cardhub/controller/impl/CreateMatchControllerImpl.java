@@ -9,8 +9,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.controller.ScreenId;
 import it.unibo.cardhub.controller.api.CreateMatchController;
 import it.unibo.cardhub.controller.api.MatchController;
-import it.unibo.cardhub.controller.api.MatchControllerFactory;
 import it.unibo.cardhub.controller.api.Navigator;
+import it.unibo.cardhub.controller.factory.MatchControllerFactory;
 import it.unibo.cardhub.io.api.DeckFactory;
 import it.unibo.cardhub.io.impl.DeckFactoryImpl;
 import it.unibo.cardhub.model.api.CreateMatchModel;
@@ -134,23 +134,21 @@ public class CreateMatchControllerImpl implements CreateMatchController {
         try {
             checkMatchParams(player1Name, player2Name, 
                             winnerAction, loserAction, gameMode);
+            switch (gameMode) {
+                case FREE_PLAY:
+                    createFreeGameController(player1Name, player1DeckId, player2Name, player2DeckId);
+                    break;
+                case CUSTOM:
+                    createCustomGameController(player1Name, player1DeckId, player2Name, player2DeckId, 
+                                    maxHandSize, startingHandSize, playerFieldSize, autoDraw, 
+                                    winnerAction, loserAction);
+                    break;
+                case E_CARD:
+                    createFullGameController(player1Name, player2Name);
+                    break;
+            }
         } catch (final EmptyFieldException e) {
             view.showInvalidForm(e.getMessage());
-            return;
-        }
-
-        switch (gameMode) {
-            case FREE_PLAY:
-                createFreeGameController(player1Name, player1DeckId, player2Name, player2DeckId);
-                break;
-            case CUSTOM:
-                createCustomGameController(player1Name, player1DeckId, player2Name, player2DeckId, 
-                                maxHandSize, startingHandSize, playerFieldSize, autoDraw, 
-                                winnerAction, loserAction);
-                break;
-            case E_CARD:
-                createFullGameController(player1Name, player2Name);
-                break;
         }
 
     }

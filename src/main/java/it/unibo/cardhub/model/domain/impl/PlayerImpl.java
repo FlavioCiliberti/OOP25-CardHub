@@ -11,6 +11,7 @@ import it.unibo.cardhub.model.domain.api.DiscardPile;
 import it.unibo.cardhub.model.domain.api.Hand;
 import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
+import it.unibo.cardhub.model.domain.exceptions.EmptyCardCollectionException;
 
 /**
  * Player implementation.
@@ -56,6 +57,14 @@ public final class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
+    public void putInDeck(final Card<?> card) {
+        this.deck.addCard(card);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Optional<Card<?>> peekDiscardPile() {
         return discardPile.peekCard();
     }
@@ -72,13 +81,21 @@ public final class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
+    public void shuffleDeck() {
+        this.deck.shuffle();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Card<?> drawCard() {
         if (this.hand.isFull()) {
             throw new CardCollectionFullException("The hand exceeded the max amount of cards.");
         }
 
         if (this.deck.isEmpty()) {
-            throw new IllegalStateException("Tried to draw with an empty deck");
+            throw new EmptyCardCollectionException("Tried to draw with an empty deck");
         }
 
         final Card<?> card = this.deck.drawCard();

@@ -39,6 +39,14 @@ public interface MatchState {
     void moveCardFromFieldToPile(Card<?> card, PlayerEnum player);
 
     /**
+     * Moves a card from the field to the deck and shuffles the deck.
+     * 
+     * @param card the card to move
+     * @param player the player the card belongs to
+     */
+    void moveCardFromFieldToDeck(Card<?> card, PlayerEnum player);
+
+    /**
      * Returns the state of the playfield.
      * 
      * @return the playfield
@@ -94,5 +102,5 @@ public interface MatchState {
      * 
      * @return the winner, if present
      */
-    Optional<Player> getWinner();
+    Optional<PlayerEnum> getWinner();
 }

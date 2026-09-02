@@ -20,11 +20,12 @@ import it.unibo.cardhub.view.components.CHButton;
 import it.unibo.cardhub.view.components.CHPanel;
 import it.unibo.cardhub.view.components.CHStyles;
 import it.unibo.cardhub.view.components.ScreenView;
+import it.unibo.cardhub.view.impl.PlayerPanelImpl.PlayerPanelNotifier;
 
 /**
  * Builds the match view.
  */
-public final class MatchViewImpl extends ScreenView implements MatchView {
+public class MatchViewImpl extends ScreenView implements MatchView {
     public static final int WIDTH = 1200;
     public static final int HEIGHT = 960;
 
@@ -32,6 +33,7 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
 
     private final JPanel matchAreaPanel;
 
+    private final JPanel topPanel;
     private final PlayerPanel firstPlayerPanel;
     private final PlayerPanel secondPlayerPanel;
     private final PlayfieldPanel playfield;
@@ -52,9 +54,10 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
 
         matchAreaPanel = new CHPanel(CHStyles.tertiaryColor(), new BorderLayout());
 
+        this.topPanel = new CHPanel(new FlowLayout(FlowLayout.RIGHT));
         firstPlayerPanel = new PlayerPanelImpl(controller, PlayerEnum.PLAYER_ONE, true);
         secondPlayerPanel = new PlayerPanelImpl(controller, PlayerEnum.PLAYER_TWO, false);
-        playfield = new PlayfieldPanelImpl(controller, new PlayerPanelNotifierImpl(firstPlayerPanel, secondPlayerPanel));
+        playfield = new PlayfieldPanelImpl(controller, new PlayerPanelNotifier(firstPlayerPanel, secondPlayerPanel));
 
         exitButton = new CHButton("Exit");
         endTurnButton = new CHButton("End Turn");
@@ -65,13 +68,18 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
 
     //sets up the content pane
     private void manageContentPane() {
-        this.setLayout(new BorderLayout());
+        super.setLayout(new BorderLayout());
 
-        final JPanel topPanel = new CHPanel(new FlowLayout(FlowLayout.RIGHT));
         topPanel.setBorder(BorderFactory.createEmptyBorder(CHStyles.PADDING_SMALL, CHStyles.PADDING_NONE,
                                                             CHStyles.PADDING_NONE, CHStyles.PADDING_SMALL));
         topPanel.add(exitButton);
-        this.add(topPanel, BorderLayout.NORTH);
+        exitButton.addActionListener(e -> {
+            if (confirmDialog("Are you sure you want to exit?", "Exit")) {
+                controller.goToHome();
+            }
+        });
+
+        super.add(topPanel, BorderLayout.NORTH);
 
         this.managePlayField();
 
@@ -90,15 +98,17 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
 
         bottomPanel.add(concedeButton);
         concedeButton.addActionListener(e -> {
-            controller.concede();
+            if (confirmDialog("Are you sure you want to concede?", "Concede")) {
+                controller.concede();
+            }
         });
 
-        this.add(bottomPanel, BorderLayout.SOUTH);
+        super.add(bottomPanel, BorderLayout.SOUTH);
     }
 
     //sets up playField
     private void managePlayField() {
-        this.add(matchAreaPanel, BorderLayout.CENTER);
+        super.add(matchAreaPanel, BorderLayout.CENTER);
         matchAreaPanel.setBorder(BorderFactory.createMatteBorder(CHStyles.PADDING_SMALL, CHStyles.PADDING_LARGE,
                                                                 CHStyles.PADDING_NONE, CHStyles.PADDING_LARGE,
                                                                 CHStyles.secondaryColor()));
@@ -125,6 +135,9 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
         this.selectPlayerPanel(player).updateShowingHandPanel(cards);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateHiddenHand(final PlayerEnum player, final int cardCount) {
         this.selectPlayerPanel(player).updateHiddenHandPanel(cardCount);
@@ -142,6 +155,14 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
      * {@inheritDoc}
      */
     @Override
+    public void updateHiddenPlayfield(final PlayerEnum player, final int cardCount) {
+        playfield.updateHiddenPlayfield(player, cardCount);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void updateDiscardPile(final PlayerEnum player, final Optional<Card<?>> topCard) {
         if (player == PlayerEnum.PLAYER_ONE) {
             playfield.updatePlayerOneDiscardPile(topCard);
@@ -152,6 +173,9 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateDeck(final PlayerEnum player, final int remainingCards) {
         this.selectPlayerPanel(player).updateDeck();
@@ -172,6 +196,7 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
     @Override
     public void showMatchEnded(final PlayerEnum winner) {
         this.showPopup(controller.getPlayerName(winner) + " Wins!", "Match Over", JOptionPane.INFORMATION_MESSAGE);
+        controller.goToHome();
     }
 
     /**
@@ -182,7 +207,32 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
         this.showPopup(message, "Invalid Action!", JOptionPane.ERROR_MESSAGE);
     }
 
-    private void showPopup(final String content, final String title, final int messageType) {
+    /**
+     * Getter for the top panel.
+     * 
+     * @return the top panel
+     */
+    protected JPanel getTopPanel() {
+        return topPanel;
+    }
+
+    /**
+     * Getter for the end turn button.
+     * 
+     * @return the end turn button
+     */
+    protected JButton getEndTurnButton() {
+        return endTurnButton;
+    }
+
+    /**
+     * Shows a pop-up with the given information.
+     * 
+     * @param content the content
+     * @param title the title
+     * @param messageType the message type
+     */
+    protected void showPopup(final String content, final String title, final int messageType) {
         JOptionPane.showMessageDialog(
             this,
             content,
@@ -190,4 +240,9 @@ public final class MatchViewImpl extends ScreenView implements MatchView {
             messageType
         );
     }
+
+    private boolean confirmDialog(final String question, final String name) {
+        return JOptionPane.showConfirmDialog(this, question, name, JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+    }
+
 }
