@@ -20,19 +20,20 @@ import it.unibo.cardhub.view.api.MatchView;
 
 /**
  * abstract implementation of {@link MatchController}.
- * 
+ *
  *  @param <V> MatchView type
+ *  @param <L> MatchLogic type
  */
-public abstract class AbstractMatchController<V extends MatchView> implements MatchController {
+public abstract class AbstractMatchController<V extends MatchView, L extends MatchLogic> implements MatchController {
 
     private final MatchState state;
-    private final MatchLogic logic;
+    private final L logic;
     private final V view;
     private final Navigator navigator;
 
     /**
      * Constructor for the controller.
-     * 
+     *
      * @param state match state
      * @param logic match logic
      * @param navigator screen navigator
@@ -40,7 +41,7 @@ public abstract class AbstractMatchController<V extends MatchView> implements Ma
     @SuppressFBWarnings(value = "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR", justification =
         "createView() is called only for instantiating the view assotiated with the controller.")
     @SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
-    protected AbstractMatchController(final MatchState state, final MatchLogic logic, final Navigator navigator) {
+    protected AbstractMatchController(final MatchState state, final L logic, final Navigator navigator) {
         this.state = Objects.requireNonNull(state, "no MatchState supplied");
         this.logic = Objects.requireNonNull(logic, "no MatchLogic supplied");
         this.navigator = Objects.requireNonNull(navigator, "no navigator supplied");
@@ -237,10 +238,10 @@ public abstract class AbstractMatchController<V extends MatchView> implements Ma
 
     /**
      * Match logic getter.
-     * 
+     *
      * @return the match state
      */
-    protected MatchLogic getLogic() {
+    protected L getLogic() {
         return logic;
     }
 
