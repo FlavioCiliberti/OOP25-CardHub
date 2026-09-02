@@ -3,9 +3,6 @@ package it.unibo.cardhub.controller.impl;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.swing.JComponent;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.controller.ScreenId;
 import it.unibo.cardhub.controller.api.CreateMatchController;
 import it.unibo.cardhub.controller.api.MatchController;
@@ -20,6 +17,7 @@ import it.unibo.cardhub.model.domain.exceptions.EmptyFieldException;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.GameMode;
 import it.unibo.cardhub.view.api.CreateMatchView;
+import it.unibo.cardhub.view.components.ScreenView;
 import it.unibo.cardhub.view.impl.CreateMatchViewImpl;
 
 /**
@@ -57,12 +55,8 @@ public class CreateMatchControllerImpl implements CreateMatchController {
      * {@inheritDoc}
      */
     @Override
-    @SuppressFBWarnings(value = "EI", justification =
-            "The view JComponent must be returned by reference so it "
-                    + "can be embedded in the real application window; "
-                    + "cannot return a defensive copy for this purpuse.")
-    public JComponent getView() {
-        return (JComponent) view;
+    public void showScreen() {
+        navigator.show(ScreenId.CREATE_MATCH, (ScreenView) view);
     }
 
     /**
@@ -238,7 +232,7 @@ public class CreateMatchControllerImpl implements CreateMatchController {
      * @param matchController the controller of the game
      */
     private void showMatch(final MatchController matchController) {
-        navigator.show(ScreenId.MATCH, matchController.getView());
+        matchController.showScreen();
     }
 
     private Deck getDeck(final int deckId) {

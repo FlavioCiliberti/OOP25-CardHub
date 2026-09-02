@@ -3,9 +3,8 @@ package it.unibo.cardhub.controller.impl;
 import java.util.Objects;
 import java.util.Optional;
 
-import javax.swing.JComponent;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.cardhub.controller.ScreenId;
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.controller.api.Navigator;
 import it.unibo.cardhub.model.domain.api.Card;
@@ -17,6 +16,7 @@ import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
 import it.unibo.cardhub.view.api.MatchView;
+import it.unibo.cardhub.view.components.ScreenView;
 
 /**
  * abstract implementation of {@link MatchController}.
@@ -71,8 +71,8 @@ public abstract class AbstractMatchController<V extends MatchView, L extends Mat
      * {@inheritDoc}
      */
     @Override
-    public JComponent getView() {
-        return (JComponent) view;
+    public void showScreen() {
+        navigator.show(ScreenId.MATCH, (ScreenView) view);
     }
 
     /**
