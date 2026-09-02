@@ -51,7 +51,7 @@ class DeckImplTest {
 
     @Test
     void testPeekCard() throws EmptyCardCollectionException {
-        var peekedCard = deck.peekCard();
+        var peekedCard = deck.peekCard().get();
 
         assertEquals(card2, peekedCard);
         assertEquals(2, deck.size());

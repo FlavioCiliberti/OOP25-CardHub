@@ -70,11 +70,7 @@ public class PlayfieldImpl implements Playfield {
      * {@inheritDoc}
      */
     @Override
-<<<<<<< HEAD
-    public Card<?> removeCard(final PlayerEnum player,final Card<?> card) {
-=======
     public Card<?> removeCard(final PlayerEnum player, final Card<?> card) {
->>>>>>> development
         final List<Card<?>> cards = this.playerCards.get(Objects.requireNonNull(player, "No such player."));
 
         if (!cards.remove(Objects.requireNonNull(card, "No such card."))) {

@@ -22,7 +22,7 @@ public class HandImplTest {
     private Card<Suit> card1;
     private Card<Suit> card2;
     private Card<Suit> card3;
-    
+
     @BeforeEach
     void setUp() {
         hand = new HandImpl(new ArrayList<>(), 2);
