@@ -33,6 +33,7 @@ public interface Playfield {
     /**
      * Removes a card from the table.
      * 
+     * @param player that played the card
      * @param card to be removed
      * @return the card
      */
