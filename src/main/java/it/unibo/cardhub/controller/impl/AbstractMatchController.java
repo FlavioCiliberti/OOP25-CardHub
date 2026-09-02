@@ -12,6 +12,7 @@ import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
+import it.unibo.cardhub.model.domain.exceptions.EmptyCardCollectionException;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
@@ -176,7 +177,7 @@ public abstract class AbstractMatchController<V extends MatchView> implements Ma
     public void compareCard(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard) {
         Objects.requireNonNull(firstPlayerCard, "no firstPlayerCard provided");
         Objects.requireNonNull(secondPlayerCard, "no secondPlayerCard provided");
-        final ComparisonWinner winner = logic.compareCard(firstPlayerCard, secondPlayerCard);
+        final ComparisonWinner winner = logic.compareCard(firstPlayerCard, secondPlayerCard, state);
         switch (winner) {
             case TIE:
                 updateWithCardAction(PlayerEnum.PLAYER_ONE, Competitor.LOOSER);
@@ -196,7 +197,15 @@ public abstract class AbstractMatchController<V extends MatchView> implements Ma
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("PMD.EmptyCatchBlock")
     public void startTurn() {
+        if (logic.isAutoDrawEnabled()) {
+            try {
+                state.drawCard(logic.getCurrentPlayer());
+            } catch (final CardCollectionFullException | EmptyCardCollectionException e) {
+                // Expected: the player doesn't draw if their hand is already full or the deck is empty
+            }
+        }
         view.updateShowingHand(getTurnPlayer(), state.getPlayer(getTurnPlayer()).getHand().getCards());
     }
 
@@ -261,7 +270,7 @@ public abstract class AbstractMatchController<V extends MatchView> implements Ma
             state.playCard(card, owner);
             view.updatePlayfield(owner, state.getPlayfield().getCards(owner));
             view.updateShowingHand(owner, state.getPlayer(owner).getHand().getCards());
-        } catch (final IllegalStateException e) {
+        } catch (final CardCollectionFullException e) {
             view.showInvalidAction(e.getMessage());
         }
     }
@@ -287,12 +296,8 @@ public abstract class AbstractMatchController<V extends MatchView> implements Ma
         switch (action) {
             case NONE:
                 return;
-            case TO_HAND:
-                if (player == getTurnPlayer()) {
-                    view.updateShowingHand(player, state.getPlayer(player).getHand().getCards());
-                } else {
-                    view.updateHiddenHand(player, state.getPlayer(player).getHand().size());
-                }
+            case TO_DECK:
+                view.updateDeck(player, state.getPlayer(player).getDeckCount());
                 break;
             case TO_PILE:
                 view.updateDiscardPile(player, state.getPlayer(player).peekDiscardPile());
