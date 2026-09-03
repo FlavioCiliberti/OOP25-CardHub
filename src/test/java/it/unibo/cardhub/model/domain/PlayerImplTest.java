@@ -14,7 +14,6 @@ import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.model.domain.attributes.Suit;
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 import it.unibo.cardhub.model.domain.exceptions.EmptyCardCollectionException;
-import it.unibo.cardhub.model.domain.exceptions.NoSuchCardsException;
 import it.unibo.cardhub.model.domain.impl.CardImpl;
 import it.unibo.cardhub.model.domain.impl.DeckImpl;
 import it.unibo.cardhub.model.domain.impl.PlayerImpl;
