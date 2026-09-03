@@ -62,7 +62,7 @@ class MatchStateImplTest {
         assertTrue(matchState.isFinished());
         assertEquals(
             playerOne,
-            matchState.getWinner().get().orElseThrow()
+            matchState.getPlayer(matchState.getWinner().get())
         );
     }
 }
