@@ -71,11 +71,19 @@ public final class PlayerImpl implements Player {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void shuffleDeck() {
+        this.deck.shuffle();
+    }
+
+    /**
      * {@inheritDoc} 
      */
     @Override
     public Card<?> drawCard() throws CardCollectionFullException {
-        if (this.hand.size() >= this.hand.getMaxSize()) {
+        if (this.hand.isFull()) {
             throw new CardCollectionFullException("Tried to add a card to a full hand.");
         }
 
