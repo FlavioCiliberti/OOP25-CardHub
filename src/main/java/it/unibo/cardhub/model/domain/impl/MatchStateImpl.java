@@ -84,6 +84,16 @@ public class MatchStateImpl implements MatchState {
     /**
      * {@inheritDoc}
      */
+    @Override
+    public void moveCardFromFieldToDeck(final Card<?> card, final PlayerEnum player) {
+        this.field.removeCard(player, card);
+        this.getPlayer(player).putInDeck(card);
+        this.getPlayer(player).shuffleDeck();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public Playfield getPlayfield() {
         return this.field.copy();
     }
