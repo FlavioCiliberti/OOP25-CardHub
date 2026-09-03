@@ -42,6 +42,14 @@ public interface MatchState {
     void moveCardFromFieldToPile(Card<?> card, PlayerEnum player);
 
     /**
+     * Moves a card from the field to the deck and shuffles the deck.
+     * 
+     * @param card the card to move
+     * @param player the player the card belongs to
+     */
+    void moveCardFromFieldToDeck(Card<?> card, PlayerEnum player);
+    
+    /**
      * Returns a copy of the playfield
      * 
      * @return a copy of the playfield
