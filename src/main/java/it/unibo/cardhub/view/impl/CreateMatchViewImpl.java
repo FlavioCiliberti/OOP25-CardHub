@@ -122,7 +122,7 @@ public final class CreateMatchViewImpl extends ScreenView implements CreateMatch
 
         freePlayRadioButton = new JRadioButton("Free Play");
         customRulesRadioButton = new JRadioButton("Custom Rules");
-        fullGameRadioButton = new JRadioButton("Full Game");
+        fullGameRadioButton = new JRadioButton("E-Card");
         gameModesGroup = new ButtonGroup();
 
         handSizeModel = new SpinnerNumberModel(controller.getDefaultHandSize(), controller.getMinHandSize(), 
