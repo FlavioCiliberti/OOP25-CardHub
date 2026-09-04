@@ -1,5 +1,8 @@
-package it.unibo.cardhub.controller.api;
+package it.unibo.cardhub.controller.factory;
 
+import it.unibo.cardhub.controller.api.MatchController;
+import it.unibo.cardhub.controller.api.Navigator;
+import it.unibo.cardhub.controller.impl.ECardMatchController;
 import it.unibo.cardhub.controller.impl.MatchControllerImpl;
 import it.unibo.cardhub.io.api.DeckFactory;
 import it.unibo.cardhub.io.impl.DeckFactoryImpl;
@@ -9,7 +12,7 @@ import it.unibo.cardhub.model.domain.impl.MatchStateBuilderImpl;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
 import it.unibo.cardhub.model.logic.impl.ECardLogic;
-import it.unibo.cardhub.model.logic.impl.MatchLogicImpl;
+import it.unibo.cardhub.model.logic.impl.StandardMatchLogic;
 
 /**
  * A factory for MatchController.
@@ -38,7 +41,7 @@ public final class MatchControllerFactory {
                                                             final Navigator navigator) {
         final MatchState state = new MatchStateBuilderImpl(firstPlayerName, secondPlayerName,
                                                         firstPlayerDeck, secondPlayerDeck).build();
-        final MatchLogic logic = new MatchLogicImpl(CardAction.TO_PILE, CardAction.TO_PILE, true, state);
+        final MatchLogic logic = new StandardMatchLogic(CardAction.NONE, CardAction.TO_PILE, true);
         return new MatchControllerImpl(state, logic, navigator);
     }
 
@@ -66,7 +69,7 @@ public final class MatchControllerFactory {
                                             final Navigator navigator) {
         final MatchState state = new MatchStateBuilderImpl(firstPlayerName, secondPlayerName, firstPlayerDeck, secondPlayerDeck)
                             .maxHandSize(maxHandSize).startingHandSize(startingHandSize).playfieldSize(playerFieldSize).build();
-        final MatchLogic logic = new MatchLogicImpl(winnerAction, loserAction, autoDraw, state);
+        final MatchLogic logic = new StandardMatchLogic(winnerAction, loserAction, autoDraw);
         return new MatchControllerImpl(state, logic, navigator);
     }
 
@@ -78,13 +81,13 @@ public final class MatchControllerFactory {
      * @param navigator the navigator
      * @return a MatchControllerImpl for E-Card match
      */
-    public static MatchController createECardMatchController(final String firstPlayerName, final String secondPlayerName,
+    public static ECardMatchController createECardMatchController(final String firstPlayerName, final String secondPlayerName,
                                                     final Navigator navigator) {
         final DeckFactory deckFactory = new DeckFactoryImpl();
 
         final MatchState state = new MatchStateBuilderImpl(firstPlayerName, secondPlayerName,
                             deckFactory.createECardDeck(), deckFactory.createECardDeck()).maxHandSize(ECARD_MAX_HAND_SIZE)
                             .startingHandSize(ECARD_STARTING_HAND_SIZE).playfieldSize(ECARD_PLAYFIELD_SIZE).build();
-        return new MatchControllerImpl(state, new ECardLogic(state), navigator);
+        return new ECardMatchController(state, new ECardLogic(), navigator);
     }
 }

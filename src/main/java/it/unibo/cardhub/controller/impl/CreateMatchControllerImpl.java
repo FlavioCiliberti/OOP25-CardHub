@@ -3,14 +3,11 @@ package it.unibo.cardhub.controller.impl;
 import java.util.Map;
 import java.util.Objects;
 
-import javax.swing.JComponent;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.controller.ScreenId;
 import it.unibo.cardhub.controller.api.CreateMatchController;
 import it.unibo.cardhub.controller.api.MatchController;
-import it.unibo.cardhub.controller.api.MatchControllerFactory;
 import it.unibo.cardhub.controller.api.Navigator;
+import it.unibo.cardhub.controller.factory.MatchControllerFactory;
 import it.unibo.cardhub.io.api.DeckFactory;
 import it.unibo.cardhub.io.impl.DeckFactoryImpl;
 import it.unibo.cardhub.model.api.CreateMatchModel;
@@ -20,6 +17,7 @@ import it.unibo.cardhub.model.domain.exceptions.EmptyFieldException;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.GameMode;
 import it.unibo.cardhub.view.api.CreateMatchView;
+import it.unibo.cardhub.view.components.ScreenView;
 import it.unibo.cardhub.view.impl.CreateMatchViewImpl;
 
 /**
@@ -57,12 +55,8 @@ public class CreateMatchControllerImpl implements CreateMatchController {
      * {@inheritDoc}
      */
     @Override
-    @SuppressFBWarnings(value = "EI", justification =
-            "The view JComponent must be returned by reference so it "
-                    + "can be embedded in the real application window; "
-                    + "cannot return a defensive copy for this purpuse.")
-    public JComponent getView() {
-        return (JComponent) view;
+    public void showScreen() {
+        navigator.show(ScreenId.CREATE_MATCH, (ScreenView) view);
     }
 
     /**
@@ -134,23 +128,21 @@ public class CreateMatchControllerImpl implements CreateMatchController {
         try {
             checkMatchParams(player1Name, player2Name, 
                             winnerAction, loserAction, gameMode);
+            switch (gameMode) {
+                case FREE_PLAY:
+                    createFreeGameController(player1Name, player1DeckId, player2Name, player2DeckId);
+                    break;
+                case CUSTOM:
+                    createCustomGameController(player1Name, player1DeckId, player2Name, player2DeckId, 
+                                    maxHandSize, startingHandSize, playerFieldSize, autoDraw, 
+                                    winnerAction, loserAction);
+                    break;
+                case E_CARD:
+                    createFullGameController(player1Name, player2Name);
+                    break;
+            }
         } catch (final EmptyFieldException e) {
             view.showInvalidForm(e.getMessage());
-            return;
-        }
-
-        switch (gameMode) {
-            case FREE_PLAY:
-                createFreeGameController(player1Name, player1DeckId, player2Name, player2DeckId);
-                break;
-            case CUSTOM:
-                createCustomGameController(player1Name, player1DeckId, player2Name, player2DeckId, 
-                                maxHandSize, startingHandSize, playerFieldSize, autoDraw, 
-                                winnerAction, loserAction);
-                break;
-            case E_CARD:
-                createFullGameController(player1Name, player2Name);
-                break;
         }
 
     }
@@ -207,7 +199,8 @@ public class CreateMatchControllerImpl implements CreateMatchController {
      * @param player2Name the name of the second player
      */
     private void createFullGameController(final String player1Name, final String player2Name) {
-        final MatchController controller = MatchControllerFactory.createECardMatchController(player1Name, player2Name, navigator);
+        final ECardMatchController controller = MatchControllerFactory.createECardMatchController(player1Name, 
+                                                                                                player2Name, navigator);
         showMatch(controller);
     }
 
@@ -239,7 +232,7 @@ public class CreateMatchControllerImpl implements CreateMatchController {
      * @param matchController the controller of the game
      */
     private void showMatch(final MatchController matchController) {
-        navigator.show(ScreenId.MATCH, matchController.getView());
+        matchController.showScreen();
     }
 
     private Deck getDeck(final int deckId) {

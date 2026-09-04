@@ -7,6 +7,8 @@ import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -21,6 +23,7 @@ import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.view.api.PlayerPanel;
+import it.unibo.cardhub.view.api.PlayfieldListener;
 import it.unibo.cardhub.view.components.CHLabel;
 import it.unibo.cardhub.view.components.CHPanel;
 import it.unibo.cardhub.view.components.CHStyles;
@@ -91,6 +94,7 @@ final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
 
         deckWrapper.add(deckLabel);
         deckLabel.setPreferredSize(new Dimension(ImageResolver.CARD_WIDTH, ImageResolver.CARD_HEIGHT));
+        this.updateDeck();
         deckLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(final MouseEvent e) {
@@ -175,11 +179,7 @@ final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
         panel.add(this, constraints);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void updateDescriptionLabel(final Card<?> card) {
+    private void updateDescriptionLabel(final Card<?> card) {
         cardInfoLabel.setText("<html>"
                                 + card.name().orElse("")
                                 + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Value: "
@@ -187,11 +187,52 @@ final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
                                 + card.desc().orElse("") + "</html>");
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void removeDescription() {
+    private void removeDescription() {
         cardInfoLabel.setText("");
+    }
+
+    /**
+     * Notifier for PlayerPanelImpl.
+     */
+    static class PlayerPanelNotifier implements PlayfieldListener {
+        private final Map<PlayerEnum, PlayerPanel> playerPanels;
+
+        /**
+         * Constructor for PlayerPanelNotifier.
+         * 
+         * @param firstPlayerPanel player 1 panel
+         * @param secondPlayerPanel player 2 panel
+         */
+        PlayerPanelNotifier(final PlayerPanel firstPlayerPanel, final PlayerPanel secondPlayerPanel) {
+            Objects.requireNonNull(firstPlayerPanel);
+            Objects.requireNonNull(secondPlayerPanel);
+
+            this.playerPanels = Map.of(PlayerEnum.PLAYER_ONE, firstPlayerPanel, PlayerEnum.PLAYER_TWO, secondPlayerPanel);
+        }
+
+        /**
+         * Updates the card description when the mouse hovers over a card.
+         * 
+         * @param card the card
+         * @param player the player the card belongs to
+         */
+        @Override
+        public void mouseHovered(final Card<?> card, final PlayerEnum player) {
+            if (playerPanels.get(player) instanceof PlayerPanelImpl panel) {
+                panel.updateDescriptionLabel(card);
+            }
+        }
+
+        /**
+         * Removes the card description when the mouse stops hovering a card.
+         * 
+         * @param player the player the card belonged to
+         */
+        @Override
+        public void mouseExited(final PlayerEnum player) {
+            if (playerPanels.get(player) instanceof PlayerPanelImpl panel) {
+                panel.removeDescription();
+            }
+        }
     }
 }

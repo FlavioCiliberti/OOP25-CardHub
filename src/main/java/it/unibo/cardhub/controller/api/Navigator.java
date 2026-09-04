@@ -3,6 +3,7 @@ package it.unibo.cardhub.controller.api;
 import javax.swing.JComponent;
 
 import it.unibo.cardhub.controller.ScreenId;
+import it.unibo.cardhub.view.components.ScreenView;
 
 /**
  * Interface for the application's navigator, responsible
@@ -24,7 +25,7 @@ public interface Navigator {
      * @param id the screen identifier
      * @param view the view component to navigate to
      */
-    void show(ScreenId id, JComponent view);
+    void show(ScreenId id, ScreenView view);
 
     /**
      * Navigates to a specific screen view: the Home screen.

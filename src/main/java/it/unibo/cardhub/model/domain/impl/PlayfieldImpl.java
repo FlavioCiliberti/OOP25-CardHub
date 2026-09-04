@@ -9,6 +9,7 @@ import java.util.Objects;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.domain.api.Playfield;
+import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 import it.unibo.cardhub.model.domain.exceptions.NoSuchCardsException;
 
 /**
@@ -59,7 +60,7 @@ public class PlayfieldImpl implements Playfield {
     @Override
     public void addCard(final PlayerEnum player, final Card<?> card) {
         if (!canAddCard(player)) {
-            throw new IllegalStateException("The player cannot add more cards.");
+            throw new CardCollectionFullException("The player cannot add more cards.");
         }
 
         this.playerCards.get(player).add(Objects.requireNonNull(card, "No such card."));
@@ -69,14 +70,14 @@ public class PlayfieldImpl implements Playfield {
      * {@inheritDoc}
      */
     @Override
-    public Card<?> removeCard(final Card<?> card) {
-        for (final List<Card<?>> cards : this.playerCards.values()) {
-            if (cards.remove(card)) {
-                return card;
-            }
+    public Card<?> removeCard(final PlayerEnum player, final Card<?> card) {
+        final List<Card<?>> cards = this.playerCards.get(Objects.requireNonNull(player, "No such player."));
+
+        if (!cards.remove(Objects.requireNonNull(card, "No such card."))) {
+            throw new NoSuchCardsException();
         }
 
-        throw new NoSuchCardsException();
+        return card;
     }
 
     /**

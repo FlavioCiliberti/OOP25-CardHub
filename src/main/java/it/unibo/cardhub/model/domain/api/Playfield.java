@@ -33,10 +33,11 @@ public interface Playfield {
     /**
      * Removes a card from the table.
      * 
+     * @param player that played the card
      * @param card to be removed
      * @return the card
      */
-    Card<?> removeCard(Card<?> card);
+    Card<?> removeCard(PlayerEnum player, Card<?> card);
 
     /**
      * A getter for the player's cards.

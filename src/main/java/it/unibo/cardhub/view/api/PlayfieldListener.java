@@ -4,12 +4,11 @@ import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
 
 /**
- * Executes the necessary actions in PlayerPanel,
- * according to events happening in PlayfieldPanel.
+ * Listener for events in the Playfield.
  */
-public interface PlayerPanelNotifier {
+public interface PlayfieldListener {
     /**
-     * Updates the card description when the mouse hovers over a card.
+     * Executes an action when the mouse hovers over a card.
      * 
      * @param card the card
      * @param player the player the card belongs to
@@ -17,7 +16,7 @@ public interface PlayerPanelNotifier {
     void mouseHovered(Card<?> card, PlayerEnum player);
 
     /**
-     * Removes the card description when the mouse stops hovering a card.
+     * Executes an action when the mouse stops hovering a card.
      * 
      * @param player the player the card belonged to
      */

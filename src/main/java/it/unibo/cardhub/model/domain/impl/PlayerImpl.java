@@ -58,6 +58,14 @@ public final class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
+    public void putInDeck(final Card<?> card) {
+        this.deck.addCard(card);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Optional<Card<?>> peekDiscardPile() {
         return discardPile.peekCard();
     }

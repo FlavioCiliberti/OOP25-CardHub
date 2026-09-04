@@ -77,7 +77,7 @@ public class MatchStateImpl implements MatchState {
      */
     @Override
     public void moveCardFromFieldToPile(final Card<?> card, final PlayerEnum player) {
-        this.field.removeCard(card);
+        this.field.removeCard(player, card);
         this.getPlayer(player).putInPile(card);
     }
 

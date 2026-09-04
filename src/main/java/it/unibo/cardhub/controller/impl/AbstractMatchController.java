@@ -3,35 +3,37 @@ package it.unibo.cardhub.controller.impl;
 import java.util.Objects;
 import java.util.Optional;
 
-import javax.swing.JComponent;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import it.unibo.cardhub.controller.ScreenId;
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.controller.api.Navigator;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
+import it.unibo.cardhub.model.domain.exceptions.EmptyCardCollectionException;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
 import it.unibo.cardhub.view.api.MatchView;
+import it.unibo.cardhub.view.components.ScreenView;
 
 /**
  * abstract implementation of {@link MatchController}.
- * 
+ *
  *  @param <V> MatchView type
+ *  @param <L> MatchLogic type
  */
-public abstract class AbstractMatchController<V extends MatchView> implements MatchController {
+public abstract class AbstractMatchController<V extends MatchView, L extends MatchLogic> implements MatchController {
 
     private final MatchState state;
-    private final MatchLogic logic;
+    private final L logic;
     private final V view;
     private final Navigator navigator;
 
     /**
      * Constructor for the controller.
-     * 
+     *
      * @param state match state
      * @param logic match logic
      * @param navigator screen navigator
@@ -39,7 +41,7 @@ public abstract class AbstractMatchController<V extends MatchView> implements Ma
     @SuppressFBWarnings(value = "MC_OVERRIDABLE_METHOD_CALL_IN_CONSTRUCTOR", justification =
         "createView() is called only for instantiating the view assotiated with the controller.")
     @SuppressWarnings("PMD.ConstructorCallsOverridableMethod")
-    protected AbstractMatchController(final MatchState state, final MatchLogic logic, final Navigator navigator) {
+    protected AbstractMatchController(final MatchState state, final L logic, final Navigator navigator) {
         this.state = Objects.requireNonNull(state, "no MatchState supplied");
         this.logic = Objects.requireNonNull(logic, "no MatchLogic supplied");
         this.navigator = Objects.requireNonNull(navigator, "no navigator supplied");
@@ -69,8 +71,8 @@ public abstract class AbstractMatchController<V extends MatchView> implements Ma
      * {@inheritDoc}
      */
     @Override
-    public JComponent getView() {
-        return (JComponent) view;
+    public void showScreen() {
+        navigator.show(ScreenId.MATCH, (ScreenView) view);
     }
 
     /**
@@ -176,7 +178,7 @@ public abstract class AbstractMatchController<V extends MatchView> implements Ma
     public void compareCard(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard) {
         Objects.requireNonNull(firstPlayerCard, "no firstPlayerCard provided");
         Objects.requireNonNull(secondPlayerCard, "no secondPlayerCard provided");
-        final ComparisonWinner winner = logic.compareCard(firstPlayerCard, secondPlayerCard);
+        final ComparisonWinner winner = logic.compareCard(firstPlayerCard, secondPlayerCard, state);
         switch (winner) {
             case TIE:
                 updateWithCardAction(PlayerEnum.PLAYER_ONE, Competitor.LOOSER);
@@ -196,8 +198,19 @@ public abstract class AbstractMatchController<V extends MatchView> implements Ma
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("PMD.EmptyCatchBlock")
     public void startTurn() {
-        view.updateShowingHand(getTurnPlayer(), state.getPlayer(getTurnPlayer()).getHand().getCards());
+        final PlayerEnum player = getTurnPlayer();
+
+        if (logic.shouldAutoDraw()) {
+            try {
+                state.drawCard(player);
+                view.updateDeck(player, state.getPlayer(player).getDeckCount());
+            } catch (final CardCollectionFullException | EmptyCardCollectionException e) {
+                // Expected: the player doesn't draw if their hand is already full or the deck is empty
+            }
+        }
+        view.updateShowingHand(player, state.getPlayer(player).getHand().getCards());
     }
 
     /**
@@ -228,10 +241,10 @@ public abstract class AbstractMatchController<V extends MatchView> implements Ma
 
     /**
      * Match logic getter.
-     * 
+     *
      * @return the match state
      */
-    protected MatchLogic getLogic() {
+    protected L getLogic() {
         return logic;
     }
 
@@ -261,7 +274,7 @@ public abstract class AbstractMatchController<V extends MatchView> implements Ma
             state.playCard(card, owner);
             view.updatePlayfield(owner, state.getPlayfield().getCards(owner));
             view.updateShowingHand(owner, state.getPlayer(owner).getHand().getCards());
-        } catch (final IllegalStateException e) {
+        } catch (final CardCollectionFullException e) {
             view.showInvalidAction(e.getMessage());
         }
     }
@@ -287,12 +300,8 @@ public abstract class AbstractMatchController<V extends MatchView> implements Ma
         switch (action) {
             case NONE:
                 return;
-            case TO_HAND:
-                if (player == getTurnPlayer()) {
-                    view.updateShowingHand(player, state.getPlayer(player).getHand().getCards());
-                } else {
-                    view.updateHiddenHand(player, state.getPlayer(player).getHand().size());
-                }
+            case TO_DECK:
+                view.updateDeck(player, state.getPlayer(player).getDeckCount());
                 break;
             case TO_PILE:
                 view.updateDiscardPile(player, state.getPlayer(player).peekDiscardPile());

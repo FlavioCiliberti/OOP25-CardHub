@@ -9,7 +9,7 @@ import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 /**
  * MatchLogic for a Free or Custom match.
  */
-public class MatchLogicImpl extends AbstractMatchLogic {
+public class StandardMatchLogic extends AbstractMatchLogic {
 
     /**
      * Constructor for MatchLogicImpl.
@@ -17,18 +17,17 @@ public class MatchLogicImpl extends AbstractMatchLogic {
      * @param winnerCardAction winner card action
      * @param loserCardAction loser card action
      * @param autoDraw whether the player draws on turn start
-     * @param matchState the match state
      */
-    public MatchLogicImpl(final CardAction winnerCardAction, final CardAction loserCardAction,
-                    final boolean autoDraw, final MatchState matchState) {
-        super(winnerCardAction, loserCardAction, autoDraw, matchState);
+    public StandardMatchLogic(final CardAction winnerCardAction, final CardAction loserCardAction, final boolean autoDraw) {
+        super(winnerCardAction, loserCardAction, autoDraw);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public ComparisonWinner compareCard(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard) {
+    public ComparisonWinner compareCard(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard,
+                                        final MatchState state) {
 
         if (firstPlayerCard.value() > secondPlayerCard.value()) {
             // Player1 winner action
@@ -36,14 +35,14 @@ public class MatchLogicImpl extends AbstractMatchLogic {
                 firstPlayerCard, 
                 PlayerEnum.PLAYER_ONE,
                 super.getWinnerCardAction(), 
-                super.getMatchState()
+                state
             );
             // Player2 loser action
             this.executeCardAction(
                 secondPlayerCard, 
                 PlayerEnum.PLAYER_TWO,
                 super.getLoserCardAction(), 
-                super.getMatchState()
+                state
             );
             return ComparisonWinner.PLAYER_1;
         } else if (firstPlayerCard.value() < secondPlayerCard.value()) {
@@ -52,17 +51,31 @@ public class MatchLogicImpl extends AbstractMatchLogic {
                 firstPlayerCard, 
                 PlayerEnum.PLAYER_ONE,
                 super.getLoserCardAction(), 
-                super.getMatchState()
+                state
             );
             // Player2 winner action
             this.executeCardAction(
                 secondPlayerCard, 
                 PlayerEnum.PLAYER_TWO,
                 super.getWinnerCardAction(), 
-                super.getMatchState()
+                state
             );
             return ComparisonWinner.PLAYER_2;
         }
+        // Player1 loser action
+        this.executeCardAction(
+            firstPlayerCard, 
+            PlayerEnum.PLAYER_ONE,
+            super.getLoserCardAction(), 
+            state
+        );
+        // Player2 loser action
+        this.executeCardAction(
+            secondPlayerCard, 
+            PlayerEnum.PLAYER_TWO,
+            super.getLoserCardAction(), 
+            state
+        );
         return ComparisonWinner.TIE;
     }
 
@@ -70,11 +83,9 @@ public class MatchLogicImpl extends AbstractMatchLogic {
                                     final CardAction action, final MatchState matchState) {
 
         if (action == CardAction.TO_PILE) {
-            matchState.getPlayfield().removeCard(card);
-            matchState.getPlayer(player).putInPile(card);
-        } else if (action == CardAction.TO_HAND) {
-            matchState.getPlayfield().removeCard(card);
-            matchState.getPlayer(player).getHand().addCard(card);
+            matchState.moveCardFromFieldToPile(card, player);
+        } else if (action == CardAction.TO_DECK) {
+            matchState.moveCardFromFieldToDeck(card, player);
         }
     }
 
