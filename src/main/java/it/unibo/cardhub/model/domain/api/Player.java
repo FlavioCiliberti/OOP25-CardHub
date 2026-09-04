@@ -2,6 +2,8 @@ package it.unibo.cardhub.model.domain.api;
 
 import java.util.Optional;
 
+import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
+
 /**
  * Represents a player in a match.
  */
@@ -11,8 +13,9 @@ public interface Player {
      * Draws a card from the player's deck.
      * 
      * @return the drawn card
+     * @throws CardCollectionFullException if the player's hand is full
      */
-    Card<?> drawCard();
+    Card<?> drawCard() throws CardCollectionFullException;
 
     /**
      * Puts a card onto the table from the player's hand.
@@ -29,6 +32,12 @@ public interface Player {
      */
     void putInPile(Card<?> card);
 
+
+    /**
+     * Shuffles the deck.
+     */
+    void shuffleDeck();
+    
     /**
      * Puts a card in the player's deck.
      * 
@@ -54,14 +63,14 @@ public interface Player {
     void shufflePileIntoDeck();
 
     /**
-     * A getter for the player's name.
+     * Returns the player's name.
      * 
      * @return the player's name
      */
     String getName();
 
     /**
-     * A getter for the player's hand.
+     * Returns the player's hand.
      * 
      * @return the player's hand
      */
@@ -82,7 +91,7 @@ public interface Player {
     boolean hasEmptyDiscardPile();
 
     /**
-     * Gets the current size of the deck.
+     * Returns the current size of the deck.
      * 
      * @return deck size
      */

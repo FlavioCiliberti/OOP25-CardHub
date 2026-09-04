@@ -24,23 +24,16 @@ public class HandImpl extends AbstractCardCollection implements Hand {
      */
     public HandImpl(final List<? extends Card<?>> cards, final int maxSize) {
         super(Objects.requireNonNull(cards));
+
         if (maxSize <= 0) {
             throw new IllegalArgumentException("Maximum hand size must be positive.");
         }
 
-        this.maxSize = maxSize;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void addCard(final Card<?> card) {
-        if (isFull()) {
-            throw new CardCollectionFullException("The hand is full.");
+        if (cards.size() > maxSize) {
+            throw new IllegalArgumentException("Initial hand size cannot exceed maximum hand size.");
         }
 
-        super.addCard(card);
+        this.maxSize = maxSize;
     }
 
     /**
@@ -55,6 +48,18 @@ public class HandImpl extends AbstractCardCollection implements Hand {
      * {@inheritDoc}
      */
     @Override
+    public Card<?> playCard(final Card<?> card) {
+        if (!this.getMutableCards().remove(card)) {
+            throw new NoSuchCardsException();
+        }
+
+        return card;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public boolean isFull() {
         return this.size() >= this.maxSize;
     }
@@ -63,11 +68,11 @@ public class HandImpl extends AbstractCardCollection implements Hand {
      * {@inheritDoc}
      */
     @Override
-    public Card<?> playCard(final Card<?> card) {
-        if (!this.getMutableCards().remove(card)) {
-            throw new NoSuchCardsException();
+    public void addCard(Card<?> card) throws CardCollectionFullException {
+        if (this.isFull()) {
+            throw new CardCollectionFullException();
         }
 
-        return card;
+        this.getMutableCards().add(card);
     }
 }

@@ -54,4 +54,12 @@ public class DeckImpl extends AbstractCardCollection implements Deck {
 
         return Optional.of(getMutableCards().get(this.size() - 1));
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addCard(Card<?> card) {
+        this.getMutableCards().add(card);
+    }
 }

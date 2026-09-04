@@ -4,12 +4,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.domain.api.Playfield;
+import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 
 /**
  * Match state implementation.
@@ -59,7 +59,7 @@ public class MatchStateImpl implements MatchState {
      * {@inheritDoc}
      */
     @Override
-    public void drawCard(final PlayerEnum player) {
+    public void drawCard(final PlayerEnum player) throws CardCollectionFullException {
         this.getPlayer(player).drawCard();
     }
 
@@ -94,13 +94,8 @@ public class MatchStateImpl implements MatchState {
     /**
      * {@inheritDoc}
      */
-    @Override
-    @SuppressFBWarnings(
-        value = "EI_EXPOSE_REP",
-        justification = "Playfield is intentionally exposed to let callers mutate its state"
-    )
     public Playfield getPlayfield() {
-        return this.field;
+        return this.field.copy();
     }
 
     /**

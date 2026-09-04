@@ -2,6 +2,8 @@ package it.unibo.cardhub.model.domain.api;
 
 import java.util.Optional;
 
+import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
+
 /**
  * Represent a match, the heart of the game.
  */
@@ -19,8 +21,9 @@ public interface MatchState {
      * Makes the player draw a card.
      * 
      * @param player the player to draw the card
+     * @throws CardCollectionFullException if the player's hand is full
      */
-    void drawCard(PlayerEnum player);
+    void drawCard(PlayerEnum player) throws CardCollectionFullException;
 
     /**
      * Makes the player play a card.
@@ -45,11 +48,11 @@ public interface MatchState {
      * @param player the player the card belongs to
      */
     void moveCardFromFieldToDeck(Card<?> card, PlayerEnum player);
-
+    
     /**
-     * Returns the state of the playfield.
+     * Returns a copy of the playfield
      * 
-     * @return the playfield
+     * @return a copy of the playfield
      */
     Playfield getPlayfield();
 

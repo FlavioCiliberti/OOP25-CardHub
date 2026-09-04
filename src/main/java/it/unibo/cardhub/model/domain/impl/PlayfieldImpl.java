@@ -103,4 +103,18 @@ public class PlayfieldImpl implements Playfield {
     public List<Card<?>> getAllCards() {
         return this.playerCards.values().stream().flatMap(List::stream).toList();
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Playfield copy() {
+        final PlayfieldImpl copy = new PlayfieldImpl(this.maxFieldSize);
+
+        for (final PlayerEnum player : PlayerEnum.values()) {
+            copy.playerCards.get(player).addAll(this.playerCards.get(player));
+        }
+
+        return copy;
+    }
 }

@@ -58,4 +58,11 @@ public interface Playfield {
      * @return a list of all the cards
      */
     List<Card<?>> getAllCards();
+
+    /**
+     * Returns a copy of the playfield for incapsulation purposes.
+     * 
+     * @return a copy of the playfield
+     */
+    Playfield copy();
 }

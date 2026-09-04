@@ -8,6 +8,13 @@ import java.util.Optional;
 public interface Deck extends CardCollection {
 
     /**
+     * Adds a card to the deck.
+     * 
+     * @param card to be added
+     */
+    void addCard(Card<?> card);
+
+    /**
      * Draws a card from the deck.
      * 
      * @return the drawn card
