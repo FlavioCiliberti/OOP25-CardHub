@@ -40,11 +40,7 @@ application {
 
 java {
     toolchain {
-<<<<<<< HEAD
-        languageVersion = JavaLanguageVersion.of(21)
-=======
         languageVersion.set(JavaLanguageVersion.of(21))
->>>>>>> development
     }
 }
 

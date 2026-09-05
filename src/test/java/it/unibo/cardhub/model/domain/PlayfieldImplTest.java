@@ -11,6 +11,7 @@ import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.domain.api.Playfield;
 import it.unibo.cardhub.model.domain.attributes.Suit;
+import it.unibo.cardhub.model.domain.exceptions.FieldFullException;
 import it.unibo.cardhub.model.domain.exceptions.NoSuchCardsException;
 import it.unibo.cardhub.model.domain.impl.CardImpl;
 import it.unibo.cardhub.model.domain.impl.PlayfieldImpl;
@@ -38,7 +39,7 @@ final class PlayfieldImplTest {
     }
 
     @Test
-    void testRemoveCardFromCorrectPlayer() {
+    void testRemoveCardFromCorrectPlayer() throws FieldFullException {
         playfield.addCard(PlayerEnum.PLAYER_ONE, card);
         playfield.addCard(PlayerEnum.PLAYER_TWO, card);
 
@@ -60,7 +61,7 @@ final class PlayfieldImplTest {
     }
 
     @Test
-    void testAddAndGetCards() {
+    void testAddAndGetCards() throws FieldFullException {
         playfield.addCard(PlayerEnum.PLAYER_ONE, card);
 
         assertEquals(
@@ -83,14 +84,21 @@ final class PlayfieldImplTest {
     }
 
     @Test
-    void testAddCardWhenFieldIsFull() {
-        for (int i = 0; i < MAX_FIELD_SIZE; i++) {
+    void testAddCardWhenFieldIsFull() throws FieldFullException {
+        playfield.addCard(PlayerEnum.PLAYER_ONE, card);
+
+        for (int i = 1; i < MAX_FIELD_SIZE; i++) {
             final Card<Suit> newCard = new CardImpl.Builder<Suit>()
                     .id(String.valueOf(i))
                     .attributes(Suit.HEARTS)
                     .value(CARD_VALUE)
                     .build();
-            playfield.addCard(PlayerEnum.PLAYER_ONE, newCard);  
+            playfield.addCard(PlayerEnum.PLAYER_ONE, newCard);
         }
+
+        assertThrows(
+            FieldFullException.class,
+            () -> playfield.addCard(PlayerEnum.PLAYER_ONE, card)
+        );
     }
 }

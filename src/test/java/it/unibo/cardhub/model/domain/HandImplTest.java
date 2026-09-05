@@ -54,7 +54,7 @@ final class HandImplTest {
     }
 
     @Test
-    void testAddCard() {
+    void testAddCard() throws CardCollectionFullException {
         hand.addCard(card1);
 
         assertEquals(1, hand.size());
@@ -62,7 +62,7 @@ final class HandImplTest {
     }
 
     @Test
-    void testAddCardWhenHandIsFull() {
+    void testAddCardWhenHandIsFull() throws CardCollectionFullException {
         hand.addCard(card1);
         hand.addCard(card2);
 
@@ -75,7 +75,7 @@ final class HandImplTest {
     }
 
     @Test
-    void testPlayCard() {
+    void testPlayCard() throws CardCollectionFullException {
         hand.addCard(card1);
 
         final Card<?> playedCard = hand.playCard(card1);

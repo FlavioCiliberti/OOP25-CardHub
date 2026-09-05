@@ -25,14 +25,15 @@ final class PlayerImplTest {
 
     private static final int CARD_VALUE = 10;
     private static final int MAX_HAND_SIZE = 7;
-    private static final int STARTING_HAND_SIZE = 0;
+    private static final int STARTING_HAND_SIZE = 1;
 
     private Player player;
+    private Card<Suit> card1;
     private Card<Suit> card2;
 
     @BeforeEach
     void setUp() {
-        final Card<Suit> card1 = new CardImpl.Builder<Suit>()
+        card1 = new CardImpl.Builder<Suit>()
                 .id("1")
                 .attributes(Suit.HEARTS)
                 .value(CARD_VALUE)
@@ -48,11 +49,11 @@ final class PlayerImplTest {
         deck.addCard(card1);
         deck.addCard(card2);
 
-        player = new PlayerImpl("John", STARTING_HAND_SIZE, MAX_HAND_SIZE, deck);
+        player = new PlayerImpl("John", MAX_HAND_SIZE, STARTING_HAND_SIZE, deck);
     }
 
     @Test
-    void testDrawCard() {
+    void testDrawCard() throws CardCollectionFullException {
         player.drawCard();
 
         assertEquals(1, player.getHand().size());
@@ -61,7 +62,7 @@ final class PlayerImplTest {
     }
 
     @Test
-    void testPlayCard() {
+    void testPlayCard() throws CardCollectionFullException {
         player.drawCard();
 
         final Card<?> playedCard = player.playCard(card2);
@@ -71,7 +72,7 @@ final class PlayerImplTest {
     }
 
     @Test
-    void testPutInPile() {
+    void testPutInPile() throws CardCollectionFullException {
         player.drawCard();
 
         player.putInPile(card2);
@@ -82,7 +83,7 @@ final class PlayerImplTest {
     @Test
     void testDrawCardWithEmptyDeck() {
         final DeckImpl emptyDeck = new DeckImpl(new ArrayList<>());
-        final PlayerImpl emptyDeckPlayer = new PlayerImpl("John", STARTING_HAND_SIZE, MAX_HAND_SIZE, emptyDeck);
+        final PlayerImpl emptyDeckPlayer = new PlayerImpl("John", MAX_HAND_SIZE, STARTING_HAND_SIZE, emptyDeck);
 
         assertThrows(
             EmptyCardCollectionException.class,
@@ -91,14 +92,25 @@ final class PlayerImplTest {
     }
 
     @Test
-    void testDrawCardWithFullHand() {
-        // riempi il mazzo
+    void testDrawCardWithFullHand() throws CardCollectionFullException {
+        player.getHand().addCard(card1);
+        player.getHand().addCard(card2);
+
+        for (int i = 3; i <= MAX_HAND_SIZE; i++) {
+            final Card<Suit> newCard = new CardImpl.Builder<Suit>()
+                    .id(String.valueOf(i))
+                    .attributes(Suit.HEARTS)
+                    .value(CARD_VALUE)
+                    .build();
+            player.getHand().addCard(newCard);
+        }
+
         assertThrows(
             CardCollectionFullException.class,
-            () -> player.drawCard()
+            player::drawCard
         );
 
-        assertEquals(1, player.getDeckCount());
+        assertEquals(2, player.getDeckCount());
         assertEquals(MAX_HAND_SIZE, player.getHand().size());
     }
 }
