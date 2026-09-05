@@ -3,6 +3,7 @@ package it.unibo.cardhub.model.domain.api;
 import java.util.Optional;
 
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
+import it.unibo.cardhub.model.domain.exceptions.FieldFullException;
 
 /**
  * Represent a match, the heart of the game.
@@ -30,8 +31,9 @@ public interface MatchState {
      * 
      * @param card the card to be played
      * @param playerEnum the player playing the card
+     * @throws FieldFullException if the player's field is full
      */
-    void playCard(Card<?> card, PlayerEnum playerEnum);
+    void playCard(Card<?> card, PlayerEnum playerEnum) throws FieldFullException;
 
     /**
      * Moves a card from the field to the discard pile.
@@ -48,9 +50,9 @@ public interface MatchState {
      * @param player the player the card belongs to
      */
     void moveCardFromFieldToDeck(Card<?> card, PlayerEnum player);
-    
+
     /**
-     * Returns a copy of the playfield
+     * Returns a copy of the playfield.
      * 
      * @return a copy of the playfield
      */

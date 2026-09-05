@@ -9,7 +9,7 @@ import java.util.Objects;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.domain.api.Playfield;
-import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
+import it.unibo.cardhub.model.domain.exceptions.FieldFullException;
 import it.unibo.cardhub.model.domain.exceptions.NoSuchCardsException;
 
 /**
@@ -55,12 +55,12 @@ public class PlayfieldImpl implements Playfield {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc} 
      */
     @Override
-    public void addCard(final PlayerEnum player, final Card<?> card) {
+    public void addCard(final PlayerEnum player, final Card<?> card) throws FieldFullException {
         if (!canAddCard(player)) {
-            throw new CardCollectionFullException("The player cannot add more cards.");
+            throw new FieldFullException("The player cannot add more cards.");
         }
 
         this.playerCards.get(player).add(Objects.requireNonNull(card, "No such card."));

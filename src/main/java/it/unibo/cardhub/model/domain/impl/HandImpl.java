@@ -68,7 +68,7 @@ public class HandImpl extends AbstractCardCollection implements Hand {
      * {@inheritDoc}
      */
     @Override
-    public void addCard(Card<?> card) throws CardCollectionFullException {
+    public void addCard(final Card<?> card) throws CardCollectionFullException {
         if (this.isFull()) {
             throw new CardCollectionFullException();
         }

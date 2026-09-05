@@ -12,6 +12,7 @@ import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 import it.unibo.cardhub.model.domain.exceptions.EmptyCardCollectionException;
+import it.unibo.cardhub.model.domain.exceptions.FieldFullException;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 import it.unibo.cardhub.model.logic.api.MatchLogic;
@@ -274,7 +275,7 @@ public abstract class AbstractMatchController<V extends MatchView, L extends Mat
             state.playCard(card, owner);
             view.updatePlayfield(owner, state.getPlayfield().getCards(owner));
             view.updateShowingHand(owner, state.getPlayer(owner).getHand().getCards());
-        } catch (final CardCollectionFullException e) {
+        } catch (final FieldFullException e) {
             view.showInvalidAction(e.getMessage());
         }
     }

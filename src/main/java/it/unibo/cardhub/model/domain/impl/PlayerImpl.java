@@ -31,6 +31,10 @@ public final class PlayerImpl implements Player {
      * @param startingHandSize the amount of card in hand at match start
      * @param deck player deck
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP",
+        justification = "Deck is intentionally exposed to let callers mutate its state"
+    )
     public PlayerImpl(final String name, final int maxHandSize, final int startingHandSize, final Deck deck) {
         if (startingHandSize > maxHandSize) {
             throw new IllegalArgumentException("Starting hand size cannot be greater than maximum hand size.");
@@ -49,7 +53,6 @@ public final class PlayerImpl implements Player {
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("PMD.EmptyCatchBlock")
     public void putInPile(final Card<?> card) {
         this.discardPile.addCard(card);
     }

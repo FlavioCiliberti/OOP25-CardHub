@@ -10,6 +10,7 @@ import it.unibo.cardhub.model.domain.api.Player;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.domain.api.Playfield;
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
+import it.unibo.cardhub.model.domain.exceptions.FieldFullException;
 
 /**
  * Match state implementation.
@@ -67,7 +68,7 @@ public class MatchStateImpl implements MatchState {
      * {@inheritDoc}
      */
     @Override
-    public void playCard(final Card<?> card, final PlayerEnum player) {
+    public void playCard(final Card<?> card, final PlayerEnum player) throws FieldFullException {
         this.field.addCard(player, card);
         this.getPlayer(player).playCard(card);
     }
@@ -94,6 +95,7 @@ public class MatchStateImpl implements MatchState {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Playfield getPlayfield() {
         return this.field.copy();
     }

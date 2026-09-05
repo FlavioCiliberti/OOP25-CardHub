@@ -2,6 +2,8 @@ package it.unibo.cardhub.model.domain.api;
 
 import java.util.List;
 
+import it.unibo.cardhub.model.domain.exceptions.FieldFullException;
+
 /**
  * Represents a playfield in a match.
  */
@@ -27,8 +29,9 @@ public interface Playfield {
      * 
      * @param player that plays the card
      * @param card to be put on the table
+     * @throws FieldFullException if the table is full
      */
-    void addCard(PlayerEnum player, Card<?> card);
+    void addCard(PlayerEnum player, Card<?> card) throws FieldFullException;
 
     /**
      * Removes a card from the table.

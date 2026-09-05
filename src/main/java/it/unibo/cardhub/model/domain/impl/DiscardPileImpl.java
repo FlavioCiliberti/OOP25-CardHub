@@ -61,7 +61,7 @@ public class DiscardPileImpl extends AbstractCardCollection implements DiscardPi
      * {@inheritDoc}
      */
     @Override
-    public void addCard(Card<?> card) {
+    public void addCard(final Card<?> card) {
         this.getMutableCards().add(card);
     }
 }

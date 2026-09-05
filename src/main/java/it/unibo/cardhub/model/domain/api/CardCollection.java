@@ -2,8 +2,6 @@ package it.unibo.cardhub.model.domain.api;
 
 import java.util.List;
 
-import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
-
 /**
  * Represents an abstract card collection.
  */
