@@ -15,19 +15,25 @@ import it.unibo.cardhub.model.domain.exceptions.NoSuchCardsException;
 import it.unibo.cardhub.model.domain.impl.CardImpl;
 import it.unibo.cardhub.model.domain.impl.PlayfieldImpl;
 
-class PlayfieldImplTest {
+/**
+ * Test class for the {@link PlayfieldImpl} class.
+ */
+final class PlayfieldImplTest {
+
+    private static final int CARD_VALUE = 10;
+    private static final int MAX_FIELD_SIZE = 7;
 
     private Playfield playfield;
     private Card<Suit> card;
 
     @BeforeEach
     void setUp() {
-        playfield = new PlayfieldImpl(7);
+        playfield = new PlayfieldImpl(MAX_FIELD_SIZE);
 
         card = new CardImpl.Builder<Suit>()
                 .id("1")
                 .attributes(Suit.HEARTS)
-                .value(10)
+                .value(CARD_VALUE)
                 .build();
     }
 
@@ -45,6 +51,11 @@ class PlayfieldImplTest {
 
         assertTrue(
             playfield.getCards(PlayerEnum.PLAYER_TWO).isEmpty()
+        );
+
+        assertEquals(
+            card,
+            playfield.getCards(PlayerEnum.PLAYER_ONE).get(0)
         );
     }
 
@@ -69,5 +80,17 @@ class PlayfieldImplTest {
             NoSuchCardsException.class,
             () -> playfield.removeCard(PlayerEnum.PLAYER_ONE, card)
         );
+    }
+
+    @Test
+    void testAddCardWhenFieldIsFull() {
+        for (int i = 0; i < MAX_FIELD_SIZE; i++) {
+            final Card<Suit> newCard = new CardImpl.Builder<Suit>()
+                    .id(String.valueOf(i))
+                    .attributes(Suit.HEARTS)
+                    .value(CARD_VALUE)
+                    .build();
+            playfield.addCard(PlayerEnum.PLAYER_ONE, newCard);  
+        }
     }
 }

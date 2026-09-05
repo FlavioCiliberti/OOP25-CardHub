@@ -17,7 +17,13 @@ import it.unibo.cardhub.model.domain.exceptions.NoSuchCardsException;
 import it.unibo.cardhub.model.domain.impl.CardImpl;
 import it.unibo.cardhub.model.domain.impl.HandImpl;
 
-public class HandImplTest {
+/**
+ * Test class for the {@link HandImpl} class.
+ */
+final class HandImplTest {
+
+    private static final int CARD_VALUE = 10;
+    private static final int HAND_SIZE = 2;
 
     private Hand hand;
     private Card<Suit> card1;
@@ -26,29 +32,29 @@ public class HandImplTest {
 
     @BeforeEach
     void setUp() {
-        hand = new HandImpl(new ArrayList<>(), 2);
+        hand = new HandImpl(new ArrayList<>(), HAND_SIZE);
 
         card1 = new CardImpl.Builder<Suit>()
                 .id("1")
                 .attributes(Suit.HEARTS)
-                .value(10)
+                .value(CARD_VALUE)
                 .build();
-        
+
         card2 = new CardImpl.Builder<Suit>()
                 .id("2")
                 .attributes(Suit.SPADES)
-                .value(5)
+                .value(CARD_VALUE)
                 .build();
 
         card3 = new CardImpl.Builder<Suit>()
                 .id("3")
                 .attributes(Suit.CLUBS)
-                .value(1)
+                .value(CARD_VALUE)
                 .build();
     }
 
     @Test
-    void testAddCard() throws CardCollectionFullException {
+    void testAddCard() {
         hand.addCard(card1);
 
         assertEquals(1, hand.size());
@@ -56,15 +62,7 @@ public class HandImplTest {
     }
 
     @Test
-    void testHandReachesMaximumSize() throws CardCollectionFullException {
-        hand.addCard(card1);
-        hand.addCard(card2);
-
-        assertEquals(2, hand.size());
-    }
-
-    @Test
-    void testAddCardWhenHandIsFull() throws CardCollectionFullException {
+    void testAddCardWhenHandIsFull() {
         hand.addCard(card1);
         hand.addCard(card2);
 
@@ -73,14 +71,14 @@ public class HandImplTest {
                 () -> hand.addCard(card3)
         );
 
-        assertEquals(2, hand.size());
+        assertEquals(HAND_SIZE, hand.size());
     }
 
     @Test
-    void testPlayCard() throws CardCollectionFullException {
+    void testPlayCard() {
         hand.addCard(card1);
 
-        Card<?> playedCard = hand.playCard(card1);
+        final Card<?> playedCard = hand.playCard(card1);
 
         assertEquals(card1, playedCard);
         assertTrue(hand.isEmpty());

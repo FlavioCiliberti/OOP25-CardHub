@@ -18,36 +18,41 @@ import it.unibo.cardhub.model.domain.impl.CardImpl;
 import it.unibo.cardhub.model.domain.impl.DeckImpl;
 import it.unibo.cardhub.model.domain.impl.PlayerImpl;
 
-class PlayerImplTest {
+/**
+ * Test class for the {@link PlayerImpl} class.
+ */
+final class PlayerImplTest {
+
+    private static final int CARD_VALUE = 10;
+    private static final int MAX_HAND_SIZE = 7;
+    private static final int STARTING_HAND_SIZE = 0;
 
     private Player player;
-    private Deck deck;
-    private Card<Suit> card1;
     private Card<Suit> card2;
 
     @BeforeEach
-    void setUp() throws CardCollectionFullException {
-        card1 = new CardImpl.Builder<Suit>()
+    void setUp() {
+        final Card<Suit> card1 = new CardImpl.Builder<Suit>()
                 .id("1")
                 .attributes(Suit.HEARTS)
-                .value(10)
+                .value(CARD_VALUE)
                 .build();
 
         card2 = new CardImpl.Builder<Suit>()
-                .id("")
+                .id("2")
                 .attributes(Suit.SPADES)
-                .value(20)
+                .value(CARD_VALUE)
                 .build();
 
-        deck = new DeckImpl(new ArrayList<>());
+        final Deck deck = new DeckImpl(new ArrayList<>());
         deck.addCard(card1);
         deck.addCard(card2);
 
-        player = new PlayerImpl("John", 7, 7, deck);
+        player = new PlayerImpl("John", STARTING_HAND_SIZE, MAX_HAND_SIZE, deck);
     }
 
     @Test
-    void testDrawCard() throws Exception {
+    void testDrawCard() {
         player.drawCard();
 
         assertEquals(1, player.getHand().size());
@@ -56,17 +61,17 @@ class PlayerImplTest {
     }
 
     @Test
-    void testPlayCard() throws Exception {
+    void testPlayCard() {
         player.drawCard();
 
-        Card<?> playedCard = player.playCard(card2);
+        final Card<?> playedCard = player.playCard(card2);
 
         assertEquals(card2, playedCard);
         assertEquals(0, player.getHand().size());
     }
 
     @Test
-    void testPutInPile() throws Exception {
+    void testPutInPile() {
         player.drawCard();
 
         player.putInPile(card2);
@@ -76,12 +81,24 @@ class PlayerImplTest {
 
     @Test
     void testDrawCardWithEmptyDeck() {
-        DeckImpl emptyDeck = new DeckImpl(new ArrayList<>());
-        PlayerImpl emptyDeckPlayer = new PlayerImpl("John", 7, 7, emptyDeck);
+        final DeckImpl emptyDeck = new DeckImpl(new ArrayList<>());
+        final PlayerImpl emptyDeckPlayer = new PlayerImpl("John", STARTING_HAND_SIZE, MAX_HAND_SIZE, emptyDeck);
 
         assertThrows(
             EmptyCardCollectionException.class,
             emptyDeckPlayer::drawCard
         );
+    }
+
+    @Test
+    void testDrawCardWithFullHand() {
+        // riempi il mazzo
+        assertThrows(
+            CardCollectionFullException.class,
+            () -> player.drawCard()
+        );
+
+        assertEquals(1, player.getDeckCount());
+        assertEquals(MAX_HAND_SIZE, player.getHand().size());
     }
 }

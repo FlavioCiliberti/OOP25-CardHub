@@ -20,8 +20,14 @@ import it.unibo.cardhub.model.domain.attributes.Pokemon;
 import it.unibo.cardhub.model.domain.attributes.Suit;
 import it.unibo.cardhub.model.domain.attributes.YuGiOh;
 
-class DeckFactoryImplTest {
+/**
+ * Test class for the {@link DeckFactoryImpl} class.
+ */
+final class DeckFactoryImplTest {
 
+    private static final int ITALIAN_DECK_SIZE = 40;
+    private static final int COLLECTIONABLE_DECK_SIZE = 20;
+    private static final int ECARD_DECK_SIZE = 7;
     private DeckFactory deckFactory;
 
     @BeforeEach
@@ -33,9 +39,7 @@ class DeckFactoryImplTest {
     void testCreateItalianDeck() {
         final Deck deck = deckFactory.createItalianDeck();
 
-        assertNotNull(deck);
-        assertEquals(40, deck.size());
-        assertFalse(deck.isEmpty());
+        assertEquals(ITALIAN_DECK_SIZE, deck.size());
 
         assertTrue(deck.getCards().stream().allMatch(card -> card.attributes() instanceof Suit));
     }
@@ -55,9 +59,7 @@ class DeckFactoryImplTest {
     void testCreatePokemonDeck() {
         final Deck deck = deckFactory.createPokemonDeck();
 
-        assertNotNull(deck);
-        assertEquals(20, deck.size());
-        assertFalse(deck.isEmpty());
+        assertEquals(COLLECTIONABLE_DECK_SIZE, deck.size());
 
         assertTrue(deck.getCards().stream().allMatch(card -> card.attributes() instanceof Pokemon));
     }
@@ -66,9 +68,7 @@ class DeckFactoryImplTest {
     void testCreateDragonBallDeck() {
         final Deck deck = deckFactory.createDragonBallDeck();
 
-        assertNotNull(deck);
-        assertEquals(20, deck.size());
-        assertFalse(deck.isEmpty());
+        assertEquals(COLLECTIONABLE_DECK_SIZE, deck.size());
 
         assertTrue(deck.getCards().stream().allMatch(card -> card.attributes() instanceof DragonBall));
     }
@@ -77,9 +77,7 @@ class DeckFactoryImplTest {
     void testCreateYuGiOhDeck() {
         final Deck deck = deckFactory.createYuGiOhDeck();
 
-        assertNotNull(deck);
-        assertEquals(20, deck.size());
-        assertFalse(deck.isEmpty());
+        assertEquals(COLLECTIONABLE_DECK_SIZE, deck.size());
 
         assertTrue(deck.getCards().stream().allMatch(card -> card.attributes() instanceof YuGiOh));
     }
@@ -88,9 +86,7 @@ class DeckFactoryImplTest {
     void testCreateECardDeck() {
         final Deck deck = deckFactory.createECardDeck();
 
-        assertNotNull(deck);
-        assertEquals(7, deck.size());
-        assertFalse(deck.isEmpty());
+        assertEquals(ECARD_DECK_SIZE, deck.size());
 
         assertTrue(deck.getCards().stream().allMatch(card -> card.attributes() instanceof ECard));
     }

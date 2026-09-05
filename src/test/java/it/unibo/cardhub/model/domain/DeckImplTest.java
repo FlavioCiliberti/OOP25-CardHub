@@ -17,7 +17,13 @@ import it.unibo.cardhub.model.domain.exceptions.EmptyCardCollectionException;
 import it.unibo.cardhub.model.domain.impl.CardImpl;
 import it.unibo.cardhub.model.domain.impl.DeckImpl;
 
-class DeckImplTest {
+/**
+ * Test class for the {@link DeckImpl} class.
+ */
+final class DeckImplTest {
+
+    private static final int CARD_VALUE = 10;
+    private static final int DECK_SIZE = 2;
 
     private Deck deck;
     private Card<Suit> card1;
@@ -28,13 +34,13 @@ class DeckImplTest {
         card1 = new CardImpl.Builder<Suit>()
                 .id("1")
                 .attributes(Suit.CLUBS)
-                .value(10)
+                .value(CARD_VALUE)
                 .build();
 
         card2 = new CardImpl.Builder<Suit>()
                 .id("2")
                 .attributes(Suit.HEARTS)
-                .value(20)
+                .value(CARD_VALUE)
                 .build();
 
         deck = new DeckImpl(
@@ -43,29 +49,29 @@ class DeckImplTest {
     }
 
     @Test
-    void testDrawCard() throws EmptyCardCollectionException {
-        Card<?> drawnCard = deck.drawCard();
+    void testDrawCard() {
+        final Card<?> drawnCard = deck.drawCard();
 
         assertEquals(card2, drawnCard);
         assertEquals(1, deck.size());
     }
 
     @Test
-    void testPeekCard() throws EmptyCardCollectionException {
-        var peekedCard = deck.peekCard().get();
+    void testPeekCard() {
+        final Card<?> peekedCard = deck.peekCard().get();
 
         assertEquals(card2, peekedCard);
-        assertEquals(2, deck.size());
+        assertEquals(DECK_SIZE, deck.size());
     }
 
     @Test
-    void testDrawCardFromEmptyDeck() throws EmptyCardCollectionException {
+    void testDrawCardFromEmptyDeck() {
         deck.drawCard();
         deck.drawCard();
 
         assertThrows(
                 EmptyCardCollectionException.class,
-                () -> deck.drawCard()
+                deck::drawCard
         );
 
         assertTrue(deck.isEmpty());
@@ -75,7 +81,7 @@ class DeckImplTest {
     void testShuffleKeepsAllCards() {
         deck.shuffle();
 
-        assertEquals(2, deck.size());
+        assertEquals(DECK_SIZE, deck.size());
         assertTrue(deck.getCards().contains(card1));
         assertTrue(deck.getCards().contains(card2));
     }
