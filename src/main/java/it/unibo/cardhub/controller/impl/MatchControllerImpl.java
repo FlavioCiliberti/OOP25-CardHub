@@ -10,7 +10,7 @@ import it.unibo.cardhub.view.impl.MatchViewImpl;
 /**
  * Base implementation of {@link MatchController}.
  */
-public class MatchControllerImpl extends AbstractMatchController<MatchView> {
+public class MatchControllerImpl extends AbstractMatchController<MatchView, MatchLogic> {
 
     /**
      * Constructor for the controller.

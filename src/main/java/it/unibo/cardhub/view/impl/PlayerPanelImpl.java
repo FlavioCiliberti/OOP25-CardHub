@@ -94,6 +94,7 @@ final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
 
         deckWrapper.add(deckLabel);
         deckLabel.setPreferredSize(new Dimension(ImageResolver.CARD_WIDTH, ImageResolver.CARD_HEIGHT));
+        this.updateDeck();
         deckLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(final MouseEvent e) {

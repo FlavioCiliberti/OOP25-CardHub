@@ -3,15 +3,15 @@ package it.unibo.cardhub.model.domain.exceptions;
 /**
  * An exception for trying to add a card to a full CardCollection.
  */
-public class CardCollectionFullException extends Exception {
+public class FieldFullException extends Exception {
 
     private static final long serialVersionUID = 42L;
 
     /**
      * Default exception constructor.
      */
-    public CardCollectionFullException() {
-        super("Cannot add a card to a full hand");
+    public FieldFullException() {
+        super("Cannot add a card to a full field");
     }
 
     /**
@@ -19,7 +19,7 @@ public class CardCollectionFullException extends Exception {
      * 
      * @param message exception message
      */
-    public CardCollectionFullException(final String message) {
+    public FieldFullException(final String message) {
         super(message);
     }
 }

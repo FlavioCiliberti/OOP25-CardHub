@@ -62,6 +62,20 @@ public class StandardMatchLogic extends AbstractMatchLogic {
             );
             return ComparisonWinner.PLAYER_2;
         }
+        // Player1 loser action
+        this.executeCardAction(
+            firstPlayerCard, 
+            PlayerEnum.PLAYER_ONE,
+            super.getLoserCardAction(), 
+            state
+        );
+        // Player2 loser action
+        this.executeCardAction(
+            secondPlayerCard, 
+            PlayerEnum.PLAYER_TWO,
+            super.getLoserCardAction(), 
+            state
+        );
         return ComparisonWinner.TIE;
     }
 

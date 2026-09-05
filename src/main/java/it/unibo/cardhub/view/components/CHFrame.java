@@ -14,8 +14,8 @@ import javax.swing.JFrame;
  */
 public final class CHFrame extends JFrame {
     private static final long serialVersionUID = 1L;
-    private static final int SCREEN_WIDTH = 640;
-    private static final int SCREEN_HEIGHT = 400;
+    private static final int SCREEN_WIDTH = 800;
+    private static final int SCREEN_HEIGHT = 800;
 
     /**
      * 
@@ -23,8 +23,9 @@ public final class CHFrame extends JFrame {
     public CHFrame() {
         this.setTitle("Card Hub App");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+        this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setMinimumSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+        this.pack();
         this.setVisible(true);
     }
 

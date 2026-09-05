@@ -82,13 +82,13 @@ public class MatchStateBuilderImpl implements MatchStateBuilder {
             player1.shuffleDeck();
             player2.shuffleDeck();
 
-            //draw initial cards
+            // Draw initial cards
             for (int i = 0; i < startingHandSize; i++) {
                 try {
                     player1.drawCard();
                     player2.drawCard();
                 } catch (final CardCollectionFullException e) {
-                    //startingHandSize <= maxHandSize so the exception should never trigger
+                    // startingHandSize <= maxHandSize so the exception should never trigger
                     throw new IllegalStateException("Hand already had cards in it on instantiation", e);
                 }
             }

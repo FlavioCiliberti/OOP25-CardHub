@@ -18,6 +18,7 @@ public abstract class AbstractMatchLogic implements MatchLogic {
     private final CardAction loserCardAction;
 
     private PlayerEnum currentPlayer;
+    private boolean isFirstTurn;
 
     /**
      * Constructor for AbstractMatchLogic.
@@ -32,6 +33,7 @@ public abstract class AbstractMatchLogic implements MatchLogic {
         this.loserCardAction = Objects.requireNonNull(loserCardAction, "missing cardAction");
 
         this.currentPlayer = PlayerEnum.PLAYER_ONE;
+        this.isFirstTurn = true;
     }
 
     /**
@@ -58,6 +60,7 @@ public abstract class AbstractMatchLogic implements MatchLogic {
         } else {
             currentPlayer = PlayerEnum.PLAYER_ONE;
         }
+        isFirstTurn = false;
     }
 
     /**
@@ -80,7 +83,7 @@ public abstract class AbstractMatchLogic implements MatchLogic {
      * {@inheritDoc}
      */
     @Override
-    public boolean isAutoDrawEnabled() {
-        return autoDraw;
+    public boolean shouldAutoDraw() {
+        return !isFirstTurn && autoDraw;
     }
 }

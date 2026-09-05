@@ -1,6 +1,5 @@
 package it.unibo.cardhub;
 
-import it.unibo.cardhub.controller.ScreenId;
 import it.unibo.cardhub.controller.api.HomeController;
 import it.unibo.cardhub.controller.api.Navigator;
 import it.unibo.cardhub.controller.impl.CardLayoutNavigator;
@@ -30,7 +29,7 @@ public final class App {
         final HomeController home = new HomeControllerImpl(
                                     navigator,
                                     frame::dispose);
-        navigator.show(ScreenId.HOME, home.getView());
+        home.showScreen();
 
         frame.setVisible(true);
     }

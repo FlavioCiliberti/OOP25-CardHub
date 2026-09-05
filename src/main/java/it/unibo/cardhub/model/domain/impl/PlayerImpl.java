@@ -31,6 +31,10 @@ public final class PlayerImpl implements Player {
      * @param startingHandSize the amount of card in hand at match start
      * @param deck player deck
      */
+    @SuppressFBWarnings(
+        value = "EI_EXPOSE_REP",
+        justification = "Deck is intentionally exposed to let callers mutate its state"
+    )
     public PlayerImpl(final String name, final int maxHandSize, final int startingHandSize, final Deck deck) {
         if (startingHandSize > maxHandSize) {
             throw new IllegalArgumentException("Starting hand size cannot be greater than maximum hand size.");
@@ -86,12 +90,12 @@ public final class PlayerImpl implements Player {
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc} 
      */
     @Override
-    public Card<?> drawCard() {
+    public Card<?> drawCard() throws CardCollectionFullException {
         if (this.hand.isFull()) {
-            throw new CardCollectionFullException("The hand exceeded the max amount of cards.");
+            throw new CardCollectionFullException("Tried to add a card to a full hand.");
         }
 
         if (this.deck.isEmpty()) {
@@ -100,6 +104,7 @@ public final class PlayerImpl implements Player {
 
         final Card<?> card = this.deck.drawCard();
         this.hand.addCard(card);
+
         return card;
     }
 
@@ -146,9 +151,11 @@ public final class PlayerImpl implements Player {
         return this.discardPile.isEmpty();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getDeckCount() {
         return this.deck.size();
     }
-
 }
