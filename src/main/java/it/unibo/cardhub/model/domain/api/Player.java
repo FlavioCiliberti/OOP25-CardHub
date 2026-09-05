@@ -32,12 +32,6 @@ public interface Player {
      */
     void putInPile(Card<?> card);
 
-
-    /**
-     * Shuffles the deck.
-     */
-    void shuffleDeck();
-    
     /**
      * Puts a card in the player's deck.
      * 
