@@ -11,6 +11,7 @@ import org.yaml.snakeyaml.Yaml;
 
 import it.unibo.cardhub.io.api.DeckFactory;
 import it.unibo.cardhub.model.domain.api.Deck;
+import it.unibo.cardhub.model.domain.api.DeckEnum;
 import it.unibo.cardhub.model.domain.attributes.DragonBall;
 import it.unibo.cardhub.model.domain.attributes.ECard;
 import it.unibo.cardhub.model.domain.attributes.Pokemon;
@@ -34,6 +35,13 @@ public final class DeckFactoryImpl implements DeckFactory {
     private static final String IMAGE_FIELD = "image";
     private static final String ATTRIBUTES_FIELD = "attributes";
     private static final String CARDS_FIELD = "cards";
+
+    private static final Map<DeckEnum, String> DECK_RESOURCE_PATHS = Map.of(
+        DeckEnum.POKEMON, "/it/unibo/cardhub/model/pokemon.yaml",
+        DeckEnum.DRAGONBALL, "/it/unibo/cardhub/model/dragonball.yaml",
+        DeckEnum.YUGIOH, "/it/unibo/cardhub/model/yugioh.yaml",
+        DeckEnum.ECARDS, "/it/unibo/cardhub/model/ecards.yaml"
+    );
 
     /**
      * Constructs a new DeckFactoryImpl.
@@ -70,7 +78,7 @@ public final class DeckFactoryImpl implements DeckFactory {
      */
     @Override
     public Deck createPokemonDeck() {
-        return loadDeck(CardType.POKEMON, attributes -> new Pokemon(
+        return loadDeck(DeckEnum.POKEMON, attributes -> new Pokemon(
             (String) attributes.get(TYPE_ATTRIBUTE),
             (String) attributes.get(RARITY_ATTRIBUTE)
         ));
@@ -81,7 +89,7 @@ public final class DeckFactoryImpl implements DeckFactory {
      */
     @Override
     public Deck createDragonBallDeck() {
-        return loadDeck(CardType.DRAGONBALL, attributes -> new DragonBall(
+        return loadDeck(DeckEnum.DRAGONBALL, attributes -> new DragonBall(
             (String) attributes.get(TYPE_ATTRIBUTE),
             (String) attributes.get(RARITY_ATTRIBUTE)
         ));
@@ -92,7 +100,7 @@ public final class DeckFactoryImpl implements DeckFactory {
      */
     @Override
     public Deck createYuGiOhDeck() {
-        return loadDeck(CardType.YUGIOH, attributes -> new YuGiOh(
+        return loadDeck(DeckEnum.YUGIOH, attributes -> new YuGiOh(
             (String) attributes.get(TYPE_ATTRIBUTE),
             (String) attributes.get(RACE_ATTRIBUTE)
         ));
@@ -103,15 +111,15 @@ public final class DeckFactoryImpl implements DeckFactory {
      */
     @Override
     public Deck createECardDeck() {
-        return loadDeck(CardType.ECARD, attributes -> new ECard(
+        return loadDeck(DeckEnum.ECARDS, attributes -> new ECard(
             (String) attributes.get(TYPE_ATTRIBUTE)
         ));
     }
 
-    private <T> Deck loadDeck(final CardType cardType, final Function<Map<String, Object>, T> attributeFactory) {
-        try (var inputStream = getClass().getResourceAsStream(cardType.getResourcePath())) {
+    private <T> Deck loadDeck(final DeckEnum deckType, final Function<Map<String, Object>, T> attributeFactory) {
+        try (var inputStream = getClass().getResourceAsStream(DECK_RESOURCE_PATHS.get(deckType))) {
             if (inputStream == null) {
-                throw new IllegalStateException("Resource not found: " + cardType.getResourcePath());
+                throw new IllegalStateException("Resource not found: " + DECK_RESOURCE_PATHS.get(deckType));
             }
 
             final Yaml yaml = new Yaml();
@@ -138,32 +146,7 @@ public final class DeckFactoryImpl implements DeckFactory {
             return new DeckImpl(new ArrayList<>(cards));
 
         } catch (final IOException e) {
-            throw new IllegalStateException("Failed to load cards from resource: " + cardType.getResourcePath(), e);
-        }
-    }
-
-    /**
-     * Enum representing the different types of cards and their corresponding resource paths.
-     */
-    private enum CardType {
-        POKEMON("/it/unibo/cardhub/model/pokemon.yaml"), 
-        DRAGONBALL("/it/unibo/cardhub/model/dragonball.yaml"), 
-        YUGIOH("/it/unibo/cardhub/model/yugioh.yaml"),
-        ECARD("/it/unibo/cardhub/model/ecard.yaml");
-
-        private final String resourcePath;
-
-        CardType(final String resourcePath) {
-            this.resourcePath = resourcePath;
-        }
-
-        /**
-         * Return the resource path.
-         * 
-         * @return the resource path
-         */
-        String getResourcePath() {
-            return this.resourcePath;
+            throw new IllegalStateException("Failed to load cards from resource: " + DECK_RESOURCE_PATHS.get(deckType), e);
         }
     }
 }
