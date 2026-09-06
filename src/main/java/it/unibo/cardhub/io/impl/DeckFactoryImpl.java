@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Function;
 
 import org.yaml.snakeyaml.Yaml;
 
 import it.unibo.cardhub.io.api.DeckFactory;
+import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.Deck;
 import it.unibo.cardhub.model.domain.api.DeckEnum;
 import it.unibo.cardhub.model.domain.attributes.DragonBall;
@@ -36,11 +36,12 @@ public final class DeckFactoryImpl implements DeckFactory {
     private static final String ATTRIBUTES_FIELD = "attributes";
     private static final String CARDS_FIELD = "cards";
 
+    private static final String ECARD_RESOURCE_PATH = "/it/unibo/cardhub/model/ecard.yaml";
+
     private static final Map<DeckEnum, String> DECK_RESOURCE_PATHS = Map.of(
         DeckEnum.POKEMON, "/it/unibo/cardhub/model/pokemon.yaml",
         DeckEnum.DRAGONBALL, "/it/unibo/cardhub/model/dragonball.yaml",
-        DeckEnum.YUGIOH, "/it/unibo/cardhub/model/yugioh.yaml",
-        DeckEnum.ECARDS, "/it/unibo/cardhub/model/ecards.yaml"
+        DeckEnum.YUGIOH, "/it/unibo/cardhub/model/yugioh.yaml"
     );
 
     /**
@@ -59,13 +60,13 @@ public final class DeckFactoryImpl implements DeckFactory {
 
         for (final Suit suit : Suit.values()) {
             for (int value = 1; value <= 10; value++) {
-                deck.addCard(new CardImpl<>(
-                    suit.name() + "_" + value,
-                    Optional.empty(), 
-                    suit, 
-                    value, 
-                    Optional.empty(), 
-                    suit.name() + "_" + value + ".png")
+                deck.addCard(
+                    new CardImpl.Builder<Suit>()
+                        .id(suit.name() + "_" + value)
+                        .attributes(suit)
+                        .value(value)
+                        .image(suit.name() + "_" + value + ".png")
+                        .build()
                 );
             }
         }
@@ -78,7 +79,7 @@ public final class DeckFactoryImpl implements DeckFactory {
      */
     @Override
     public Deck createPokemonDeck() {
-        return loadDeck(DeckEnum.POKEMON, attributes -> new Pokemon(
+        return loadDeck(DECK_RESOURCE_PATHS.get(DeckEnum.POKEMON), attributes -> new Pokemon(
             (String) attributes.get(TYPE_ATTRIBUTE),
             (String) attributes.get(RARITY_ATTRIBUTE)
         ));
@@ -89,7 +90,7 @@ public final class DeckFactoryImpl implements DeckFactory {
      */
     @Override
     public Deck createDragonBallDeck() {
-        return loadDeck(DeckEnum.DRAGONBALL, attributes -> new DragonBall(
+        return loadDeck(DECK_RESOURCE_PATHS.get(DeckEnum.DRAGONBALL), attributes -> new DragonBall(
             (String) attributes.get(TYPE_ATTRIBUTE),
             (String) attributes.get(RARITY_ATTRIBUTE)
         ));
@@ -100,7 +101,7 @@ public final class DeckFactoryImpl implements DeckFactory {
      */
     @Override
     public Deck createYuGiOhDeck() {
-        return loadDeck(DeckEnum.YUGIOH, attributes -> new YuGiOh(
+        return loadDeck(DECK_RESOURCE_PATHS.get(DeckEnum.YUGIOH), attributes -> new YuGiOh(
             (String) attributes.get(TYPE_ATTRIBUTE),
             (String) attributes.get(RACE_ATTRIBUTE)
         ));
@@ -111,42 +112,55 @@ public final class DeckFactoryImpl implements DeckFactory {
      */
     @Override
     public Deck createECardDeck() {
-        return loadDeck(DeckEnum.ECARDS, attributes -> new ECard(
+        return loadDeck(ECARD_RESOURCE_PATH, attributes -> new ECard(
             (String) attributes.get(TYPE_ATTRIBUTE)
         ));
     }
 
-    private <T> Deck loadDeck(final DeckEnum deckType, final Function<Map<String, Object>, T> attributeFactory) {
-        try (var inputStream = getClass().getResourceAsStream(DECK_RESOURCE_PATHS.get(deckType))) {
+    private <T> Deck loadDeck(
+            final String resourcePath,
+            final Function<Map<String, Object>, T> attributeFactory) {
+
+        try (var inputStream = getClass().getResourceAsStream(resourcePath)) {
             if (inputStream == null) {
-                throw new IllegalStateException("Resource not found: " + DECK_RESOURCE_PATHS.get(deckType));
+                throw new IllegalStateException(
+                    "Resource not found: " + resourcePath
+                );
             }
 
             final Yaml yaml = new Yaml();
-
             final Map<String, Object> data = yaml.load(inputStream);
 
             @SuppressWarnings("unchecked")
-            final List<Map<String, Object>> cardsData = (List<Map<String, Object>>) data.get(CARDS_FIELD);
+            final List<Map<String, Object>> cardsData =
+                    (List<Map<String, Object>>) data.get(CARDS_FIELD);
 
-            final List<CardImpl<T>> cards = cardsData.stream().map(cardData -> {
-                @SuppressWarnings("unchecked")
-                final Map<String, Object> attributes = (Map<String, Object>) cardData.get(ATTRIBUTES_FIELD);
-                final T cardAttributes = attributeFactory.apply(attributes);
-                return new CardImpl<>(
-                    (String) cardData.get(ID_FIELD),
-                    Optional.ofNullable((String) cardData.get(NAME_FIELD)),
-                    cardAttributes,
-                    (Integer) cardData.get(VALUE_FIELD),
-                    Optional.ofNullable((String) cardData.get(DESCRIPTION_FIELD)),
-                    (String) cardData.get(IMAGE_FIELD)
-                );
-            }).toList();
+            final List<Card<T>> cards = cardsData.stream()
+                .map(cardData -> {
+                    @SuppressWarnings("unchecked")
+                    final Map<String, Object> attributes =
+                            (Map<String, Object>) cardData.get(ATTRIBUTES_FIELD);
+
+                    final T cardAttributes = attributeFactory.apply(attributes);
+
+                    return new CardImpl.Builder<T>()
+                        .id((String) cardData.get(ID_FIELD))
+                        .name((String) cardData.get(NAME_FIELD))
+                        .attributes(cardAttributes)
+                        .value((Integer) cardData.get(VALUE_FIELD))
+                        .desc((String) cardData.get(DESCRIPTION_FIELD))
+                        .image((String) cardData.get(IMAGE_FIELD))
+                        .build();
+                })
+                .toList();
 
             return new DeckImpl(new ArrayList<>(cards));
 
         } catch (final IOException e) {
-            throw new IllegalStateException("Failed to load cards from resource: " + DECK_RESOURCE_PATHS.get(deckType), e);
+            throw new IllegalStateException(
+                "Failed to load cards from resource: " + resourcePath,
+                e
+            );
         }
     }
 }

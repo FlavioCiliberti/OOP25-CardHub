@@ -7,8 +7,7 @@ public enum DeckEnum {
         POKEMON("Pokemon", 0), 
         DRAGONBALL("Dragon Ball", 1), 
         YUGIOH("Yu Gi Oh", 2),
-        ECARDS("E-Card", 3),
-        ITALIAN("Italian", 4);
+        ITALIAN("Italian", 3);
 
     private final String displayName;
     private final int id;
