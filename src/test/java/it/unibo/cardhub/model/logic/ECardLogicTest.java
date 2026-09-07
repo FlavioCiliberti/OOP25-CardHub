@@ -17,7 +17,12 @@ import it.unibo.cardhub.model.domain.impl.MatchStateBuilderImpl;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 import it.unibo.cardhub.model.logic.impl.ECardLogic;
 
-public class ECardLogicTest {
+/**
+ * Test class for ECardLogic.
+ */
+class ECardLogicTest {
+    private static final String TEST_STRING = "test";
+
     private ECardLogic logic;
 
     @BeforeEach 
@@ -78,7 +83,7 @@ public class ECardLogicTest {
     }
 
     private static Card<?> createTestCard(final int value) {
-        return new CardImpl<>("test", Optional.of("test"), "test", value, Optional.of("desc"), "Exodia.png");
+        return new CardImpl<>(TEST_STRING, Optional.of(TEST_STRING), TEST_STRING, value, Optional.of("desc"), "Exodia.png");
     }
 
     private static MatchState buildState(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard) {

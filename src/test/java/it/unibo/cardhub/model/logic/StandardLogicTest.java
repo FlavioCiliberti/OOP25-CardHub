@@ -3,6 +3,7 @@ package it.unibo.cardhub.model.logic;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +21,12 @@ import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 import it.unibo.cardhub.model.logic.impl.StandardMatchLogic;
 
+/**
+ * Test class for StandardMatchLogic.
+ */
 class StandardLogicTest {
+    private static final String TEST_STRING = "test";
+    private static final String ERROR_STRING = "Unexpected Exception";
 
     @Test
     void testCardsMoveToPile() {
@@ -53,13 +59,13 @@ class StandardLogicTest {
 
         try {
             state.drawCard(PlayerEnum.PLAYER_ONE);
-        } catch (CardCollectionFullException e) {
-            e.printStackTrace();
+        } catch (final CardCollectionFullException e) {
+            fail(ERROR_STRING, e);
         }
         try {
             state.drawCard(PlayerEnum.PLAYER_TWO);
-        } catch (CardCollectionFullException e) {
-            e.printStackTrace();
+        } catch (final CardCollectionFullException e) {
+            fail(ERROR_STRING, e);
         }
 
         assertEquals(List.of(firstPlayerCard), state.getPlayer(PlayerEnum.PLAYER_ONE).getHand().getCards());
@@ -81,8 +87,8 @@ class StandardLogicTest {
 
         try {
             state.drawCard(PlayerEnum.PLAYER_TWO);
-        } catch (CardCollectionFullException e) {
-            e.printStackTrace();
+        } catch (final CardCollectionFullException e) {
+            fail(ERROR_STRING, e);
         }
 
         assertEquals(List.of(secondPlayerCard), state.getPlayer(PlayerEnum.PLAYER_TWO).getHand().getCards());
@@ -117,7 +123,7 @@ class StandardLogicTest {
     }
 
     private static Card<?> createTestCard(final int value) {
-        return new CardImpl<>("test", Optional.of("test"), "test", value, Optional.of("desc"), "Exodia.png");
+        return new CardImpl<>(TEST_STRING, Optional.of(TEST_STRING), TEST_STRING, value, Optional.of("desc"), "Exodia.png");
     }
 
     private static MatchState buildState(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard) {
