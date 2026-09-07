@@ -14,6 +14,7 @@ import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
+import it.unibo.cardhub.model.domain.exceptions.FieldFullException;
 import it.unibo.cardhub.model.domain.impl.CardImpl;
 import it.unibo.cardhub.model.domain.impl.DeckImpl;
 import it.unibo.cardhub.model.domain.impl.MatchStateBuilderImpl;
@@ -35,8 +36,7 @@ class StandardLogicTest {
         final MatchState state = buildState(firstPlayerCard, secondPlayerCard);
         final StandardMatchLogic logic = new StandardMatchLogic(CardAction.TO_PILE, CardAction.TO_PILE, false);
 
-        state.playCard(firstPlayerCard, PlayerEnum.PLAYER_ONE);
-        state.playCard(secondPlayerCard, PlayerEnum.PLAYER_TWO);
+        playCard(state, firstPlayerCard, secondPlayerCard);
 
         assertEquals(ComparisonWinner.PLAYER_1, logic.compareCard(firstPlayerCard, secondPlayerCard, state));
         assertTrue(state.getPlayfield().getAllCards().isEmpty());
@@ -51,8 +51,7 @@ class StandardLogicTest {
         final MatchState state = buildState(firstPlayerCard, secondPlayerCard);
         final StandardMatchLogic logic = new StandardMatchLogic(CardAction.TO_DECK, CardAction.TO_DECK, false);
 
-        state.playCard(firstPlayerCard, PlayerEnum.PLAYER_ONE);
-        state.playCard(secondPlayerCard, PlayerEnum.PLAYER_TWO);
+        playCard(state, firstPlayerCard, secondPlayerCard);
 
         assertEquals(ComparisonWinner.PLAYER_1, logic.compareCard(firstPlayerCard, secondPlayerCard, state));
         assertTrue(state.getPlayfield().getAllCards().isEmpty());
@@ -79,8 +78,7 @@ class StandardLogicTest {
         final MatchState state = buildState(firstPlayerCard, secondPlayerCard);
         final StandardMatchLogic logic = new StandardMatchLogic(CardAction.NONE, CardAction.TO_DECK, false);
 
-        state.playCard(firstPlayerCard, PlayerEnum.PLAYER_ONE);
-        state.playCard(secondPlayerCard, PlayerEnum.PLAYER_TWO);
+        playCard(state, firstPlayerCard, secondPlayerCard);
 
         assertEquals(ComparisonWinner.PLAYER_1, logic.compareCard(firstPlayerCard, secondPlayerCard, state));
         assertFalse(state.getPlayfield().getAllCards().isEmpty());
@@ -102,8 +100,7 @@ class StandardLogicTest {
         final MatchState state = buildState(firstPlayerCard, secondPlayerCard);
         final StandardMatchLogic logic = new StandardMatchLogic(CardAction.TO_DECK, CardAction.TO_PILE, false);
 
-        state.playCard(firstPlayerCard, PlayerEnum.PLAYER_ONE);
-        state.playCard(secondPlayerCard, PlayerEnum.PLAYER_TWO);
+        playCard(state, firstPlayerCard, secondPlayerCard);
 
         assertEquals(ComparisonWinner.TIE, logic.compareCard(firstPlayerCard, secondPlayerCard, state));
         assertTrue(state.getPlayfield().getAllCards().isEmpty());
@@ -120,6 +117,19 @@ class StandardLogicTest {
         assertFalse(logic.shouldAutoDraw());
         logic.changeTurn();
         assertTrue(logic.shouldAutoDraw());
+    }
+
+    private static void playCard(final MatchState state, final Card<?> firstPlayerCard, final Card<?> secondPlayerCard) {
+        try {
+            state.playCard(firstPlayerCard, PlayerEnum.PLAYER_ONE);
+        } catch (final FieldFullException e) {
+            fail(ERROR_STRING, e);
+        }
+        try {
+            state.playCard(secondPlayerCard, PlayerEnum.PLAYER_TWO);
+        } catch (final FieldFullException e) {
+           fail(ERROR_STRING, e);
+        }
     }
 
     private static Card<?> createTestCard(final int value) {

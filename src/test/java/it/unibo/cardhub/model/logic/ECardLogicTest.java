@@ -1,6 +1,7 @@
 package it.unibo.cardhub.model.logic;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
+import it.unibo.cardhub.model.domain.exceptions.FieldFullException;
 import it.unibo.cardhub.model.domain.impl.CardImpl;
 import it.unibo.cardhub.model.domain.impl.DeckImpl;
 import it.unibo.cardhub.model.domain.impl.MatchStateBuilderImpl;
@@ -22,6 +24,7 @@ import it.unibo.cardhub.model.logic.impl.ECardLogic;
  */
 class ECardLogicTest {
     private static final String TEST_STRING = "test";
+    private static final String ERROR_STRING = "Unexpected Exception";
 
     private ECardLogic logic;
 
@@ -77,8 +80,16 @@ class ECardLogicTest {
     }
 
     private void playCards(final MatchState state, final Card<?> firstPlayerCard, final Card<?> secondPlayerCard) {
-        state.playCard(firstPlayerCard, PlayerEnum.PLAYER_ONE);
-        state.playCard(secondPlayerCard, PlayerEnum.PLAYER_TWO);
+        try {
+            state.playCard(firstPlayerCard, PlayerEnum.PLAYER_ONE);
+        } catch (final FieldFullException e) {
+            fail(ERROR_STRING, e);
+        }
+        try {
+            state.playCard(secondPlayerCard, PlayerEnum.PLAYER_TWO);
+        } catch (final FieldFullException e) {
+           fail(ERROR_STRING, e);
+        }
         logic.compareCard(firstPlayerCard, secondPlayerCard, state);
     }
 
