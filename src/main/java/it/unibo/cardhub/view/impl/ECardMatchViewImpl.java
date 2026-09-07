@@ -19,6 +19,7 @@ public class ECardMatchViewImpl extends ScoredMatchViewImpl implements ECardMatc
      */
     public ECardMatchViewImpl(final MatchController controller) {
         super(controller);
+        disableEndTurnButton();
     }
 
     /**
@@ -27,6 +28,11 @@ public class ECardMatchViewImpl extends ScoredMatchViewImpl implements ECardMatc
     @Override
     public void showComparisonResult(final String message) {
         this.showPopup(message, "Confrontation", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void disableEndTurnButton() {
+        super.getEndTurnButton().setEnabled(false);
+        super.getEndTurnButton().setVisible(false);
     }
 
 }

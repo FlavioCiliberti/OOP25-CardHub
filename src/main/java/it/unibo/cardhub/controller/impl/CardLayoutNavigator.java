@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import it.unibo.cardhub.controller.ScreenId;
 import it.unibo.cardhub.controller.api.Navigator;
+import it.unibo.cardhub.view.components.ScreenView;
 
 /**
  * {@link Navigator} implementation that uses Swing {@link CardLayout}.
@@ -23,7 +24,7 @@ public class CardLayoutNavigator implements Navigator {
     private static final String HOME = ScreenId.HOME.name();
     private final CardLayout layout = new CardLayout();
     private final JPanel container = new JPanel();
-    private JComponent currentTransientView;
+    private ScreenView currentTransientView;
     private boolean homeAdded;
 
     /**
@@ -54,7 +55,7 @@ public class CardLayoutNavigator implements Navigator {
             "The view is stored by reference because it must be the "
                     + "exact JComponent instance added to the container, "
                     + "so it can later be identified and removed.")
-    public void show(final ScreenId id, final JComponent view) {
+    public void show(final ScreenId id, final ScreenView view) {
         if (id == ScreenId.HOME) {
             if (!homeAdded) {
                 container.add(view, HOME); 

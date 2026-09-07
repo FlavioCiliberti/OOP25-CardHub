@@ -27,14 +27,6 @@ public abstract class AbstractCardCollection implements CardCollection {
      * {@inheritDoc}
      */
     @Override
-    public void addCard(final Card<?> card) {
-        this.cards.add(Objects.requireNonNull(card, "No such card."));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public List<Card<?>> getCards() {
         return List.copyOf(this.cards);
     }

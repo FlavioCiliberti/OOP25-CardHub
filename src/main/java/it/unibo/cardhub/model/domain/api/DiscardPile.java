@@ -8,6 +8,13 @@ import java.util.Optional;
 public interface DiscardPile extends CardCollection {
 
     /**
+     * Adds a card to the discard pile.
+     * 
+     * @param card to be added
+     */
+    void addCard(Card<?> card);
+
+    /**
      * Takes a chosen card from the pile.
      * 
      * @param card the chosen card
