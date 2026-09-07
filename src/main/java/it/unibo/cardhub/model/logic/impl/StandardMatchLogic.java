@@ -1,5 +1,7 @@
 package it.unibo.cardhub.model.logic.impl;
 
+import java.util.Objects;
+
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
@@ -28,6 +30,9 @@ public class StandardMatchLogic extends AbstractMatchLogic {
     @Override
     public ComparisonWinner compareCard(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard,
                                         final MatchState state) {
+        Objects.requireNonNull(firstPlayerCard, "card can't be null");
+        Objects.requireNonNull(secondPlayerCard, "card can't be null");
+        Objects.requireNonNull(state, "Match State can't be null");
 
         if (firstPlayerCard.value() > secondPlayerCard.value()) {
             // Player1 winner action

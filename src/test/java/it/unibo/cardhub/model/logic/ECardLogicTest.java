@@ -20,9 +20,9 @@ import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 import it.unibo.cardhub.model.logic.impl.ECardLogic;
 
 /**
- * Test class for ECardLogic.
+ * Test class for {@link ECardLogic} class.
  */
-class ECardLogicTest {
+final class ECardLogicTest {
     private static final String TEST_STRING = "test";
     private static final String ERROR_STRING = "Unexpected Exception";
 

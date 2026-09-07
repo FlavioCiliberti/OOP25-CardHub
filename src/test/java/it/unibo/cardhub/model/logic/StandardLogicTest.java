@@ -23,9 +23,9 @@ import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 import it.unibo.cardhub.model.logic.impl.StandardMatchLogic;
 
 /**
- * Test class for StandardMatchLogic.
+ * Test class for {@link StandardMatchLogic} class.
  */
-class StandardLogicTest {
+final class StandardLogicTest {
     private static final String TEST_STRING = "test";
     private static final String ERROR_STRING = "Unexpected Exception";
 
