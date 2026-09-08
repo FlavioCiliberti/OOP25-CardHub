@@ -13,7 +13,9 @@ public enum CHColor {
     /**
      * Primary application color.
      */
-    PRIMARY(0xE58909), // scelta discutibile
+    PRIMARY(0xba8441),
+    // PRIMARY(0xd49d4c),
+    // PRIMARY(0x38b03d),
 
     /**
      * Secondary application color.
