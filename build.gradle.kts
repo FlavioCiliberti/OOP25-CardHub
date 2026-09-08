@@ -15,6 +15,7 @@ repositories {
 dependencies {
 
     compileOnly("com.github.spotbugs:spotbugs-annotations:4.10.2")
+    testCompileOnly("com.github.spotbugs:spotbugs-annotations:4.10.2")
 
 
     implementation("com.omertron:API-OMDB:1.5")
