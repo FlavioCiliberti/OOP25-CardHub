@@ -2,6 +2,7 @@ package it.unibo.cardhub.model.logic.impl;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Objects;
 
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
@@ -38,6 +39,10 @@ public class ECardLogic extends AbstractMatchLogic implements PointTracker {
     @Override
     public ComparisonWinner compareCard(final Card<?> firstPlayerCard, final Card<?> secondPlayerCard,
                                         final MatchState state) {
+        Objects.requireNonNull(firstPlayerCard, "card can't be null");
+        Objects.requireNonNull(secondPlayerCard, "card can't be null");
+        Objects.requireNonNull(state, "Match State can't be null");
+
         final ECardEnum firstCardType = ECardEnum.fromValue(firstPlayerCard.value());
         final ECardEnum secondCardType = ECardEnum.fromValue(secondPlayerCard.value());
 
@@ -63,6 +68,8 @@ public class ECardLogic extends AbstractMatchLogic implements PointTracker {
      */
     @Override
     public int getPoints(final PlayerEnum player) {
+        Objects.requireNonNull(player, "player can't be null");
+
         return playerPoints.get(player);
     }
 
@@ -90,6 +97,8 @@ public class ECardLogic extends AbstractMatchLogic implements PointTracker {
     }
 
     private void addPoints(final PlayerEnum player, final int value) {
+        Objects.requireNonNull(player, "player can't be null");
+
         playerPoints.put(player, playerPoints.get(player) + value);
     }
 }
