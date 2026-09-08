@@ -117,10 +117,7 @@ public final class DeckFactoryImpl implements DeckFactory {
         ));
     }
 
-    private <T> Deck loadDeck(
-            final String resourcePath,
-            final Function<Map<String, Object>, T> attributeFactory) {
-
+    private <T> Deck loadDeck(final String resourcePath, final Function<Map<String, Object>, T> attributeFactory) {
         try (var inputStream = getClass().getResourceAsStream(resourcePath)) {
             if (inputStream == null) {
                 throw new IllegalStateException(
@@ -132,15 +129,12 @@ public final class DeckFactoryImpl implements DeckFactory {
             final Map<String, Object> data = yaml.load(inputStream);
 
             @SuppressWarnings("unchecked")
-            final List<Map<String, Object>> cardsData =
-                    (List<Map<String, Object>>) data.get(CARDS_FIELD);
+            final List<Map<String, Object>> cardsData = (List<Map<String, Object>>) data.get(CARDS_FIELD);
 
             final List<Card<T>> cards = cardsData.stream()
                 .map(cardData -> {
                     @SuppressWarnings("unchecked")
-                    final Map<String, Object> attributes =
-                            (Map<String, Object>) cardData.get(ATTRIBUTES_FIELD);
-
+                    final Map<String, Object> attributes = (Map<String, Object>) cardData.get(ATTRIBUTES_FIELD);
                     final T cardAttributes = attributeFactory.apply(attributes);
 
                     return new CardImpl.Builder<T>()
