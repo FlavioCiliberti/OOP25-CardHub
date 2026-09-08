@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
 import org.yaml.snakeyaml.Yaml;
@@ -61,7 +62,7 @@ public final class DeckFactoryImpl implements DeckFactory {
         for (final Suit suit : Suit.values()) {
             for (int value = 1; value <= 10; value++) {
                 deck.addCard(
-                    new CardImpl.Builder<Suit>()
+                    CardImpl.<Suit>builder()
                         .id(suit.name() + "_" + value)
                         .attributes(suit)
                         .value(value)
@@ -137,14 +138,16 @@ public final class DeckFactoryImpl implements DeckFactory {
                     final Map<String, Object> attributes = (Map<String, Object>) cardData.get(ATTRIBUTES_FIELD);
                     final T cardAttributes = attributeFactory.apply(attributes);
 
-                    return new CardImpl.Builder<T>()
+                    final Card<T> card = CardImpl.<T>builder()
                         .id((String) cardData.get(ID_FIELD))
-                        .name((String) cardData.get(NAME_FIELD))
+                        .name(Optional.ofNullable((String) cardData.get(NAME_FIELD)))
                         .attributes(cardAttributes)
                         .value((Integer) cardData.get(VALUE_FIELD))
-                        .desc((String) cardData.get(DESCRIPTION_FIELD))
+                        .desc(Optional.ofNullable((String) cardData.get(DESCRIPTION_FIELD)))
                         .image((String) cardData.get(IMAGE_FIELD))
                         .build();
+
+                    return card;
                 })
                 .toList();
 

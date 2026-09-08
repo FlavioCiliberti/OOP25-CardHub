@@ -41,9 +41,9 @@ final class MatchStateImplTest {
         final Deck deckOne = new DeckImpl(new ArrayList<>());
         final Deck deckTwo = new DeckImpl(new ArrayList<>());
 
-        card = new CardImpl.Builder<Suit>()
+        card = CardImpl.<Suit>builder()
                 .id("1")
-                .attributes(Suit.HEARTS)
+                .attributes(Suit.BATONS)
                 .value(10)
                 .build();
 
