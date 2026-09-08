@@ -84,7 +84,7 @@ final class CardLayoutNavigatorTest {
 
     private boolean containsComponent(final ScreenView view) {
         for (final Component c : root.getComponents()) {
-            if (c == view) {
+            if (c.equals(view)) {
                 return true;
             }
         }
