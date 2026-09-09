@@ -185,9 +185,16 @@ final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
     }
 
     private void updateDescriptionLabel(final Card<?> card) {
+        String attributes = card.attributes().toString()
+                            .replace("[", "&nbsp;&nbsp;")
+                            .replace("]", " ")
+                            .replace(", ", "&nbsp;&nbsp;");
+
         cardInfoLabel.setText("<html>"
                                 + card.name().orElse("")
-                                + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Value: "
+                                + "<br>"
+                                + attributes
+                                + "&nbsp;&nbsp;Value: "
                                 + card.value() + "<br>"
                                 + card.desc().orElse("") + "</html>");
     }
