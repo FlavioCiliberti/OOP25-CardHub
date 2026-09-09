@@ -48,7 +48,7 @@ public final class SilentMatchView extends ScreenView implements MatchView {
     }
 
     @Override
-    public void updateDeck(final PlayerEnum player, final int remainingCards) {
+    public void updateDeck(final PlayerEnum player) {
     }
 
     @Override

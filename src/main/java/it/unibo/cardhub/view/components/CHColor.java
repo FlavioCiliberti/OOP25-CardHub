@@ -13,9 +13,10 @@ public enum CHColor {
     /**
      * Primary application color.
      */
-    PRIMARY(0xba8441),
-    // PRIMARY(0xd49d4c),
-    // PRIMARY(0x38b03d),
+    //PRIMARY(0xba8441),
+    //PRIMARY(0xd49d4c),
+    //PRIMARY(0x38b03d),
+    PRIMARY(0x9BE3FF),
 
     /**
      * Secondary application color.

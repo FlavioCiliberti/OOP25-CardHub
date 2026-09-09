@@ -3,6 +3,7 @@ package it.unibo.cardhub.view.impl;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import javax.swing.BorderFactory;
@@ -50,6 +51,8 @@ public class MatchViewImpl extends ScreenView implements MatchView {
      * @param controller the Match controller
      */
     public MatchViewImpl(final MatchController controller) {
+        Objects.requireNonNull(controller, "controller can't be null");
+
         this.controller = controller;
 
         matchAreaPanel = new CHPanel(CHStyles.tertiaryColor(), new BorderLayout());
@@ -132,7 +135,7 @@ public class MatchViewImpl extends ScreenView implements MatchView {
      */
     @Override
     public void updateShowingHand(final PlayerEnum player, final List<Card<?>> cards) {
-        this.selectPlayerPanel(player).updateShowingHandPanel(cards);
+        this.selectPlayerPanel(player).updateShowingHandPanel(Objects.requireNonNull(cards));
     }
 
     /**
@@ -164,6 +167,8 @@ public class MatchViewImpl extends ScreenView implements MatchView {
      */
     @Override
     public void updateDiscardPile(final PlayerEnum player, final Optional<Card<?>> topCard) {
+        Objects.requireNonNull(topCard, "card can't be null");
+
         if (player == PlayerEnum.PLAYER_ONE) {
             playfield.updatePlayerOneDiscardPile(topCard);
         } else if (player == PlayerEnum.PLAYER_TWO) {
@@ -177,7 +182,7 @@ public class MatchViewImpl extends ScreenView implements MatchView {
      * {@inheritDoc}
      */
     @Override
-    public void updateDeck(final PlayerEnum player, final int remainingCards) {
+    public void updateDeck(final PlayerEnum player) {
         this.selectPlayerPanel(player).updateDeck();
     }
 
@@ -186,6 +191,8 @@ public class MatchViewImpl extends ScreenView implements MatchView {
      */
     @Override
     public void showCurrentPlayer(final PlayerEnum player) {
+        Objects.requireNonNull(player, "player can't be null");
+
         this.showPopup("It's " + controller.getPlayerName(player) + "'s turn", "Turn Start", JOptionPane.INFORMATION_MESSAGE);
         controller.startTurn();
     }
@@ -195,6 +202,8 @@ public class MatchViewImpl extends ScreenView implements MatchView {
      */
     @Override
     public void showMatchEnded(final PlayerEnum winner) {
+        Objects.requireNonNull(winner, "player can't be null");
+
         this.showPopup(controller.getPlayerName(winner) + " Wins!", "Match Over", JOptionPane.INFORMATION_MESSAGE);
         controller.goToHome();
     }

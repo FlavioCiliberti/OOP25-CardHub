@@ -63,9 +63,8 @@ public interface MatchView {
      * Refreshes a player's remaining deck size and makes the deck invisible if empty.
      *
      * @param player the player whose deck changed
-     * @param remainingCards the number of cards left in the deck
      */
-    void updateDeck(PlayerEnum player, int remainingCards);
+    void updateDeck(PlayerEnum player);
 
     /**
      * Signals whose turn it currently is.

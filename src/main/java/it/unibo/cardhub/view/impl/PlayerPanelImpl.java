@@ -62,6 +62,9 @@ final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
      * @param mirrored if true, the elements are going to be arranged in reverse order to create a mirrored version
      */
     PlayerPanelImpl(final MatchController controller, final PlayerEnum player, final boolean mirrored) {
+        Objects.requireNonNull(controller, "controller can't be null");
+        Objects.requireNonNull(player, "player can't be null");
+
         this.controller = controller;
         this.player = player;
 
@@ -119,6 +122,8 @@ final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
      */
     @Override
     public void updateShowingHandPanel(final List<Card<?>> cards) {
+        Objects.requireNonNull(cards, "hand can't be null");
+
         handPanel.removeAll();
         for (final Card<?> card : cards) {
             final JLabel cardLabel = new CHLabel(ImageResolver.resolve(card));
@@ -218,6 +223,9 @@ final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
          */
         @Override
         public void mouseHovered(final Card<?> card, final PlayerEnum player) {
+            Objects.requireNonNull(card, "card can't be null");
+            Objects.requireNonNull(player, "PlayerEnum can't be null");
+
             if (playerPanels.get(player) instanceof PlayerPanelImpl panel) {
                 panel.updateDescriptionLabel(card);
             }
@@ -230,6 +238,8 @@ final class PlayerPanelImpl extends CHPanel implements PlayerPanel {
          */
         @Override
         public void mouseExited(final PlayerEnum player) {
+            Objects.requireNonNull(player, "PlayerEnum can't be null");
+
             if (playerPanels.get(player) instanceof PlayerPanelImpl panel) {
                 panel.removeDescription();
             }

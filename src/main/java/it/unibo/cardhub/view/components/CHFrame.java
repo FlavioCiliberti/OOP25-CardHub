@@ -14,7 +14,7 @@ import javax.swing.JFrame;
  */
 public final class CHFrame extends JFrame {
     private static final long serialVersionUID = 1L;
-    private static final int SCREEN_WIDTH = 800;
+    private static final int SCREEN_WIDTH = 900;
     private static final int SCREEN_HEIGHT = 800;
 
     /**

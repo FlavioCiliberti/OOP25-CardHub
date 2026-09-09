@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -109,6 +110,8 @@ public final class CreateMatchViewImpl extends ScreenView implements CreateMatch
      * @param controller the controller for the current screen
      */
     public CreateMatchViewImpl(final CreateMatchController controller) {
+        Objects.requireNonNull(controller, "controller can't be null");
+
         playersPanel = new CHPanel(CHStyles.primaryColor(), new BorderLayout());
         firstPlayerPanel = new CHPanel(new GridBagLayout());
         secondPlayerPanel = new CHPanel(new GridBagLayout());

@@ -110,7 +110,7 @@ public abstract class AbstractMatchController<V extends MatchView, L extends Mat
     public void reshuffleIntoDeck(final PlayerEnum owner) {
         checkTurn(owner);
         state.shufflePileIntoDeck(owner);
-        view.updateDeck(owner, getDeckCount(owner));
+        view.updateDeck(owner);
         view.updateDiscardPile(owner, Optional.empty());
     }
 
@@ -206,7 +206,7 @@ public abstract class AbstractMatchController<V extends MatchView, L extends Mat
         if (logic.shouldAutoDraw()) {
             try {
                 state.drawCard(player);
-                view.updateDeck(player, state.getPlayer(player).getDeckCount());
+                view.updateDeck(player);
             } catch (final CardCollectionFullException | EmptyCardCollectionException e) {
                 // Expected: the player doesn't draw if their hand is already full or the deck is empty
             }
@@ -290,7 +290,7 @@ public abstract class AbstractMatchController<V extends MatchView, L extends Mat
         try {
             state.drawCard(player);
             view.updateShowingHand(player, state.getPlayer(player).getHand().getCards());
-            view.updateDeck(player, state.getPlayer(player).getDeckCount());
+            view.updateDeck(player);
         } catch (final CardCollectionFullException e) {
             view.showInvalidAction(e.getMessage());
         }
@@ -302,7 +302,7 @@ public abstract class AbstractMatchController<V extends MatchView, L extends Mat
             case NONE:
                 return;
             case TO_DECK:
-                view.updateDeck(player, state.getPlayer(player).getDeckCount());
+                view.updateDeck(player);
                 break;
             case TO_PILE:
                 view.updateDiscardPile(player, state.getPlayer(player).peekDiscardPile());
