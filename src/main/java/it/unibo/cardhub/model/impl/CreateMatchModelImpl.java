@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import it.unibo.cardhub.model.api.CreateMatchModel;
-import it.unibo.cardhub.model.domain.DeckEnum;
+import it.unibo.cardhub.model.domain.api.DeckEnum;
 
 /**
  * Default implementation of {@link CreateMatchModel}, exposing fixed domain constraints.

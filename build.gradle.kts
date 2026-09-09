@@ -16,6 +16,11 @@ dependencies {
 
     compileOnly("com.github.spotbugs:spotbugs-annotations:4.10.2")
     testCompileOnly("com.github.spotbugs:spotbugs-annotations:4.10.2")
+    compileOnly("org.projectlombok:lombok:1.18.42")
+    annotationProcessor("org.projectlombok:lombok:1.18.42")
+
+    testCompileOnly("org.projectlombok:lombok:1.18.42")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.42")
 
 
     implementation("com.omertron:API-OMDB:1.5")

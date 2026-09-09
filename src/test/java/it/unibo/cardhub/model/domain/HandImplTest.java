@@ -34,21 +34,21 @@ final class HandImplTest {
     void setUp() {
         hand = new HandImpl(new ArrayList<>(), HAND_SIZE);
 
-        card1 = new CardImpl.Builder<Suit>()
+        card1 = CardImpl.<Suit>builder()
                 .id("1")
-                .attributes(Suit.HEARTS)
+                .attributes(Suit.COINS)
                 .value(CARD_VALUE)
                 .build();
 
-        card2 = new CardImpl.Builder<Suit>()
+        card2 = CardImpl.<Suit>builder()
                 .id("2")
-                .attributes(Suit.SPADES)
+                .attributes(Suit.CUPS)
                 .value(CARD_VALUE)
                 .build();
 
-        card3 = new CardImpl.Builder<Suit>()
+        card3 = CardImpl.<Suit>builder()
                 .id("3")
-                .attributes(Suit.CLUBS)
+                .attributes(Suit.SWORDS)
                 .value(CARD_VALUE)
                 .build();
     }

@@ -1,4 +1,4 @@
-package it.unibo.cardhub.model.domain;
+package it.unibo.cardhub.model.domain.api;
 
 /**
  * Temporary non-dinamic enumeration of available decks.
@@ -6,7 +6,8 @@ package it.unibo.cardhub.model.domain;
 public enum DeckEnum {
         POKEMON("Pokemon", 0), 
         DRAGONBALL("Dragon Ball", 1), 
-        YUGIOH("Yu Gi Oh", 2);
+        YUGIOH("Yu Gi Oh", 2),
+        ITALIAN("Italian", 3);
 
     private final String displayName;
     private final int id;

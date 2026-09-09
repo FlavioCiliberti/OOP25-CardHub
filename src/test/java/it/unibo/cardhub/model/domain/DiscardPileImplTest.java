@@ -34,15 +34,15 @@ final class DiscardPileImplTest {
 
     @BeforeEach
     void setUp() {
-        card1 = new CardImpl.Builder<Suit>()
+        card1 = CardImpl.<Suit>builder()
                 .id("1")
-                .attributes(Suit.HEARTS)
+                .attributes(Suit.BATONS)
                 .value(CARD_VALUE)
                 .build();
 
-        card2 = new CardImpl.Builder<Suit>()
+        card2 = CardImpl.<Suit>builder()
                 .id("2")
-                .attributes(Suit.SPADES)
+                .attributes(Suit.BATONS)
                 .value(CARD_VALUE)
                 .build();
 

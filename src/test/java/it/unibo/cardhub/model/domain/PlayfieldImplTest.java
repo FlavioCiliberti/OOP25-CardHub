@@ -31,9 +31,9 @@ final class PlayfieldImplTest {
     void setUp() {
         playfield = new PlayfieldImpl(MAX_FIELD_SIZE);
 
-        card = new CardImpl.Builder<Suit>()
+        card = CardImpl.<Suit>builder()
                 .id("1")
-                .attributes(Suit.HEARTS)
+                .attributes(Suit.BATONS)
                 .value(CARD_VALUE)
                 .build();
     }
@@ -88,9 +88,9 @@ final class PlayfieldImplTest {
         playfield.addCard(PlayerEnum.PLAYER_ONE, card);
 
         for (int i = 1; i < MAX_FIELD_SIZE; i++) {
-            final Card<Suit> newCard = new CardImpl.Builder<Suit>()
+            final Card<Suit> newCard = CardImpl.<Suit>builder()
                     .id(String.valueOf(i))
-                    .attributes(Suit.HEARTS)
+                    .attributes(Suit.BATONS)
                     .value(CARD_VALUE)
                     .build();
             playfield.addCard(PlayerEnum.PLAYER_ONE, newCard);

@@ -11,8 +11,8 @@ import it.unibo.cardhub.controller.factory.MatchControllerFactory;
 import it.unibo.cardhub.io.api.DeckFactory;
 import it.unibo.cardhub.io.impl.DeckFactoryImpl;
 import it.unibo.cardhub.model.api.CreateMatchModel;
-import it.unibo.cardhub.model.domain.DeckEnum;
 import it.unibo.cardhub.model.domain.api.Deck;
+import it.unibo.cardhub.model.domain.api.DeckEnum;
 import it.unibo.cardhub.model.domain.exceptions.EmptyFieldException;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.GameMode;
@@ -242,6 +242,7 @@ public class CreateMatchControllerImpl implements CreateMatchController {
             case POKEMON -> this.deckFactory.createPokemonDeck();
             case DRAGONBALL -> this.deckFactory.createDragonBallDeck();
             case YUGIOH -> this.deckFactory.createYuGiOhDeck();
+            case ITALIAN -> this.deckFactory.createItalianDeck();
         };
     }
 }

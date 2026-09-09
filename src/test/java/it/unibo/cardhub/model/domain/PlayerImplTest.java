@@ -33,15 +33,15 @@ final class PlayerImplTest {
 
     @BeforeEach
     void setUp() {
-        card1 = new CardImpl.Builder<Suit>()
+        card1 = CardImpl.<Suit>builder()
                 .id("1")
-                .attributes(Suit.HEARTS)
+                .attributes(Suit.BATONS)
                 .value(CARD_VALUE)
                 .build();
 
-        card2 = new CardImpl.Builder<Suit>()
+        card2 = CardImpl.<Suit>builder()
                 .id("2")
-                .attributes(Suit.SPADES)
+                .attributes(Suit.CUPS)
                 .value(CARD_VALUE)
                 .build();
 
@@ -97,9 +97,9 @@ final class PlayerImplTest {
         player.getHand().addCard(card2);
 
         for (int i = 3; i <= MAX_HAND_SIZE; i++) {
-            final Card<Suit> newCard = new CardImpl.Builder<Suit>()
+            final Card<Suit> newCard = CardImpl.<Suit>builder()
                     .id(String.valueOf(i))
-                    .attributes(Suit.HEARTS)
+                    .attributes(Suit.SWORDS)
                     .value(CARD_VALUE)
                     .build();
             player.getHand().addCard(newCard);
