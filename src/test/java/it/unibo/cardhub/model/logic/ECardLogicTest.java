@@ -54,6 +54,19 @@ final class ECardLogicTest {
     }
 
     @Test
+    void testEmperorBeatsCitizen() {
+        final Card<?> firstPlayerCard = createTestCard(1);
+        final Card<?> secondPlayerCard = createTestCard(2);
+        final MatchState state = buildState(firstPlayerCard, secondPlayerCard);
+
+        playCards(state, firstPlayerCard, secondPlayerCard);
+
+        assertEquals(0, logic.getPoints(PlayerEnum.PLAYER_ONE));
+        assertEquals(1, logic.getPoints(PlayerEnum.PLAYER_TWO));
+        assertEquals(ComparisonWinner.PLAYER_2, logic.getWinningPlayer());
+    }
+
+    @Test
     void testSlaveBeatsEmperor() {
         final Card<?> firstPlayerCard = createTestCard(0);
         final Card<?> secondPlayerCard = createTestCard(2);
