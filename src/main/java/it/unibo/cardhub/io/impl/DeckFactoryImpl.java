@@ -133,12 +133,12 @@ public final class DeckFactoryImpl implements DeckFactory {
             final List<Map<String, Object>> cardsData = (List<Map<String, Object>>) data.get(CARDS_FIELD);
 
             final List<Card<T>> cards = cardsData.stream()
-                .map(cardData -> {
+                .<Card<T>>map(cardData -> {
                     @SuppressWarnings("unchecked")
                     final Map<String, Object> attributes = (Map<String, Object>) cardData.get(ATTRIBUTES_FIELD);
                     final T cardAttributes = attributeFactory.apply(attributes);
 
-                    final Card<T> card = CardImpl.<T>builder()
+                    return CardImpl.<T>builder()
                         .id((String) cardData.get(ID_FIELD))
                         .name(Optional.ofNullable((String) cardData.get(NAME_FIELD)))
                         .attributes(cardAttributes)
@@ -146,8 +146,6 @@ public final class DeckFactoryImpl implements DeckFactory {
                         .desc(Optional.ofNullable((String) cardData.get(DESCRIPTION_FIELD)))
                         .image((String) cardData.get(IMAGE_FIELD))
                         .build();
-
-                    return card;
                 })
                 .toList();
 

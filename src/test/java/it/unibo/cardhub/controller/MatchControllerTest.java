@@ -59,9 +59,9 @@ final class MatchControllerTest {
         deckOne = new DeckImpl(new ArrayList<>());
         deckTwo = new DeckImpl(new ArrayList<>());
 
-        card = new CardImpl.Builder<Suit>()
+        card = CardImpl.<Suit>builder()
                 .id("1")
-                .attributes(Suit.HEARTS)
+                .attributes(Suit.BATONS)
                 .value(CARD_VALUE)
                 .build();
 
@@ -147,9 +147,9 @@ final class MatchControllerTest {
         final Hand hand = state.getPlayer(turnPlayer).getHand();
         for (int i = 0; i < MAX_HAND_SIZE; i++) {
             hand.addCard(
-                    new CardImpl.Builder<Suit>()
+                    CardImpl.<Suit>builder()
                             .id("test" + i)
-                            .attributes(Suit.CLUBS)
+                            .attributes(Suit.BATONS)
                             .value(CARD_VALUE)
                             .build()
             );
@@ -194,10 +194,10 @@ final class MatchControllerTest {
                 navigator
         );
 
-        final Card<Suit> playerOneCard = new CardImpl.Builder<Suit>()
-                .id("k").attributes(Suit.HEARTS).value(HIGHER_CARD_VALUE).build();
-        final Card<Suit> playerTwoCard = new CardImpl.Builder<Suit>()
-                .id("j").attributes(Suit.HEARTS).value(CARD_VALUE).build();
+        final Card<Suit> playerOneCard = CardImpl.<Suit>builder()
+                .id("k").attributes(Suit.BATONS).value(HIGHER_CARD_VALUE).build();
+        final Card<Suit> playerTwoCard = CardImpl.<Suit>builder()
+                .id("j").attributes(Suit.BATONS).value(CARD_VALUE).build();
 
         state.getPlayer(PlayerEnum.PLAYER_ONE).getHand().addCard(playerOneCard);
         state.getPlayer(PlayerEnum.PLAYER_TWO).getHand().addCard(playerTwoCard);
