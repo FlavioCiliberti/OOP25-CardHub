@@ -65,7 +65,9 @@ public abstract class AbstractMatchController<V extends MatchView, L extends Mat
         getMatchView().updateHiddenHand(getTurnPlayer(), 
                             getState().getPlayer(getTurnPlayer()).getHand().size());
         onEndTurn();
-        getMatchView().showCurrentPlayer(getTurnPlayer());
+        if (!state.isFinished()) {
+            getMatchView().showCurrentPlayer(getTurnPlayer());
+        }
     }
 
     /**
@@ -144,7 +146,7 @@ public abstract class AbstractMatchController<V extends MatchView, L extends Mat
     @Override
     public void concede() {
         logic.changeTurn();
-        state.endMatch(getTurnPlayer());
+        state.endMatch(getTurnPlayer().toComparisonWinner());
         view.showMatchEnded(state.getWinner().get());
     }
 

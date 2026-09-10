@@ -64,7 +64,13 @@ public class ECardMatchController extends AbstractMatchController<ECardMatchView
             showUpdatedScore();
         }
 
-        getLogic().changeTurn();
+        if (getState().getPlayer(PlayerEnum.PLAYER_ONE).getHand().isEmpty()
+            && getState().getPlayer(PlayerEnum.PLAYER_TWO).getHand().isEmpty()) {
+            getState().endMatch(getLogic().getWinningPlayer());
+            getMatchView().showMatchEnded(getState().getWinner().get());
+        } else {
+            getLogic().changeTurn();
+        }
     }
 
     /**

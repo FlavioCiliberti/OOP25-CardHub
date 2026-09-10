@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
+import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 import it.unibo.cardhub.view.api.MatchView;
 import it.unibo.cardhub.view.components.ScreenView;
 
@@ -23,7 +24,7 @@ public final class SilentMatchView extends ScreenView implements MatchView {
 
     private final List<PlayerEnum> hiddenHandUpdates = new ArrayList<>();
     private String lastInvalidActionMessage;
-    private PlayerEnum lastMatchEndedWinner;
+    private ComparisonWinner lastMatchEndedWinner;
     private PlayerEnum lastShownCurrentPlayer;
 
     @Override
@@ -57,7 +58,7 @@ public final class SilentMatchView extends ScreenView implements MatchView {
     }
 
     @Override
-    public void showMatchEnded(final PlayerEnum winner) {
+    public void showMatchEnded(final ComparisonWinner winner) {
         lastMatchEndedWinner = winner;
     }
 
@@ -89,7 +90,7 @@ public final class SilentMatchView extends ScreenView implements MatchView {
      * 
      * @return the last match winner
      */
-    public PlayerEnum getLastMatchEndedWinner() {
+    public ComparisonWinner getLastMatchEndedWinner() {
         return lastMatchEndedWinner;
     }
 

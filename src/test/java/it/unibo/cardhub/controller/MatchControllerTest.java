@@ -174,8 +174,8 @@ final class MatchControllerTest {
         controller.concede();
 
         assertTrue(state.isFinished());
-        assertEquals(otherPlayer, state.getWinner().get());
-        assertEquals(otherPlayer, view.getLastMatchEndedWinner());
+        assertEquals(otherPlayer, state.getWinner().get().toPlayerEnum().get());
+        assertEquals(otherPlayer, view.getLastMatchEndedWinner().toPlayerEnum().get());
     }
 
     @Test

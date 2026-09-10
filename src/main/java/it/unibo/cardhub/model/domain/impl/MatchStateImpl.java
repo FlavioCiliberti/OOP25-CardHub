@@ -11,6 +11,7 @@ import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.domain.api.Playfield;
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 import it.unibo.cardhub.model.domain.exceptions.FieldFullException;
+import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 
 /**
  * Match state implementation.
@@ -21,7 +22,7 @@ public class MatchStateImpl implements MatchState {
     private final Playfield field;
 
     private MatchStatus status;
-    private Optional<PlayerEnum> winner;
+    private Optional<ComparisonWinner> winner;
 
     /**
      * Match state constructor.
@@ -136,12 +137,12 @@ public class MatchStateImpl implements MatchState {
      * {@inheritDoc}
      */
     @Override
-    public void endMatch(final PlayerEnum player) {
+    public void endMatch(final ComparisonWinner matchWinner) {
         if (this.status != MatchStatus.RUNNING) {
             throw new IllegalStateException("A winner can only be set while the match is running.");
         }
 
-        this.winner = Optional.of(player);
+        this.winner = Optional.of(matchWinner);
         this.status = MatchStatus.FINISHED;
     }
 
@@ -149,7 +150,7 @@ public class MatchStateImpl implements MatchState {
      * {@inheritDoc}
      */
     @Override
-    public Optional<PlayerEnum> getWinner() {
+    public Optional<ComparisonWinner> getWinner() {
         return this.winner;
     }
 
