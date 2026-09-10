@@ -44,7 +44,7 @@ public class DiscardPileImpl extends AbstractCardCollection implements DiscardPi
             return Optional.empty();
         }
 
-        return Optional.of(getMutableCards().get(this.size() - 1));
+        return Optional.of(getMutableCards().getLast());
     }
 
     /**

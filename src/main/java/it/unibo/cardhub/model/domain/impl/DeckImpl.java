@@ -32,7 +32,7 @@ public class DeckImpl extends AbstractCardCollection implements Deck {
             throw new EmptyCardCollectionException();
         }
 
-        return this.getMutableCards().remove(this.size() - 1);
+        return this.getMutableCards().removeLast();
     }
 
     /**
@@ -52,7 +52,7 @@ public class DeckImpl extends AbstractCardCollection implements Deck {
             return Optional.empty();
         }
 
-        return Optional.of(getMutableCards().get(this.size() - 1));
+        return Optional.of(getMutableCards().getLast());
     }
 
     /**

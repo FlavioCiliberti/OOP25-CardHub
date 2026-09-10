@@ -64,8 +64,10 @@ public final class DeckFactoryImpl implements DeckFactory {
                 deck.addCard(
                     CardImpl.<Suit>builder()
                         .id(suit.name() + "_" + value)
+                        .name(Optional.empty())
                         .attributes(suit)
                         .value(value)
+                        .desc(Optional.empty())
                         .image(suit.name() + "_" + value + ".png")
                         .build()
                 );
