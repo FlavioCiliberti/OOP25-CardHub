@@ -6,6 +6,7 @@ import java.util.Optional;
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
+import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 
 /**
  * Represents the view of a match, updated by the {@link MatchController} 
@@ -78,7 +79,7 @@ public interface MatchView {
      *
      * @param winner the match's winner
      */
-    void showMatchEnded(PlayerEnum winner);
+    void showMatchEnded(ComparisonWinner winner);
 
     /**
      * Signals that an action was unsuccessful.

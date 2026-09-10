@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import it.unibo.cardhub.controller.api.MatchController;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
+import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 import it.unibo.cardhub.view.api.MatchView;
 import it.unibo.cardhub.view.api.PlayerPanel;
 import it.unibo.cardhub.view.api.PlayfieldPanel;
@@ -174,7 +175,7 @@ public class MatchViewImpl extends ScreenView implements MatchView {
         } else if (player == PlayerEnum.PLAYER_TWO) {
             playfield.updatePlayerTwoDiscardPile(topCard);
         } else {
-            throw new IllegalStateException("Player does not exist");
+            throw new IllegalStateException("Player doesn't exist");
         }
     }
 
@@ -201,10 +202,16 @@ public class MatchViewImpl extends ScreenView implements MatchView {
      * {@inheritDoc}
      */
     @Override
-    public void showMatchEnded(final PlayerEnum winner) {
+    public void showMatchEnded(final ComparisonWinner winner) {
         Objects.requireNonNull(winner, "player can't be null");
 
-        this.showPopup(controller.getPlayerName(winner) + " Wins!", "Match Over", JOptionPane.INFORMATION_MESSAGE);
+        if (winner == ComparisonWinner.TIE) {
+            this.showPopup("It's a tie!", "Match Over", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            this.showPopup(controller.getPlayerName(winner.toPlayerEnum().get()) + " Wins!",
+                            "Match Over", JOptionPane.INFORMATION_MESSAGE);
+        }
+
         controller.goToHome();
     }
 
@@ -232,6 +239,15 @@ public class MatchViewImpl extends ScreenView implements MatchView {
      */
     protected JButton getEndTurnButton() {
         return endTurnButton;
+    }
+
+    /**
+     * Getter for the playfield panel.
+     * 
+     * @return the playfield panel
+     */
+    protected PlayfieldPanel getPlayfieldPanel() {
+        return playfield;
     }
 
     /**

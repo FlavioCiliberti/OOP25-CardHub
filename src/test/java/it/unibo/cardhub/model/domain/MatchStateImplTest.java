@@ -76,12 +76,12 @@ final class MatchStateImplTest {
 
     @Test
     void testEndMatchSetsWinner() {
-        matchState.endMatch(PlayerEnum.PLAYER_ONE);
+        matchState.endMatch(PlayerEnum.PLAYER_ONE.toComparisonWinner());
 
         assertTrue(matchState.isFinished());
         assertEquals(
             playerOne,
-            matchState.getPlayer(matchState.getWinner().get())
+            matchState.getPlayer(matchState.getWinner().get().toPlayerEnum().get())
         );
     }
 

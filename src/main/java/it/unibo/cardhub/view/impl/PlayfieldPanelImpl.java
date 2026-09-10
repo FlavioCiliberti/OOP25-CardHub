@@ -109,6 +109,22 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
      * {@inheritDoc}
      */
     @Override
+    public void setPlayerOneShufflePileEnabled(final boolean enabled) {
+        playerOneDiscardPileArea.setShufflePileButtonEnabled(enabled);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setPlayerTwoShufflePileEnabled(final boolean enabled) {
+        playerTwoDiscardPileArea.setShufflePileButtonEnabled(enabled);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void updatePlayfield(final PlayerEnum player, final List<Card<?>> cards) {
         Objects.requireNonNull(cards, "Cards list cannot be null");
 
@@ -343,6 +359,10 @@ final class PlayfieldPanelImpl extends CHPanel implements PlayfieldPanel {
 
             this.pile.revalidate();
             this.pile.repaint();
+        }
+
+        void setShufflePileButtonEnabled(final boolean enabled) {
+            reshuffle.setEnabled(enabled);
         }
 
         private void discardSelectedCard() {

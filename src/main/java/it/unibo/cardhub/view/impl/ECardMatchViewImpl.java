@@ -20,6 +20,7 @@ public class ECardMatchViewImpl extends ScoredMatchViewImpl implements ECardMatc
     public ECardMatchViewImpl(final MatchController controller) {
         super(controller);
         disableEndTurnButton();
+        disableShufflePileButtons();
     }
 
     /**
@@ -35,4 +36,8 @@ public class ECardMatchViewImpl extends ScoredMatchViewImpl implements ECardMatc
         super.getEndTurnButton().setVisible(false);
     }
 
+    private void disableShufflePileButtons() {
+        super.getPlayfieldPanel().setPlayerOneShufflePileEnabled(false);
+        super.getPlayfieldPanel().setPlayerTwoShufflePileEnabled(false);
+    }
 }

@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
 import it.unibo.cardhub.model.domain.exceptions.FieldFullException;
+import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 
 /**
  * Represent a match, the heart of the game.
@@ -91,9 +92,9 @@ public interface MatchState {
     /**
      * Ends a match and sets the winner.
      * 
-     * @param player the winner
+     * @param winner the winner
      */
-    void endMatch(PlayerEnum player);
+    void endMatch(ComparisonWinner winner);
 
     /**
      * Informs about the match's state.
@@ -107,5 +108,5 @@ public interface MatchState {
      * 
      * @return the winner, if present
      */
-    Optional<PlayerEnum> getWinner();
+    Optional<ComparisonWinner> getWinner();
 }

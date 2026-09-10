@@ -27,6 +27,20 @@ public interface PlayfieldPanel {
     void updatePlayerTwoDiscardPile(Optional<Card<?>> card);
 
     /**
+     * Sets the enabled states of the player's reshuffle pile button.
+     * 
+     * @param enabled whether the button should be enabled or not
+     */
+    void setPlayerOneShufflePileEnabled(boolean enabled);
+
+    /**
+     * Sets the enabled states of the opponent's reshuffle pile button.
+     * 
+     * @param enabled whether the button should be enabled or not
+     */
+    void setPlayerTwoShufflePileEnabled(boolean enabled);
+
+    /**
      * Updates the playfield with the specified list of cards.
      *
      * @param cards the list of cards to display on the playfield
