@@ -1,107 +1,157 @@
 package it.unibo.cardhub.model.domain.impl;
 
-import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.Player;
+import it.unibo.cardhub.model.domain.api.PlayerEnum;
+import it.unibo.cardhub.model.domain.api.Playfield;
+import it.unibo.cardhub.model.domain.exceptions.CardCollectionFullException;
+import it.unibo.cardhub.model.domain.exceptions.FieldFullException;
+import it.unibo.cardhub.model.logic.api.ComparisonWinner;
 
 /**
  * Match state implementation.
  */
 public class MatchStateImpl implements MatchState {
 
-    private final List<Player> players;
-    private Player currentPlayer;
-    private Optional<Player> winner;
+    private final Map<PlayerEnum, Player> players;
+    private final Playfield field;
+
     private MatchStatus status;
+    private Optional<ComparisonWinner> winner;
 
     /**
      * Match state constructor.
      * 
-     * @param players of the match
-     * @throws IllegalArgumentException if the match has no players
+     * @param playerOne first player
+     * @param playerTwo second player
+     * @param maxFieldSize maximum number of cards on the field per player
+     * @throws IllegalArgumentException if the maximum field size is invalid
      */
-    public MatchStateImpl(final List<Player> players) {
-        Objects.requireNonNull(players);
+    public MatchStateImpl(final Player playerOne, final Player playerTwo, final int maxFieldSize) {
+        Objects.requireNonNull(playerOne);
+        Objects.requireNonNull(playerTwo);
 
-        if (players.isEmpty()) {
-            throw new IllegalArgumentException("A match needs at least one player.");
+        if (maxFieldSize <= 0) {
+            throw new IllegalArgumentException("Maximum field size must be positive.");
         }
 
-        this.players = List.copyOf(players);
+        this.players = Map.of(PlayerEnum.PLAYER_ONE, playerOne, PlayerEnum.PLAYER_TWO, playerTwo);
+        this.field = new PlayfieldImpl(maxFieldSize);
+
         this.winner = Optional.empty();
-        this.status = MatchStatus.CREATED;
+
+        status = MatchStatus.CREATED;
+        this.start();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void start() {
-        if (this.status != MatchStatus.CREATED) {
-            throw new IllegalStateException("The match has already started.");
-        }
-
-        this.currentPlayer = this.players.get(0);
-        this.status = MatchStatus.RUNNING;
+    public Player getPlayer(final PlayerEnum player) {
+        return players.get(Objects.requireNonNull(player));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void nextTurn() {
-        if (this.status != MatchStatus.RUNNING) {
-            throw new IllegalStateException("Cannot change turn if the match is not running.");
-        }
-
-        final int currentIndex = this.players.indexOf(this.currentPlayer);
-        final int nextIndex = (currentIndex + 1) % this.players.size();
-
-        this.currentPlayer = this.players.get(nextIndex);
+    public void drawCard(final PlayerEnum player) throws CardCollectionFullException {
+        this.getPlayer(player).drawCard();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Player getCurrentPlayer() {
-        return Objects.requireNonNull(this.currentPlayer, "The match has not started yet.");
+    public void playCard(final Card<?> card, final PlayerEnum player) throws FieldFullException {
+        this.field.addCard(player, card);
+        this.getPlayer(player).playCard(card);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<Player> getPlayers() {
-        return List.copyOf(this.players);
+    public void moveCardFromFieldToPile(final Card<?> card, final PlayerEnum player) {
+        this.field.removeCard(player, card);
+        this.getPlayer(player).putInPile(card);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Optional<Player> getWinner() {
-        return this.winner;
+    public void moveCardFromFieldToDeck(final Card<?> card, final PlayerEnum player) {
+        this.field.removeCard(player, card);
+        this.getPlayer(player).putInDeck(card);
+        this.getPlayer(player).shuffleDeck();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void endMatch(final Player player) {
+    public Playfield getPlayfield() {
+        return this.field.copy();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getPlayFieldSize() {
+        return this.field.getMaxCardsPerPlayer();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void shufflePileIntoDeck(final PlayerEnum player) {
+        this.getPlayer(player).shufflePileIntoDeck();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isEmptyDeck(final PlayerEnum owner) {
+        return this.getPlayer(owner).hasEmptyDeck();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isEmptyDiscardPile(final PlayerEnum owner) {
+        return this.getPlayer(owner).hasEmptyDiscardPile();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void endMatch(final ComparisonWinner matchWinner) {
         if (this.status != MatchStatus.RUNNING) {
             throw new IllegalStateException("A winner can only be set while the match is running.");
         }
 
-        if (!this.players.contains(player)) {
-            throw new IllegalArgumentException("The winner must be a player of this match.");
-        }
-
-        this.winner = Optional.of(player);
+        this.winner = Optional.of(matchWinner);
         this.status = MatchStatus.FINISHED;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Optional<ComparisonWinner> getWinner() {
+        return this.winner;
     }
 
     /**
@@ -112,10 +162,18 @@ public class MatchStateImpl implements MatchState {
         return this.status == MatchStatus.FINISHED;
     }
 
+    private void start() {
+        if (this.status != MatchStatus.CREATED) {
+            throw new IllegalStateException("The match has already started.");
+        }
+
+        this.status = MatchStatus.RUNNING;
+    }
+
     /**
      * Represents the status of the match.
      */
-    public enum MatchStatus {
+    private enum MatchStatus {
         CREATED, RUNNING, FINISHED
     }
 }

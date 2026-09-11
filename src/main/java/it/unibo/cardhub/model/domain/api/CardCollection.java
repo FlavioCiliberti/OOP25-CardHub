@@ -8,18 +8,11 @@ import java.util.List;
 public interface CardCollection {
 
     /**
-     * Adds a card to another card collection.
-     * 
-     * @param card to be added
-     */
-    void addCard(Card card);
-
-    /**
      * Returns a copy of all the cards of the collection.
      * 
      * @return a list of all the cards
      */
-    List<Card> getCards();
+    List<Card<?>> getCards();
 
     /**
      * Gets the current size of the collection.

@@ -1,14 +1,15 @@
 package it.unibo.cardhub.model.domain.impl;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 import it.unibo.cardhub.model.domain.api.Card;
-import it.unibo.cardhub.model.domain.api.Player;
+import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.domain.api.Playfield;
+import it.unibo.cardhub.model.domain.exceptions.FieldFullException;
 import it.unibo.cardhub.model.domain.exceptions.NoSuchCardsException;
 
 /**
@@ -16,19 +17,24 @@ import it.unibo.cardhub.model.domain.exceptions.NoSuchCardsException;
  */
 public class PlayfieldImpl implements Playfield {
 
-    private final Map<Player, List<Card>> playerCards;
-    private final int maxHandSize;
+    private final Map<PlayerEnum, List<Card<?>>> playerCards;
+    private final int maxFieldSize;
 
     /**
      * Playfield constructor.
      * 
-     * @param players of the playfield
-     * @param maxHandSize of the game
+     * @param maxFieldSize of the game
      */
-    public PlayfieldImpl(final List<Player> players, final int maxHandSize) {
-        this.playerCards = new LinkedHashMap<>();
-        players.forEach(p -> this.playerCards.put(Objects.requireNonNull(p), new ArrayList<>()));
-        this.maxHandSize = maxHandSize;
+    public PlayfieldImpl(final int maxFieldSize) {
+        if (maxFieldSize <= 0) {
+            throw new IllegalArgumentException("Maximum field size must be positive.");
+        }
+
+        this.playerCards = new EnumMap<>(PlayerEnum.class);
+        for (final PlayerEnum player : PlayerEnum.values()) {
+            this.playerCards.put(player, new ArrayList<>());
+        }
+        this.maxFieldSize = maxFieldSize;
     }
 
     /**
@@ -36,25 +42,25 @@ public class PlayfieldImpl implements Playfield {
      */
     @Override
     public int getMaxCardsPerPlayer() {
-        return this.maxHandSize;
+        return this.maxFieldSize;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public boolean canAddCard(final Player player) {
-        final List<Card> cards = Objects.requireNonNull(this.playerCards.get(player), "No such player.");
-        return cards.size() < this.maxHandSize;
+    public boolean canAddCard(final PlayerEnum player) {
+        final List<Card<?>> cards = this.playerCards.get(player);
+        return cards.size() < this.maxFieldSize;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritDoc} 
      */
     @Override
-    public void addCard(final Player player, final Card card) {
+    public void addCard(final PlayerEnum player, final Card<?> card) throws FieldFullException {
         if (!canAddCard(player)) {
-            throw new IllegalStateException("The player cannot add more cards.");
+            throw new FieldFullException("The player cannot add more cards.");
         }
 
         this.playerCards.get(player).add(Objects.requireNonNull(card, "No such card."));
@@ -64,22 +70,22 @@ public class PlayfieldImpl implements Playfield {
      * {@inheritDoc}
      */
     @Override
-    public Card removeCard(final Card card) {
-        for (final List<Card> cards : this.playerCards.values()) {
-            if (cards.remove(card)) {
-                return card;
-            }
+    public Card<?> removeCard(final PlayerEnum player, final Card<?> card) {
+        final List<Card<?>> cards = this.playerCards.get(Objects.requireNonNull(player, "No such player."));
+
+        if (!cards.remove(Objects.requireNonNull(card, "No such card."))) {
+            throw new NoSuchCardsException();
         }
 
-        throw new NoSuchCardsException();
+        return card;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public List<Card> getCards(final Player player) {
-        return List.copyOf(Objects.requireNonNull(this.playerCards.get(player), "No such player."));
+    public List<Card<?>> getCards(final PlayerEnum player) {
+        return List.copyOf(this.playerCards.get(player));
     }
 
     /**
@@ -94,7 +100,21 @@ public class PlayfieldImpl implements Playfield {
      * {@inheritDoc}
      */
     @Override
-    public List<Card> getAllCards() {
+    public List<Card<?>> getAllCards() {
         return this.playerCards.values().stream().flatMap(List::stream).toList();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Playfield copy() {
+        final PlayfieldImpl copy = new PlayfieldImpl(this.maxFieldSize);
+
+        for (final PlayerEnum player : PlayerEnum.values()) {
+            copy.playerCards.get(player).addAll(this.playerCards.get(player));
+        }
+
+        return copy;
     }
 }

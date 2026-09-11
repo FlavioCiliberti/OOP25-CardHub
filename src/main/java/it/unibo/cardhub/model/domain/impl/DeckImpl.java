@@ -16,21 +16,23 @@ public class DeckImpl extends AbstractCardCollection implements Deck {
 
     /**
      * Deck constructor.
+     * 
+     * @param cards deck cards
      */
-    public DeckImpl() {
-        super();
+    public DeckImpl(final List<? extends Card<?>> cards) {
+        super(Objects.requireNonNull(cards));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Card drawCard() {
+    public Card<?> drawCard() {
         if (this.isEmpty()) {
             throw new EmptyCardCollectionException();
         }
 
-        return this.getMutableCards().remove(this.size() - 1);
+        return this.getMutableCards().removeLast();
     }
 
     /**
@@ -45,19 +47,19 @@ public class DeckImpl extends AbstractCardCollection implements Deck {
      * {@inheritDoc}
      */
     @Override
-    public Optional<Card> peekCard() {
+    public Optional<Card<?>> peekCard() {
         if (getMutableCards().isEmpty()) {
             return Optional.empty();
         }
 
-        return Optional.of(getMutableCards().get(this.size() - 1));
+        return Optional.of(getMutableCards().getLast());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void addCards(final List<Card> cards) {
-        this.getMutableCards().addAll(Objects.requireNonNull(cards, "No such cards."));
+    public void addCard(final Card<?> card) {
+        this.getMutableCards().add(card);
     }
 }

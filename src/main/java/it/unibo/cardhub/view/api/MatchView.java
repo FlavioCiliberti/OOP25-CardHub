@@ -1,0 +1,91 @@
+package it.unibo.cardhub.view.api;
+
+import java.util.List;
+import java.util.Optional;
+
+import it.unibo.cardhub.controller.api.MatchController;
+import it.unibo.cardhub.model.domain.api.Card;
+import it.unibo.cardhub.model.domain.api.PlayerEnum;
+import it.unibo.cardhub.model.logic.api.ComparisonWinner;
+
+/**
+ * Represents the view of a match, updated by the {@link MatchController} 
+ * whenever the model changes.
+ * 
+ * <p>It only deals with domain objects (cards, players): mapping
+ * a card to its image is entirely up to the concrete view implementation.
+ * </p>
+ */
+public interface MatchView {
+
+    /**
+     * Refreshes a player's hand.
+     *
+     * @param player the player whose hand changed
+     * @param cards the player's hand, in order
+     */
+    void updateShowingHand(PlayerEnum player, List<Card<?>> cards);
+
+    /**
+     * Updates the player hand showing only face-down cards, without
+     * exposing any card data to the view.
+     * 
+     * @param player the player whose hand changed
+     * @param cardCount number of cards on hand
+     */
+    void updateHiddenHand(PlayerEnum player, int cardCount);
+
+    /**
+     * Updates the playfield with the specified list of cards.
+     *
+     * @param cards the list of cards to display on the playfield
+     * @param player the owner of the playfield
+     */
+    void updatePlayfield(PlayerEnum player, List<Card<?>> cards);
+
+    /**
+     * Updates the playfield showing only face-down cards, without
+     * exposing any card data to the view.
+     *
+     * @param cardCount number of cards on the playfield
+     * @param player the owner of the playfield
+     */
+    void updateHiddenPlayfield(PlayerEnum player, int cardCount);
+
+    /**
+     * Refreshes a player's discard pile.
+     *
+     * @param player the player whose discard pile changed
+     * @param topCard the top card of the pile, if any
+     */
+    void updateDiscardPile(PlayerEnum player, Optional<Card<?>> topCard);
+
+    /**
+     * Refreshes a player's remaining deck size and makes the deck invisible if empty.
+     *
+     * @param player the player whose deck changed
+     */
+    void updateDeck(PlayerEnum player);
+
+    /**
+     * Signals whose turn it currently is.
+     *
+     * @param player the current player
+     */
+    void showCurrentPlayer(PlayerEnum player);
+
+    /**
+     * Signals that the match has ended.
+     *
+     * @param winner the match's winner
+     */
+    void showMatchEnded(ComparisonWinner winner);
+
+    /**
+     * Signals that an action was unsuccessful.
+     * 
+     * @param message the message to show
+     */
+    void showInvalidAction(String message);
+
+}

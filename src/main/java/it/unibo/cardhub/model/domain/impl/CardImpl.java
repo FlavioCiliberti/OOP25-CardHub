@@ -1,5 +1,9 @@
 package it.unibo.cardhub.model.domain.impl;
 
+import java.util.Optional;
+
+import lombok.Builder;
+
 import it.unibo.cardhub.model.domain.api.Card;
 
 /**
@@ -7,10 +11,19 @@ import it.unibo.cardhub.model.domain.api.Card;
  * 
  * @param id card ID
  * @param name card name
+ * @param attributes card attribute
  * @param value card value
  * @param desc card description
- * @param imagePath card image path
+ * @param image image file name
+ * @param <T> card attribute type
  */
-public record CardImpl(String id, String name, int value, String desc, String imagePath) implements Card {
-
+@Builder
+public record CardImpl<T>(
+    String id, 
+    Optional<String> name, 
+    T attributes, 
+    int value, 
+    Optional<String> desc, 
+    String image
+) implements Card<T> {
 }

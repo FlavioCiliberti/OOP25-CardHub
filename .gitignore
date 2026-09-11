@@ -8,6 +8,12 @@ bin/
 # Ignore Idea customizations
 .idea
 
+# Ignore GitHub customizations
+.github
+
+# Ignore VSCode customizations
+.vscode
+
 # Ignore Eclipse settings
 .project
 .settings/

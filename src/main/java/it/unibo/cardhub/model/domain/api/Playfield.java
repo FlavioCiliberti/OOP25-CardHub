@@ -2,6 +2,8 @@ package it.unibo.cardhub.model.domain.api;
 
 import java.util.List;
 
+import it.unibo.cardhub.model.domain.exceptions.FieldFullException;
+
 /**
  * Represents a playfield in a match.
  */
@@ -15,28 +17,30 @@ public interface Playfield {
     int getMaxCardsPerPlayer();
 
     /**
-     * Informs whether a player can add another card to his hand.
+     * Informs whether a player can add another card to the field.
      * 
      * @param player that wants to add a card
      * @return true if he can, false otherwise
      */
-    boolean canAddCard(Player player);
+    boolean canAddCard(PlayerEnum player);
 
     /**
      * Adds a card from the player's hand to the table.
      * 
      * @param player that plays the card
      * @param card to be put on the table
+     * @throws FieldFullException if the table is full
      */
-    void addCard(Player player, Card card);
+    void addCard(PlayerEnum player, Card<?> card) throws FieldFullException;
 
     /**
      * Removes a card from the table.
      * 
+     * @param player that played the card
      * @param card to be removed
      * @return the card
      */
-    Card removeCard(Card card);
+    Card<?> removeCard(PlayerEnum player, Card<?> card);
 
     /**
      * A getter for the player's cards.
@@ -44,7 +48,7 @@ public interface Playfield {
      * @param player having cards of interest
      * @return a list of cards
      */
-    List<Card> getCards(Player player);
+    List<Card<?>> getCards(PlayerEnum player);
 
     /**
      * Removes all cards from the table.
@@ -56,5 +60,12 @@ public interface Playfield {
      * 
      * @return a list of all the cards
      */
-    List<Card> getAllCards();
+    List<Card<?>> getAllCards();
+
+    /**
+     * Returns a copy of the playfield for incapsulation purposes.
+     * 
+     * @return a copy of the playfield
+     */
+    Playfield copy();
 }

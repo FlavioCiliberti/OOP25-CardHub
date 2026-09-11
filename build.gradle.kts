@@ -15,10 +15,17 @@ repositories {
 dependencies {
 
     compileOnly("com.github.spotbugs:spotbugs-annotations:4.10.2")
+    testCompileOnly("com.github.spotbugs:spotbugs-annotations:4.10.2")
+    compileOnly("org.projectlombok:lombok:1.18.42")
+    annotationProcessor("org.projectlombok:lombok:1.18.42")
+
+    testCompileOnly("org.projectlombok:lombok:1.18.42")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.42")
 
 
     implementation("com.omertron:API-OMDB:1.5")
     implementation("org.jooq:jool:0.9.15")
+    implementation("org.yaml:snakeyaml:2.5")
 
 
     val slf4jVersion = "2.0.18"
@@ -35,6 +42,12 @@ dependencies {
 application {
 
     mainClass.set("it.unibo.cardhub.App")
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
 }
 
 tasks.withType<Test>().configureEach {

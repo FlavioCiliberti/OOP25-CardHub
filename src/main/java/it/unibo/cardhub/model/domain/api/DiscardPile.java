@@ -8,19 +8,26 @@ import java.util.Optional;
 public interface DiscardPile extends CardCollection {
 
     /**
+     * Adds a card to the discard pile.
+     * 
+     * @param card to be added
+     */
+    void addCard(Card<?> card);
+
+    /**
      * Takes a chosen card from the pile.
      * 
      * @param card the chosen card
      * @return the chosen card
      */
-    Card takeCard(Card card);
+    Card<?> takeCard(Card<?> card);
 
     /**
      * Returns the most recently discarded card without removing it.
      *
      * @return the most recently discarded card
      */
-    Optional<Card> peekCard();
+    Optional<Card<?>> peekCard();
 
     /**
      * Reshuffles the cards into the deck.

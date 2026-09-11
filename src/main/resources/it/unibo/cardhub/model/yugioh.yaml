@@ -1,0 +1,166 @@
+cards:
+  - id: yugioh-001
+    name: Blue-Eyes White Dragon
+    attributes:
+      type: dragon
+      attribute: light
+    value: 3_000
+    image: blue-eyes-white-dragon.png
+
+  - id: yugioh-002
+    name: Blue-Eyes White Dragon
+    attributes:
+      type: dragon
+      attribute: light
+    value: 3_000
+    image: blue-eyes-white-dragon.png
+
+  - id: yugioh-003
+    name: Dark Magician
+    attributes:
+      type: spellcaster
+      attribute: dark
+    value: 2_500
+    image: dark-magician.png
+
+  - id: yugioh-004
+    name: Dark Magician
+    attributes:
+      type: spellcaster
+      attribute: dark
+    value: 2_500
+    image: dark-magician.png
+
+  - id: yugioh-005
+    name: Dark Magician Girl
+    attributes:
+      type: spellcaster
+      attribute: dark
+    value: 2_000
+    image: dark-magician-girl.png
+
+  - id: yugioh-006
+    name: Left Arm of the Forbidden One
+    attributes:
+      type: spellcaster
+      attribute: dark
+    value: 200
+    image: LeftArm.png
+
+  - id: yugioh-007
+    name: Right Arm of the Forbidden One
+    attributes:
+      type: spellcaster
+      attribute: dark
+    value: 200
+    image: RightArm.png
+
+  - id: yugioh-008
+    name: Left Leg of the Forbidden One
+    attributes:
+      type: spellcaster
+      attribute: dark
+    value: 200
+    image: LeftLeg.png
+
+  - id: yugioh-009
+    name: Right Leg of the Forbidden One
+    attributes:
+      type: spellcaster
+      attribute: dark
+    value: 200
+    image: RightLeg.png
+
+  - id: yugioh-010
+    name: Exodia the Forbidden One
+    attributes:
+      type: spellcaster
+      attribute: dark
+    value: 1_000
+    description: "If you have all 5 pieces of Exodia in the hand you win the game."
+    image: Exodia.png
+  
+  - id: yugioh-011
+    name: Summoned Skull
+    attributes:
+      type: fiend
+      attribute: dark
+    value: 2_500
+    image: SummonedSkull.png
+
+  - id: yugioh-012
+    name: Maxx C
+    attributes:
+      type: insect
+      attribute: earth
+    value: 500
+    description: "Send this card to the discard pile, for the rest of the turn draw 1 card every time the opponent summons."
+    image: MaxxC.png
+
+  - id: yugioh-013
+    name: Maxx C
+    attributes:
+      type: insect
+      attribute: earth
+    value: 500
+    description: "Send this card to the discard pile, for the rest of the turn draw 1 card every time the opponent summons."
+    image: MaxxC.png
+
+  - id: yugioh-014
+    name: Maxx C
+    attributes:
+      type: insect
+      attribute: earth
+    value: 500
+    description: "Send this card to the discard pile, for the rest of the turn draw 1 card every time the opponent summons."
+    image: MaxxC.png
+
+  - id: yugioh-015
+    name: Ash Blossom & Joyous Spring
+    attributes:
+      type: zombie
+      attribute: fire
+    value: 0
+    description: "When your opponent activates an effect to draw a card, send this card to the discard pile and negate it."
+    image: AshBlossom.png
+
+  - id: yugioh-016
+    name: Ash Blossom & Joyous Spring
+    attributes:
+      type: zombie
+      attribute: fire
+    value: 0
+    description: "When your opponent activates an effect to draw a card, send this card to the discard pile and negate it."
+    image: AshBlossom.png
+
+  - id: yugioh-017
+    name: Elemental HERO Neos
+    attributes:
+      type: warrior
+      attribute: light
+    value: 2_500
+    image: Neos.png
+
+  - id: yugioh-018
+    name: Aitsu
+    attributes:
+      type: fairy
+      attribute: fire
+    value: 100
+    image: Aitsu.png
+
+  - id: yugioh-019
+    name: Koitsu
+    attributes:
+      type: fairy
+      attribute: water
+    value: 200
+    image: Koitsu.png
+
+  - id: yugioh-020
+    name: Black Luster Soldier
+    attributes:
+      type: warrior
+      attribute: earth
+    value: 3_000
+    image: BlackLusterSoldier.png

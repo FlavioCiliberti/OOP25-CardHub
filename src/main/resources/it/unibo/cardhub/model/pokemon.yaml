@@ -1,0 +1,177 @@
+cards:
+  - id: pokemon-001
+    name: Terapagos.png
+    attributes:
+      type: normal
+      rarity: secret rare
+    value: 230
+    description: "This pokemon can't be attacked by normal type pokemons."
+    image: Terapagos.png
+
+  - id: pokemon-002
+    name: Dreepy
+    attributes:
+      type: dragon
+      rarity: common
+    value: 70
+    image: Dreepy.png
+
+  - id: pokemon-003
+    name: Dreepy
+    attributes:
+      type: dragon
+      rarity: common
+    value: 70
+    image: Dreepy.png
+
+
+  - id: pokemon-004
+    name: Dreepy
+    attributes:
+      type: dragon
+      rarity: common
+    value: 70
+    image: Dreepy.png
+
+  - id: pokemon-005
+    name: Drakloak
+    attributes:
+      type: dragon
+      rarity: common
+    value: 90
+    description: "Evolves from Dreepy. When played you can draw 1 card."
+    image: Drakloak.png
+
+  - id: pokemon-006
+    name: Drakloak
+    attributes:
+      type: dragon
+      rarity: common
+    value: 90
+    description: "Evolves from Dreepy. When played you can draw 1 card."
+    image: Drakloak.png
+
+
+  - id: pokemon-007
+    name: Dragapult
+    attributes:
+      type: dragon
+      rarity: super rare
+    value: 320
+    description: "Evolves from Drakloak."
+    image: Dragapult.png
+
+  - id: pokemon-008
+    name: Dragapult
+    attributes:
+      type: dragon
+      rarity: super rare
+    value: 320
+    description: "Evolves from Drakloak."
+    image: Dragapult.png
+
+  - id: pokemon-009
+    name: Budew
+    attributes:
+      type: grass
+      rarity: common
+    value: 30
+    image: Budew.png
+
+  - id: pokemon-010
+    name: Fezandipiti
+    attributes:
+      type: dark
+      rarity: super rare
+    value: 210
+    description: "If one of your pokemon was knocked out last turn, you can draw 3 cards."
+    image: Fezandipiti.png
+  
+  - id: pokemon-011
+    name: Fezandipiti
+    attributes:
+      type: dark
+      rarity: super rare
+    value: 210
+    description: "If one of your pokemon was knocked out last turn, you can draw 3 cards."
+    image: Fezandipiti.png
+
+  - id: pokemon-012
+    name: Kyurem
+    attributes:
+      type: dragon
+      rarity: rare
+    value: 130
+    image: Kyurem.png
+
+  - id: pokemon-013
+    name: Metagross
+    attributes:
+      type: steel
+      rarity: rare
+    value: 180
+    image: Metagross.png
+
+
+  - id: pokemon-014
+    name: Latias
+    attributes:
+      type: psychic
+      rarity: super rare
+    value: 210
+    description: "This pokemon cannot attack the turn after attacking."
+    image: Latias.png
+
+  - id: pokemon-015
+    name: Latias
+    attributes:
+      type: psychic
+      rarity: super rare
+    value: 210
+    description: "This pokemon cannot attack the turn after attacking."
+    image: Latias.png
+
+  - id: pokemon-016
+    name: Dwebble
+    attributes:
+      type: grass
+      rarity: common
+    value: 70
+    description: "When played you can draw 1 card."
+    image: Dwebble.png
+
+
+  - id: pokemon-017
+    name: Dwebble
+    attributes:
+      type: grass
+      rarity: common
+    value: 70
+    description: "When played you can draw 1 card."
+    image: Dwebble.png
+
+  - id: pokemon-018
+    name: Crustle
+    attributes:
+      type: grass
+      rarity: uncommon
+    value: 150
+    description: "Evolves from Dwebble. This pokemon is unaffected by opponent's effects."
+    image: Crustle.png
+
+  - id: pokemon-019
+    name: Zekrom
+    attributes:
+      type: dragon
+      rarity: rare
+    value: 130
+    description: "This pokemon cannot attack the turn after attacking."
+    image: Zekrom.png
+
+  - id: pokemon-020
+    name: Reshiram
+    attributes:
+      type: dragon
+      rarity: super rare
+    value: 130
+    image: Reshiram.png
