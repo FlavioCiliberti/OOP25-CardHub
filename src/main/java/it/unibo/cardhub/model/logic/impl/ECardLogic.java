@@ -10,12 +10,12 @@ import it.unibo.cardhub.model.domain.api.PlayerEnum;
 import it.unibo.cardhub.model.domain.attributes.ECardEnum;
 import it.unibo.cardhub.model.logic.api.CardAction;
 import it.unibo.cardhub.model.logic.api.ComparisonWinner;
-import it.unibo.cardhub.model.logic.api.PointTracker;
+import it.unibo.cardhub.model.logic.api.ScoredMatchLogic;
 
 /**
  * Match logic for an E-Card game.
  */
-public class ECardLogic extends AbstractMatchLogic implements PointTracker {
+public class ECardLogic extends AbstractMatchLogic implements ScoredMatchLogic {
     private static final int NORMAL_WIN_POINTS = 1;
     private static final int SLAVE_WIN_POINTS = 3;
 

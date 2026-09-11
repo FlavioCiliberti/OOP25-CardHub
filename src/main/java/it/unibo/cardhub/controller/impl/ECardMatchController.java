@@ -7,14 +7,14 @@ import it.unibo.cardhub.controller.api.Navigator;
 import it.unibo.cardhub.model.domain.api.Card;
 import it.unibo.cardhub.model.domain.api.MatchState;
 import it.unibo.cardhub.model.domain.api.PlayerEnum;
-import it.unibo.cardhub.model.logic.impl.ECardLogic;
+import it.unibo.cardhub.model.logic.api.ScoredMatchLogic;
 import it.unibo.cardhub.view.api.ECardMatchView;
 import it.unibo.cardhub.view.impl.ECardMatchViewImpl;
 
 /**
  * Implementation of {@link MatchController} for the ECard full game.
  */
-public class ECardMatchController extends AbstractMatchController<ECardMatchView, ECardLogic> {
+public class ECardMatchController extends AbstractMatchController<ECardMatchView, ScoredMatchLogic> {
 
     /**
      * Constructor for the controller.
@@ -23,7 +23,7 @@ public class ECardMatchController extends AbstractMatchController<ECardMatchView
      * @param logic match logic
      * @param navigator screen navigator
      */
-    public ECardMatchController(final MatchState state, final ECardLogic logic, final Navigator navigator) {
+    public ECardMatchController(final MatchState state, final ScoredMatchLogic logic, final Navigator navigator) {
         super(state, logic, navigator);
     }
 

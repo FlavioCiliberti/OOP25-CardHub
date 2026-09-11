@@ -5,7 +5,7 @@ import it.unibo.cardhub.model.domain.api.PlayerEnum;
 /**
  * An interface for point-tracking in the match logic.
  */
-public interface PointTracker {
+public interface ScoredMatchLogic extends MatchLogic {
     /**
      * Getter for a player's points.
      * 
