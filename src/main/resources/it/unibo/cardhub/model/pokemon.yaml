@@ -157,7 +157,7 @@ cards:
       rarity: uncommon
     value: 150
     description: "Evolves from Dwebble. This pokemon is unaffected by opponent's effects."
-    image: Dragapult.png
+    image: Crustle.png
 
   - id: pokemon-019
     name: Zekrom
