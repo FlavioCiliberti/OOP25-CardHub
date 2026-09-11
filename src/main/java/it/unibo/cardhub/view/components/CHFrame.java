@@ -2,10 +2,6 @@ package it.unibo.cardhub.view.components;
 
 import java.awt.Dimension;
 
-// import java.awt.*;
-// import javax.swing.JPanel;
-// import it.unibo.cardhub.view.impl.HomeViewImpl;
-
 import javax.swing.JFrame;
 
 //IMPORTANT; SERVES FOR UI TESTING PURPUSES ONLY (FOR NOW)
@@ -21,12 +17,16 @@ public final class CHFrame extends JFrame {
      * 
      */
     public CHFrame() {
-        this.setTitle("Card Hub App");
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
-        this.setMinimumSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
-        this.pack();
-        this.setVisible(true);
+        customize();
+    }
+
+    private void customize() {
+        super.setTitle("Card Hub App");
+        super.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        super.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+        super.setMinimumSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+        super.pack();
+        super.setVisible(true);
     }
 
 }
