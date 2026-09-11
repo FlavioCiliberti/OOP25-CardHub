@@ -139,7 +139,7 @@ cards:
       type: warrior
       attribute: light
     value: 2_500
-    image: RightArm.png
+    image: Neos.png
 
   - id: yugioh-018
     name: Aitsu
